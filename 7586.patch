@@ -1,0 +1,326 @@
+# HG changeset patch
+# User mjmckay <michael.mckay@sympatico.ca>
+# Date 1391488655 18000
+#      Mon Feb 03 23:37:35 2014 -0500
+# Branch release/3.7.0
+# Node ID 09ae44c5cfa6e779345db99b76aac760770736fc
+# Parent  3ae0a91233c93d71b92555dbc8fd78eab27f5e79
+# Parent  b844acd589807e22652c41c77967deb705a00bab
+Merge with hotfix/BF3450248
+
+diff -r 3ae0a91233c9 -r 09ae44c5cfa6 .hgtags
+--- a/.hgtags	Thu Sep 01 14:12:17 2011 -0500
++++ b/.hgtags	Mon Feb 03 23:37:35 2014 -0500
+@@ -18,3 +18,4 @@
+ 6a99423fdff9b08b811410dffe89adb537fd80d1 adempiere360lts
+ 2dbc5fdef25d9c151bfab0b01cd5f0dc55d5fa24 adempiere370lts
+ 16a9d4709ea634da66d5f80b0ee31e59d22cad47 3.7.0
++c2fe7bed9e2daaedbc3d31bb1726f372f9330cce BF3450248
+diff -r 3ae0a91233c9 -r 09ae44c5cfa6 base/src/org/compiere/model/MPaySelectionLine.java
+--- a/base/src/org/compiere/model/MPaySelectionLine.java	Thu Sep 01 14:12:17 2011 -0500
++++ b/base/src/org/compiere/model/MPaySelectionLine.java	Mon Feb 03 23:37:35 2014 -0500
+@@ -13,6 +13,10 @@
+  * For the text or an alternative of this public license, you may reach us    *
+  * ComPiere, Inc., 2620 Augustine Dr. #245, Santa Clara, CA 95054, USA        *
+  * or via info@compiere.org or http://www.compiere.org/license.html           *
++ *                                                                            *
++ *  @author Michael McKay                                                     * 
++ *  	<li>BF3441324  - Partially paid invoice does not appear in payment    *
++ *                       selection                                            *
+  *****************************************************************************/
+ package org.compiere.model;
+ 
+@@ -91,16 +95,18 @@
+ 
+ 	/**
+ 	 * 	Set Invoice Info
+-	 *	@param C_Invoice_ID invoice
++	 *	@param C_Invoice_ID invoice
++	 *  @param C_InvoicePaySchedule_ID invoice pay schedule
+ 	 *	@param isSOTrx sales trx
+ 	 *	@param PayAmt payment
+ 	 *	@param OpenAmt open
+ 	 *	@param DiscountAmt discount
+ 	 */
+-	public void setInvoice (int C_Invoice_ID, boolean isSOTrx, BigDecimal OpenAmt, 
+-		BigDecimal PayAmt, BigDecimal DiscountAmt)
++	public void setInvoice (int C_Invoice_ID, int C_InvoicePaySchedule_ID, boolean isSOTrx, 
++		BigDecimal OpenAmt, BigDecimal PayAmt, BigDecimal DiscountAmt)
+ 	{
+-		setC_Invoice_ID (C_Invoice_ID);
++		setC_Invoice_ID (C_Invoice_ID);
++		set_ValueOfColumn("C_InvoicePaySchedule_ID",C_InvoicePaySchedule_ID);
+ 		setIsSOTrx(isSOTrx);
+ 		setOpenAmt(OpenAmt);
+ 		setPayAmt (PayAmt);
+diff -r 3ae0a91233c9 -r 09ae44c5cfa6 base/src/org/compiere/process/PaySelectionCreateFrom.java
+--- a/base/src/org/compiere/process/PaySelectionCreateFrom.java	Thu Sep 01 14:12:17 2011 -0500
++++ b/base/src/org/compiere/process/PaySelectionCreateFrom.java	Mon Feb 03 23:37:35 2014 -0500
+@@ -13,6 +13,10 @@
+  * For the text or an alternative of this public license, you may reach us    *
+  * ComPiere, Inc., 2620 Augustine Dr. #245, Santa Clara, CA 95054, USA        *
+  * or via info@compiere.org or http://www.compiere.org/license.html           *
++ *                                                                            *
++ *  @author Michael McKay                                                     * 
++ *  	<li>BF3441324  - Partially paid invoice does not appear in payment    *
++ *                       selection                                            *
+  *****************************************************************************/
+ package org.compiere.process;
+ 
+@@ -113,23 +117,34 @@
+ 		
+ 	//	psel.getPayDate();
+ 
+-		String sql = "SELECT C_Invoice_ID,"
++		String sql = "SELECT i.C_Invoice_ID, i.C_InvoicePaySchedule_ID,"
+ 			//	Open
+-			+ " currencyConvert(invoiceOpen(i.C_Invoice_ID, 0)"
+-				+ ",i.C_Currency_ID, ?,?, i.C_ConversionType_ID,i.AD_Client_ID,i.AD_Org_ID),"	//	##1/2 Currency_To,PayDate
++			+ " currencyConvert(invoiceOpen(i.C_Invoice_ID, i.C_InvoicePaySchedule_ID)"
++			+ ",i.C_Currency_ID, ?,?, i.C_ConversionType_ID,i.AD_Client_ID,i.AD_Org_ID),"	//	##1/2 Currency_To,PayDate
+ 			//	Discount
+ 			+ " currencyConvert(paymentTermDiscount(i.GrandTotal,i.C_Currency_ID,i.C_PaymentTerm_ID,i.DateInvoiced, ?)"	//	##3 PayDate
+-				+ ",i.C_Currency_ID, ?,?,i.C_ConversionType_ID,i.AD_Client_ID,i.AD_Org_ID),"	//	##4/5 Currency_To,PayDate
++			+ ",i.C_Currency_ID, ?,?,i.C_ConversionType_ID,i.AD_Client_ID,i.AD_Org_ID),"	//	##4/5 Currency_To,PayDate
+ 			+ " PaymentRule, IsSOTrx "		//	4..6
+-			+ "FROM C_Invoice i "
++			+ "FROM C_Invoice_v i "
++			+ "LEFT OUTER JOIN C_InvoicePaySchedule ips ON (i.C_InvoicePaySchedule_ID = ips.C_InvoicePaySchedule_ID) "
+ 			+ "WHERE IsSOTrx='N' AND IsPaid='N' AND DocStatus IN ('CO','CL')"
+-			+ " AND AD_Client_ID=?"				//	##6
++			+ " AND i.AD_Client_ID=?"				//	##6
++			// And a payment is needed  ##7
++			+ " AND invoiceOpen(i.C_Invoice_ID,i.C_InvoicePaySchedule_ID)-paymentTermDiscount(i.GrandTotal,i.C_Currency_ID,i.C_PaymentTerm_ID,i.DateInvoiced, ?) != 0.0"
+ 			//	Existing Payments - Will reselect Invoice if prepared but not paid 
++			//  BR3450248 - Partially paid invoice does not appear in payment selection
+ 			+ " AND NOT EXISTS (SELECT * FROM C_PaySelectionLine psl"
+ 			+                 " INNER JOIN C_PaySelectionCheck psc ON (psl.C_PaySelectionCheck_ID=psc.C_PaySelectionCheck_ID)"
+ 			+                 " LEFT OUTER JOIN C_Payment pmt ON (pmt.C_Payment_ID=psc.C_Payment_ID)"
++			+                 " WHERE i.C_Invoice_ID=psl.C_Invoice_ID"
++			+				  " AND i.C_InvoicePaySchedule_ID is null"  // include all InvoicePaySchedules - these are handled by invoiceOpen()
++			+				  " AND psl.IsActive='Y'"
++			+				  " AND (pmt.DocStatus IS NULL OR pmt.DocStatus NOT IN ('VO','RE'))"
++			+				  " AND psl.differenceamt = 0.0) " 
++			// Avoid repeats in current PaySelection which can happen if the button is clicked more than once
++			+ " AND NOT EXISTS (SELECT * FROM C_PaySelectionLine psl" 
+ 			+                 " WHERE i.C_Invoice_ID=psl.C_Invoice_ID AND psl.IsActive='Y'"
+-			+				  " AND (pmt.DocStatus IS NULL OR pmt.DocStatus NOT IN ('VO','RE')) )";
++			+				  " AND psl.C_PaySelection_ID = ?)"; // ##8 Current selection
+ 		//	Disputed
+ 		if (!p_IncludeInDispute)
+ 			sql += " AND i.IsInDispute='N'";
+@@ -143,7 +158,7 @@
+ 				sql += " AND (";
+ 			else
+ 				sql += " AND ";
+-			sql += "paymentTermDiscount(invoiceOpen(C_Invoice_ID, 0), C_Currency_ID, C_PaymentTerm_ID, DateInvoiced, ?) > 0";	//	##
++			sql += "paymentTermDiscount(invoiceOpen(i.C_Invoice_ID, i.C_InvoicePaySchedule_ID), C_Currency_ID, C_PaymentTerm_ID, DateInvoiced, ?) > 0";	//	##
+ 		}
+ 		//	OnlyDue
+ 		if (p_OnlyDue)
+@@ -152,7 +167,7 @@
+ 				sql += " OR ";
+ 			else
+ 				sql += " AND ";
+-			sql += "paymentTermDueDays(C_PaymentTerm_ID, DateInvoiced, ?) >= 0";	//	##
++			sql += "COALESCE(ips.duedate,paymentTermDueDate(i.C_PaymentTerm_ID, i.DateInvoiced)) <= ?";	//	##
+ 			if (p_OnlyDiscount)
+ 				sql += ")";
+ 		}
+@@ -196,6 +211,9 @@
+ 			pstmt.setTimestamp(index++, psel.getPayDate());
+ 			//
+ 			pstmt.setInt(index++, psel.getAD_Client_ID());
++			pstmt.setTimestamp(index++, psel.getPayDate());
++			pstmt.setInt(index++, psel.getC_PaySelection_ID());
++			
+ 			if (p_PaymentRule != null)
+ 				pstmt.setString(index++, p_PaymentRule);
+ 			if (p_OnlyDiscount)
+@@ -210,17 +228,18 @@
+ 			ResultSet rs = pstmt.executeQuery ();
+ 			while (rs.next ())
+ 			{
+-				int C_Invoice_ID = rs.getInt(1);
+-				BigDecimal PayAmt = rs.getBigDecimal(2);
++				int C_Invoice_ID = rs.getInt(1);
++				int C_InvoicePaySchedule_ID = rs.getInt(2);
++				BigDecimal PayAmt = rs.getBigDecimal(3);
+ 				if (C_Invoice_ID == 0 || Env.ZERO.compareTo(PayAmt) == 0)
+ 					continue;
+-				BigDecimal DiscountAmt = rs.getBigDecimal(3);
+-				String PaymentRule  = rs.getString(4);
+-				boolean isSOTrx = "Y".equals(rs.getString(5));
++				BigDecimal DiscountAmt = rs.getBigDecimal(4);
++				String PaymentRule  = rs.getString(5);
++				boolean isSOTrx = "Y".equals(rs.getString(6));
+ 				//
+ 				lines++;
+ 				MPaySelectionLine pselLine = new MPaySelectionLine (psel, lines*10, PaymentRule);
+-				pselLine.setInvoice (C_Invoice_ID, isSOTrx,
++				pselLine.setInvoice (C_Invoice_ID, C_InvoicePaySchedule_ID, isSOTrx,
+ 					PayAmt, PayAmt.subtract(DiscountAmt), DiscountAmt);
+ 				if (!pselLine.save())
+ 				{
+diff -r 3ae0a91233c9 -r 09ae44c5cfa6 client/src/org/compiere/apps/form/PaySelect.java
+--- a/client/src/org/compiere/apps/form/PaySelect.java	Thu Sep 01 14:12:17 2011 -0500
++++ b/client/src/org/compiere/apps/form/PaySelect.java	Mon Feb 03 23:37:35 2014 -0500
+@@ -10,6 +10,11 @@
+  * You should have received a copy of the GNU General Public License along    *
+  * with this program; if not, write to the Free Software Foundation, Inc.,    *
+  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.                     *
++ *                                                                            *
++ *                                                                            *
++ *  @author Michael McKay                                                     * 
++ *  	<li>BF3441324  - Partially paid invoice does not appear in payment    *
++ *                       selection                                            *
+  *****************************************************************************/
+ package org.compiere.apps.form;
+ 
+@@ -188,14 +193,14 @@
+ 		Properties ctx = Env.getCtx();
+ 		/**  prepare MiniTable
+ 		 *
+-		SELECT i.C_Invoice_ID, i.DateInvoiced+p.NetDays AS DateDue,
++		SELECT i.C_Invoice_ID, i.C_InvoicePaySchedule_ID, i.DateInvoiced+p.NetDays AS DateDue,
+ 		bp.Name, i.DocumentNo, c.ISO_Code, i.GrandTotal,
+ 		paymentTermDiscount(i.GrandTotal, i.C_PaymentTerm_ID, i.DateInvoiced, SysDate) AS Discount,
+ 		SysDate-paymentTermDueDays(i.C_PaymentTerm_ID,i.DateInvoiced) AS DiscountDate,
+ 		i.GrandTotal-paymentTermDiscount(i.GrandTotal,i.C_PaymentTerm_ID,i.DateInvoiced,SysDate) AS DueAmount,
+ 		currencyConvert(i.GrandTotal-paymentTermDiscount(i.GrandTotal,i.C_PaymentTerm_ID,i.DateInvoiced,SysDate,null),
+ 			i.C_Currency_ID,xx100,SysDate) AS PayAmt
+-		FROM C_Invoice i, C_BPartner bp, C_Currency c, C_PaymentTerm p
++		FROM C_Invoice_v i, C_BPartner bp, C_Currency c, C_PaymentTerm p
+ 		WHERE i.IsSOTrx='N'
+ 		AND i.C_BPartner_ID=bp.C_BPartner_ID
+ 		AND i.C_Currency_ID=c.C_Currency_ID
+@@ -205,32 +210,53 @@
+ 		 */
+ 
+ 		m_sql = miniTable.prepareTable(new ColumnInfo[] {
+-			//  0..4
++			//  0..5
+ 			new ColumnInfo(" ", "i.C_Invoice_ID", IDColumn.class, false, false, null),
+-			new ColumnInfo(Msg.translate(ctx, "DueDate"), "paymentTermDueDate(i.C_PaymentTerm_ID, i.DateInvoiced) AS DateDue", Timestamp.class, true, true, null),
++			new ColumnInfo(Msg.translate(ctx, "DueDate"), "COALESCE(ips.duedate,paymentTermDueDate(i.C_PaymentTerm_ID, i.DateInvoiced)) AS DateDue", Timestamp.class, true, true, null),
+ 			new ColumnInfo(Msg.translate(ctx, "C_BPartner_ID"), "bp.Name", KeyNamePair.class, true, false, "i.C_BPartner_ID"),
+ 			new ColumnInfo(Msg.translate(ctx, "DocumentNo"), "i.DocumentNo", String.class),
++			new ColumnInfo(Msg.getMsg(ctx, "Payment #"), "np.numpaymts", KeyNamePair.class, true, false, "np.C_InvoicePaySchedule_ID"),
+ 			new ColumnInfo(Msg.translate(ctx, "C_Currency_ID"), "c.ISO_Code", KeyNamePair.class, true, false, "i.C_Currency_ID"),
+-			// 5..9
++			// 6..11
+ 			new ColumnInfo(Msg.translate(ctx, "GrandTotal"), "i.GrandTotal", BigDecimal.class),
+ 			new ColumnInfo(Msg.translate(ctx, "DiscountAmt"), "paymentTermDiscount(i.GrandTotal,i.C_Currency_ID,i.C_PaymentTerm_ID,i.DateInvoiced, ?)", BigDecimal.class),
+ 			new ColumnInfo(Msg.getMsg(ctx, "DiscountDate"), "SysDate-paymentTermDueDays(i.C_PaymentTerm_ID,i.DateInvoiced,SysDate)", Timestamp.class),
+ 			new ColumnInfo(Msg.getMsg(ctx, "AmountDue"), "currencyConvert(invoiceOpen(i.C_Invoice_ID,i.C_InvoicePaySchedule_ID),i.C_Currency_ID, ?,?,i.C_ConversionType_ID, i.AD_Client_ID,i.AD_Org_ID)", BigDecimal.class),
+-			new ColumnInfo(Msg.getMsg(ctx, "AmountPay"), "currencyConvert(invoiceOpen(i.C_Invoice_ID,i.C_InvoicePaySchedule_ID)-paymentTermDiscount(i.GrandTotal,i.C_Currency_ID,i.C_PaymentTerm_ID,i.DateInvoiced, ?),i.C_Currency_ID, ?,?,i.C_ConversionType_ID, i.AD_Client_ID,i.AD_Org_ID)", BigDecimal.class)
++			new ColumnInfo(Msg.getMsg(ctx, "AmountPay"), "currencyConvert(invoiceOpen(i.C_Invoice_ID,i.C_InvoicePaySchedule_ID)-paymentTermDiscount(i.GrandTotal,i.C_Currency_ID,i.C_PaymentTerm_ID,i.DateInvoiced, ?),i.C_Currency_ID, ?,?,i.C_ConversionType_ID, i.AD_Client_ID,i.AD_Org_ID)", BigDecimal.class),
++			new ColumnInfo(Msg.translate(ctx, "PaySched_ID"), "np.C_InvoicePaySchedule_ID", Integer.class)
+ 			},
+ 			//	FROM
+ 			"C_Invoice_v i"
+ 			+ " INNER JOIN C_BPartner bp ON (i.C_BPartner_ID=bp.C_BPartner_ID)"
+ 			+ " INNER JOIN C_Currency c ON (i.C_Currency_ID=c.C_Currency_ID)"
+-			+ " INNER JOIN C_PaymentTerm p ON (i.C_PaymentTerm_ID=p.C_PaymentTerm_ID)",
++			+ " INNER JOIN C_PaymentTerm p ON (i.C_PaymentTerm_ID=p.C_PaymentTerm_ID)"
++			+ " INNER JOIN (SELECT civ.c_invoice_id, civ.c_invoicepayschedule_id, civ.duedate," 
++			+ 			   " (SELECT COUNT(C_Invoice_ID) AS payno"
++			+			   " FROM C_Invoice_V"
++			+			   " WHERE C_Invoice_ID = civ.C_Invoice_ID"
++			+			   " AND duedate <= civ.duedate"
++			+			   " GROUP BY C_Invoice_ID) || ' / ' ||"
++			+			   " (SELECT COUNT(C_Invoice_ID) as numpmts"
++			+			   " FROM C_Invoice_V"
++			+			   " WHERE C_Invoice_ID = civ.C_Invoice_ID"
++			+			   " GROUP BY C_Invoice_ID) as numpaymts"
++			+			   " FROM C_Invoice_v civ) np ON (i.C_Invoice_ID=np.C_Invoice_ID"
++			+														" AND (i.C_InvoicePaySchedule_ID IS NULL"
++			+														" OR i.C_InvoicePaySchedule_ID = np.C_InvoicePaySchedule_ID))"
++			+ " LEFT OUTER JOIN C_InvoicePaySchedule ips ON (i.C_InvoicePaySchedule_ID = ips.C_InvoicePaySchedule_ID)",
+ 			//	WHERE
+ 			"i.IsSOTrx=? AND IsPaid='N'"
++			// And a payment is needed
++			+ " AND invoiceOpen(i.C_Invoice_ID,i.C_InvoicePaySchedule_ID)-paymentTermDiscount(i.GrandTotal,i.C_Currency_ID,i.C_PaymentTerm_ID,i.DateInvoiced, ?) != 0.0"
+ 			//	Different Payment Selection
++			//  BR3450248 - Partially paid invoice does not appear in payment selection
+ 			+ " AND NOT EXISTS (SELECT * FROM C_PaySelectionLine psl"
+ 			+                 " INNER JOIN C_PaySelectionCheck psc ON (psl.C_PaySelectionCheck_ID=psc.C_PaySelectionCheck_ID)"
+ 			+                 " LEFT OUTER JOIN C_Payment pmt ON (pmt.C_Payment_ID=psc.C_Payment_ID)"
+-			+                 " WHERE i.C_Invoice_ID=psl.C_Invoice_ID AND psl.IsActive='Y'"
+-			+				  " AND (pmt.DocStatus IS NULL OR pmt.DocStatus NOT IN ('VO','RE')) )"
++			+                 " WHERE i.C_Invoice_ID=psl.C_Invoice_ID AND (i.C_InvoicePaySchedule_ID IS NULL OR i.C_InvoicePaySchedule_ID=0)" 
++			+				  " AND psl.IsActive='Y'"
++			+				  " AND (pmt.DocStatus IS NULL OR pmt.DocStatus NOT IN ('VO','RE'))"
++			+				  " AND psl.differenceamt = 0.0)"
+ 			+ " AND i.DocStatus IN ('CO','CL')"
+ 			+ " AND i.AD_Client_ID=?",	//	additional where & order in loadTableInfo()
+ 			true, "i");
+@@ -307,7 +333,7 @@
+ 		int c_doctype_id  = dt.getKey();
+ 		if (c_doctype_id   != 0)
+ 			sql += " AND i.c_doctype_id =?";
+-		sql += " ORDER BY 2,3";
++		sql += " ORDER BY DateDue, bp.Name, i.DocumentNo";
+ 
+ 		log.finest(sql + " - C_Currency_ID=" + bi.C_Currency_ID + ", C_BPartner_ID=" + C_BPartner_ID + ", C_doctype_id=" + c_doctype_id  );
+ 		//  Get Open Invoices
+@@ -322,6 +348,7 @@
+ 			pstmt.setInt(index++, bi.C_Currency_ID);
+ 			pstmt.setTimestamp(index++, payDate);
+ 			pstmt.setString(index++, isSOTrx);			//	IsSOTrx
++			pstmt.setTimestamp(index++, payDate);
+ 			pstmt.setInt(index++, m_AD_Client_ID);		//	Client
+ 			if (onlyDue)
+ 				pstmt.setTimestamp(index++, payDate);
+@@ -356,7 +383,7 @@
+ 			IDColumn id = (IDColumn)miniTable.getValueAt(i, 0);
+ 			if (id.isSelected())
+ 			{
+-				BigDecimal amt = (BigDecimal)miniTable.getValueAt(i, 9);
++				BigDecimal amt = (BigDecimal)miniTable.getValueAt(i, 10);
+ 				if (amt != null)
+ 					invoiceAmt = invoiceAmt.add(amt);
+ 				m_noSelected++;
+@@ -408,16 +435,18 @@
+ 		for (int i = 0; i < rows; i++)
+ 		{
+ 			IDColumn id = (IDColumn)miniTable.getValueAt(i, 0);
++			Object ips_id = miniTable.getValueAt(i,11);
+ 			if (id.isSelected())
+ 			{
+ 				line += 10;
+ 				MPaySelectionLine psl = new MPaySelectionLine (m_ps, line, PaymentRule);
+ 				int C_Invoice_ID = id.getRecord_ID().intValue();
+-				BigDecimal OpenAmt = (BigDecimal)miniTable.getValueAt(i, 8);
+-				BigDecimal PayAmt = (BigDecimal)miniTable.getValueAt(i, 9);
++				int C_InvoicePaySchedule_ID = Integer.parseInt(ips_id.toString());
++				BigDecimal OpenAmt = (BigDecimal)miniTable.getValueAt(i, 9);
++				BigDecimal PayAmt = (BigDecimal)miniTable.getValueAt(i, 10);
+ 				boolean isSOTrx = false;
+ 				//
+-				psl.setInvoice(C_Invoice_ID, isSOTrx,
++				psl.setInvoice(C_Invoice_ID, C_InvoicePaySchedule_ID, isSOTrx,
+ 					OpenAmt, PayAmt, OpenAmt.subtract(PayAmt));
+ 				if (!psl.save(trxName))
+ 				{
+diff -r 3ae0a91233c9 -r 09ae44c5cfa6 migration/370lts-release/mysql/809_BF3450248_AddInvoicePaySchedule.sql
+--- /dev/null	Thu Jan 01 00:00:00 1970 +0000
++++ b/migration/370lts-release/mysql/809_BF3450248_AddInvoicePaySchedule.sql	Mon Feb 03 23:37:35 2014 -0500
+@@ -0,0 +1,3 @@
++-- Column: c_invoicepayschedule_id
++-- BF3450248 - Partially paid invoices do not appear in payment selection window
++ALTER TABLE adempiere.c_payselectionline ADD COLUMN c_invoicepayschedule_id numeric(10,0);
+diff -r 3ae0a91233c9 -r 09ae44c5cfa6 migration/370lts-release/oracle/809_BF3450248_AddInvoicePaySchedule.sql
+--- /dev/null	Thu Jan 01 00:00:00 1970 +0000
++++ b/migration/370lts-release/oracle/809_BF3450248_AddInvoicePaySchedule.sql	Mon Feb 03 23:37:35 2014 -0500
+@@ -0,0 +1,3 @@
++-- Column: c_invoicepayschedule_id
++-- BF3450248 - Partially paid invoices do not appear in payment selection window
++ALTER TABLE adempiere.c_payselectionline ADD COLUMN c_invoicepayschedule_id numeric(10,0);
+diff -r 3ae0a91233c9 -r 09ae44c5cfa6 migration/370lts-release/postgresql/809_BF3450248_AddInvoicePaySchedule.sql
+--- /dev/null	Thu Jan 01 00:00:00 1970 +0000
++++ b/migration/370lts-release/postgresql/809_BF3450248_AddInvoicePaySchedule.sql	Mon Feb 03 23:37:35 2014 -0500
+@@ -0,0 +1,3 @@
++-- Column: c_invoicepayschedule_id
++-- BF3450248 - Partially paid invoices do not appear in payment selection window
++ALTER TABLE adempiere.c_payselectionline ADD COLUMN c_invoicepayschedule_id numeric(10,0);

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="OFC">
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/base/src"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/client/src"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/JasperReports/src"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/zkwebui/WEB-INF/src"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/serverRoot/src/main/server"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/install/src"/>
+        <wb-resource deploy-path="/" source-path="/zkwebui" tag="defaultRootSource"/>
+        <property name="context-root" value="webui"/>
+        <property name="java-output-path" value="/OFC/bin"/>
+    </wb-module>
+</project-modules>

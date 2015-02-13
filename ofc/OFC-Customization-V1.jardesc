@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="WINDOWS-1252" standalone="no"?>
+<jardesc>
+    <jar path="C:/Adempiere/lib/customization.jar"/>
+    <options buildIfNeeded="true" compress="false" descriptionLocation="/ofc/OFC-Customization-V1.jardesc" exportErrors="false" exportWarnings="true" includeDirectoryEntries="false" overwrite="true" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+    <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
+    <selectedProjects/>
+    <manifest generateManifest="true" manifestLocation="/ofc/OFC-Customization-V1-Manifest" manifestVersion="1.0" reuseManifest="false" saveManifest="true" usesManifest="true">
+        <sealing sealJar="false">
+            <packagesToSeal/>
+            <packagesToUnSeal/>
+        </sealing>
+    </manifest>
+    <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
+        <javaElement handleIdentifier="=HtmlGet/src&lt;org.w3c.www.protocol"/>
+        <javaElement handleIdentifier="=HtmlGet/src&lt;TeSS.javadocs.TeSS.util"/>
+        <javaElement handleIdentifier="=HtmlGet/src&lt;org.w3c.www.http"/>
+        <javaElement handleIdentifier="=HtmlGet/src&lt;HtmlGet"/>
+        <javaElement handleIdentifier="=HtmlGet/src&lt;org.w3c.tools.crypt"/>
+        <javaElement handleIdentifier="=HtmlGet/src&lt;org.w3c.www.protocol.http.proxy"/>
+        <javaElement handleIdentifier="=HtmlGet/src&lt;org.w3c.tools.sorter"/>
+        <file path="/HtmlGet/src/build.sh"/>
+        <javaElement handleIdentifier="=HtmlGet/src&lt;org.w3c.tools.codec"/>
+        <javaElement handleIdentifier="=HtmlGet/src&lt;TeSS"/>
+        <javaElement handleIdentifier="=HtmlGet/src&lt;org.w3c.www.protocol.http.cookies"/>
+        <javaElement handleIdentifier="=HtmlGet/src&lt;org.w3c"/>
+        <javaElement handleIdentifier="=HtmlGet/src&lt;org.w3c.www.mux.handlers"/>
+        <javaElement handleIdentifier="=ofc/base\/src"/>
+        <javaElement handleIdentifier="=HtmlGet/src&lt;org.makefiles"/>
+        <javaElement handleIdentifier="=HtmlGet/src&lt;TeSS.javadocs"/>
+        <javaElement handleIdentifier="=HtmlGet/src&lt;TeSS.javadocs.TeSS.util.exceptions"/>
+        <javaElement handleIdentifier="=HtmlGet/src&lt;org.w3c.tools"/>
+        <javaElement handleIdentifier="=HtmlGet/src&lt;org.w3c.www.mux"/>
+        <javaElement handleIdentifier="=HtmlGet/src&lt;org.w3c.www.mime"/>
+        <javaElement handleIdentifier="=HtmlGet/src&lt;TeSS.util.exceptions"/>
+        <javaElement handleIdentifier="=HtmlGet/src&lt;org.w3c.www.mux.tests"/>
+        <javaElement handleIdentifier="=HtmlGet/src&lt;TeSS.docs"/>
+        <javaElement handleIdentifier="=HtmlGet/src&lt;org.w3c.www.protocol.http"/>
+        <javaElement handleIdentifier="=HtmlGet/src&lt;TeSS.util"/>
+        <javaElement handleIdentifier="=HtmlGet/src&lt;org.w3c.www.protocol.http.auth"/>
+        <javaElement handleIdentifier="=HtmlGet/src&lt;org.w3c.util"/>
+        <javaElement handleIdentifier="=HtmlGet/src&lt;TeSS.javadocs.TeSS"/>
+        <file path="/HtmlGet/src/WebQueryServer.java"/>
+        <javaElement handleIdentifier="=ofc/client\/src"/>
+        <javaElement handleIdentifier="=HtmlGet/src&lt;org.w3c.www"/>
+    </selectedElements>
+</jardesc>

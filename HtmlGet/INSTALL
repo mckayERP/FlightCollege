@@ -1,0 +1,6 @@
+Prebuilt jar files for TeSS and HtmlGet are in the jars directory.  The 
+included makefile can be used to build the source code from scratch.
+
+For information on how to run the shell and screen scraper, please see the 
+doc.html file in this directory.
+

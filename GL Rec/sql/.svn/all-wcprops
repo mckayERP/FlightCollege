@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svnroot/adempiere/!svn/ver/13873/contributions/adaxa/glrec/sql
+END
+GLreconciliation_postgresql.sql
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svnroot/adempiere/!svn/ver/13873/contributions/adaxa/glrec/sql/GLreconciliation_postgresql.sql
+END
+GLReconciliation_oracle.sql
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svnroot/adempiere/!svn/ver/13873/contributions/adaxa/glrec/sql/GLReconciliation_oracle.sql
+END

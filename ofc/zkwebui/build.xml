@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================= -->
+<!-- ZKWebui                                       -->
+<!-- ============================================= -->
+
+<project name="ZkWebUI" default="dist" basedir=".">
+	<description>
+	    This buildfile is used to build the Zk WebUI client.
+  	</description>
+
+	<!-- set global properties for this build -->
+	<property file="../buildCustomization.properties"/>
+	<property name="src" value="${basedir}/WEB-INF/src"/>
+	<property name="build.dir" value="${basedir}/build/WEB-INF/classes"/>
+	<property name="dist.dir" value=".."/>
+	<property name="jar.path" value="${adempiere.trunk}/lib"/>
+
+	<property name="war.name"	value="webui"/>
+	<property name="compile.debug"       value="true"/>
+	<property name="compile.deprecation" value="false"/>
+	<property name="compile.optimize"    value="true"/>
+
+	<!-- set path to include the necessary jar files for javac -->
+	<path id="lib.class.path">
+		<pathelement path="${classpath}"/>
+		<pathelement location="${adempiere.trunk}/zkwebui"/>
+	  	<pathelement location="${adempiere.trunk}/zkwebui/WEB-INF/classes"/>
+	  	<pathelement location="${adempiere.trunk}/zkwebui/WEB-INF/src"/>
+		<pathelement path="${dist.dir}/${adempiere.customJarFile}"/>		
+
+		<pathelement location="${adempiere.trunk}/base/build"/>
+		<pathelement location="${adempiere.trunk}/client/build"/>
+		<pathelement location="${adempiere.trunk}/JasperReports/build"/>
+	    <fileset dir="${adempiere.trunk}/lib">
+	    	<include name="*.jar"/>
+	    </fileset>
+	    <pathelement location="${adempiere.trunk}/tools/lib/servlet-api.jar"/>
+	    <fileset dir="${adempiere.trunk}/zkwebui/WEB-INF/lib">
+	    	<include name="*.jar"/>
+	    </fileset>
+	</path>
+
+
+	<target name="init" description="initialization target">
+		<echo message="=========== Build and add to ${adempiere.zkCustomJarFile}"/>
+		<!-- create the time stamp -->
+		<tstamp/>
+		<!-- create the build directory structure used by compile -->
+		<mkdir dir="${build.dir}"/>
+		<!-- check for the distribution directory -->
+		<available file="${dist.dir}" type="dir" property="dist.dir.exists"/>
+	</target>
+
+	<target name="makedir" depends="init" unless="dist.dir.exists">
+		<!-- create the distribution directory if not available -->
+		<mkdir dir="${dist.dir}"/>
+	</target>
+
+	<!-- =========================================== -->
+	<!-- Compile                                     -->
+	<!-- =========================================== -->
+	<target name="compile" depends="makedir">
+		<!-- compile the java code from ${src} into ${build.dir} -->
+		<javac target="1.6" srcdir="${src}" destdir="${build.dir}" deprecation="on" debug="on">
+			<classpath refid="lib.class.path"/>
+			<compilerarg line="-XDignore.symbol.file" />
+		</javac>
+		<!-- copy all image & sound files from src to the build directory -->
+		<copy todir="${build.dir}">
+			<fileset dir="${src}">
+				<include name="**/images/*"/>
+				<include name="**/*.gif"/>
+				<include name="**/*.jpg"/>
+				<include name="**/*.png"/>
+				<include name="**/*.wav"/>
+				<include name="**/*.htm"/>
+				<include name="**/*.html"/>
+				<include name="**/*.properties"/>
+				<exclude name="**/package.html"/>
+			</fileset>
+		</copy>
+	</target>
+
+	<!-- =========================================== -->
+	<!-- Distribution                                -->
+	<!-- =========================================== -->
+	<target name="dist" depends="compile">
+		<!-- put everything from ${build.dir} into customization.jar file -->
+		<jar
+		  jarfile="${dist.dir}/${adempiere.zkCustomJarFile}" 
+		  basedir="${basedir}/build"
+		  update="true">
+		</jar>
+	</target>
+
+	<target name="clean">
+		<!-- Delete the ${build.dir} directory trees -->
+		<delete dir="${basedir}/build"/>
+	</target>
+
+</project>
