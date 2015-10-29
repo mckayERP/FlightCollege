@@ -52,7 +52,6 @@ import org.compiere.util.CLogger;
 import org.compiere.util.DB;
 import org.compiere.util.Env;
 import org.eevolution.model.I_DD_Order;
-import org.eevolution.model.I_HR_Process;
 import org.eevolution.model.I_PP_Cost_Collector;
 import org.eevolution.model.I_PP_Order;
 
@@ -312,13 +311,13 @@ public class DocumentEngine implements DocAction
 					// Process (this is to update the ProcessedOn flag with a timestamp after the original document)
 					for (PO docafter : docsPostProcess) {
 						docafter.setProcessedOn("Processed", true, false);
-						docafter.save();
+						docafter.saveEx();
 					}
 				}
 				
 				if (STATUS_Completed.equals(status) && MClient.isClientAccountingImmediate())
 				{
-					m_document.save();
+					m_document.saveEx();
 					postIt();
 					
 					if (m_document instanceof PO && docsPostProcess.size() > 0) {
@@ -1062,7 +1061,7 @@ public class DocumentEngine implements DocAction
 			}
 		}
 		/********************
-		 *  Bank Statement
+		 *  Bank Deposit
 		 */
 		else if (AD_Table_ID == MBankDeposit.Table_ID)
 		{
@@ -1145,7 +1144,7 @@ public class DocumentEngine implements DocAction
 		/********************
 		 *  Payroll Process
 		 */
-		else if (AD_Table_ID == I_HR_Process.Table_ID)
+		else if (AD_Table_ID == MTable.getTable_ID("HR_Process")) // I_HR_Process.Table_ID
 		{
 			if (docStatus.equals(DocumentEngine.STATUS_Drafted)
 					|| docStatus.equals(DocumentEngine.STATUS_InProgress)

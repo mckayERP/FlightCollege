@@ -357,6 +357,14 @@ public class X_C_DocType extends PO implements I_C_DocType, I_Persistent
 	public static final String DOCBASETYPE_DistributionOrder = "DOO";
 	/** Manufacturing Cost Collector = MCC */
 	public static final String DOCBASETYPE_ManufacturingCostCollector = "MCC";
+	/** Warehouse Management Order = WMO */
+	public static final String DOCBASETYPE_WarehouseManagementOrder = "WMO";
+	/** Fixed Assets Addition = FAA */
+	public static final String DOCBASETYPE_FixedAssetsAddition = "FAA";
+	/** Fixed Assets Disposal = FAD */
+	public static final String DOCBASETYPE_FixedAssetsDisposal = "FAD";
+	/** Fixed Assets Depreciation = FDP */
+	public static final String DOCBASETYPE_FixedAssetsDepreciation = "FDP";
 	/** Bank Deposit = CMD */
 	public static final String DOCBASETYPE_BankDeposit = "CMD";
 	/** Set Document BaseType.

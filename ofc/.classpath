@@ -2,14 +2,13 @@
 <classpath>
 	<classpathentry kind="src" path="base/src"/>
 	<classpathentry kind="src" path="client/src"/>
-	<classpathentry kind="src" path="JasperReports/src"/>
 	<classpathentry kind="src" path="zkwebui/WEB-INF/src"/>
 	<classpathentry kind="src" path="serverRoot/src/main/server"/>
 	<classpathentry kind="src" path="install/src"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/HtmlGet"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/adempiereTrunk"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

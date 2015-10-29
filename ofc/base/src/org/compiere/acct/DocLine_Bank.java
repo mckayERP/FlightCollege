@@ -46,6 +46,7 @@ public class DocLine_Bank extends DocLine
 		m_TrxAmt = line.getTrxAmt();
 		//
 		setDateDoc(line.getValutaDate());
+		setDateAcct(doc.getDateAcct());  // adaxa-pb use statement date
 		setC_BPartner_ID(line.getC_BPartner_ID());
 	}   //  DocLine_Bank
 
@@ -66,7 +67,7 @@ public class DocLine_Bank extends DocLine
 	{
 		return m_C_Payment_ID;
 	}   //  getC_Payment_ID
- 
+
 	/**
 	 * 	Get AD_Org_ID
 	 * 	@param payment if true get Org from payment

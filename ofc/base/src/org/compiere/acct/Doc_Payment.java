@@ -26,6 +26,7 @@ import org.compiere.model.MAcctSchema;
 import org.compiere.model.MBankAccount;
 import org.compiere.model.MCharge;
 import org.compiere.model.MPayment;
+import org.compiere.model.MSysConfig;
 import org.compiere.util.Env;
 
 /**
@@ -108,7 +109,8 @@ public class Doc_Payment extends Doc
 		//  create Fact Header
 		Fact fact = new Fact(this, as, Fact.POST_Actual);
 		//	Cash Transfer or Manual Deposit
-		if ("X".equals(m_TenderType) || "G".equals(m_TenderType))
+		if (("X".equals(m_TenderType) && !MSysConfig.getBooleanValue("CASH_AS_PAYMENT", true, getAD_Client_ID()))
+				|| "G".equals(m_TenderType))
 		{
 			ArrayList<Fact> facts = new ArrayList<Fact>();
 			facts.add(fact);

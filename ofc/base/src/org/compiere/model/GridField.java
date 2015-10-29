@@ -57,6 +57,7 @@ import org.compiere.util.Evaluator;
  *  @author Jorg Janke
  *  @author Victor Perez , e-Evolution.SC FR [ 1757088 ], [1877902] Implement JSR 223 Scripting APIs to Callout
  *  		http://sourceforge.net/tracker/?func=detail&atid=879335&aid=1877902&group_id=176962 to FR [1877902]
+ *    <li>Implement embedded or horizontal tab panel https://adempiere.atlassian.net/browse/ADEMPIERE-319
  *  @author Carlos Ruiz, qss FR [1877902]
  *  @author Juan David Arboleda (arboleda), GlobalQSS, [ 1795398 ] Process Parameter: add display and readonly logic
  *  @author Teo Sarca, teo.sarca@gmail.com
@@ -809,11 +810,6 @@ public class GridField
 		return true;
 	}	//	isDisplayed
 
-	// Should the column be hidden by default in list view
-	public boolean isHideInListView() {
-		return(m_vo.HideInListView);
-	}
-	
 	/**
 	 * Preferred width in list view
 	 */
@@ -975,6 +971,22 @@ public class GridField
 	public boolean isDisplayed()
 	{
 		return m_vo.IsDisplayed;
+	}
+	/**
+	 * 	Is Displayed
+	 *	@return true if displayed
+	 */
+	public boolean isDisplayedGrid()
+	{
+		return m_vo.IsDisplayedGrid;
+	}
+	/**
+	 * 	Grid sequence number
+	 *	@return sequence number
+	 */
+	public int getSeqNoGrid()
+	{
+		return m_vo.SeqNoGrid;
 	}
 	/**
 	 * 	Get DisplayLogic
@@ -1206,6 +1218,15 @@ public class GridField
 	{
 		return m_vo.AD_Process_ID;
 	}
+	
+	/** get AD_Chart_ID
+	 * @return chart id
+	 */
+	public int getAD_Chart_ID()
+	{
+		return m_vo.AD_Chart_ID;
+	}
+	
 	/**
 	 * 	Get Description
 	 *	@return description
@@ -1883,4 +1904,24 @@ public class GridField
 	{
 		return isParentTabField(m_vo.ColumnName);
 	}
+
+	/**           Selection column in range based or not        */
+	public boolean isRange()
+	{
+		return m_vo.IsRange;
+	}
+
+	/**
+	 *
+	 * @return true if this field (m_vo.IsAllowCopy) also exist in parent tab
+	 */
+	public boolean IsAllowCopy()
+	{
+		return m_vo.IsAllowsCopy;
+	}
+
+    public boolean isEmbedded()
+    {
+    	return m_vo.isEmbedded;
+    }
 }   //  MField
