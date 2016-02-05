@@ -10,7 +10,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,    *
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.                     *
  *****************************************************************************/
-package org.compiere.grid;
+package org.compiere.apps.form;
 
 import java.math.BigDecimal;
 import java.sql.PreparedStatement;
@@ -20,12 +20,17 @@ import java.sql.Timestamp;
 import java.util.Vector;
 import java.util.logging.Level;
 
+import org.adempiere.exceptions.AdempiereException;
+import org.compiere.grid.CreateFrom;
 import org.compiere.minigrid.IMiniTable;
 import org.compiere.model.GridTab;
+import org.compiere.model.I_C_BankDeposit;
 import org.compiere.model.MBankAccount;
 import org.compiere.model.MBankDeposit;
 import org.compiere.model.MBankDepositLine;
+import org.compiere.model.MBankStatement;
 import org.compiere.model.MPayment;
+import org.compiere.util.CLogger;
 import org.compiere.util.DB;
 import org.compiere.util.Env;
 import org.compiere.util.KeyNamePair;
@@ -35,32 +40,17 @@ import org.compiere.util.Msg;
  *  Create Transactions for Bank Deposits
  *
  */
-public class CreateFromDeposit extends CreateFrom 
+public class CreateFromDeposit
 {
-	public MBankAccount bankAccount;
-	
-	/**
-	 *  Protected Constructor
-	 *  @param mTab MTab
-	 */
-	public CreateFromDeposit(GridTab mTab)
-	{
-		super(mTab);
-		log.info(mTab.toString());
-	}   //  VCreateFromInvoice
-
-	/**
-	 *  Dynamic Init
-	 *  @return true if initialized
-	 */
-	public boolean dynInit() throws Exception
-	{
-		log.config("");
-		setTitle(Msg.translate(Env.getCtx(), "C_BankDeposit_ID") + " .. " + Msg.translate(Env.getCtx(), "CreateFrom"));
+	/**	Logger				*/
+	protected CLogger 		log = CLogger.getCLogger(getClass());
+	/**	Model Deposit		*/
+	private MBankDeposit 	m_BankDeposit;
+	/**	Bank Account		*/
+	private MBankAccount 	m_BankAccount;
+	/**	Record Identifier	*/
+	private int 			m_Record_ID = 0;
 		
-		return true;
-	}   //  dynInit
-	
 	/**************************************************************************
 	 *	Construct SQL Where Clause and define parameters
 	 *  (setParameters needs to set parameters)
@@ -136,7 +126,7 @@ public class CreateFromDeposit extends CreateFrom
 	{
 		int index = 1;
 		
-		pstmt.setInt(index++, bankAccount.getC_BankAccount_ID());
+		pstmt.setInt(index++, m_BankAccount.getC_BankAccount_ID());
 		
 		if (DocumentNo.length() > 0)
 			pstmt.setString(index++, getSQLText(DocumentNo));
@@ -254,12 +244,7 @@ public class CreateFromDeposit extends CreateFrom
 		
 		return data;
 	}
-	
-	public void info()
-	{
 		
-	}
-	
 	protected void configureMiniTable (IMiniTable miniTable)
 	{
 		miniTable.setColumnClass(0, Boolean.class, false);      //  0-Selection
@@ -280,8 +265,7 @@ public class CreateFromDeposit extends CreateFrom
 	public boolean save(IMiniTable miniTable, String trxName)
 	{
 		//  fixed values
-		int C_BankDeposit_ID = ((Integer)getGridTab().getValue("C_BankDeposit_ID")).intValue();
-		MBankDeposit bd = new MBankDeposit (Env.getCtx(), C_BankDeposit_ID, trxName);
+		MBankDeposit bd = new MBankDeposit (Env.getCtx(), m_Record_ID, trxName);
 		log.config(bd.toString());
 
 		//  Lines
@@ -326,4 +310,25 @@ public class CreateFromDeposit extends CreateFrom
 	    
 	    return columnNames;
 	}
+	/**
+	 * Valid Table and Record Identifier
+	 * @param p_AD_Table_ID
+	 * @param p_Record_ID
+	 */
+	protected void validTable(int p_AD_Table_ID, int p_Record_ID) {
+		//	Valid Table
+		if(p_AD_Table_ID != I_C_BankDeposit.Table_ID) {
+			throw new AdempiereException("@AD_Table_ID@ @C_BankDeposit_ID@ @NotFound@");
+		}
+		//	Valid Record Identifier
+		if(p_Record_ID <= 0) {
+			throw new AdempiereException("@SaveErrorRowNotFound@");
+		}
+		//	Default
+		m_Record_ID = p_Record_ID;
+		//	Instance Bank Statement
+		m_BankDeposit = new MBankDeposit(Env.getCtx(), m_Record_ID, null);
+		m_BankAccount = m_BankDeposit.getBankAccount();
+	}
+
 }
