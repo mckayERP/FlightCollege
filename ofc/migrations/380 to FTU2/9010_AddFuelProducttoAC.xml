@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="MFTU" Name="Add fuel product ID and charges" ReleaseNo="FTU2" SeqNo="10">
+    <Step SeqNo="10" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000000" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1001467" Column="FuelProductID" isOldNull="true">1000250</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="20" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000001" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1001467" Column="FuelProductID" isOldNull="true">1000250</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="30" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000002" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1001467" Column="FuelProductID" isOldNull="true">1000250</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="40" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000003" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1001467" Column="FuelProductID" isOldNull="true">1000250</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="50" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000004" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1001467" Column="FuelProductID" isOldNull="true">1000250</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="60" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000005" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1001467" Column="FuelProductID" isOldNull="true">1000250</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="70" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000006" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1001467" Column="FuelProductID" isOldNull="true">1000250</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="80" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000007" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1001467" Column="FuelProductID" isOldNull="true">1000250</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="90" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000008" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1001467" Column="FuelProductID" isOldNull="true">1000250</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="100" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000009" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1001467" Column="FuelProductID" isOldNull="true">1000250</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="110" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000010" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1001467" Column="FuelProductID" isOldNull="true">1000250</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="120" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000011" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1001467" Column="FuelProductID" isOldNull="true">1000250</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="130" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000012" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1001467" Column="FuelProductID" isOldNull="true">1000250</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="140" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000013" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1001467" Column="FuelProductID" isOldNull="true">1000250</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="150" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000014" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1001467" Column="FuelProductID" isOldNull="true">1000250</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="160" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000015" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1001467" Column="FuelProductID" isOldNull="true">1000250</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="170" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000016" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1001467" Column="FuelProductID" isOldNull="true">1000250</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="180" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000017" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1001467" Column="FuelProductID" isOldNull="true">1000250</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="190" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000001" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1001468" Column="FuelChargeID" isOldNull="true">1000079</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="200" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000000" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1001468" Column="FuelChargeID" isOldNull="true">1000079</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="210" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000002" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1001468" Column="FuelChargeID" isOldNull="true">1000079</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="220" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000003" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1001468" Column="FuelChargeID" isOldNull="true">1000079</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="230" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000004" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1001468" Column="FuelChargeID" isOldNull="true">1000079</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="240" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000005" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1001468" Column="FuelChargeID" isOldNull="true">1000079</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="250" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000006" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1001468" Column="FuelChargeID" isOldNull="true">1000079</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="260" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000007" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1001468" Column="FuelChargeID" isOldNull="true">1000079</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="270" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000008" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1001468" Column="FuelChargeID" isOldNull="true">1000079</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="280" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000009" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1001468" Column="FuelChargeID" isOldNull="true">1000079</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="290" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000010" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1001468" Column="FuelChargeID" isOldNull="true">1000079</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="300" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000011" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1001468" Column="FuelChargeID" isOldNull="true">1000079</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="310" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000012" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1001468" Column="FuelChargeID" isOldNull="true">1000079</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="320" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000013" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1001468" Column="FuelChargeID" isOldNull="true">1000079</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="330" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000014" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1001468" Column="FuelChargeID" isOldNull="true">1000079</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="340" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000015" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1001468" Column="FuelChargeID" isOldNull="true">1000079</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="350" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000016" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1001468" Column="FuelChargeID" isOldNull="true">1000079</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="360" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000017" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1001468" Column="FuelChargeID" isOldNull="true">1000079</Data>
+      </PO>
+    </Step>
+  </Migration>
+</Migrations>

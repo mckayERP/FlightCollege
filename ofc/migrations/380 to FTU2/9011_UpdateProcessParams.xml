@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="MFTU" Name="Update the process parameters" ReleaseNo="FTU2" SeqNo="11">
+    <Step SeqNo="10" StepType="AD">
+      <PO AD_Table_ID="284" Action="U" Record_ID="1000003" Table="AD_Process">
+        <Data AD_Column_ID="4656" Column="Classname" oldValue="org.compiere.process.OFCImportAuditTrail">com.mckayerp.ftu.process.ImportAuditTrail</Data>
+        <Data AD_Column_ID="4023" Column="Value" oldValue="OFC_Import_Flightsheet_Audit_Trail">Import_Flightsheet_Audit_Trail</Data>
+        <Data AD_Column_ID="2809" Column="Name" oldValue="OFC_Import_Flightsheet_Audit_Trail">Import_Flightsheet_Audit_Trail</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="20" StepType="AD">
+      <PO AD_Table_ID="116" Action="U" Record_ID="1000019" Table="AD_Menu">
+        <Data AD_Column_ID="229" Column="Name" oldValue="Import Flightsheet Audit Trail">Import_Flightsheet_Audit_Trail</Data>
+        <Data AD_Column_ID="230" Column="Description" isOldNull="true">Imports the flightsheet data</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="30" StepType="AD">
+      <PO AD_Table_ID="284" Action="U" Record_ID="1000005" Table="AD_Process">
+        <Data AD_Column_ID="4656" Column="Classname" oldValue="org.compiere.process.OFCImportFlightSheets">com.mckayerp.ftu.process.ImportFlightSheets</Data>
+        <Data AD_Column_ID="4023" Column="Value" oldValue="OFC_Import_Flightsheet_Data">Import_Flightsheet_Data</Data>
+        <Data AD_Column_ID="2809" Column="Name" oldValue="OFC_Import_Flightsheet_Data">Import Flightsheet Data</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="40" StepType="AD">
+      <PO AD_Table_ID="116" Action="U" Record_ID="1000020" Table="AD_Menu">
+        <Data AD_Column_ID="230" Column="Description" oldValue="Import the Flightsheet times">Imports the flightsheet data</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="50" StepType="AD">
+      <PO AD_Table_ID="284" Action="U" Record_ID="1000008" Table="AD_Process">
+        <Data AD_Column_ID="2810" Column="Description" oldValue="Imports the flightsheet data">Imports open flightsheet data</Data>
+        <Data AD_Column_ID="4023" Column="Value" oldValue="OFC_Import_Open_Flights">Import_Open_Flights</Data>
+        <Data AD_Column_ID="2809" Column="Name" oldValue="OFC_Import_Open_Flights">Import_Open_Flights</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="60" StepType="AD">
+      <PO AD_Table_ID="116" Action="U" Record_ID="1000029" Table="AD_Menu">
+        <Data AD_Column_ID="229" Column="Name" oldValue="Import Open Flight Data">Import_Open_Flights</Data>
+        <Data AD_Column_ID="230" Column="Description" oldValue="Import Open flight data from the flight sheet system">Imports open flightsheet data</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="70" StepType="AD">
+      <PO AD_Table_ID="284" Action="U" Record_ID="1000008" Table="AD_Process">
+        <Data AD_Column_ID="4656" Column="Classname" oldValue="org.compiere.process.OFCImportOpenFlights">com.mckayerp.ftu.process.ImportOpenFlights</Data>
+        <Data AD_Column_ID="2809" Column="Name" oldValue="Import_Open_Flights">Import Open Flights</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="80" StepType="AD">
+      <PO AD_Table_ID="116" Action="U" Record_ID="1000029" Table="AD_Menu">
+        <Data AD_Column_ID="229" Column="Name" oldValue="Import_Open_Flights">Import Open Flights</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="90" StepType="AD">
+      <PO AD_Table_ID="285" Action="I" Record_ID="1000312" Table="AD_Process_Para">
+        <Data AD_Column_ID="2824" Column="Help" isNewNull="true"/>
+        <Data AD_Column_ID="2830" Column="IsRange">false</Data>
+        <Data AD_Column_ID="2817" Column="IsActive">true</Data>
+        <Data AD_Column_ID="2814" Column="AD_Process_Para_ID">1000312</Data>
+        <Data AD_Column_ID="2815" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="3737" Column="FieldLength">1</Data>
+        <Data AD_Column_ID="2821" Column="UpdatedBy">0</Data>
+        <Data AD_Column_ID="2825" Column="AD_Process_ID">1000005</Data>
+        <Data AD_Column_ID="2820" Column="Updated">2016-01-27 02:22:09.443</Data>
+        <Data AD_Column_ID="2819" Column="CreatedBy">0</Data>
+        <Data AD_Column_ID="3742" Column="ValueMax" isNewNull="true"/>
+        <Data AD_Column_ID="5819" Column="IsCentrallyMaintained">true</Data>
+        <Data AD_Column_ID="5593" Column="DefaultValue2" isNewNull="true"/>
+        <Data AD_Column_ID="3740" Column="VFormat" isNewNull="true"/>
+        <Data AD_Column_ID="2827" Column="AD_Reference_ID">20</Data>
+        <Data AD_Column_ID="3741" Column="ValueMin" isNewNull="true"/>
+        <Data AD_Column_ID="3736" Column="AD_Val_Rule_ID" isNewNull="true"/>
+        <Data AD_Column_ID="2826" Column="SeqNo">33</Data>
+        <Data AD_Column_ID="3738" Column="IsMandatory">false</Data>
+        <Data AD_Column_ID="2818" Column="Created">2016-01-27 02:22:09.443</Data>
+        <Data AD_Column_ID="2828" Column="AD_Reference_Value_ID" isNewNull="true"/>
+        <Data AD_Column_ID="3739" Column="DefaultValue">N</Data>
+        <Data AD_Column_ID="2816" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="7728" Column="EntityType">MFTU</Data>
+        <Data AD_Column_ID="56299" Column="ReadOnlyLogic" isNewNull="true"/>
+        <Data AD_Column_ID="56300" Column="DisplayLogic" isNewNull="true"/>
+        <Data AD_Column_ID="2822" Column="Name">OnlyOpenFlights</Data>
+        <Data AD_Column_ID="4017" Column="ColumnName">OnlyOpenFlights</Data>
+        <Data AD_Column_ID="2823" Column="Description" isNewNull="true"/>
+        <Data AD_Column_ID="7729" Column="AD_Element_ID" isNewNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="100" StepType="AD">
+      <PO AD_Table_ID="285" Action="U" Record_ID="1000312" Table="AD_Process_Para">
+        <Data AD_Column_ID="56300" Column="DisplayLogic" isOldNull="true">@#AD_User_Name@='System'</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="110" StepType="AD">
+      <PO AD_Table_ID="284" Action="U" Record_ID="1000008" Table="AD_Process">
+        <Data AD_Column_ID="4656" Column="Classname" oldValue="com.mckayerp.ftu.process.ImportOpenFlights">com.mckayerp.ftu.process.ImportFlightSheets</Data>
+      </PO>
+    </Step>
+  </Migration>
+</Migrations>

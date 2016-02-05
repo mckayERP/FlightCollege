@@ -1,4 +1,4 @@
-package org.compiere.process;
+package com.mckayerp.ftu.process;
 
 import java.math.BigDecimal;
 import java.sql.PreparedStatement;
@@ -16,12 +16,14 @@ import org.compiere.impexp.ImpFormat;
 import org.compiere.model.MOrder;
 import org.compiere.model.MOrderLine;
 import org.compiere.model.MResourceAssignment;
+import org.compiere.process.ProcessInfoParameter;
+import org.compiere.process.SvrProcess;
 import org.compiere.util.DB;
 import org.compiere.util.Env;
 
 import HtmlGet.HtmlGet;
 
-public class OFCImportOpenFlights extends SvrProcess {
+public class ImportOpenFlights extends SvrProcess {
 
 	private static long mLock = 123567; // a number to use for an advisory lock.  Postgresql specific.
 	
@@ -593,11 +595,11 @@ public class OFCImportOpenFlights extends SvrProcess {
 				"FROM adempiere.ofc_advanced_inst int, adempiere.M_Product mp " +
 				"WHERE int.OFC_Intro_Product_ID = mp.M_Product_ID) intro " +
 				"ON fs.ofc_course_type = intro.ofc_flight_course_type " +
-			"LEFT OUTER JOIN (SELECT sr.*, mp.M_Product_ID, fsc.M_Product_ID AS fsc_id, fsc.description AS fsc_desc " +
-			    "FROM adempiere.S_Resource sr, adempiere.M_Product mp " +
-				"LEFT OUTER JOIN adempiere.M_Product fsc " +
-				"ON 'FSC' || mp.classification = fsc.value " +
-				"WHERE sr.S_Resource_ID = mp.S_Resource_ID) ac " +
+	"LEFT OUTER JOIN (SELECT sr.*, mp.M_Product_ID, fsc.M_Product_ID AS fsc_id, fsc.description AS fsc_desc " +
+	    "FROM adempiere.S_Resource sr, adempiere.M_Product mp " +
+		"LEFT OUTER JOIN adempiere.M_Product fsc " +
+		"ON 'FSC' || mp.classification = fsc.value " +
+		"WHERE sr.S_Resource_ID = mp.S_Resource_ID) ac " +
 			"ON ac.S_Resource_ID = fs.OFC_AC_Resource_ID " +
 			"WHERE fs.OFC_Flightsheet_Line_Status is null AND " +
 			    "fs.OFC_Course_Type <> 'Cancelled' AND " +

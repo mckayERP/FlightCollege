@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="MFTU" Name="Update OFC Business Partners" ReleaseNo="FTU2" SeqNo="8">
+    <Step SeqNo="10" StepType="AD">
+      <PO AD_Table_ID="291" Action="U" Record_ID="1000232" Table="C_BPartner">
+        <Data AD_Column_ID="2927" Column="IsEmployee" oldValue="false">true</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="20" StepType="AD">
+      <PO AD_Table_ID="291" Action="U" Record_ID="1001687" Table="C_BPartner">
+        <Data AD_Column_ID="2927" Column="IsEmployee" oldValue="false">true</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="30" StepType="AD">
+      <PO AD_Table_ID="291" Action="U" Record_ID="1002563" Table="C_BPartner">
+        <Data AD_Column_ID="4940" Column="C_BP_Group_ID" oldValue="1000001">1000011</Data>
+        <Data AD_Column_ID="2930" Column="M_PriceList_ID" oldValue="1000000">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="40" StepType="AD">
+      <PO AD_Table_ID="291" Action="U" Record_ID="1000020" Table="C_BPartner">
+        <Data AD_Column_ID="2896" Column="IsActive" oldValue="false">true</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="50" StepType="AD">
+      <PO AD_Table_ID="291" Action="U" Record_ID="1000020" Table="C_BPartner">
+        <Data AD_Column_ID="2927" Column="IsEmployee" oldValue="false">true</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="60" StepType="AD">
+      <PO AD_Table_ID="291" Action="U" Record_ID="1000020" Table="C_BPartner">
+        <Data AD_Column_ID="2896" Column="IsActive" oldValue="true">false</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="70" StepType="AD">
+      <PO AD_Table_ID="291" Action="U" Record_ID="1000993" Table="C_BPartner">
+        <Data AD_Column_ID="4940" Column="C_BP_Group_ID" oldValue="1000001">1000011</Data>
+        <Data AD_Column_ID="2930" Column="M_PriceList_ID" oldValue="1000000">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="80" StepType="AD">
+      <PO AD_Table_ID="291" Action="U" Record_ID="1000993" Table="C_BPartner">
+        <Data AD_Column_ID="2927" Column="IsEmployee" oldValue="false">true</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="90" StepType="AD">
+      <PO AD_Table_ID="291" Action="U" Record_ID="1000777" Table="C_BPartner">
+        <Data AD_Column_ID="4940" Column="C_BP_Group_ID" oldValue="1000005">1000011</Data>
+        <Data AD_Column_ID="2930" Column="M_PriceList_ID" oldValue="1000000">1000006</Data>
+        <Data AD_Column_ID="2896" Column="IsActive" oldValue="false">true</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="100" StepType="AD">
+      <PO AD_Table_ID="291" Action="U" Record_ID="1000777" Table="C_BPartner">
+        <Data AD_Column_ID="2896" Column="IsActive" oldValue="true">false</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="110" StepType="AD">
+      <PO AD_Table_ID="291" Action="U" Record_ID="1000777" Table="C_BPartner">
+        <Data AD_Column_ID="2896" Column="IsActive" oldValue="false">true</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="120" StepType="AD">
+      <PO AD_Table_ID="291" Action="U" Record_ID="1000777" Table="C_BPartner">
+        <Data AD_Column_ID="2927" Column="IsEmployee" oldValue="false">true</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="130" StepType="AD">
+      <PO AD_Table_ID="291" Action="U" Record_ID="1000777" Table="C_BPartner">
+        <Data AD_Column_ID="2896" Column="IsActive" oldValue="true">false</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="140" StepType="AD">
+      <PO AD_Table_ID="291" Action="U" Record_ID="1000937" Table="C_BPartner">
+        <Data AD_Column_ID="2927" Column="IsEmployee" oldValue="false">true</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="150" StepType="AD">
+      <PO AD_Table_ID="291" Action="U" Record_ID="1000937" Table="C_BPartner">
+        <Data AD_Column_ID="4940" Column="C_BP_Group_ID" oldValue="1000001">1000011</Data>
+        <Data AD_Column_ID="2930" Column="M_PriceList_ID" oldValue="1000000">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="160" StepType="AD">
+      <PO AD_Table_ID="291" Action="U" Record_ID="1000921" Table="C_BPartner">
+        <Data AD_Column_ID="4940" Column="C_BP_Group_ID" oldValue="1000001">1000011</Data>
+        <Data AD_Column_ID="2930" Column="M_PriceList_ID" oldValue="1000000">1000006</Data>
+        <Data AD_Column_ID="2896" Column="IsActive" oldValue="false">true</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="170" StepType="AD">
+      <PO AD_Table_ID="291" Action="U" Record_ID="1000921" Table="C_BPartner">
+        <Data AD_Column_ID="2927" Column="IsEmployee" oldValue="false">true</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="180" StepType="AD">
+      <PO AD_Table_ID="291" Action="U" Record_ID="1000921" Table="C_BPartner">
+        <Data AD_Column_ID="2896" Column="IsActive" oldValue="true">false</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="190" StepType="AD">
+      <PO AD_Table_ID="291" Action="U" Record_ID="1000811" Table="C_BPartner">
+        <Data AD_Column_ID="4940" Column="C_BP_Group_ID" oldValue="1000001">1000011</Data>
+        <Data AD_Column_ID="2930" Column="M_PriceList_ID" oldValue="1000000">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="200" StepType="AD">
+      <PO AD_Table_ID="291" Action="U" Record_ID="1000811" Table="C_BPartner">
+        <Data AD_Column_ID="2927" Column="IsEmployee" oldValue="false">true</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="210" StepType="AD">
+      <PO AD_Table_ID="291" Action="U" Record_ID="1001460" Table="C_BPartner">
+        <Data AD_Column_ID="4940" Column="C_BP_Group_ID" oldValue="1000001">1000011</Data>
+        <Data AD_Column_ID="2930" Column="M_PriceList_ID" oldValue="1000000">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="220" StepType="AD">
+      <PO AD_Table_ID="291" Action="U" Record_ID="1001460" Table="C_BPartner">
+        <Data AD_Column_ID="2927" Column="IsEmployee" oldValue="false">true</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="230" StepType="AD">
+      <PO AD_Table_ID="291" Action="U" Record_ID="1000932" Table="C_BPartner">
+        <Data AD_Column_ID="4940" Column="C_BP_Group_ID" oldValue="1000001">1000011</Data>
+        <Data AD_Column_ID="2930" Column="M_PriceList_ID" oldValue="1000000">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="240" StepType="AD">
+      <PO AD_Table_ID="291" Action="U" Record_ID="1000932" Table="C_BPartner">
+        <Data AD_Column_ID="2927" Column="IsEmployee" oldValue="false">true</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="250" StepType="AD">
+      <PO AD_Table_ID="291" Action="U" Record_ID="1000757" Table="C_BPartner">
+        <Data AD_Column_ID="4940" Column="C_BP_Group_ID" oldValue="1000011">1000001</Data>
+        <Data AD_Column_ID="3085" Column="C_Dunning_ID" isOldNull="true">1000000</Data>
+        <Data AD_Column_ID="2930" Column="M_PriceList_ID" oldValue="1000006">1000000</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="260" StepType="AD">
+      <PO AD_Table_ID="291" Action="U" Record_ID="1000757" Table="C_BPartner">
+        <Data AD_Column_ID="1001106" Column="HasBlockTime" oldValue="false">true</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="270" StepType="AD">
+      <PO AD_Table_ID="291" Action="U" Record_ID="1000757" Table="C_BPartner">
+        <Data AD_Column_ID="2927" Column="IsEmployee" oldValue="true">false</Data>
+      </PO>
+    </Step>
+    <Step DBType="Postgres" Parse="Y" SeqNo="280" StepType="SQL">
+      <Comments>Update missing instructors</Comments>
+      <SQLStatement>INSERT INTO ftu_instructor
+SELECT
+ 	  sr.ad_client_id, --numeric(10,0) NOT NULL DEFAULT NULL::numeric,
+	  sr.ad_org_id, --numeric(10,0) DEFAULT NULL::numeric,
+	  sr.isactive, --character(1) DEFAULT NULL::bpchar,
+	  sr.created, --timestamp without time zone,
+	  sr.updated, --timestamp without time zone,
+	  sr.createdby, --numeric(10,0) DEFAULT NULL::numeric,
+	  sr.updatedby, --numeric(10,0) DEFAULT NULL::numeric,
+	  nextid(1000496,'N'), --numeric(10,0) NOT NULL,
+	  bp.c_bpartner_id, --numeric(10,0) DEFAULT NULL::numeric,
+	  sr.s_resource_id, --numeric(10,0),
+	  bp.name, --character varying(60) DEFAULT NULL::character varying,
+	  bp.description, --character varying(255) DEFAULT NULL::character varying,
+	  null
+FROM (SELECT Inst_resource_ID from FTU_Flightsheet WHERE Inst_Resource_ID is not null AND FTU_Instructor_ID is null group by Inst_Resource_ID) fs
+	JOIN s_resource sr on fs.Inst_resource_id = sr.s_resource_ID
+	JOIN C_BPartner bp on (bp.name = sr.name and bp.C_BP_Group_ID = 1000011);
+
+UPDATE FTU_Flightsheet fs
+SET FTU_Instructor_ID = (SELECT inst.FTU_Instructor_ID FROM FTU_Instructor inst WHERE fs.Inst_Resource_ID = inst.S_Resource_ID)
+WHERE FTU_Instructor_ID is null;</SQLStatement>
+      <RollbackStatement>UPDATE FTU_Flightsheet SET FTU_Instructor_ID = null;</RollbackStatement>
+    </Step>
+  </Migration>
+</Migrations>

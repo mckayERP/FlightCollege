@@ -1,4 +1,4 @@
-package org.compiere.process;
+package com.mckayerp.ftu.process;
 
 import java.math.BigDecimal;
 import java.sql.PreparedStatement;
@@ -13,12 +13,14 @@ import java.util.Vector;
 import java.util.logging.Level;
 
 import org.compiere.impexp.ImpFormat;
+import org.compiere.process.ProcessInfoParameter;
+import org.compiere.process.SvrProcess;
 import org.compiere.util.DB;
 import org.compiere.util.Env;
 
 import HtmlGet.HtmlGet;
 
-public class OFCImportAuditTrail extends SvrProcess {
+public class ImportAuditTrail extends SvrProcess {
 
 	/** The Berkley telegraph HtmlGet class */ 
 	private HtmlGet mh;

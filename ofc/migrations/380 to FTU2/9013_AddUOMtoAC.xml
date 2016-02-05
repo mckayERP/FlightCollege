@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="MFTU" Name="Add UOM to aircraft fuel product" ReleaseNo="FTU2" SeqNo="13">
+    <Step SeqNo="10" StepType="AD">
+      <PO AD_Table_ID="101" Action="I" Record_ID="1001470" Table="AD_Column">
+        <Data AD_Column_ID="13448" Column="ColumnSQL" isNewNull="true"/>
+        <Data AD_Column_ID="117" Column="DefaultValue">1000001</Data>
+        <Data AD_Column_ID="109" Column="AD_Column_ID">1001470</Data>
+        <Data AD_Column_ID="114" Column="AD_Table_ID">1000034</Data>
+        <Data AD_Column_ID="3389" Column="ValueMax" isNewNull="true"/>
+        <Data AD_Column_ID="6482" Column="EntityType">MFTU</Data>
+        <Data AD_Column_ID="110" Column="Version">0</Data>
+        <Data AD_Column_ID="227" Column="AD_Reference_Value_ID" isNewNull="true"/>
+        <Data AD_Column_ID="124" Column="IsMandatory">true</Data>
+        <Data AD_Column_ID="125" Column="IsTranslated">false</Data>
+        <Data AD_Column_ID="550" Column="CreatedBy">0</Data>
+        <Data AD_Column_ID="551" Column="Updated">2016-01-28 08:19:45.392</Data>
+        <Data AD_Column_ID="126" Column="IsIdentifier">false</Data>
+        <Data AD_Column_ID="127" Column="SeqNo">0</Data>
+        <Data AD_Column_ID="113" Column="Help">The UOM defines a unique non monetary Unit of Measure</Data>
+        <Data AD_Column_ID="3388" Column="ValueMin" isNewNull="true"/>
+        <Data AD_Column_ID="120" Column="IsParent">false</Data>
+        <Data AD_Column_ID="359" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="360" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="548" Column="IsActive">true</Data>
+        <Data AD_Column_ID="118" Column="FieldLength">22</Data>
+        <Data AD_Column_ID="6244" Column="IsSelectionColumn">false</Data>
+        <Data AD_Column_ID="226" Column="AD_Reference_ID">19</Data>
+        <Data AD_Column_ID="6483" Column="IsSyncDatabase">N</Data>
+        <Data AD_Column_ID="549" Column="Created">2016-01-28 08:19:45.392</Data>
+        <Data AD_Column_ID="115" Column="AD_Val_Rule_ID" isNewNull="true"/>
+        <Data AD_Column_ID="1179" Column="VFormat" isNewNull="true"/>
+        <Data AD_Column_ID="3360" Column="IsUpdateable">true</Data>
+        <Data AD_Column_ID="119" Column="IsKey">false</Data>
+        <Data AD_Column_ID="3369" Column="AD_Process_ID" isNewNull="true"/>
+        <Data AD_Column_ID="552" Column="UpdatedBy">0</Data>
+        <Data AD_Column_ID="1692" Column="Callout" isNewNull="true"/>
+        <Data AD_Column_ID="6245" Column="ReadOnlyLogic" isNewNull="true"/>
+        <Data AD_Column_ID="11617" Column="IsAlwaysUpdateable">false</Data>
+        <Data AD_Column_ID="54358" Column="InfoFactoryClass" isNewNull="true"/>
+        <Data AD_Column_ID="50218" Column="MandatoryLogic" isNewNull="true"/>
+        <Data AD_Column_ID="56149" Column="IsAutocomplete">false</Data>
+        <Data AD_Column_ID="56187" Column="IsAllowLogging">true</Data>
+        <Data AD_Column_ID="56352" Column="FormatPattern" isNewNull="true"/>
+        <Data AD_Column_ID="128" Column="IsEncrypted">N</Data>
+        <Data AD_Column_ID="112" Column="Description">Unit of Measure</Data>
+        <Data AD_Column_ID="111" Column="Name">UOM</Data>
+        <Data AD_Column_ID="116" Column="ColumnName">C_UOM_ID</Data>
+        <Data AD_Column_ID="59702" Column="AD_Chart_ID" isNewNull="true"/>
+        <Data AD_Column_ID="2608" Column="AD_Element_ID">215</Data>
+        <Data AD_Column_ID="68024" Column="IsRange">false</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="20" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1001470" Table="AD_Column">
+        <Data AD_Column_ID="50218" Column="MandatoryLogic" isOldNull="true">@isGeneric@!'Y' &amp; @isSim@!'Y'</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="30" StepType="AD">
+      <PO AD_Table_ID="107" Action="I" Record_ID="1001313" Table="AD_Field">
+        <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
+        <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
+        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
+        <Data AD_Column_ID="174" Column="AD_Column_ID">1001470</Data>
+        <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
+        <Data AD_Column_ID="186" Column="IsEncrypted">false</Data>
+        <Data AD_Column_ID="582" Column="UpdatedBy">0</Data>
+        <Data AD_Column_ID="384" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="578" Column="IsActive">true</Data>
+        <Data AD_Column_ID="579" Column="Created">2016-01-28 08:26:15.629</Data>
+        <Data AD_Column_ID="383" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="180" Column="DisplayLength">22</Data>
+        <Data AD_Column_ID="176" Column="IsDisplayed">true</Data>
+        <Data AD_Column_ID="183" Column="IsSameLine">false</Data>
+        <Data AD_Column_ID="184" Column="IsHeading">false</Data>
+        <Data AD_Column_ID="185" Column="IsFieldOnly">false</Data>
+        <Data AD_Column_ID="181" Column="SeqNo" isNewNull="true"/>
+        <Data AD_Column_ID="2745" Column="IsCentrallyMaintained">true</Data>
+        <Data AD_Column_ID="172" Column="AD_Tab_ID">1000039</Data>
+        <Data AD_Column_ID="167" Column="AD_Field_ID">1001313</Data>
+        <Data AD_Column_ID="580" Column="CreatedBy">0</Data>
+        <Data AD_Column_ID="581" Column="Updated">2016-01-28 08:26:15.629</Data>
+        <Data AD_Column_ID="2007" Column="IsReadOnly">false</Data>
+        <Data AD_Column_ID="170" Column="Help">The UOM defines a unique non monetary Unit of Measure</Data>
+        <Data AD_Column_ID="5375" Column="AD_FieldGroup_ID" isNewNull="true"/>
+        <Data AD_Column_ID="9969" Column="ObscureType" isNewNull="true"/>
+        <Data AD_Column_ID="15011" Column="AD_Reference_ID" isNewNull="true"/>
+        <Data AD_Column_ID="177" Column="DisplayLogic" isNewNull="true"/>
+        <Data AD_Column_ID="15013" Column="IsMandatory" isNewNull="true"/>
+        <Data AD_Column_ID="7714" Column="EntityType">MFTU</Data>
+        <Data AD_Column_ID="53265" Column="DefaultValue" isNewNull="true"/>
+        <Data AD_Column_ID="54356" Column="AD_Reference_Value_ID" isNewNull="true"/>
+        <Data AD_Column_ID="54357" Column="AD_Val_Rule_ID" isNewNull="true"/>
+        <Data AD_Column_ID="54359" Column="InfoFactoryClass" isNewNull="true"/>
+        <Data AD_Column_ID="57957" Column="Included_Tab_ID" isNewNull="true"/>
+        <Data AD_Column_ID="169" Column="Description">Unit of Measure</Data>
+        <Data AD_Column_ID="168" Column="Name">UOM</Data>
+        <Data AD_Column_ID="59704" Column="PreferredWidth" isNewNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="40" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1001014" Table="AD_Field">
+        <Data AD_Column_ID="181" Column="SeqNo" oldValue="320">260</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="50" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1001013" Table="AD_Field">
+        <Data AD_Column_ID="181" Column="SeqNo" oldValue="330">270</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="60" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000807" Table="AD_Field">
+        <Data AD_Column_ID="181" Column="SeqNo" oldValue="260">280</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="70" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000966" Table="AD_Field">
+        <Data AD_Column_ID="181" Column="SeqNo" oldValue="270">290</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="80" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1001313" Table="AD_Field">
+        <Data AD_Column_ID="181" Column="SeqNo" isOldNull="true">300</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="90" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000808" Table="AD_Field">
+        <Data AD_Column_ID="181" Column="SeqNo" oldValue="280">310</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="100" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1001310" Table="AD_Field">
+        <Data AD_Column_ID="181" Column="SeqNo" oldValue="300">320</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="110" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1001311" Table="AD_Field">
+        <Data AD_Column_ID="181" Column="SeqNo" oldValue="310">330</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="120" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000815" Table="AD_Field">
+        <Data AD_Column_ID="181" Column="SeqNo" oldValue="290">340</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="130" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000834" Table="AD_Field">
+        <Data AD_Column_ID="181" Column="SeqNo" oldValue="340">350</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="140" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000832" Table="AD_Field">
+        <Data AD_Column_ID="181" Column="SeqNo" oldValue="350">360</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="150" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000833" Table="AD_Field">
+        <Data AD_Column_ID="181" Column="SeqNo" oldValue="360">370</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="160" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000964" Table="AD_Field">
+        <Data AD_Column_ID="181" Column="SeqNo" oldValue="370">380</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="170" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000965" Table="AD_Field">
+        <Data AD_Column_ID="181" Column="SeqNo" oldValue="380">390</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="180" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000963" Table="AD_Field">
+        <Data AD_Column_ID="181" Column="SeqNo" oldValue="390">400</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="190" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000962" Table="AD_Field">
+        <Data AD_Column_ID="181" Column="SeqNo" oldValue="400">410</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="200" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000841" Table="AD_Field">
+        <Data AD_Column_ID="181" Column="SeqNo" oldValue="410">420</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="210" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000842" Table="AD_Field">
+        <Data AD_Column_ID="181" Column="SeqNo" oldValue="420">430</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="220" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1001014" Table="AD_Field">
+        <Data AD_Column_ID="183" Column="IsSameLine" oldValue="false">true</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="230" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000807" Table="AD_Field">
+        <Data AD_Column_ID="183" Column="IsSameLine" oldValue="true">false</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="240" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1001313" Table="AD_Field">
+        <Data AD_Column_ID="183" Column="IsSameLine" oldValue="false">true</Data>
+        <Data AD_Column_ID="5375" Column="AD_FieldGroup_ID" isOldNull="true">1000000</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="250" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1001310" Table="AD_Field">
+        <Data AD_Column_ID="183" Column="IsSameLine" oldValue="false">true</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="260" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000815" Table="AD_Field">
+        <Data AD_Column_ID="183" Column="IsSameLine" oldValue="true">false</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="270" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000000" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1000768" Column="ACRegistration" isOldNull="true">C-GJFE</Data>
+        <Data AD_Column_ID="1000764" Column="Name" isOldNull="true">C-GJFE</Data>
+        <Data AD_Column_ID="1000767" Column="Value" oldValue="1000000">JFE</Data>
+        <Data AD_Column_ID="1001470" Column="C_UOM_ID" isOldNull="true">1000001</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="280" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000001" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1000768" Column="ACRegistration" isOldNull="true">C-FJZP</Data>
+        <Data AD_Column_ID="1000764" Column="Name" isOldNull="true">C-FJZP</Data>
+        <Data AD_Column_ID="1000767" Column="Value" oldValue="1000001">JZP</Data>
+        <Data AD_Column_ID="1001470" Column="C_UOM_ID" isOldNull="true">1000001</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="290" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000002" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1000768" Column="ACRegistration" isOldNull="true">C-GLKN</Data>
+        <Data AD_Column_ID="1000764" Column="Name" isOldNull="true">C-GLKN</Data>
+        <Data AD_Column_ID="1000767" Column="Value" oldValue="1000002">LKN</Data>
+        <Data AD_Column_ID="1001470" Column="C_UOM_ID" isOldNull="true">1000001</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="300" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000003" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1000768" Column="ACRegistration" isOldNull="true">C-FSJN</Data>
+        <Data AD_Column_ID="1000764" Column="Name" isOldNull="true">C-FSJN</Data>
+        <Data AD_Column_ID="1000767" Column="Value" oldValue="1000003">SJN</Data>
+        <Data AD_Column_ID="1001470" Column="C_UOM_ID" isOldNull="true">1000001</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="310" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000004" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1000768" Column="ACRegistration" isOldNull="true">C-FTMM</Data>
+        <Data AD_Column_ID="1000764" Column="Name" isOldNull="true">C-FTMM</Data>
+        <Data AD_Column_ID="1000767" Column="Value" oldValue="1000004">TMM</Data>
+        <Data AD_Column_ID="1001470" Column="C_UOM_ID" isOldNull="true">1000001</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="320" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000005" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1000768" Column="ACRegistration" isOldNull="true">C-GPMR</Data>
+        <Data AD_Column_ID="1000764" Column="Name" isOldNull="true">C-GPMR</Data>
+        <Data AD_Column_ID="1000767" Column="Value" oldValue="1000005">PMR</Data>
+        <Data AD_Column_ID="1001470" Column="C_UOM_ID" isOldNull="true">1000001</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="330" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000006" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1000768" Column="ACRegistration" isOldNull="true">C-GCOH</Data>
+        <Data AD_Column_ID="1000764" Column="Name" isOldNull="true">C-GCOH</Data>
+        <Data AD_Column_ID="1000767" Column="Value" oldValue="1000006">COH</Data>
+        <Data AD_Column_ID="1001470" Column="C_UOM_ID" isOldNull="true">1000001</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="340" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000007" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1000764" Column="Name" isOldNull="true">C-GFTM</Data>
+        <Data AD_Column_ID="1000767" Column="Value" oldValue="1000007">C-GFTM</Data>
+        <Data AD_Column_ID="1001470" Column="C_UOM_ID" isOldNull="true">1000001</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="350" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000008" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1000768" Column="ACRegistration" isOldNull="true">C-FVZN</Data>
+        <Data AD_Column_ID="1000764" Column="Name" isOldNull="true">C-FVZN</Data>
+        <Data AD_Column_ID="1000767" Column="Value" oldValue="1000008">VZN</Data>
+        <Data AD_Column_ID="1001470" Column="C_UOM_ID" isOldNull="true">1000001</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="360" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000009" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1000768" Column="ACRegistration" isOldNull="true">C-GXAM</Data>
+        <Data AD_Column_ID="1000764" Column="Name" isOldNull="true">C-GXAM</Data>
+        <Data AD_Column_ID="1000767" Column="Value" oldValue="1000009">XAM</Data>
+        <Data AD_Column_ID="1001470" Column="C_UOM_ID" isOldNull="true">1000001</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="370" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000010" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1000768" Column="ACRegistration" isOldNull="true">C-GCVO</Data>
+        <Data AD_Column_ID="1000764" Column="Name" isOldNull="true">C-GCVO</Data>
+        <Data AD_Column_ID="1000767" Column="Value" oldValue="1000010">CVO</Data>
+        <Data AD_Column_ID="1001470" Column="C_UOM_ID" isOldNull="true">1000001</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="380" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000011" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1000768" Column="ACRegistration" isOldNull="true">C-GFZI</Data>
+        <Data AD_Column_ID="1000764" Column="Name" isOldNull="true">C-GFZI</Data>
+        <Data AD_Column_ID="1000767" Column="Value" oldValue="1000011">FZI</Data>
+        <Data AD_Column_ID="1001470" Column="C_UOM_ID" isOldNull="true">1000001</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="390" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000012" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1000768" Column="ACRegistration" isOldNull="true">C-GFXL</Data>
+        <Data AD_Column_ID="1000764" Column="Name" isOldNull="true">C-GFXL</Data>
+        <Data AD_Column_ID="1000767" Column="Value" oldValue="1000012">FXL</Data>
+        <Data AD_Column_ID="1001470" Column="C_UOM_ID" isOldNull="true">1000001</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="400" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000013" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1000768" Column="ACRegistration" isOldNull="true">C-GLLM</Data>
+        <Data AD_Column_ID="1000764" Column="Name" isOldNull="true">C-GLLM</Data>
+        <Data AD_Column_ID="1000767" Column="Value" oldValue="1000013">LLM</Data>
+        <Data AD_Column_ID="1001470" Column="C_UOM_ID" isOldNull="true">1000001</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="410" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000014" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1000768" Column="ACRegistration" isOldNull="true">C-GEUH</Data>
+        <Data AD_Column_ID="1000764" Column="Name" isOldNull="true">C-GEUH</Data>
+        <Data AD_Column_ID="1000767" Column="Value" oldValue="1000014">EUH</Data>
+        <Data AD_Column_ID="1001470" Column="C_UOM_ID" isOldNull="true">1000001</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="420" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000015" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1000768" Column="ACRegistration" isOldNull="true">C-GWZN</Data>
+        <Data AD_Column_ID="1000764" Column="Name" isOldNull="true">C-GWZN</Data>
+        <Data AD_Column_ID="1000767" Column="Value" oldValue="1000015">WZN</Data>
+        <Data AD_Column_ID="1001470" Column="C_UOM_ID" isOldNull="true">1000001</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="430" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000016" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1000768" Column="ACRegistration" isOldNull="true">C-FDMO</Data>
+        <Data AD_Column_ID="1000764" Column="Name" isOldNull="true">C-FDMO</Data>
+        <Data AD_Column_ID="1000767" Column="Value" oldValue="1000000">DMO</Data>
+        <Data AD_Column_ID="1001470" Column="C_UOM_ID" isOldNull="true">1000001</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="440" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000017" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1000768" Column="ACRegistration" isOldNull="true">C-GVLM</Data>
+        <Data AD_Column_ID="1000764" Column="Name" isOldNull="true">C-GVLM</Data>
+        <Data AD_Column_ID="1000767" Column="Value" oldValue="1000001">VLM</Data>
+        <Data AD_Column_ID="1001470" Column="C_UOM_ID" isOldNull="true">1000001</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="450" StepType="AD">
+      <PO AD_Table_ID="146" Action="U" Record_ID="1000001" Table="C_UOM">
+        <Data AD_Column_ID="489" Column="CostingPrecision" oldValue="0">2</Data>
+      </PO>
+    </Step>
+  </Migration>
+</Migrations>

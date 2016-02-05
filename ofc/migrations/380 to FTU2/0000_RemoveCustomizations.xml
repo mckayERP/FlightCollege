@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="U" Name="Remove Customizations" ReleaseNo="FTU2" SeqNo="0">
+    <Step SeqNo="10" StepType="AD">
+      <PO AD_Table_ID="109" Action="D" Record_ID="1000004" Table="AD_Message">
+        <Data AD_Column_ID="392" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="7716" Column="EntityType" isNewNull="true" oldValue="D"/>
+        <Data AD_Column_ID="588" Column="IsActive" isNewNull="true" oldValue="true"/>
+        <Data AD_Column_ID="198" Column="MsgText" isNewNull="true" oldValue="Auto Refresh"/>
+        <Data AD_Column_ID="199" Column="MsgTip" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="197" Column="MsgType" isNewNull="true" oldValue="I"/>
+        <Data AD_Column_ID="592" Column="UpdatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="6766" Column="Value" isNewNull="true" oldValue="AutoRefresh"/>
+        <Data AD_Column_ID="391" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="589" Column="Created" isNewNull="true" oldValue="2012-04-23 13:48:39.0"/>
+        <Data AD_Column_ID="6765" Column="AD_Message_ID" isNewNull="true" oldValue="1000004"/>
+        <Data AD_Column_ID="590" Column="CreatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="591" Column="Updated" isNewNull="true" oldValue="2012-04-23 13:48:39.0"/>
+      </PO>
+    </Step>
+    <Step SeqNo="20" StepType="AD">
+      <PO AD_Table_ID="109" Action="D" Record_ID="1000007" Table="AD_Message">
+        <Data AD_Column_ID="391" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="6765" Column="AD_Message_ID" isNewNull="true" oldValue="1000007"/>
+        <Data AD_Column_ID="392" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="589" Column="Created" isNewNull="true" oldValue="2012-04-23 13:53:35.0"/>
+        <Data AD_Column_ID="590" Column="CreatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="7716" Column="EntityType" isNewNull="true" oldValue="D"/>
+        <Data AD_Column_ID="588" Column="IsActive" isNewNull="true" oldValue="true"/>
+        <Data AD_Column_ID="199" Column="MsgTip" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="197" Column="MsgType" isNewNull="true" oldValue="I"/>
+        <Data AD_Column_ID="591" Column="Updated" isNewNull="true" oldValue="2012-04-23 13:53:35.0"/>
+        <Data AD_Column_ID="592" Column="UpdatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="6766" Column="Value" isNewNull="true" oldValue="ContactAndAddress"/>
+        <Data AD_Column_ID="198" Column="MsgText" isNewNull="true" oldValue="Contact and Address Information"/>
+      </PO>
+    </Step>
+    <Step SeqNo="30" StepType="AD">
+      <PO AD_Table_ID="109" Action="D" Record_ID="1000003" Table="AD_Message">
+        <Data AD_Column_ID="391" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="6765" Column="AD_Message_ID" isNewNull="true" oldValue="1000003"/>
+        <Data AD_Column_ID="392" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="589" Column="Created" isNewNull="true" oldValue="2014-02-14 08:59:31.0"/>
+        <Data AD_Column_ID="7716" Column="EntityType" isNewNull="true" oldValue="U"/>
+        <Data AD_Column_ID="588" Column="IsActive" isNewNull="true" oldValue="true"/>
+        <Data AD_Column_ID="199" Column="MsgTip" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="197" Column="MsgType" isNewNull="true" oldValue="I"/>
+        <Data AD_Column_ID="592" Column="UpdatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="6766" Column="Value" isNewNull="true" oldValue="ImpVal-missingAndOr"/>
+        <Data AD_Column_ID="590" Column="CreatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="591" Column="Updated" isNewNull="true" oldValue="2014-02-14 08:59:31.0"/>
+        <Data AD_Column_ID="198" Column="MsgText" isNewNull="true" oldValue="The Condition line is missing a leading And or Or"/>
+      </PO>
+    </Step>
+    <Step SeqNo="40" StepType="AD">
+      <PO AD_Table_ID="109" Action="D" Record_ID="1000002" Table="AD_Message">
+        <Data AD_Column_ID="391" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="6765" Column="AD_Message_ID" isNewNull="true" oldValue="1000002"/>
+        <Data AD_Column_ID="392" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="589" Column="Created" isNewNull="true" oldValue="2014-02-13 07:05:45.0"/>
+        <Data AD_Column_ID="590" Column="CreatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="7716" Column="EntityType" isNewNull="true" oldValue="U"/>
+        <Data AD_Column_ID="588" Column="IsActive" isNewNull="true" oldValue="true"/>
+        <Data AD_Column_ID="199" Column="MsgTip" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="197" Column="MsgType" isNewNull="true" oldValue="I"/>
+        <Data AD_Column_ID="591" Column="Updated" isNewNull="true" oldValue="2014-02-13 07:05:45.0"/>
+        <Data AD_Column_ID="592" Column="UpdatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="6766" Column="Value" isNewNull="true" oldValue="Loaded"/>
+        <Data AD_Column_ID="198" Column="MsgText" isNewNull="true" oldValue="The file was loaded successfully"/>
+      </PO>
+    </Step>
+    <Step SeqNo="50" StepType="AD">
+      <PO AD_Table_ID="109" Action="D" Record_ID="1000001" Table="AD_Message">
+        <Data AD_Column_ID="391" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="6765" Column="AD_Message_ID" isNewNull="true" oldValue="1000001"/>
+        <Data AD_Column_ID="392" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="590" Column="CreatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="588" Column="IsActive" isNewNull="true" oldValue="true"/>
+        <Data AD_Column_ID="198" Column="MsgText" isNewNull="true" oldValue="New Query"/>
+        <Data AD_Column_ID="199" Column="MsgTip" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="197" Column="MsgType" isNewNull="true" oldValue="I"/>
+        <Data AD_Column_ID="591" Column="Updated" isNewNull="true" oldValue="2014-02-12 21:41:57.0"/>
+        <Data AD_Column_ID="592" Column="UpdatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="7716" Column="EntityType" isNewNull="true" oldValue="U"/>
+        <Data AD_Column_ID="6766" Column="Value" isNewNull="true" oldValue="New Query"/>
+        <Data AD_Column_ID="589" Column="Created" isNewNull="true" oldValue="2014-02-12 21:41:57.0"/>
+      </PO>
+    </Step>
+    <Step SeqNo="60" StepType="AD">
+      <PO AD_Table_ID="109" Action="D" Record_ID="1000009" Table="AD_Message">
+        <Data AD_Column_ID="592" Column="UpdatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="391" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="6765" Column="AD_Message_ID" isNewNull="true" oldValue="1000009"/>
+        <Data AD_Column_ID="392" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="590" Column="CreatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="7716" Column="EntityType" isNewNull="true" oldValue="D"/>
+        <Data AD_Column_ID="588" Column="IsActive" isNewNull="true" oldValue="true"/>
+        <Data AD_Column_ID="198" Column="MsgText" isNewNull="true" oldValue="Only AP Payments"/>
+        <Data AD_Column_ID="199" Column="MsgTip" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="197" Column="MsgType" isNewNull="true" oldValue="I"/>
+        <Data AD_Column_ID="6766" Column="Value" isNewNull="true" oldValue="OnlyPayment"/>
+        <Data AD_Column_ID="589" Column="Created" isNewNull="true" oldValue="2012-04-23 14:04:26.0"/>
+        <Data AD_Column_ID="591" Column="Updated" isNewNull="true" oldValue="2012-04-23 14:04:26.0"/>
+      </PO>
+    </Step>
+    <Step SeqNo="70" StepType="AD">
+      <PO AD_Table_ID="109" Action="D" Record_ID="1000008" Table="AD_Message">
+        <Data AD_Column_ID="391" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="392" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="590" Column="CreatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="7716" Column="EntityType" isNewNull="true" oldValue="D"/>
+        <Data AD_Column_ID="588" Column="IsActive" isNewNull="true" oldValue="true"/>
+        <Data AD_Column_ID="198" Column="MsgText" isNewNull="true" oldValue="Only Receipts"/>
+        <Data AD_Column_ID="199" Column="MsgTip" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="197" Column="MsgType" isNewNull="true" oldValue="I"/>
+        <Data AD_Column_ID="591" Column="Updated" isNewNull="true" oldValue="2012-04-23 14:03:33.0"/>
+        <Data AD_Column_ID="592" Column="UpdatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="6766" Column="Value" isNewNull="true" oldValue="OnlyReceipt"/>
+        <Data AD_Column_ID="6765" Column="AD_Message_ID" isNewNull="true" oldValue="1000008"/>
+        <Data AD_Column_ID="589" Column="Created" isNewNull="true" oldValue="2012-04-23 14:03:33.0"/>
+      </PO>
+    </Step>
+    <Step SeqNo="80" StepType="AD">
+      <PO AD_Table_ID="109" Action="D" Record_ID="1000010" Table="AD_Message">
+        <Data AD_Column_ID="391" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="6765" Column="AD_Message_ID" isNewNull="true" oldValue="1000010"/>
+        <Data AD_Column_ID="392" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="590" Column="CreatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="588" Column="IsActive" isNewNull="true" oldValue="true"/>
+        <Data AD_Column_ID="199" Column="MsgTip" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="197" Column="MsgType" isNewNull="true" oldValue="I"/>
+        <Data AD_Column_ID="591" Column="Updated" isNewNull="true" oldValue="2013-08-15 07:23:34.0"/>
+        <Data AD_Column_ID="592" Column="UpdatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="198" Column="MsgText" isNewNull="true" oldValue="Received"/>
+        <Data AD_Column_ID="6766" Column="Value" isNewNull="true" oldValue="Received"/>
+        <Data AD_Column_ID="589" Column="Created" isNewNull="true" oldValue="2013-08-15 07:23:34.0"/>
+        <Data AD_Column_ID="7716" Column="EntityType" isNewNull="true" oldValue="D"/>
+      </PO>
+    </Step>
+    <Step SeqNo="90" StepType="AD">
+      <PO AD_Table_ID="109" Action="D" Record_ID="1000006" Table="AD_Message">
+        <Data AD_Column_ID="391" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="6765" Column="AD_Message_ID" isNewNull="true" oldValue="1000006"/>
+        <Data AD_Column_ID="392" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="590" Column="CreatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="7716" Column="EntityType" isNewNull="true" oldValue="D"/>
+        <Data AD_Column_ID="588" Column="IsActive" isNewNull="true" oldValue="true"/>
+        <Data AD_Column_ID="199" Column="MsgTip" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="197" Column="MsgType" isNewNull="true" oldValue="I"/>
+        <Data AD_Column_ID="591" Column="Updated" isNewNull="true" oldValue="2012-04-23 13:51:22.0"/>
+        <Data AD_Column_ID="592" Column="UpdatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="6766" Column="Value" isNewNull="true" oldValue="ShowAttributeDetails"/>
+        <Data AD_Column_ID="198" Column="MsgText" isNewNull="true" oldValue="Show Attribute Details"/>
+        <Data AD_Column_ID="589" Column="Created" isNewNull="true" oldValue="2012-04-23 13:51:22.0"/>
+      </PO>
+    </Step>
+    <Step SeqNo="100" StepType="AD">
+      <PO AD_Table_ID="109" Action="D" Record_ID="1000005" Table="AD_Message">
+        <Data AD_Column_ID="391" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="6765" Column="AD_Message_ID" isNewNull="true" oldValue="1000005"/>
+        <Data AD_Column_ID="392" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="590" Column="CreatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="7716" Column="EntityType" isNewNull="true" oldValue="D"/>
+        <Data AD_Column_ID="588" Column="IsActive" isNewNull="true" oldValue="true"/>
+        <Data AD_Column_ID="198" Column="MsgText" isNewNull="true" oldValue="Show Detail"/>
+        <Data AD_Column_ID="199" Column="MsgTip" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="197" Column="MsgType" isNewNull="true" oldValue="I"/>
+        <Data AD_Column_ID="592" Column="UpdatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="6766" Column="Value" isNewNull="true" oldValue="ShowDetail"/>
+        <Data AD_Column_ID="591" Column="Updated" isNewNull="true" oldValue="2012-04-23 13:50:21.0"/>
+        <Data AD_Column_ID="589" Column="Created" isNewNull="true" oldValue="2012-04-23 13:50:21.0"/>
+      </PO>
+    </Step>
+    <Step DBType="ALL" Parse="Y" SeqNo="110" StepType="SQL">
+      <SQLStatement>ALTER TABLE adempiere.M_ProductionLine ADD COLUMN M_Production_ID NUMERIC(10);
+UPDATE adempiere.M_ProductionLine pl
+	SET M_Production_ID = (SELECT M_Production_ID FROM adempiere.M_ProductionPlan pp
+				WHERE pl.M_ProductionPlan_ID = pp.M_ProductionPlan_ID);
+Alter TABLE adempiere.M_ProductionLine ALTER COLUMN M_Production_ID SET NOT NULL;
+</SQLStatement>
+      <RollbackStatement>ALTER TABLE adempiere.M_ProductionLine DROP COLUMN M_Production_ID;</RollbackStatement>
+    </Step>
+    <Step SeqNo="120" StepType="AD">
+      <PO AD_Table_ID="109" Action="D" Record_ID="1000000" Table="AD_Message">
+        <Data AD_Column_ID="391" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="6765" Column="AD_Message_ID" isNewNull="true" oldValue="1000000"/>
+        <Data AD_Column_ID="392" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="589" Column="Created" isNewNull="true" oldValue="2014-02-12 21:41:35.0"/>
+        <Data AD_Column_ID="590" Column="CreatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="7716" Column="EntityType" isNewNull="true" oldValue="U"/>
+        <Data AD_Column_ID="588" Column="IsActive" isNewNull="true" oldValue="true"/>
+        <Data AD_Column_ID="198" Column="MsgText" isNewNull="true" oldValue="Last Query"/>
+        <Data AD_Column_ID="199" Column="MsgTip" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="197" Column="MsgType" isNewNull="true" oldValue="I"/>
+        <Data AD_Column_ID="591" Column="Updated" isNewNull="true" oldValue="2014-02-12 21:41:35.0"/>
+        <Data AD_Column_ID="592" Column="UpdatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="6766" Column="Value" isNewNull="true" oldValue="Last Query"/>
+      </PO>
+    </Step>
+    <Step DBType="ALL" Parse="Y" SeqNo="130" StepType="SQL">
+      <SQLStatement>Update c_acctSchema set autoperiodcontrol = 'N', C_Period_ID = 50050 where ad_client_id = 11 AND c_acctSchema_id = 101;
+Delete from fact_acct where ad_client_id = 11 and C_Period_ID &gt;= 1000000;
+Delete from C_PeriodControl where ad_client_id = 11 and C_Period_ID &gt;= 1000000;
+Delete from c_period where ad_client_id = 11 and C_Year_ID &gt;= 1000000;  
+Delete from C_Year where ad_client_id = 11 and C_Year_ID &gt;= 1000000;</SQLStatement>
+      <RollbackStatement>Update c_acctSchema set autoperiodcontrol = 'N', C_Period_ID = 50050 where ad_client_id = 11 AND c_acctSchema_id = 101;</RollbackStatement>
+    </Step>
+  </Migration>
+</Migrations>

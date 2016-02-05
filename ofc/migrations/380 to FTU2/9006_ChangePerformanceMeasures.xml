@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="MFTU" Name="Change performance measures" ReleaseNo="FTU2" SeqNo="6">
+    <Step SeqNo="10" StepType="AD">
+      <PO AD_Table_ID="440" Action="U" Record_ID="1000011" Table="PA_Goal">
+        <Data AD_Column_ID="14759" Column="DateFrom" oldValue="2014-01-01 00:00:00.0">2015-01-01 00:00:00.0</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="20" StepType="AD">
+      <PO AD_Table_ID="440" Action="U" Record_ID="1000002" Table="PA_Goal">
+        <Data AD_Column_ID="14759" Column="DateFrom" oldValue="2013-12-01 00:00:00.0">2015-01-01 00:00:00.0</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="30" StepType="AD">
+      <PO AD_Table_ID="440" Action="U" Record_ID="1000009" Table="PA_Goal">
+        <Data AD_Column_ID="14759" Column="DateFrom" oldValue="2014-02-01 00:00:00.0">2015-01-01 00:00:00.0</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="40" StepType="AD">
+      <PO AD_Table_ID="440" Action="U" Record_ID="1000006" Table="PA_Goal">
+        <Data AD_Column_ID="14759" Column="DateFrom" oldValue="2013-12-01 00:00:00.0">2015-12-01 00:00:00.0</Data>
+      </PO>
+    </Step>
+  </Migration>
+</Migrations>

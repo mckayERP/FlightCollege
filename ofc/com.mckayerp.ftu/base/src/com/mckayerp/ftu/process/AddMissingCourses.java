@@ -1,5 +1,6 @@
-package org.compiere.process;
+package com.mckayerp.ftu.process;
 
+import org.compiere.process.SvrProcess;
 import org.compiere.util.DB;
 
 /**
@@ -7,7 +8,7 @@ import org.compiere.util.DB;
  * @author Michael McKay
  * @version 0
  */
-public class OFCAddMissingCourses extends SvrProcess
+public class AddMissingCourses extends SvrProcess
 	{
 		protected void prepare()
 		{

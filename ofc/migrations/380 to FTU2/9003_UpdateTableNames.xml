@@ -1,0 +1,1687 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="MFTU" Name="Update table names" ReleaseNo="FTU2" SeqNo="3">
+    <Step SeqNo="10" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000038" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="ac_status_v">FTU_AC_Status_V</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="20" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000007" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="I_OFC_Audit_Trail">I_Flightsheet_Audit_Trail</Data>
+        <Data AD_Column_ID="102" Column="Name" oldValue="Import OFC Audit Trail">Import Flightsheet Audit Trail</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="30" StepType="AD">
+      <PO AD_Table_ID="115" Action="U" Record_ID="1000158" Table="AD_Sequence">
+        <Data AD_Column_ID="347" Column="Description" oldValue="Table I_OFC_Audit_Trail">Table I_Flightsheet_Audit_Trail</Data>
+        <Data AD_Column_ID="216" Column="Name" oldValue="I_OFC_Audit_Trail">I_Flightsheet_Audit_Trail</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="40" StepType="AD">
+      <PO AD_Table_ID="276" Action="U" Record_ID="1000008" Table="AD_Element">
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="I_OFC_Audit_Trail_ID">I_Flightsheet_Audit_Trail_ID</Data>
+        <Data AD_Column_ID="2603" Column="Name" oldValue="I_OFC_Audit_Trail_ID">Import Flightsheet Audit Trail ID</Data>
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="I_OFC_Audit_Trail_ID">Import Flightsheet Audit Trail ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="50" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000169" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="I_OFC_Audit_Trail_ID">Import Flightsheet Audit Trail ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="I_OFC_Audit_Trail_ID">I_Flightsheet_Audit_Trail_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="60" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000317" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="70" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000018" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="I_OFC_Flightsheet">I_Flightsheet</Data>
+        <Data AD_Column_ID="103" Column="Description" oldValue="OFC Flightsheet Data import table.">Flightsheet Data import table.</Data>
+        <Data AD_Column_ID="102" Column="Name" oldValue="I_OFC_Flightsheet">I_Flightsheet</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="80" StepType="AD">
+      <PO AD_Table_ID="115" Action="U" Record_ID="1000211" Table="AD_Sequence">
+        <Data AD_Column_ID="347" Column="Description" oldValue="Table I_OFC_Flightsheet">Table I_Flightsheet</Data>
+        <Data AD_Column_ID="216" Column="Name" oldValue="I_OFC_Flightsheet">I_Flightsheet</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="90" StepType="AD">
+      <PO AD_Table_ID="276" Action="U" Record_ID="1000051" Table="AD_Element">
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="I_OFC_FLightsheet">I_Flightsheet ID</Data>
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="I_OFC_Flightsheet_ID">I_Flightsheet_ID</Data>
+        <Data AD_Column_ID="2603" Column="Name" oldValue="I_OFC_FLightsheet">I_Flightsheet ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="100" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000356" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="I_OFC_FLightsheet">I_Flightsheet ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="I_OFC_Flightsheet_ID">I_Flightsheet_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="110" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000349" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="120" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000665" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="130" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000055" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="OAC_DeferredDefectList_V">FTU_DeferredDefectList_V</Data>
+        <Data AD_Column_ID="102" Column="Name" oldValue="OAC_DeferredDefectList_V">FTU_DeferredDefectList_V</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="140" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000056" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="OAC_MasterDefectList_V">FTU_MasterDefectList_V</Data>
+        <Data AD_Column_ID="102" Column="Name" oldValue="OAC_MasterDefectList_V">FTU_MasterDefectList_V</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="150" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000042" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="ofc_ac_multiday_flighttimes_v">FTU_AC_Multiday_Flighttimes_V</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="160" StepType="AD">
+      <PO AD_Table_ID="100" Action="D" Record_ID="1000039" Table="AD_Table">
+        <Data AD_Column_ID="356" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="727" Column="IsDeleteable" isNewNull="true" oldValue="false"/>
+        <Data AD_Column_ID="545" Column="CreatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="108" Column="LoadSeq" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="78180" Column="IsDocument" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="726" Column="IsSecurityEnabled" isNewNull="true" oldValue="false"/>
+        <Data AD_Column_ID="354" Column="AccessLevel" isNewNull="true" oldValue="3"/>
+        <Data AD_Column_ID="104" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="106" Column="AD_Val_Rule_ID" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="355" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="105" Column="AD_Window_ID" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="543" Column="IsActive" isNewNull="true" oldValue="true"/>
+        <Data AD_Column_ID="546" Column="Updated" isNewNull="true" oldValue="2010-07-26 11:53:27.0"/>
+        <Data AD_Column_ID="547" Column="UpdatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="100" Column="AD_Table_ID" isNewNull="true" oldValue="1000039"/>
+        <Data AD_Column_ID="544" Column="Created" isNewNull="true" oldValue="2010-07-26 11:53:27.0"/>
+        <Data AD_Column_ID="4196" Column="IsHighVolume" isNewNull="true" oldValue="false"/>
+        <Data AD_Column_ID="6489" Column="ImportTable" isNewNull="true" oldValue="N"/>
+        <Data AD_Column_ID="6125" Column="IsView" isNewNull="true" oldValue="true"/>
+        <Data AD_Column_ID="8564" Column="IsChangeLog" isNewNull="true" oldValue="false"/>
+        <Data AD_Column_ID="9342" Column="PO_Window_ID" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="9341" Column="ReplicationType" isNewNull="true" oldValue="L"/>
+        <Data AD_Column_ID="50183" Column="CopyColumnsFromTable" isNewNull="true" oldValue="N"/>
+        <Data AD_Column_ID="6488" Column="EntityType" isNewNull="true" oldValue="MFTU"/>
+        <Data AD_Column_ID="59135" Column="IsCentrallyMaintained" isNewNull="true" oldValue="true"/>
+        <Data AD_Column_ID="107" Column="TableName" isNewNull="true" oldValue="OFC_AC_Status_V"/>
+        <Data AD_Column_ID="103" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="102" Column="Name" isNewNull="true" oldValue="Aircraft Status Summary"/>
+        <Data AD_Column_ID="65574" Column="ACTriggerLength" isNewNull="true" oldValue="0"/>
+      </PO>
+    </Step>
+    <Step SeqNo="170" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000035" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="OFC_ACJourneyLog">FTU_ACJourneyLog</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="180" StepType="AD">
+      <PO AD_Table_ID="115" Action="U" Record_ID="1000230" Table="AD_Sequence">
+        <Data AD_Column_ID="347" Column="Description" oldValue="Table OFC_ACJourneyLog">Table FTU_ACJourneyLog</Data>
+        <Data AD_Column_ID="216" Column="Name" oldValue="OFC_ACJourneyLog">FTU_ACJourneyLog</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="190" StepType="AD">
+      <PO AD_Table_ID="276" Action="U" Record_ID="1000185" Table="AD_Element">
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="OFC_ACJourneyLog_ID">FTU_ACJourneyLog_ID</Data>
+        <Data AD_Column_ID="2603" Column="Name" oldValue="Aircraft Journey Log">Aircraft Journey Log ID</Data>
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="Aircraft Journey Log">Aircraft Journey Log ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="200" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000786" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="Aircraft Journey Log">Aircraft Journey Log ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_ACJourneyLog_ID">FTU_ACJourneyLog_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="210" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000030" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="OFC_Advanced_Inst">FTU_Advanced_Inst</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="220" StepType="AD">
+      <PO AD_Table_ID="115" Action="U" Record_ID="1000223" Table="AD_Sequence">
+        <Data AD_Column_ID="347" Column="Description" oldValue="Table OFC_Advanced_Inst">Table FTU_Advanced_Inst</Data>
+        <Data AD_Column_ID="216" Column="Name" oldValue="OFC_Advanced_Inst">FTU_Advanced_Inst</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="230" StepType="AD">
+      <PO AD_Table_ID="276" Action="U" Record_ID="1000142" Table="AD_Element">
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="OFC_Advanced_Inst_ID">FTU_Advanced_Inst_ID</Data>
+        <Data AD_Column_ID="2603" Column="Name" oldValue="Advanced Instruction Courses">Advanced Instruction Courses ID</Data>
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="Advanced Instruction Courses">Advanced Instruction Courses ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="240" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000708" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="Advanced Instruction Courses">Advanced Instruction Courses ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Advanced_Inst_ID">FTU_Advanced_Inst_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="250" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000720" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="260" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000034" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="OFC_Aircraft">FTU_Aircraft</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="270" StepType="AD">
+      <PO AD_Table_ID="115" Action="U" Record_ID="1000229" Table="AD_Sequence">
+        <Data AD_Column_ID="347" Column="Description" oldValue="Table OFC_Aircraft">Table FTU_Aircraft</Data>
+        <Data AD_Column_ID="216" Column="Name" oldValue="OFC_Aircraft">FTU_Aircraft</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="280" StepType="AD">
+      <PO AD_Table_ID="276" Action="U" Record_ID="1000184" Table="AD_Element">
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="OFC_Aircraft_ID">FTU_Aircraft_ID</Data>
+        <Data AD_Column_ID="2603" Column="Name" oldValue="Aircraft">Aircraft ID</Data>
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="Aircraft">Aircraft ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="290" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000763" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="OFC_Aircraft_ID">Aircraft ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Aircraft_ID">FTU_Aircraft_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="300" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000040" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="OFC_AVDoc">FTU_AVDoc</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="310" StepType="AD">
+      <PO AD_Table_ID="115" Action="U" Record_ID="1000240" Table="AD_Sequence">
+        <Data AD_Column_ID="347" Column="Description" oldValue="Table OFC_AVDoc">Table FTU_AVDoc</Data>
+        <Data AD_Column_ID="216" Column="Name" oldValue="OFC_AVDoc">FTU_AVDoc</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="320" StepType="AD">
+      <PO AD_Table_ID="276" Action="U" Record_ID="1000235" Table="AD_Element">
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="OFC_AVDoc_ID">FTU_AVDoc_ID</Data>
+        <Data AD_Column_ID="2603" Column="Name" oldValue="Aviation Document">Aviation Document ID</Data>
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="Aviation Document">Aviation Document ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="330" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000929" Table="AD_Column">
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_AVDoc_ID">FTU_AVDoc_ID</Data>
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="Aviation Document">Aviation Document ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="340" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000897" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="Aviation Document">Aviation Document ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_AVDoc_ID">FTU_AVDoc_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="350" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000886" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="Aviation Document">Aviation Document ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_AVDoc_ID">FTU_AVDoc_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="360" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000951" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="370" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000922" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="380" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000906" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="390" StepType="AD">
+      <PO AD_Table_ID="489" Action="U" Record_ID="1004286" Table="AD_PrintFormatItem">
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="Aviation Document">Aviation Document ID</Data>
+        <Data AD_Column_ID="6940" Column="Name" oldValue="Aviation Document">Aviation Document ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="400" StepType="AD">
+      <PO AD_Table_ID="489" Action="U" Record_ID="1004889" Table="AD_PrintFormatItem">
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="Aviation Document">Aviation Document ID</Data>
+        <Data AD_Column_ID="6940" Column="Name" oldValue="Aviation Document">Aviation Document ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="410" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000048" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="OFC_BlockBooking_V">FTU_BlockBooking_V</Data>
+        <Data AD_Column_ID="102" Column="Name" oldValue="OFC_BlockBooking_V">FTU_BlockBooking_V</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="420" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000017" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="OFC_Booking_Audit_Trail">FTU_Booking_Audit_Trail</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="430" StepType="AD">
+      <PO AD_Table_ID="115" Action="U" Record_ID="1000210" Table="AD_Sequence">
+        <Data AD_Column_ID="347" Column="Description" oldValue="Table ofc_booking_audit_trail">Table FTU_Booking_Audit_Trail</Data>
+        <Data AD_Column_ID="216" Column="Name" oldValue="OFC_Booking_Audit_Trail">FTU_Booking_Audit_Trail</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="440" StepType="AD">
+      <PO AD_Table_ID="276" Action="U" Record_ID="1000048" Table="AD_Element">
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="OFC_Booking_Audit_Trail_ID">FTU_Booking_Audit_Trail_ID</Data>
+        <Data AD_Column_ID="2603" Column="Name" oldValue="OFC_Booking_Audit_Trail">Booking Audit Trail ID</Data>
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="OFC_Booking_Audit_Trail">Booking Audit Trail ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="450" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000331" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="OFC_Booking_Audit_Trail">Booking Audit Trail ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Booking_Audit_Trail_ID">FTU_Booking_Audit_Trail_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="460" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000402" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="470" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000032" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="ofc_bookings_summary_v">FTU_Bookings_Summary_V</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="480" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000009" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="OFC_Class">FTU_Class</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="490" StepType="AD">
+      <PO AD_Table_ID="115" Action="U" Record_ID="1000168" Table="AD_Sequence">
+        <Data AD_Column_ID="347" Column="Description" oldValue="Table OFC_Class">Table FTU_Class</Data>
+        <Data AD_Column_ID="216" Column="Name" oldValue="OFC_Class">FTU_Class</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="500" StepType="AD">
+      <PO AD_Table_ID="276" Action="U" Record_ID="1000017" Table="AD_Element">
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="OFC_Class_ID">FTU_Class_ID</Data>
+        <Data AD_Column_ID="2603" Column="Name" oldValue="FTU Class">Class ID</Data>
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="FTU Class">Class ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="510" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000210" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="FTU Class">Class ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Class_ID">FTU_Class_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="520" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000243" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="FTU Class">Class ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Class_ID">FTU_Class_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="530" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1001262" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="FTU Class">Class ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Class_ID">FTU_Class_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="540" StepType="AD">
+      <PO AD_Table_ID="285" Action="U" Record_ID="1000303" Table="AD_Process_Para">
+        <Data AD_Column_ID="2824" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="2822" Column="Name" oldValue="Class">Class ID</Data>
+        <Data AD_Column_ID="4017" Column="ColumnName" oldValue="OFC_Class_ID">FTU_Class_ID</Data>
+        <Data AD_Column_ID="2823" Column="Description" isNewNull="true" oldValue="The class on which to report"/>
+      </PO>
+    </Step>
+    <Step SeqNo="550" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000272" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="560" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000262" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="570" StepType="AD">
+      <PO AD_Table_ID="489" Action="U" Record_ID="1000941" Table="AD_PrintFormatItem">
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="FTU Class">Class ID</Data>
+        <Data AD_Column_ID="6940" Column="Name" oldValue="FTU Class">Class ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="580" StepType="AD">
+      <PO AD_Table_ID="489" Action="U" Record_ID="1001276" Table="AD_PrintFormatItem">
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="FTU Class">Class ID</Data>
+        <Data AD_Column_ID="6940" Column="Name" oldValue="FTU Class">Class ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="590" StepType="AD">
+      <PO AD_Table_ID="489" Action="U" Record_ID="1005763" Table="AD_PrintFormatItem">
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="FTU Class">Class ID</Data>
+        <Data AD_Column_ID="6940" Column="Name" oldValue="FTU Class">Class ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="600" StepType="AD">
+      <PO AD_Table_ID="489" Action="U" Record_ID="1005288" Table="AD_PrintFormatItem">
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="FTU Class">Class ID</Data>
+        <Data AD_Column_ID="6940" Column="Name" oldValue="FTU Class">Class ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="610" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000057" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="OFC_Class_List_V">FTU_Class_List_V</Data>
+        <Data AD_Column_ID="102" Column="Name" oldValue="OFC_Class_List_V">FTU_Class_List_V</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="620" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000004" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="OFC_Course">FTU_Course</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="630" StepType="AD">
+      <PO AD_Table_ID="115" Action="U" Record_ID="1000169" Table="AD_Sequence">
+        <Data AD_Column_ID="347" Column="Description" oldValue="Table OFC_Course">Table FTU_Course</Data>
+        <Data AD_Column_ID="216" Column="Name" oldValue="OFC_Course">FTU_Course</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="640" StepType="AD">
+      <PO AD_Table_ID="276" Action="U" Record_ID="1000003" Table="AD_Element">
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="OFC_Course_ID">FTU_Course_ID</Data>
+        <Data AD_Column_ID="2603" Column="Name" oldValue="Course">Course ID</Data>
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="Course">Course ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="650" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000129" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="Course">Course ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Course_ID">FTU_Course_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="660" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000255" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="Course">Course ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Course_ID">FTU_Course_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="670" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000194" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="680" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000201" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="690" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000013" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="OFC_Course_Grade">FTU_Course_Grade</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="700" StepType="AD">
+      <PO AD_Table_ID="115" Action="U" Record_ID="1000178" Table="AD_Sequence">
+        <Data AD_Column_ID="347" Column="Description" oldValue="Table OFC_Course_Grade">Table FTU_Course_Grade</Data>
+        <Data AD_Column_ID="216" Column="Name" oldValue="OFC_Course_Grade">FTU_Course_Grade</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="710" StepType="AD">
+      <PO AD_Table_ID="276" Action="U" Record_ID="1000029" Table="AD_Element">
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="OFC_Course_Grade_ID">FTU_Course_Grade_ID</Data>
+        <Data AD_Column_ID="2603" Column="Name" oldValue="Course Grade">Course Grade ID</Data>
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="Course Grade">Course Grade ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="720" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000293" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="Course Grade">Course Grade ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Course_Grade_ID">FTU_Course_Grade_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="730" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000290" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="740" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000012" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="OFC_Course_Inst">FTU_Course_Inst</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="750" StepType="AD">
+      <PO AD_Table_ID="115" Action="U" Record_ID="1000166" Table="AD_Sequence">
+        <Data AD_Column_ID="347" Column="Description" oldValue="Table OFC_Course_Inst">Table FTU_Course_Inst</Data>
+        <Data AD_Column_ID="216" Column="Name" oldValue="OFC_Course_Inst">FTU_Course_Inst</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="760" StepType="AD">
+      <PO AD_Table_ID="276" Action="U" Record_ID="1000020" Table="AD_Element">
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="OFC_Course_Inst_ID">FTU_Course_Inst_ID</Data>
+        <Data AD_Column_ID="2603" Column="Name" oldValue="Course Instance">Course Instance ID</Data>
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="Course Instance">Course Instance ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="770" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000254" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="Course Instance">Course Instance ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Course_Inst_ID">FTU_Course_Inst_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="780" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000280" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="Course Instance">Course Instance ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Course_Inst_ID">FTU_Course_Inst_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="790" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000202" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="800" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000280" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="810" StepType="AD">
+      <PO AD_Table_ID="489" Action="U" Record_ID="1000956" Table="AD_PrintFormatItem">
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="Course Instance">Course Instance ID</Data>
+        <Data AD_Column_ID="6940" Column="Name" oldValue="Course Instance">Course Instance ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="820" StepType="AD">
+      <PO AD_Table_ID="489" Action="U" Record_ID="1001816" Table="AD_PrintFormatItem">
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="Course Instance">Course Instance ID</Data>
+        <Data AD_Column_ID="6940" Column="Name" oldValue="Course Instance">Course Instance ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="830" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000036" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="OFC_DefectLog">FTU_DefectLog</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="840" StepType="AD">
+      <PO AD_Table_ID="115" Action="U" Record_ID="1000231" Table="AD_Sequence">
+        <Data AD_Column_ID="347" Column="Description" oldValue="Table OFC_DefectLog">Table FTU_DefectLog</Data>
+        <Data AD_Column_ID="216" Column="Name" oldValue="OFC_DefectLog">FTU_DefectLog</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="850" StepType="AD">
+      <PO AD_Table_ID="276" Action="U" Record_ID="1000187" Table="AD_Element">
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="OFC_DefectLog_ID">FTU_DefectLog_ID</Data>
+        <Data AD_Column_ID="2603" Column="Name" oldValue="Defect Log">Aircraft Defect Log ID</Data>
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="Defect Log">Aircraft Defect Log ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="860" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000799" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="Defect Log">Aircraft Defect Log ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_DefectLog_ID">FTU_DefectLog_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="870" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1001232" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="Defect Log">Aircraft Defect Log ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_DefectLog_ID">FTU_DefectLog_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="880" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1001211" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="Defect Log">Aircraft Defect Log ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_DefectLog_ID">FTU_DefectLog_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="890" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000825" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="900" StepType="AD">
+      <PO AD_Table_ID="489" Action="U" Record_ID="1004569" Table="AD_PrintFormatItem">
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="Defect Log">Aircraft Defect Log ID</Data>
+        <Data AD_Column_ID="6940" Column="Name" oldValue="Defect Log">Aircraft Defect Log ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="910" StepType="AD">
+      <PO AD_Table_ID="489" Action="U" Record_ID="1004590" Table="AD_PrintFormatItem">
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="Defect Log">Aircraft Defect Log ID</Data>
+        <Data AD_Column_ID="6940" Column="Name" oldValue="Defect Log">Aircraft Defect Log ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="920" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000021" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="OFC_Endorsement">FTU_Endorsement</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="930" StepType="AD">
+      <PO AD_Table_ID="115" Action="U" Record_ID="1000215" Table="AD_Sequence">
+        <Data AD_Column_ID="347" Column="Description" oldValue="Table OFC_Endorsement">Table FTU_Endorsement</Data>
+        <Data AD_Column_ID="216" Column="Name" oldValue="OFC_Endorsement">FTU_Endorsement</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="940" StepType="AD">
+      <PO AD_Table_ID="276" Action="U" Record_ID="1000125" Table="AD_Element">
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="OFC_Endorsement_ID">FTU_Endorsement_ID</Data>
+        <Data AD_Column_ID="2603" Column="Name" oldValue="Endorsements and Ratings">Endorsements and Ratings ID</Data>
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="Endorsements and Ratings">Endorsements and Ratings ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="950" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000482" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="Endorsements and Ratings">Endorsements and Ratings ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Endorsement_ID">FTU_Endorsement_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="960" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000031" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="OFC_Flags">FTU_Flags</Data>
+        <Data AD_Column_ID="102" Column="Name" oldValue="OFC_Flags">FTU_Flags</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="970" StepType="AD">
+      <PO AD_Table_ID="115" Action="U" Record_ID="1000225" Table="AD_Sequence">
+        <Data AD_Column_ID="347" Column="Description" oldValue="Table OFC_Flags">Table FTU_Flags</Data>
+        <Data AD_Column_ID="216" Column="Name" oldValue="OFC_Flags">FTU_Flags</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="980" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000019" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="OFC_Flightsheet">FTU_Flightsheet</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="990" StepType="AD">
+      <PO AD_Table_ID="115" Action="U" Record_ID="1000212" Table="AD_Sequence">
+        <Data AD_Column_ID="347" Column="Description" oldValue="Table OFC_Flightsheet">Table FTU_Flightsheet</Data>
+        <Data AD_Column_ID="216" Column="Name" oldValue="OFC_Flightsheet">FTU_Flightsheet</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1000" StepType="AD">
+      <PO AD_Table_ID="276" Action="U" Record_ID="1000110" Table="AD_Element">
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="OFC_Flightsheet_ID">FTU_Flightsheet_ID</Data>
+        <Data AD_Column_ID="2603" Column="Name" oldValue="OFC_Flightsheet">OFC_Flightsheet ID</Data>
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="OFC_Flightsheet">OFC_Flightsheet ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1010" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000424" Table="AD_Column">
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="OFC_Flightsheet">OFC_Flightsheet ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Flightsheet_ID">FTU_Flightsheet_ID</Data>
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="1020" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000694" Table="AD_Column">
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" oldValue="The ID of the flight associated with this order"/>
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" oldValue="Check the OFC Flightsheet system of the ID of the flight and select it in this field."/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="OFC_Flightsheet">OFC_Flightsheet ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Flightsheet_ID">FTU_Flightsheet_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1030" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000710" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="1040" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000428" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="1050" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000773" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="1060" StepType="AD">
+      <PO AD_Table_ID="489" Action="U" Record_ID="1002200" Table="AD_PrintFormatItem">
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="OFC_Flightsheet">OFC_Flightsheet ID</Data>
+        <Data AD_Column_ID="6940" Column="Name" oldValue="OFC_Flightsheet">OFC_Flightsheet ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1070" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000019" Table="AD_Table">
+        <Data AD_Column_ID="102" Column="Name" oldValue="OFC_Flightsheet">FTU_Flightsheet</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1080" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000005" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="OFC_Grading_System">FTU_Grading_System</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1090" StepType="AD">
+      <PO AD_Table_ID="115" Action="U" Record_ID="1000172" Table="AD_Sequence">
+        <Data AD_Column_ID="347" Column="Description" oldValue="Table OFC_Grading_System">Table FTU_Grading_System</Data>
+        <Data AD_Column_ID="216" Column="Name" oldValue="OFC_Grading_System">FTU_Grading_System</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1100" StepType="AD">
+      <PO AD_Table_ID="276" Action="U" Record_ID="1000005" Table="AD_Element">
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="OFC_Grading_System_ID">FTU_Grading_System_ID</Data>
+        <Data AD_Column_ID="2603" Column="Name" oldValue="Grading System">Grading System ID</Data>
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="Grading System">Grading System ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1110" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000144" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="Grading System">Grading System ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Grading_System_ID">FTU_Grading_System_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1120" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000161" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="Grading System">Grading System ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Grading_System_ID">FTU_Grading_System_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1130" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000006" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="OFC_Grading_System_Details">FTU_Grading_System_Details</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1140" StepType="AD">
+      <PO AD_Table_ID="115" Action="U" Record_ID="1000173" Table="AD_Sequence">
+        <Data AD_Column_ID="347" Column="Description" oldValue="Table OFC_Grading_System_Details">Table FTU_Grading_System_Details</Data>
+        <Data AD_Column_ID="216" Column="Name" oldValue="OFC_Grading_System_Details">FTU_Grading_System_Details</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1150" StepType="AD">
+      <PO AD_Table_ID="276" Action="U" Record_ID="1000007" Table="AD_Element">
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="OFC_Grading_System_Details_ID">FTU_Grading_System_Details_ID</Data>
+        <Data AD_Column_ID="2603" Column="Name" oldValue="Grading System Details">Grading System Details ID</Data>
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="Grading System Details">Grading System Details ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1160" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000156" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="Grading System Details">Grading System Details ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Grading_System_Details_ID">FTU_Grading_System_Details_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1170" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000029" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="OFC_Invoice_LineTax_v">FTU_Invoice_LineTax_V</Data>
+        <Data AD_Column_ID="103" Column="Description" oldValue="OFC Invoice line tax">Invoice line tax</Data>
+        <Data AD_Column_ID="102" Column="Name" oldValue="OFC_Invoice_LineTax_v">FTU_Invoice_LineTax_V</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1180" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000037" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="OFC_Journey_Log">FTU_Journey_Log</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1190" StepType="AD">
+      <PO AD_Table_ID="115" Action="U" Record_ID="1000233" Table="AD_Sequence">
+        <Data AD_Column_ID="347" Column="Description" oldValue="Table OFC_Journey_Log">Table FTU_Journey_Log</Data>
+        <Data AD_Column_ID="216" Column="Name" oldValue="OFC_Journey_Log">FTU_Journey_Log</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1200" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000020" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="OFC_License_Type">FTU_License_Type</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1210" StepType="AD">
+      <PO AD_Table_ID="115" Action="U" Record_ID="1000238" Table="AD_Sequence">
+        <Data AD_Column_ID="347" Column="Description" oldValue="Table OFC_License_Type">Table FTU_License_Type</Data>
+        <Data AD_Column_ID="216" Column="Name" oldValue="OFC_License_Type">FTU_License_Type</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1220" StepType="AD">
+      <PO AD_Table_ID="276" Action="U" Record_ID="1000126" Table="AD_Element">
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="OFC_License_Type_ID">FTU_License_Type_ID</Data>
+        <Data AD_Column_ID="2603" Column="Name" oldValue="License or Permit">Licenses and Permits ID</Data>
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="License or Permit">Licenses and Permits ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1230" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000487" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="License or Permit">Licenses and Permits ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_License_Type_ID">FTU_License_Type_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1240" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000466" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="License or Permit">Licenses and Permits ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_License_Type_ID">FTU_License_Type_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1250" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000875" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="License or Permit">Licenses and Permits ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_License_Type_ID">FTU_License_Type_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1260" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000937" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="1270" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000597" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="1280" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000023" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="OFC_Medical_Cat">FTU_Medical_Cat</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1290" StepType="AD">
+      <PO AD_Table_ID="115" Action="U" Record_ID="1000217" Table="AD_Sequence">
+        <Data AD_Column_ID="347" Column="Description" oldValue="Table OFC_Medical_Cat">Table FTU_Medical_Cat</Data>
+        <Data AD_Column_ID="216" Column="Name" oldValue="OFC_Medical_Cat">FTU_Medical_Cat</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1300" StepType="AD">
+      <PO AD_Table_ID="276" Action="U" Record_ID="1000127" Table="AD_Element">
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="OFC_Medical_Cat_ID">FTU_Medical_Cat_ID</Data>
+        <Data AD_Column_ID="2603" Column="Name" oldValue="Medical Category">Medical Category ID</Data>
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="Medical Category">Medical Category ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1310" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000462" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="Medical Category">Medical Category ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Medical_Cat_ID">FTU_Medical_Cat_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1320" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000507" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="Medical Category">Medical Category ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Medical_Cat_ID">FTU_Medical_Cat_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1330" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000596" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="1340" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000868" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="1350" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000058" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="OFC_MembershipList_v">FTU_MembershipList_V</Data>
+        <Data AD_Column_ID="103" Column="Description" oldValue="OFC Membership list">Membership list</Data>
+        <Data AD_Column_ID="102" Column="Name" oldValue="OFC_MembershipList_v">FTU_MembershipList_V</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1360" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000065" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="OFC_PCC_Schedule2_Details_v">FTU_PCC_Schedule2_Details_V</Data>
+        <Data AD_Column_ID="102" Column="Name" oldValue="OFC PCC Schedule 2 details view">FTU_PCC_Schedule2_Details_V</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1370" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000041" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="OFC_Pilot_Medical">FTU_Pilot_Medical</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1380" StepType="AD">
+      <PO AD_Table_ID="115" Action="U" Record_ID="1000241" Table="AD_Sequence">
+        <Data AD_Column_ID="347" Column="Description" oldValue="Table OFC_Pilot_Medical">Table FTU_Pilot_Medical</Data>
+        <Data AD_Column_ID="216" Column="Name" oldValue="OFC_Pilot_Medical">FTU_Pilot_Medical</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1390" StepType="AD">
+      <PO AD_Table_ID="276" Action="U" Record_ID="1000239" Table="AD_Element">
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="OFC_Pilot_Medical_ID">FTU_Pilot_Medical_ID</Data>
+        <Data AD_Column_ID="2603" Column="Name" oldValue="Medical Certifcation">Medical Certifcation ID</Data>
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="Medical Certifcation">Medical Certifcation ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1400" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000930" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="Medical Certifcation">Medical Certifcation ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Pilot_Medical_ID">FTU_Pilot_Medical_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1410" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000957" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="1420" StepType="AD">
+      <PO AD_Table_ID="489" Action="U" Record_ID="1004897" Table="AD_PrintFormatItem">
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="Medical Certifcation">Medical Certifcation ID</Data>
+        <Data AD_Column_ID="6940" Column="Name" oldValue="Medical Certifcation">Medical Certifcation ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1430" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000025" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="OFC_Pilot_Quals">FTU_Pilot_Quals</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1440" StepType="AD">
+      <PO AD_Table_ID="115" Action="U" Record_ID="1000218" Table="AD_Sequence">
+        <Data AD_Column_ID="347" Column="Description" oldValue="Table OFC_Pilot_Quals">Table FTU_Pilot_Quals</Data>
+        <Data AD_Column_ID="216" Column="Name" oldValue="OFC_Pilot_Quals">FTU_Pilot_Quals</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1450" StepType="AD">
+      <PO AD_Table_ID="276" Action="U" Record_ID="1000129" Table="AD_Element">
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="OFC_Pilot_Quals_ID">FTU_Pilot_Quals_ID</Data>
+        <Data AD_Column_ID="2603" Column="Name" oldValue="Pilot Qualifications">Pilot Qualifications ID</Data>
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="Pilot Qualifications">Pilot Qualifications ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1460" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000543" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="Pilot Qualifications">Pilot Qualifications ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Pilot_Quals_ID">FTU_Pilot_Quals_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1470" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000944" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="1480" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000014" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="OFC_Registered_Courses">FTU_Registered_Courses</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1490" StepType="AD">
+      <PO AD_Table_ID="115" Action="U" Record_ID="1000179" Table="AD_Sequence">
+        <Data AD_Column_ID="347" Column="Description" oldValue="Table OFC_Registered_Courses">Table FTU_Registered_Courses</Data>
+        <Data AD_Column_ID="216" Column="Name" oldValue="OFC_Registered_Courses">FTU_Registered_Courses</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1500" StepType="AD">
+      <PO AD_Table_ID="276" Action="U" Record_ID="1000027" Table="AD_Element">
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="OFC_Registered_Courses_ID">FTU_Registered_Courses_ID</Data>
+        <Data AD_Column_ID="2603" Column="Name" oldValue="Registered Courses">Registered Courses ID</Data>
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="Registered Courses">Registered Courses ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1510" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000275" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="Registered Courses">Registered Courses ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Registered_Courses_ID">FTU_Registered_Courses_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1520" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000303" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="Registered Courses">Registered Courses ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Registered_Courses_ID">FTU_Registered_Courses_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1530" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000283" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="1540" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000296" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="1550" StepType="AD">
+      <PO AD_Table_ID="489" Action="U" Record_ID="1000966" Table="AD_PrintFormatItem">
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="Registered Courses">Registered Courses ID</Data>
+        <Data AD_Column_ID="6940" Column="Name" oldValue="Registered Courses">Registered Courses ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1560" StepType="AD">
+      <PO AD_Table_ID="489" Action="U" Record_ID="1001827" Table="AD_PrintFormatItem">
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="Registered Courses">Registered Courses ID</Data>
+        <Data AD_Column_ID="6940" Column="Name" oldValue="Registered Courses">Registered Courses ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1570" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000015" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="OFC_RV_Submitted_Grades">FTU_Submitted_Grades_RV</Data>
+        <Data AD_Column_ID="102" Column="Name" oldValue="OFC_RV_Submitted_Grades">FTU_Submitted_Grades_RV</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1580" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000003" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="OFC_Semester">FTU_Semester</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1590" StepType="AD">
+      <PO AD_Table_ID="115" Action="U" Record_ID="1000171" Table="AD_Sequence">
+        <Data AD_Column_ID="347" Column="Description" oldValue="Table OFC_Semester">Table FTU_Semester</Data>
+        <Data AD_Column_ID="216" Column="Name" oldValue="OFC_Semester">FTU_Semester</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1600" StepType="AD">
+      <PO AD_Table_ID="276" Action="U" Record_ID="1000002" Table="AD_Element">
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="OFC_Semester_ID">FTU_Semester_ID</Data>
+        <Data AD_Column_ID="2603" Column="Name" oldValue="Sememsters">Sememster ID</Data>
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="Sememsters">Sememster ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1610" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000114" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="Sememsters">Sememster ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Semester_ID">FTU_Semester_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1620" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000257" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="Sememsters">Sememster ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Semester_ID">FTU_Semester_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1630" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000165" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="1640" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000205" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="1650" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000011" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="OFC_Student">FTU_Student</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1660" StepType="AD">
+      <PO AD_Table_ID="115" Action="U" Record_ID="1000174" Table="AD_Sequence">
+        <Data AD_Column_ID="347" Column="Description" oldValue="Table OFC_Student">Table FTU_Student</Data>
+        <Data AD_Column_ID="216" Column="Name" oldValue="OFC_Student">FTU_Student</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1670" StepType="AD">
+      <PO AD_Table_ID="276" Action="U" Record_ID="1000019" Table="AD_Element">
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="OFC_Student_ID">FTU_Student_ID</Data>
+        <Data AD_Column_ID="2603" Column="Name" oldValue="Student">Student ID</Data>
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="Student">Student ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1680" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000281" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" oldValue="The ID of the student"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="Student">Student ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Student_ID">FTU_Student_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1690" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000237" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="Student">Student ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Student_ID">FTU_Student_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1700" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000284" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="1710" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000266" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="1720" StepType="AD">
+      <PO AD_Table_ID="489" Action="U" Record_ID="1000965" Table="AD_PrintFormatItem">
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="Student">Student ID</Data>
+        <Data AD_Column_ID="6940" Column="Name" oldValue="Student">Student ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1730" StepType="AD">
+      <PO AD_Table_ID="489" Action="U" Record_ID="1001288" Table="AD_PrintFormatItem">
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="Student">Student ID</Data>
+        <Data AD_Column_ID="6940" Column="Name" oldValue="Student">Student ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1740" StepType="AD">
+      <PO AD_Table_ID="489" Action="U" Record_ID="1001826" Table="AD_PrintFormatItem">
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="Student">Student ID</Data>
+        <Data AD_Column_ID="6940" Column="Name" oldValue="Student">Student ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1750" StepType="AD">
+      <PO AD_Table_ID="489" Action="U" Record_ID="1005781" Table="AD_PrintFormatItem">
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="Student">Student ID</Data>
+        <Data AD_Column_ID="6940" Column="Name" oldValue="Student">Student ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1760" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000026" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="OFC_Student_Bookings_Summary_v">FTU_Student_Bookings_Summary_V</Data>
+        <Data AD_Column_ID="102" Column="Name" oldValue="OFC_Student_Bookings_Summary_v">FTU_Student_Bookings_Summary_V</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1770" StepType="AD">
+      <PO AD_Table_ID="115" Action="U" Record_ID="1000219" Table="AD_Sequence">
+        <Data AD_Column_ID="347" Column="Description" oldValue="Table OFC_Student_Bookings_Summary_v">Table FTU_Student_Bookings_Summary_V</Data>
+        <Data AD_Column_ID="216" Column="Name" oldValue="OFC_Student_Bookings_Summary_v">FTU_Student_Bookings_Summary_V</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1780" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000033" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="OFC_Syllabus_Details">FTU_Syllabus_Details</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1790" StepType="AD">
+      <PO AD_Table_ID="115" Action="U" Record_ID="1000228" Table="AD_Sequence">
+        <Data AD_Column_ID="347" Column="Description" oldValue="Table OFC_Syllabus_Details">Table FTU_Syllabus_Details</Data>
+        <Data AD_Column_ID="216" Column="Name" oldValue="OFC_Syllabus_Details">FTU_Syllabus_Details</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1800" StepType="AD">
+      <PO AD_Table_ID="276" Action="U" Record_ID="1000155" Table="AD_Element">
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="OFC_Syllabus_Details_ID">FTU_Syllabus_Details_ID</Data>
+        <Data AD_Column_ID="2603" Column="Name" oldValue="Syllabus Details">Syllabus Details ID</Data>
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="Syllabus Details">Syllabus Details ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1810" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000739" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="Syllabus Details">Syllabus Details ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Syllabus_Details_ID">FTU_Syllabus_Details_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1820" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000748" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="Syllabus Details">Syllabus Details ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Syllabus_Details_ID">FTU_Syllabus_Details_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1830" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000749" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="1840" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000971" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="1850" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000788" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="1860" StepType="AD">
+      <PO AD_Table_ID="489" Action="U" Record_ID="1002561" Table="AD_PrintFormatItem">
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="Syllabus Details">Syllabus Details ID</Data>
+        <Data AD_Column_ID="6940" Column="Name" oldValue="Syllabus Details">Syllabus Details ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1870" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000044" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="OFC_TL11b_Course_Map">FTU_TL11b_Course_Map</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1880" StepType="AD">
+      <PO AD_Table_ID="115" Action="U" Record_ID="1000248" Table="AD_Sequence">
+        <Data AD_Column_ID="347" Column="Description" oldValue="Table OFC_TL11b_Course_Map">Table FTU_TL11b_Course_Map</Data>
+        <Data AD_Column_ID="216" Column="Name" oldValue="OFC_TL11b_Course_Map">FTU_TL11b_Course_Map</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1890" StepType="AD">
+      <PO AD_Table_ID="276" Action="U" Record_ID="1000265" Table="AD_Element">
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="OFC_TL11b_Course_Map_ID">FTU_TL11b_Course_Map_ID</Data>
+        <Data AD_Column_ID="2603" Column="Name" oldValue="OFC_TL11B_Course_Map">TL11B_Course_Map ID</Data>
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="OFC_TL11B_Course_Map">TL11B_Course_Map ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1900" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1001048" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="OFC_TL11B_Course_Map">TL11B_Course_Map ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_TL11b_Course_Map_ID">FTU_TL11b_Course_Map_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1910" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000983" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="1920" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000046" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="ofc_tl11b_student_detail_v">FTU_TL11B_Student_Detail_V</Data>
+        <Data AD_Column_ID="102" Column="Name" oldValue="ofc_tl11b_student_detail_v">FTU_TL11B_Student_Detail_V</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1930" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000045" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="ofc_TL11B_student_summary_v">FTU_TL11B_Student_Summary_V</Data>
+        <Data AD_Column_ID="102" Column="Name" oldValue="ofc_TL11B_student_summary_v">FTU_TL11B_Student_Summary_V</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1940" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000049" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="OFC_Training">FTU_Training</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1950" StepType="AD">
+      <PO AD_Table_ID="115" Action="U" Record_ID="1000253" Table="AD_Sequence">
+        <Data AD_Column_ID="347" Column="Description" oldValue="Table OFC_Training">Table FTU_Training</Data>
+        <Data AD_Column_ID="216" Column="Name" oldValue="OFC_Training">FTU_Training</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1960" StepType="AD">
+      <PO AD_Table_ID="276" Action="U" Record_ID="1000300" Table="AD_Element">
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="OFC_Training_ID">FTU_Training_ID</Data>
+        <Data AD_Column_ID="2603" Column="Name" oldValue="Training">Training ID</Data>
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="Training">Training ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1970" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1001121" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="Training">Training ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Training_ID">FTU_Training_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1980" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1001159" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="Training">Training ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Training_ID">FTU_Training_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="1990" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1001204" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="Training">Training ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Training_ID">FTU_Training_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2000" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1001035" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="2010" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1001070" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="2020" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1001025" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="2030" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000050" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="OFC_Training_Record">FTU_Training_Record</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2040" StepType="AD">
+      <PO AD_Table_ID="115" Action="U" Record_ID="1000254" Table="AD_Sequence">
+        <Data AD_Column_ID="347" Column="Description" oldValue="Table OFC_Training_Record">Table FTU_Training_Record</Data>
+        <Data AD_Column_ID="216" Column="Name" oldValue="OFC_Training_Record">FTU_Training_Record</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2050" StepType="AD">
+      <PO AD_Table_ID="276" Action="U" Record_ID="1000301" Table="AD_Element">
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="OFC_Training_Record_ID">FTU_Training_Record_ID</Data>
+        <Data AD_Column_ID="2603" Column="Name" oldValue="Personnel Training Record">Personnel Training Record ID</Data>
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="Personnel Training Record">Personnel Training Record ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2060" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1001135" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="Personnel Training Record">Personnel Training Record ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Training_Record_ID">FTU_Training_Record_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2070" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1001048" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="2080" StepType="AD">
+      <PO AD_Table_ID="489" Action="U" Record_ID="1004399" Table="AD_PrintFormatItem">
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="Personnel Training Record">Personnel Training Record ID</Data>
+        <Data AD_Column_ID="6940" Column="Name" oldValue="Personnel Training Record">Personnel Training Record ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2090" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000051" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="OFC_Training_Session">FTU_Training_Session</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2100" StepType="AD">
+      <PO AD_Table_ID="115" Action="U" Record_ID="1000255" Table="AD_Sequence">
+        <Data AD_Column_ID="347" Column="Description" oldValue="Table OFC_Training_Session">Table FTU_Training_Session</Data>
+        <Data AD_Column_ID="216" Column="Name" oldValue="OFC_Training_Session">FTU_Training_Session</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2110" StepType="AD">
+      <PO AD_Table_ID="276" Action="U" Record_ID="1000302" Table="AD_Element">
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="OFC_Training_Session_ID">FTU_Training_Session_ID</Data>
+        <Data AD_Column_ID="2603" Column="Name" oldValue="Training Session">Training Session ID</Data>
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="Training Session">Training Session ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2120" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1001147" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="Training Session">Training Session ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Training_Session_ID">FTU_Training_Session_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2130" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1001158" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="Training Session">Training Session ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Training_Session_ID">FTU_Training_Session_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2140" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1001042" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="2150" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1001052" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="2160" StepType="AD">
+      <PO AD_Table_ID="489" Action="U" Record_ID="1004398" Table="AD_PrintFormatItem">
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="Training Session">Training Session ID</Data>
+        <Data AD_Column_ID="6940" Column="Name" oldValue="Training Session">Training Session ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2170" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000002" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="OFC_Training_Unit">FTU_Training_Unit</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2180" StepType="AD">
+      <PO AD_Table_ID="115" Action="U" Record_ID="1000176" Table="AD_Sequence">
+        <Data AD_Column_ID="347" Column="Description" oldValue="Table OFC_Training_Unit">Table FTU_Training_Unit</Data>
+        <Data AD_Column_ID="216" Column="Name" oldValue="OFC_Training_Unit">FTU_Training_Unit</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2190" StepType="AD">
+      <PO AD_Table_ID="276" Action="U" Record_ID="1000000" Table="AD_Element">
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="OFC_Training_Unit_ID">FTU_Training_Unit_ID</Data>
+        <Data AD_Column_ID="2603" Column="Name" oldValue="OFC_Training_Unit_ID">Training Unit ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2200" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000099" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="OFC_Training_Unit_ID">Training Unit ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Training_Unit_ID">FTU_Training_Unit_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2210" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000121" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="OFC_Training_Unit_ID">Training Unit ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Training_Unit_ID">FTU_Training_Unit_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2220" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000135" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="OFC_Training_Unit_ID">Training Unit ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Training_Unit_ID">FTU_Training_Unit_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2230" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000215" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="OFC_Training_Unit_ID">Training Unit ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Training_Unit_ID">FTU_Training_Unit_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2240" StepType="AD">
+      <PO AD_Table_ID="285" Action="U" Record_ID="1000129" Table="AD_Process_Para">
+        <Data AD_Column_ID="2824" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="2822" Column="Name" oldValue="FTU Name">Training Unit ID</Data>
+        <Data AD_Column_ID="4017" Column="ColumnName" oldValue="OFC_Training_Unit_ID">FTU_Training_Unit_ID</Data>
+        <Data AD_Column_ID="2823" Column="Description" oldValue="Flight Training Unit (school) Name">ID (Key) of the Training Unit</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2250" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000154" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="2260" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000168" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="2270" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000195" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="2280" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000274" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="2290" StepType="AD">
+      <PO AD_Table_ID="489" Action="U" Record_ID="1000930" Table="AD_PrintFormatItem">
+        <Data AD_Column_ID="6940" Column="Name" oldValue="OFC_Training_Unit_ID">Training Unit ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2300" StepType="AD">
+      <PO AD_Table_ID="489" Action="U" Record_ID="1000931" Table="AD_PrintFormatItem">
+        <Data AD_Column_ID="6940" Column="Name" oldValue="OFC_Training_Unit_ID">Training Unit ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2310" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000054" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="OFC_TrainingApplicability">FTU_TrainingApplicability</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2320" StepType="AD">
+      <PO AD_Table_ID="115" Action="U" Record_ID="1000258" Table="AD_Sequence">
+        <Data AD_Column_ID="347" Column="Description" oldValue="Table OFC_TrainingApplicability">Table FTU_TrainingApplicability</Data>
+        <Data AD_Column_ID="216" Column="Name" oldValue="OFC_TrainingApplicability">FTU_TrainingApplicability</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2330" StepType="AD">
+      <PO AD_Table_ID="276" Action="U" Record_ID="1000306" Table="AD_Element">
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="OFC_TrainingApplicability_ID">FTU_TrainingApplicability_ID</Data>
+        <Data AD_Column_ID="2603" Column="Name" oldValue="Training Applicability">Training Applicability ID</Data>
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="Training Applicability">Training Applicability ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2340" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1001194" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="Training Applicability">Training Applicability ID</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_TrainingApplicability_ID">FTU_TrainingApplicability_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2350" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1001071" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="2360" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000052" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="RV_OFC_Training_Record">FTU_Training_Record_V</Data>
+        <Data AD_Column_ID="102" Column="Name" oldValue="RV_OFC_Training_Record">FTU_Training_Record_V</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2370" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000053" Table="AD_Table">
+        <Data AD_Column_ID="107" Column="TableName" oldValue="RV_OFC_Training_Required">FTU_Training_Required_V</Data>
+        <Data AD_Column_ID="102" Column="Name" oldValue="RV_OFC_Training_Required">FTU_Training_Required_V</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2380" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000828" Table="AD_Column">
+        <Data AD_Column_ID="111" Column="Name" oldValue="Air Time">air_time</Data>
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="Air_Time">air_time</Data>
+        <Data AD_Column_ID="2608" Column="AD_Element_ID" oldValue="1000193">1000252</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2390" StepType="AD">
+      <PO AD_Table_ID="276" Action="D" Record_ID="1000193" Table="AD_Element">
+        <Data AD_Column_ID="6284" Column="PO_Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="6286" Column="PO_PrintName" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="2594" Column="AD_Element_ID" isNewNull="true" oldValue="1000193"/>
+        <Data AD_Column_ID="2602" Column="ColumnName" isNewNull="true" oldValue="Air Time"/>
+        <Data AD_Column_ID="2595" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="2598" Column="Created" isNewNull="true" oldValue="2010-07-20 11:45:51.0"/>
+        <Data AD_Column_ID="2600" Column="Updated" isNewNull="true" oldValue="2010-07-20 11:45:51.0"/>
+        <Data AD_Column_ID="2605" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="2597" Column="IsActive" isNewNull="true" oldValue="true"/>
+        <Data AD_Column_ID="6283" Column="PO_Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="6484" Column="EntityType" isNewNull="true" oldValue="MFTU"/>
+        <Data AD_Column_ID="2596" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="2599" Column="CreatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="2601" Column="UpdatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="2603" Column="Name" isNewNull="true" oldValue="Air Time"/>
+        <Data AD_Column_ID="2604" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="4299" Column="PrintName" isNewNull="true" oldValue="Air Time"/>
+        <Data AD_Column_ID="6285" Column="PO_Name" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="58588" Column="AD_Reference_ID" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="58589" Column="FieldLength" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="58590" Column="AD_Reference_Value_ID" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="2400" StepType="AD">
+      <PO AD_Table_ID="276" Action="U" Record_ID="1000252" Table="AD_Element">
+        <Data AD_Column_ID="2603" Column="Name" oldValue="air_time">Air Time</Data>
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="air_time">Air Time</Data>
+        <Data AD_Column_ID="58589" Column="FieldLength" oldValue="131089">20</Data>
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="air_time">AirTime</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2410" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000828" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="air_time">Air Time</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="air_time">AirTime</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2420" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000950" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="air_time">Air Time</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="air_time">AirTime</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2430" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000844" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="2440" StepType="AD">
+      <PO AD_Table_ID="489" Action="U" Record_ID="1002911" Table="AD_PrintFormatItem">
+        <Data AD_Column_ID="6940" Column="Name" oldValue="air_time">Air Time</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2450" StepType="AD">
+      <PO AD_Table_ID="489" Action="U" Record_ID="1003029" Table="AD_PrintFormatItem">
+        <Data AD_Column_ID="6940" Column="Name" oldValue="air_time">Air Time</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2460" StepType="AD">
+      <PO AD_Table_ID="489" Action="U" Record_ID="1004220" Table="AD_PrintFormatItem">
+        <Data AD_Column_ID="6940" Column="Name" oldValue="air_time">Air Time</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2470" StepType="AD">
+      <PO AD_Table_ID="489" Action="U" Record_ID="1004287" Table="AD_PrintFormatItem">
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="air_time">Air Time</Data>
+        <Data AD_Column_ID="6940" Column="Name" oldValue="air_time">Air Time</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2480" StepType="AD">
+      <PO AD_Table_ID="489" Action="U" Record_ID="1004302" Table="AD_PrintFormatItem">
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="air_time">Air Time</Data>
+        <Data AD_Column_ID="6940" Column="Name" oldValue="air_time">Air Time</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2490" StepType="AD">
+      <PO AD_Table_ID="489" Action="U" Record_ID="1004332" Table="AD_PrintFormatItem">
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="air_time">Air Time</Data>
+        <Data AD_Column_ID="6940" Column="Name" oldValue="air_time">Air Time</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2500" StepType="AD">
+      <PO AD_Table_ID="489" Action="U" Record_ID="1004317" Table="AD_PrintFormatItem">
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="air_time">Air Time</Data>
+        <Data AD_Column_ID="6940" Column="Name" oldValue="air_time">Air Time</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2510" StepType="AD">
+      <PO AD_Table_ID="489" Action="U" Record_ID="1004491" Table="AD_PrintFormatItem">
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="air_time">Air Time</Data>
+        <Data AD_Column_ID="6940" Column="Name" oldValue="air_time">Air Time</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="2520" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000409" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="ofc_air_time">AirTime</Data>
+        <Data AD_Column_ID="2608" Column="AD_Element_ID" oldValue="1000104">1000252</Data>
+        <Data AD_Column_ID="111" Column="Name" oldValue="ofc_air_time">Air Time</Data>
+      </PO>
+    </Step>
+    <Step DBType="Postgres" Parse="Y" SeqNo="2525" StepType="SQL">
+      <SQLStatement>ALTER Table i_flightsheet Rename COLUMN airtime TO airtime_ch;
+ALTER TABLE i_flightsheet ADD COLUMN airtime numeric;
+UPDATE i_flightsheet SET airtime = to_number(airtime_ch, '999999.9999');
+ALTER TABLE adempiere.i_flightsheet DROP COLUMN airtime_ch;</SQLStatement>
+      <RollbackStatement>ALTER Table i_flightsheet Rename COLUMN airtime TO airtime_n;
+ALTER TABLE i_flightsheet ADD COLUMN airtime character varying(49);
+UPDATE i_flightsheet SET airtime = to_char(airtime_n, '999999.9999');
+ALTER TABLE adempiere.i_flightsheet DROP COLUMN airtime_n;</RollbackStatement>
+    </Step>
+    <Step SeqNo="2530" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000409" Table="AD_Column">
+        <Data AD_Column_ID="118" Column="FieldLength" oldValue="49">22</Data>
+        <Data AD_Column_ID="226" Column="AD_Reference_ID" oldValue="10">22</Data>
+      </PO>
+    </Step>
+  </Migration>
+</Migrations>

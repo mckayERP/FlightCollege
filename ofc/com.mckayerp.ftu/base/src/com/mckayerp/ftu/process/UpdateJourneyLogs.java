@@ -1,4 +1,4 @@
-package org.compiere.process;
+package com.mckayerp.ftu.process;
 
 import java.math.BigDecimal;
 import java.sql.PreparedStatement;
@@ -19,12 +19,13 @@ import org.compiere.impexp.ImpFormat;
 import org.compiere.model.MOrder;
 import org.compiere.model.MOrderLine;
 import org.compiere.model.MResourceAssignment;
+import org.compiere.process.SvrProcess;
 import org.compiere.util.DB;
 import org.compiere.util.Env;
 
 import HtmlGet.HtmlGet;
 
-public class OFCUpdateJourneyLogs extends SvrProcess {
+public class UpdateJourneyLogs extends SvrProcess {
 	
 	@Override
 	protected void prepare() {

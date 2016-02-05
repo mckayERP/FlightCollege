@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="MFTU" Name="Update import formats" ReleaseNo="FTU2" SeqNo="5">
+    <Step SeqNo="10" StepType="AD">
+      <PO AD_Table_ID="381" Action="U" Record_ID="1000007" Table="AD_ImpFormat">
+        <Data AD_Column_ID="4676" Column="Name" oldValue="OFC Flightsheet Import">Flightsheet Import</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="20" StepType="AD">
+      <PO AD_Table_ID="381" Action="U" Record_ID="1000006" Table="AD_ImpFormat">
+        <Data AD_Column_ID="4676" Column="Name" oldValue="OFC FS Audit Trail Import">FS Audit Trail Import</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="30" StepType="AD">
+      <PO AD_Table_ID="381" Action="U" Record_ID="1000008" Table="AD_ImpFormat">
+        <Data AD_Column_ID="4676" Column="Name" oldValue="OFC Import Open Flightsheets">Import Open Flightsheets</Data>
+      </PO>
+    </Step>
+  </Migration>
+</Migrations>

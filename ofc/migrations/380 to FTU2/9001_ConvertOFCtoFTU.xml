@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="U" Name="Convert OFC to mckayERP FTU" ReleaseNo="FTU2" SeqNo="1">
+    <Comments>Add the MFTU entity type.</Comments>
+    <Step SeqNo="10" StepType="AD">
+      <Comments>Add the MFTU entity type.</Comments>
+      <PO AD_Table_ID="882" Action="I" Record_ID="1000000" Table="AD_EntityType">
+        <Data AD_Column_ID="15605" Column="ModelPackage">com.mckayerp.ftu.model</Data>
+        <Data AD_Column_ID="15599" Column="Updated">2015-11-21 09:29:04.149</Data>
+        <Data AD_Column_ID="15600" Column="UpdatedBy">0</Data>
+        <Data AD_Column_ID="15596" Column="IsActive">true</Data>
+        <Data AD_Column_ID="15602" Column="Description">Flight Training Unit management and control</Data>
+        <Data AD_Column_ID="15593" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="15606" Column="Classpath" isNewNull="true"/>
+        <Data AD_Column_ID="15607" Column="Processing">false</Data>
+        <Data AD_Column_ID="15604" Column="Version">1.0</Data>
+        <Data AD_Column_ID="15603" Column="Help">Originally built for the Ottawa Flight College, this entity provides extenstions to ADempiere to track and bill for aircraft rental and flight training.  Also includes aviation maintenance and othe supporting quality assurance services.</Data>
+        <Data AD_Column_ID="15594" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="15597" Column="Created">2015-11-21 09:29:04.149</Data>
+        <Data AD_Column_ID="15598" Column="CreatedBy">0</Data>
+        <Data AD_Column_ID="15601" Column="Name">mckayERP Flight Training Unit</Data>
+        <Data AD_Column_ID="15592" Column="EntityType">MFTU</Data>
+        <Data AD_Column_ID="15595" Column="AD_EntityType_ID">50029</Data>
+      </PO>
+    </Step>
+    <Step DBType="Postgres" Parse="Y" SeqNo="20" StepType="SQL">
+      <Comments>Convert all the user defined element types to ME_FTU.</Comments>
+      <SQLStatement>UPDATE AD_Browse SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_Browse_Field SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_ChartDatasource SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_Column SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_Column SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_Element SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_Element SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_Field SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_FieldGroup SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_Form SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_Image SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_InfoColumn SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_InfoWindow SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_Menu SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_Message SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_ModelValidator SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_Modification SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_Process SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_Process_Para SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_Ref_List SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_Ref_Table SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_Reference SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_ReplicationStrategy SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_ReplicationTable SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_ReportView SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_Rule SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_SysConfig SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_Tab SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_Table SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_Table SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_Table_Process SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_Task SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_Val_Rule SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_View SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_View_Column SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_WF_NextCondition SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_WF_Node SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_WF_Node_Para SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_WF_NodeNext SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_WF_Responsible SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_Window SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_Workbench SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_WorkbenchWindow SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE AD_Workflow SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE I_Workflow SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE PA_ColorSchema SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE PA_MeasureCalc SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE PP_Order_Node SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE PP_Order_NodeNext SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE PP_Order_Workflow SET entitytype = 'MFTU' WHERE entitytype = 'U';
+UPDATE PP_WF_Node_Product SET entitytype = 'MFTU' WHERE entitytype = 'U';</SQLStatement>
+      <RollbackStatement>UPDATE AD_Browse SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_Browse_Field SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_ChartDatasource SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_Column SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_Column SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_Element SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_Element SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_Field SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_FieldGroup SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_Form SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_Image SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_InfoColumn SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_InfoWindow SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_Menu SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_Message SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_ModelValidator SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_Modification SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_Process SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_Process_Para SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_Ref_List SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_Ref_Table SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_Reference SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_ReplicationStrategy SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_ReplicationTable SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_ReportView SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_Rule SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_SysConfig SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_Tab SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_Table SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_Table SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_Table_Process SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_Task SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_Val_Rule SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_View SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_View_Column SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_WF_NextCondition SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_WF_Node SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_WF_Node_Para SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_WF_NodeNext SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_WF_Responsible SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_Window SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_Workbench SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_WorkbenchWindow SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE AD_Workflow SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE I_Workflow SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE PA_ColorSchema SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE PA_MeasureCalc SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE PP_Order_Node SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE PP_Order_NodeNext SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE PP_Order_Workflow SET entitytype = 'U' WHERE entitytype = 'MFTU';
+UPDATE PP_WF_Node_Product SET entitytype = 'U' WHERE entitytype = 'MFTU';</RollbackStatement>
+    </Step>
+  </Migration>
+</Migrations>
