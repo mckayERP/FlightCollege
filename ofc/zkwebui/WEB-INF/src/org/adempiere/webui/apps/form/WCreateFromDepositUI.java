@@ -13,16 +13,13 @@
  *****************************************************************************/
 package org.adempiere.webui.apps.form;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.util.Vector;
 import java.util.logging.Level;
 
-import org.adempiere.webui.apps.AEnv;
-import org.compiere.grid.CreateFrom;
-import org.compiere.grid.CreateFromDeposit;
-import org.adempiere.webui.apps.form.WCreateFromWindow;
 import org.adempiere.webui.component.Button;
 import org.adempiere.webui.component.ConfirmPanel;
 import org.adempiere.webui.component.Grid;
@@ -38,14 +35,18 @@ import org.adempiere.webui.editor.WNumberEditor;
 import org.adempiere.webui.editor.WSearchEditor;
 import org.adempiere.webui.editor.WStringEditor;
 import org.adempiere.webui.editor.WTableDirEditor;
-import org.adempiere.webui.window.FDialog;
-import org.compiere.model.GridTab;
-import org.compiere.model.MBankAccount;
+import org.adempiere.webui.panel.ADForm;
+import org.adempiere.webui.panel.CustomForm;
+import org.adempiere.webui.panel.IFormController;
+import org.compiere.apps.form.CreateFromDeposit;
+import org.compiere.apps.form.ICreateFrom;
+import org.compiere.model.MBankDeposit;
 import org.compiere.model.MBankStatement;
 import org.compiere.model.MColumn;
 import org.compiere.model.MLookup;
 import org.compiere.model.MLookupFactory;
 import org.compiere.model.MPayment;
+import org.compiere.process.ProcessInfo;
 import org.compiere.util.CLogger;
 import org.compiere.util.DisplayType;
 import org.compiere.util.Env;
@@ -57,36 +58,48 @@ import org.zkoss.zkex.zul.Borderlayout;
 import org.zkoss.zkex.zul.Center;
 import org.zkoss.zul.Hbox;
 
-public class WCreateFromDepositUI extends CreateFromDeposit implements EventListener
+public class WCreateFromDepositUI extends CreateFromDeposit 
+	implements IFormController, ICreateFrom, EventListener
 {
-	private static final long serialVersionUID = 1L;
-	
-	private WCreateFromWindow window;
-	
-	public WCreateFromDepositUI(GridTab tab) 
-	{
-		super(tab);
-		log.info(getGridTab().toString());
+	/**
+	 * Standard Constructor
+	 */
+	public WCreateFromDepositUI() {
+		try {
+			v_CreateFromPanel = new WCreateFromPanel(this);
+			v_Container = new CustomForm() {
 		
-		window = new WCreateFromWindow(this, getGridTab().getWindowNo());
-		
-		p_WindowNo = getGridTab().getWindowNo();
-
-		try
-		{
-			if (!dynInit())
-				return;
-			zkInit();
-			setInitOK(true);
-		}
-		catch(Exception e)
-		{
+				private static final long serialVersionUID = 1L;
+			
+				public void setProcessInfo(ProcessInfo pi) {
+					p_WindowNo = getWindowNo();
+					try {
+						//	Valid for launched from a window
+						if(pi != null) {
+							//	Valid Table and Record
+							validTable(pi.getTable_ID(), 
+									pi.getRecord_ID());
+						}
+						//	Init
+						if (!dynInit())
+							return;
+						zkInit();
+					} catch(Exception e) {
+						log.log(Level.SEVERE, "", e);
+					}
+				}
+			};
+		} catch (IOException e) {
 			log.log(Level.SEVERE, "", e);
-			setInitOK(false);
 		}
-		AEnv.showWindow(window);
-	}
+	}		
 	
+	//	Yamel Senih FR [ 114 ], 2015-11-26
+	//	Change to form
+	private CustomForm v_Container = null;
+	/**	Main Panel for Create From	*/
+	private WCreateFromPanel v_CreateFromPanel;
+
 	/** Window No               */
 	private int p_WindowNo;
 
@@ -129,27 +142,18 @@ public class WCreateFromDepositUI extends CreateFromDeposit implements EventList
 	 *  @throws Exception if Lookups cannot be initialized
 	 *  @return true if initialized
 	 */
-	public boolean dynInit() throws Exception
-	{
+	public boolean dynInit() throws Exception {
 		log.config("");
 		
-		super.dynInit();
-		
 		//Refresh button
-		Button refreshButton = window.getConfirmPanel().createButton(ConfirmPanel.A_REFRESH);
+		Button refreshButton = v_CreateFromPanel.getConfirmPanel().createButton(ConfirmPanel.A_REFRESH);
 		refreshButton.addEventListener(Events.ON_CLICK, this);
-		window.getConfirmPanel().addButton(refreshButton);
+		v_CreateFromPanel.getConfirmPanel().addButton(refreshButton);
 				
-		if (getGridTab().getValue("C_BankDeposit_ID") == null)
-		{
-			FDialog.error(0, window, "SaveErrorRowNotFound");
-			return false;
-		}
-		
-		window.setTitle(getTitle());
-		
-		int AD_Column_ID = 4917;        //  C_BankStatement.C_BankAccount_ID
-		MLookup lookup = MLookupFactory.get (Env.getCtx(), p_WindowNo, 0, AD_Column_ID, DisplayType.TableDir);
+		//  C_BankAccount_ID
+		MLookup lookup = MLookupFactory.get (Env.getCtx(), p_WindowNo, 0, 
+				MColumn.getColumn_ID(MBankDeposit.Table_Name, MBankDeposit.COLUMNNAME_C_BankAccount_ID), 
+				DisplayType.TableDir);
 		bankAccountField = new WTableDirEditor ("C_BankAccount_ID", true, false, true, lookup);
 		//  Set Default
 		int C_BankAccount_ID = Env.getContextAsInt(Env.getCtx(), p_WindowNo, "C_BankAccount_ID");
@@ -158,27 +162,32 @@ public class WCreateFromDepositUI extends CreateFromDeposit implements EventList
 		authorizationField = new WStringEditor ("authorization", false, false, true, 10, 30, null, null);
 		authorizationField.getComponent().addEventListener(Events.ON_CHANGE, this);
 
-		lookup = MLookupFactory.get (Env.getCtx(), p_WindowNo, 0, MColumn.getColumn_ID(MPayment.Table_Name, MPayment.COLUMNNAME_C_DocType_ID), DisplayType.TableDir);
+		lookup = MLookupFactory.get (Env.getCtx(), p_WindowNo, 0, 
+				MColumn.getColumn_ID(MPayment.Table_Name, MPayment.COLUMNNAME_C_DocType_ID), 
+				DisplayType.TableDir);
 		documentTypeField = new WTableDirEditor (MPayment.COLUMNNAME_C_DocType_ID,false,false,true,lookup);
 		documentTypeField.getComponent().addEventListener(Events.ON_CHANGE, this);
 		
-		lookup = MLookupFactory.get (Env.getCtx(), p_WindowNo, 0, MColumn.getColumn_ID(MPayment.Table_Name, MPayment.COLUMNNAME_TenderType), DisplayType.List);
+		lookup = MLookupFactory.get (Env.getCtx(), p_WindowNo, 0, 
+				MColumn.getColumn_ID(MPayment.Table_Name, MPayment.COLUMNNAME_TenderType), 
+				DisplayType.List);
 		tenderTypeField = new WTableDirEditor (MPayment.COLUMNNAME_TenderType,false,false,true,lookup);
 		tenderTypeField.getComponent().addEventListener(Events.ON_CHANGE, this);
 		
-		MLookup lookupCard = MLookupFactory.get (Env.getCtx(), p_WindowNo, 0, 
-				MColumn.getColumn_ID(MPayment.Table_Name, MPayment.COLUMNNAME_CreditCardType), DisplayType.List);
-		creditCardTypeField = new WTableDirEditor (MPayment.COLUMNNAME_CreditCardType,false,false,true,lookupCard);
+		lookup = MLookupFactory.get (Env.getCtx(), p_WindowNo, 0, 
+				MColumn.getColumn_ID(MPayment.Table_Name, MPayment.COLUMNNAME_CreditCardType), 
+				DisplayType.List);
+		creditCardTypeField = new WTableDirEditor (MPayment.COLUMNNAME_CreditCardType,false,false,true,lookup);
 		creditCardTypeField.getComponent().addEventListener(Events.ON_CHANGE, this);
 		
-		lookup = MLookupFactory.get (Env.getCtx(), p_WindowNo, 0, 3499, DisplayType.Search);
+		lookup = MLookupFactory.get (Env.getCtx(), p_WindowNo, 0, 
+				MColumn.getColumn_ID(MPayment.Table_Name, MPayment.COLUMNNAME_C_BPartner_ID),  
+				DisplayType.Search);
 		bPartnerLookup = new WSearchEditor ("C_BPartner_ID", false, false, true, lookup);
 		
 		Timestamp date = Env.getContextAsDate(Env.getCtx(), p_WindowNo, MBankStatement.COLUMNNAME_StatementDate);
 		dateToField.setValue(date);
-	
-		bankAccount = new MBankAccount(Env.getCtx(), C_BankAccount_ID, null);
-		
+			
 		loadBankAccount();
 		
 		return true;
@@ -202,7 +211,7 @@ public class WCreateFromDepositUI extends CreateFromDeposit implements EventList
     	Borderlayout parameterLayout = new Borderlayout();
 		parameterLayout.setHeight("110px");
 		parameterLayout.setWidth("100%");
-    	Panel parameterPanel = window.getParameterPanel();
+    	Panel parameterPanel = v_CreateFromPanel.getParameterPanel();
 		parameterPanel.appendChild(parameterLayout);
 		
 		Grid parameterBankLayout = GridFactory.newGridLayout();
@@ -258,10 +267,10 @@ public class WCreateFromDepositUI extends CreateFromDeposit implements EventList
 	public void onEvent(Event e) throws Exception
 	{
 		log.config("Action=" + e.getTarget().getId());
-		if(e.getTarget().equals(window.getConfirmPanel().getButton(ConfirmPanel.A_REFRESH)))
+		if(e.getTarget().equals(v_CreateFromPanel.getConfirmPanel().getButton(ConfirmPanel.A_REFRESH)))
 		{
 			loadBankAccount();
-			window.tableChanged(null);
+			v_CreateFromPanel.tableChanged(null);
 		}
 	}
 	
@@ -274,47 +283,57 @@ public class WCreateFromDepositUI extends CreateFromDeposit implements EventList
 	
 	protected void loadTableOIS (Vector<?> data)
 	{
-		window.getWListbox().clear();
+		v_CreateFromPanel.getWListbox().clear();
 		
 		//  Remove previous listeners
-		window.getWListbox().getModel().removeTableModelListener(window);
+		v_CreateFromPanel.getWListbox().getModel().removeTableModelListener(v_CreateFromPanel);
 		//  Set Model
 		ListModelTable model = new ListModelTable(data);
-		model.addTableModelListener(window);
-		window.getWListbox().setData(model, getOISColumnNames());
+		model.addTableModelListener(v_CreateFromPanel);
+		v_CreateFromPanel.getWListbox().setData(model, getOISColumnNames());
 		//
 		
-		configureMiniTable(window.getWListbox());
+		configureMiniTable(v_CreateFromPanel.getWListbox());
 	}
 	
 	/**
 	 *  List total amount
 	 */
-	public void info()
-	{
+	public boolean info() {
+		//	Valid null
+		if(v_CreateFromPanel == null)
+			return false;
+
 		DecimalFormat format = DisplayType.getNumberFormat(DisplayType.Amount);
 
 		BigDecimal total = new BigDecimal(0.0);
-		int rows = window.getWListbox().getRowCount();
+		int rows = v_CreateFromPanel.getWListbox().getRowCount();
 		int count = 0;
 		for (int i = 0; i < rows; i++)
 		{
-			if (((Boolean)window.getWListbox().getValueAt(i, 0)).booleanValue())
+			if (((Boolean)v_CreateFromPanel.getWListbox().getValueAt(i, 0)).booleanValue())
 			{
-				total = total.add((BigDecimal)window.getWListbox().getValueAt(i, 4));
+				total = total.add((BigDecimal)v_CreateFromPanel.getWListbox().getValueAt(i, 4));
 				count++;
 			}
 		}
-		window.setStatusLine(count, Msg.getMsg(Env.getCtx(), "Sum") + "  " + format.format(total));
-	}   //  infoStatement
+		v_CreateFromPanel.setStatusLine(count, Msg.getMsg(Env.getCtx(), "Sum") + "  " + format.format(total));
+		//	Default return true for update panel from it method
+		return true;
+	}   //  infoDeposit
 	
-	public void showWindow()
-	{
-		window.setVisible(true);
+	@Override
+	public int getWindowNo() {
+		return v_Container.getWindowNo();
 	}
-	
-	public void closeWindow()
-	{
-		window.dispose();
+
+	@Override
+	public void dispose() {
+		v_Container.dispose();
+	}
+
+	@Override
+	public ADForm getForm() {
+		return v_Container;
 	}
 }

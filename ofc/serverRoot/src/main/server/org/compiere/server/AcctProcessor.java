@@ -77,7 +77,7 @@ public class AcctProcessor extends AdempiereServer
 			m_ass = new MAcctSchema[] {new MAcctSchema (getCtx(), m_model.getC_AcctSchema_ID(), null)};
 		//
 		postSession();
-		MCost.create(m_client);
+		//MCost.create(m_client);
 		//
 		int no = m_model.deleteLog();
 		m_summary.append("Logs deleted=").append(no);
@@ -167,7 +167,6 @@ public class AcctProcessor extends AdempiereServer
 				&& m_model.getAD_Table_ID() != AD_Table_ID)
 				continue;
 			//  SELECT * FROM table
-			//  TODO: add virtual columns? They don't exist in the database, but are part of the model.
 			StringBuffer sql = new StringBuffer ("SELECT * FROM ").append(TableName)
 				.append(" WHERE AD_Client_ID=? AND (ProcessedOn");
 			if (processedOn.compareTo(Env.ZERO) != 0)
