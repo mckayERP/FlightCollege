@@ -3,16 +3,16 @@
   <Migration EntityType="MFTU" Name="Update elements, columns and fields" ReleaseNo="FTU2" SeqNo="4">
     <Step SeqNo="10" StepType="AD">
       <PO AD_Table_ID="276" Action="U" Record_ID="1000244" Table="AD_Element">
-        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="aircraft">Aircraft</Data>
         <Data AD_Column_ID="2603" Column="Name" oldValue="aircraft">Aircraft</Data>
         <Data AD_Column_ID="2604" Column="Description" isOldNull="true">The unique aircraft call sign or registration marks.</Data>
         <Data AD_Column_ID="4299" Column="PrintName" oldValue="aircraft">Aircraft</Data>
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="aircraft">Aircraft</Data>
       </PO>
     </Step>
     <Step SeqNo="20" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000942" Table="AD_Column">
-        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isOldNull="true">The unique aircraft call sign or registration marks.</Data>
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="111" Column="Name" oldValue="aircraft">Aircraft</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="aircraft">Aircraft</Data>
       </PO>
@@ -93,8 +93,8 @@
     </Step>
     <Step SeqNo="160" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000363" Table="AD_Field">
-        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="169" Column="Description" oldValue="Air Time is the interval between the wheels up and wheels down measured in hours.">The time intervale measured in hours from the moment the aircraft leaves the ground to the moment it contacts the ground again.</Data>
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
       </PO>
     </Step>
     <Step SeqNo="170" StepType="AD">
@@ -166,9 +166,9 @@
     </Step>
     <Step SeqNo="280" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000727" Table="AD_Column">
+        <Data AD_Column_ID="111" Column="Name" oldValue="bookingdate">Booking Date</Data>
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="111" Column="Name" oldValue="bookingdate">Booking Date</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="bookingdate">BookingDate</Data>
       </PO>
     </Step>
@@ -181,9 +181,9 @@
     </Step>
     <Step SeqNo="300" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000728" Table="AD_Column">
+        <Data AD_Column_ID="111" Column="Name" oldValue="bookinghour">Booking Hour</Data>
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="111" Column="Name" oldValue="bookinghour">Booking Hour</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="bookinghour">BookingHour</Data>
       </PO>
     </Step>
@@ -213,12 +213,13 @@
     </Step>
     <Step SeqNo="340" StepType="AD">
       <PO AD_Table_ID="276" Action="D" Record_ID="1000308" Table="AD_Element">
+        <Data AD_Column_ID="2598" Column="Created" isNewNull="true" oldValue="2012-01-17 11:54:38.0"/>
+        <Data AD_Column_ID="2603" Column="Name" isNewNull="true" oldValue="contact_name"/>
         <Data AD_Column_ID="6284" Column="PO_Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="6286" Column="PO_PrintName" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="2594" Column="AD_Element_ID" isNewNull="true" oldValue="1000308"/>
         <Data AD_Column_ID="2602" Column="ColumnName" isNewNull="true" oldValue="contact_name"/>
         <Data AD_Column_ID="2595" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
-        <Data AD_Column_ID="2598" Column="Created" isNewNull="true" oldValue="2012-01-17 11:54:38.0"/>
         <Data AD_Column_ID="2600" Column="Updated" isNewNull="true" oldValue="2012-01-17 11:54:38.0"/>
         <Data AD_Column_ID="2605" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="2597" Column="IsActive" isNewNull="true" oldValue="true"/>
@@ -227,7 +228,6 @@
         <Data AD_Column_ID="2596" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
         <Data AD_Column_ID="2599" Column="CreatedBy" isNewNull="true" oldValue="0"/>
         <Data AD_Column_ID="2601" Column="UpdatedBy" isNewNull="true" oldValue="0"/>
-        <Data AD_Column_ID="2603" Column="Name" isNewNull="true" oldValue="contact_name"/>
         <Data AD_Column_ID="2604" Column="Description" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="4299" Column="PrintName" isNewNull="true" oldValue="contact_name"/>
         <Data AD_Column_ID="6285" Column="PO_Name" isNewNull="true" isOldNull="true"/>
@@ -255,9 +255,9 @@
     </Step>
     <Step SeqNo="380" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000312" Table="AD_Column">
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="Course_Title">CourseTitle</Data>
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="116" Column="ColumnName" oldValue="Course_Title">CourseTitle</Data>
       </PO>
     </Step>
     <Step SeqNo="390" StepType="AD">
@@ -269,9 +269,9 @@
     </Step>
     <Step SeqNo="400" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1001066" Table="AD_Column">
+        <Data AD_Column_ID="111" Column="Name" oldValue="cust_name">Customer Name</Data>
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="111" Column="Name" oldValue="cust_name">Customer Name</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="cust_name">CustName</Data>
       </PO>
     </Step>
@@ -289,9 +289,9 @@
     </Step>
     <Step SeqNo="430" StepType="AD">
       <PO AD_Table_ID="276" Action="U" Record_ID="1000331" Table="AD_Element">
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="customer">Customer</Data>
         <Data AD_Column_ID="2602" Column="ColumnName" oldValue="customer">Customer</Data>
         <Data AD_Column_ID="2603" Column="Name" oldValue="customer">Customer</Data>
-        <Data AD_Column_ID="4299" Column="PrintName" oldValue="customer">Customer</Data>
       </PO>
     </Step>
     <Step SeqNo="440" StepType="AD">
@@ -325,16 +325,16 @@
     </Step>
     <Step SeqNo="480" StepType="AD">
       <PO AD_Table_ID="276" Action="U" Record_ID="1000274" Table="AD_Element">
-        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="date_from">Date_From</Data>
         <Data AD_Column_ID="2603" Column="Name" oldValue="date_from">Date From</Data>
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="date_from">Date_From</Data>
         <Data AD_Column_ID="4299" Column="PrintName" oldValue="date_from">Date From</Data>
       </PO>
     </Step>
     <Step SeqNo="490" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1001069" Table="AD_Column">
+        <Data AD_Column_ID="111" Column="Name" oldValue="date_from">Date From</Data>
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="111" Column="Name" oldValue="date_from">Date From</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="date_from">Date_From</Data>
       </PO>
     </Step>
@@ -359,10 +359,10 @@
     </Step>
     <Step SeqNo="530" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1001070" Table="AD_Column">
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="date_to">Date_To</Data>
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="111" Column="Name" oldValue="date_to">Date To</Data>
-        <Data AD_Column_ID="116" Column="ColumnName" oldValue="date_to">Date_To</Data>
       </PO>
     </Step>
     <Step SeqNo="540" StepType="AD">
@@ -420,26 +420,26 @@
     </Step>
     <Step SeqNo="590" StepType="AD">
       <PO AD_Table_ID="276" Action="D" Record_ID="1000275" Table="AD_Element">
-        <Data AD_Column_ID="6284" Column="PO_Help" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="6286" Column="PO_PrintName" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="2594" Column="AD_Element_ID" isNewNull="true" oldValue="1000275"/>
+        <Data AD_Column_ID="2597" Column="IsActive" isNewNull="true" oldValue="true"/>
+        <Data AD_Column_ID="58589" Column="FieldLength" isNewNull="true" oldValue="29"/>
+        <Data AD_Column_ID="6286" Column="PO_PrintName" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="2603" Column="Name" isNewNull="true" oldValue="Date To"/>
+        <Data AD_Column_ID="6284" Column="PO_Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="2602" Column="ColumnName" isNewNull="true" oldValue="Date_To"/>
         <Data AD_Column_ID="2595" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
         <Data AD_Column_ID="2598" Column="Created" isNewNull="true" oldValue="2011-02-08 17:32:06.0"/>
         <Data AD_Column_ID="2600" Column="Updated" isNewNull="true" oldValue="2016-01-19 06:05:06.0"/>
         <Data AD_Column_ID="2605" Column="Help" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="2597" Column="IsActive" isNewNull="true" oldValue="true"/>
         <Data AD_Column_ID="6283" Column="PO_Description" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="6484" Column="EntityType" isNewNull="true" oldValue="MFTU"/>
         <Data AD_Column_ID="2596" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
         <Data AD_Column_ID="2599" Column="CreatedBy" isNewNull="true" oldValue="0"/>
         <Data AD_Column_ID="2601" Column="UpdatedBy" isNewNull="true" oldValue="0"/>
-        <Data AD_Column_ID="2603" Column="Name" isNewNull="true" oldValue="Date To"/>
         <Data AD_Column_ID="2604" Column="Description" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="4299" Column="PrintName" isNewNull="true" oldValue="Date To"/>
         <Data AD_Column_ID="6285" Column="PO_Name" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="58588" Column="AD_Reference_ID" isNewNull="true" oldValue="16"/>
-        <Data AD_Column_ID="58589" Column="FieldLength" isNewNull="true" oldValue="29"/>
         <Data AD_Column_ID="58590" Column="AD_Reference_Value_ID" isNewNull="true" isOldNull="true"/>
       </PO>
     </Step>
@@ -454,8 +454,8 @@
     </Step>
     <Step SeqNo="610" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000943" Table="AD_Column">
-        <Data AD_Column_ID="113" Column="Help" isOldNull="true">Measured in hours.</Data>
         <Data AD_Column_ID="112" Column="Description" isOldNull="true">The time interval of flight where the student is under instruction.</Data>
+        <Data AD_Column_ID="113" Column="Help" isOldNull="true">Measured in hours.</Data>
         <Data AD_Column_ID="111" Column="Name" oldValue="dual">Dual</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="dual">Dual</Data>
       </PO>
@@ -537,10 +537,10 @@
     </Step>
     <Step SeqNo="750" StepType="AD">
       <PO AD_Table_ID="276" Action="U" Record_ID="1000251" Table="AD_Element">
+        <Data AD_Column_ID="2604" Column="Description" isOldNull="true">The time intervale from the moment the aircraft first moves under its own power for the purposes of taking off until the moment it comes to rest.</Data>
         <Data AD_Column_ID="2602" Column="ColumnName" oldValue="FLig">FlightTime</Data>
         <Data AD_Column_ID="2605" Column="Help" isOldNull="true">Measured in hours.</Data>
         <Data AD_Column_ID="2603" Column="Name" oldValue="flight_time">Flight Time</Data>
-        <Data AD_Column_ID="2604" Column="Description" isOldNull="true">The time intervale from the moment the aircraft first moves under its own power for the purposes of taking off until the moment it comes to rest.</Data>
         <Data AD_Column_ID="4299" Column="PrintName" oldValue="flight_time">Flight Time</Data>
       </PO>
     </Step>
@@ -593,21 +593,23 @@
     </Step>
     <Step SeqNo="840" StepType="AD">
       <PO AD_Table_ID="489" Action="U" Record_ID="1004336" Table="AD_PrintFormatItem">
-        <Data AD_Column_ID="6946" Column="PrintName" oldValue="flight_time">Flight Time</Data>
         <Data AD_Column_ID="6940" Column="Name" oldValue="flight_time">Flight Time</Data>
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="flight_time">Flight Time</Data>
       </PO>
     </Step>
     <Step SeqNo="850" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000941" Table="AD_Column">
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="fltdate">FlightDate</Data>
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="111" Column="Name" oldValue="fltdate">Flight Date</Data>
-        <Data AD_Column_ID="116" Column="ColumnName" oldValue="fltdate">FlightDate</Data>
         <Data AD_Column_ID="2608" Column="AD_Element_ID" oldValue="1000243">1000189</Data>
       </PO>
     </Step>
     <Step SeqNo="860" StepType="AD">
       <PO AD_Table_ID="276" Action="D" Record_ID="1000243" Table="AD_Element">
+        <Data AD_Column_ID="4299" Column="PrintName" isNewNull="true" oldValue="fltdate"/>
+        <Data AD_Column_ID="2603" Column="Name" isNewNull="true" oldValue="fltdate"/>
         <Data AD_Column_ID="6284" Column="PO_Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="6286" Column="PO_PrintName" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="2594" Column="AD_Element_ID" isNewNull="true" oldValue="1000243"/>
@@ -622,9 +624,7 @@
         <Data AD_Column_ID="2596" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
         <Data AD_Column_ID="2599" Column="CreatedBy" isNewNull="true" oldValue="0"/>
         <Data AD_Column_ID="2601" Column="UpdatedBy" isNewNull="true" oldValue="0"/>
-        <Data AD_Column_ID="2603" Column="Name" isNewNull="true" oldValue="fltdate"/>
         <Data AD_Column_ID="2604" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="4299" Column="PrintName" isNewNull="true" oldValue="fltdate"/>
         <Data AD_Column_ID="6285" Column="PO_Name" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="58588" Column="AD_Reference_ID" isNewNull="true" oldValue="16"/>
         <Data AD_Column_ID="58589" Column="FieldLength" isNewNull="true" oldValue="29"/>
@@ -640,10 +640,10 @@
     </Step>
     <Step SeqNo="880" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000940" Table="AD_Column">
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="fltmonth">FlightMonth</Data>
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="111" Column="Name" oldValue="fltmonth">Month</Data>
-        <Data AD_Column_ID="116" Column="ColumnName" oldValue="fltmonth">FlightMonth</Data>
       </PO>
     </Step>
     <Step SeqNo="890" StepType="AD">
@@ -653,8 +653,8 @@
     </Step>
     <Step SeqNo="900" StepType="AD">
       <PO AD_Table_ID="489" Action="U" Record_ID="1002975" Table="AD_PrintFormatItem">
-        <Data AD_Column_ID="6946" Column="PrintName" oldValue="fltmonth">Month</Data>
         <Data AD_Column_ID="6940" Column="Name" oldValue="fltmonth">Month</Data>
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="fltmonth">Month</Data>
       </PO>
     </Step>
     <Step SeqNo="910" StepType="AD">
@@ -683,8 +683,8 @@
     </Step>
     <Step SeqNo="950" StepType="AD">
       <PO AD_Table_ID="489" Action="U" Record_ID="1004323" Table="AD_PrintFormatItem">
-        <Data AD_Column_ID="6946" Column="PrintName" oldValue="fltmonth">Month</Data>
         <Data AD_Column_ID="6940" Column="Name" oldValue="fltmonth">Month</Data>
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="fltmonth">Month</Data>
       </PO>
     </Step>
     <Step SeqNo="960" StepType="AD">
@@ -722,8 +722,8 @@
     </Step>
     <Step SeqNo="1020" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000824" Table="AD_Column">
-        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isOldNull="true">The date of the start of the flight.</Data>
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
       </PO>
     </Step>
     <Step SeqNo="1030" StepType="AD">
@@ -739,8 +739,8 @@
     </Step>
     <Step SeqNo="1050" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000832" Table="AD_Column">
-        <Data AD_Column_ID="113" Column="Help" isOldNull="true">Measured in hours.</Data>
         <Data AD_Column_ID="112" Column="Description" isOldNull="true">The time intervale from the moment the aircraft first moves under its own power for the purposes of taking off until the moment it comes to rest.</Data>
+        <Data AD_Column_ID="113" Column="Help" isOldNull="true">Measured in hours.</Data>
         <Data AD_Column_ID="111" Column="Name" oldValue="Flt Time">Flight Time</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="FltTime">FlightTime</Data>
         <Data AD_Column_ID="2608" Column="AD_Element_ID" oldValue="1000197">1000251</Data>
@@ -748,8 +748,8 @@
     </Step>
     <Step SeqNo="1060" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000847" Table="AD_Field">
-        <Data AD_Column_ID="170" Column="Help" oldValue="From CARs: flight time means the time from the moment an aircraft first moves under its own power for the purpose of taking off until the moment it comes to rest at the end of the flight; (temps de vol).  ">Measured in hours.</Data>
         <Data AD_Column_ID="169" Column="Description" oldValue="Flight Time is the interval from engine start to engine stop.">The time intervale from the moment the aircraft first moves under its own power for the purposes of taking off until the moment it comes to rest.</Data>
+        <Data AD_Column_ID="170" Column="Help" oldValue="From CARs: flight time means the time from the moment an aircraft first moves under its own power for the purpose of taking off until the moment it comes to rest at the end of the flight; (temps de vol).  ">Measured in hours.</Data>
       </PO>
     </Step>
     <Step SeqNo="1070" StepType="AD">
@@ -799,8 +799,8 @@
     </Step>
     <Step SeqNo="1110" StepType="AD">
       <PO AD_Table_ID="489" Action="U" Record_ID="1004309" Table="AD_PrintFormatItem">
-        <Data AD_Column_ID="6946" Column="PrintName" oldValue="fuel_used">Fuel Used</Data>
         <Data AD_Column_ID="6940" Column="Name" oldValue="fuel_used">Fuel Used</Data>
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="fuel_used">Fuel Used</Data>
       </PO>
     </Step>
     <Step SeqNo="1120" StepType="AD">
@@ -830,9 +830,9 @@
     </Step>
     <Step SeqNo="1160" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1001077" Table="AD_Column">
+        <Data AD_Column_ID="111" Column="Name" oldValue="full_time_months">Full Time Months</Data>
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="111" Column="Name" oldValue="full_time_months">Full Time Months</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="full_time_months">FullTimeMonths</Data>
       </PO>
     </Step>
@@ -844,8 +844,8 @@
     </Step>
     <Step SeqNo="1180" StepType="AD">
       <PO AD_Table_ID="489" Action="U" Record_ID="1003895" Table="AD_PrintFormatItem">
-        <Data AD_Column_ID="6946" Column="PrintName" isOldNull="true">Full Time Months</Data>
         <Data AD_Column_ID="6940" Column="Name" oldValue="full_time_months">Full Time Months</Data>
+        <Data AD_Column_ID="6946" Column="PrintName" isOldNull="true">Full Time Months</Data>
       </PO>
     </Step>
     <Step SeqNo="1190" StepType="AD">
@@ -884,10 +884,10 @@
     </Step>
     <Step SeqNo="1250" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000370" Table="AD_Column">
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="i_ofc_acknowledged_by">i_acknowledged_by</Data>
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="111" Column="Name" oldValue="i_ofc_acknowledged_by">i_acknowledged_by</Data>
-        <Data AD_Column_ID="116" Column="ColumnName" oldValue="i_ofc_acknowledged_by">i_acknowledged_by</Data>
       </PO>
     </Step>
     <Step SeqNo="1260" StepType="AD">
@@ -948,10 +948,10 @@
     </Step>
     <Step SeqNo="1350" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000370" Table="AD_Column">
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="i_acknowledged_by">I_Acknowledged_By</Data>
+        <Data AD_Column_ID="111" Column="Name" oldValue="i_acknowledged_by">I_Acknowledged_by</Data>
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="111" Column="Name" oldValue="i_acknowledged_by">I_Acknowledged_by</Data>
-        <Data AD_Column_ID="116" Column="ColumnName" oldValue="i_acknowledged_by">I_Acknowledged_By</Data>
       </PO>
     </Step>
     <Step SeqNo="1360" StepType="AD">
@@ -1025,9 +1025,9 @@
     </Step>
     <Step SeqNo="1470" StepType="AD">
       <PO AD_Table_ID="276" Action="U" Record_ID="1000076" Table="AD_Element">
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="i_ofc_air_time">I_AirTime</Data>
         <Data AD_Column_ID="2602" Column="ColumnName" oldValue="i_AirTime">I_AirTime</Data>
         <Data AD_Column_ID="2603" Column="Name" oldValue="i_ofc_air_timB">I_AirTime</Data>
-        <Data AD_Column_ID="4299" Column="PrintName" oldValue="i_ofc_air_time">I_AirTime</Data>
       </PO>
     </Step>
     <Step SeqNo="1480" StepType="AD">
@@ -1066,17 +1066,17 @@
     </Step>
     <Step SeqNo="1530" StepType="AD">
       <PO AD_Table_ID="276" Action="U" Record_ID="1000064" Table="AD_Element">
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="i_ofc_authorized_by">I_AuthorizedBy</Data>
         <Data AD_Column_ID="2602" Column="ColumnName" oldValue="i_ofc_authorized_by">I_AuthorizedBy</Data>
         <Data AD_Column_ID="2603" Column="Name" oldValue="i_ofc_authorized_by">I_AuthorizedBy</Data>
-        <Data AD_Column_ID="4299" Column="PrintName" oldValue="i_ofc_authorized_by">I_AuthorizedBy</Data>
       </PO>
     </Step>
     <Step SeqNo="1540" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000369" Table="AD_Column">
-        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="111" Column="Name" oldValue="i_ofc_authorized_by">I_AuthorizedBy</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="i_ofc_authorized_by">I_AuthorizedBy</Data>
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
       </PO>
     </Step>
     <Step SeqNo="1550" StepType="AD">
@@ -1107,9 +1107,9 @@
     </Step>
     <Step SeqNo="1590" StepType="AD">
       <PO AD_Table_ID="276" Action="U" Record_ID="1000078" Table="AD_Element">
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="i_ofc_briefing">I_Briefing</Data>
         <Data AD_Column_ID="2602" Column="ColumnName" oldValue="i_ofc_briefing">I_Briefing</Data>
         <Data AD_Column_ID="2603" Column="Name" oldValue="i_ofc_briefing">I_Briefing</Data>
-        <Data AD_Column_ID="4299" Column="PrintName" oldValue="i_ofc_briefing">I_Briefing</Data>
       </PO>
     </Step>
     <Step SeqNo="1600" StepType="AD">
@@ -1122,9 +1122,9 @@
     </Step>
     <Step SeqNo="1610" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000332" Table="AD_Field">
+        <Data AD_Column_ID="168" Column="Name" oldValue="i_ofc_briefing">I_Briefing</Data>
         <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="168" Column="Name" oldValue="i_ofc_briefing">I_Briefing</Data>
       </PO>
     </Step>
     <Step SeqNo="1620" StepType="AD">
@@ -1148,17 +1148,17 @@
     </Step>
     <Step SeqNo="1650" StepType="AD">
       <PO AD_Table_ID="276" Action="U" Record_ID="1000059" Table="AD_Element">
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="i_ofc_call_marks">Call Marks</Data>
         <Data AD_Column_ID="2602" Column="ColumnName" oldValue="i_ofc_call_marks">I_CallMarks</Data>
         <Data AD_Column_ID="2603" Column="Name" oldValue="i_ofc_call_marks">Call Marks</Data>
-        <Data AD_Column_ID="4299" Column="PrintName" oldValue="i_ofc_call_marks">Call Marks</Data>
       </PO>
     </Step>
     <Step SeqNo="1660" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000364" Table="AD_Column">
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="i_ofc_call_marks">I_CallMarks</Data>
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="111" Column="Name" oldValue="i_ofc_call_marks">Call Marks</Data>
-        <Data AD_Column_ID="116" Column="ColumnName" oldValue="i_ofc_call_marks">I_CallMarks</Data>
       </PO>
     </Step>
     <Step SeqNo="1670" StepType="AD">
@@ -1209,9 +1209,9 @@
     </Step>
     <Step SeqNo="1740" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000648" Table="AD_Field">
+        <Data AD_Column_ID="168" Column="Name" oldValue="I_Briefing">Briefing</Data>
         <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="168" Column="Name" oldValue="I_Briefing">Briefing</Data>
       </PO>
     </Step>
     <Step SeqNo="1750" StepType="AD">
@@ -1248,8 +1248,8 @@
     </Step>
     <Step SeqNo="1800" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000647" Table="AD_Field">
-        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="168" Column="Name" oldValue="I_AuthorizedBy">Authorized By</Data>
       </PO>
     </Step>
@@ -1280,9 +1280,9 @@
     </Step>
     <Step SeqNo="1850" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000330" Table="AD_Field">
+        <Data AD_Column_ID="168" Column="Name" oldValue="I_AirTime">Air Time</Data>
         <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="168" Column="Name" oldValue="I_AirTime">Air Time</Data>
       </PO>
     </Step>
     <Step SeqNo="1860" StepType="AD">
@@ -1319,16 +1319,16 @@
     </Step>
     <Step SeqNo="1910" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000329" Table="AD_Field">
-        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="168" Column="Name" oldValue="I_Acknowledged_by">Acknowledged By</Data>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
       </PO>
     </Step>
     <Step SeqNo="1920" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000645" Table="AD_Field">
+        <Data AD_Column_ID="168" Column="Name" oldValue="I_Acknowledged_by">Acknowledged By</Data>
         <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="168" Column="Name" oldValue="I_Acknowledged_by">Acknowledged By</Data>
       </PO>
     </Step>
     <Step SeqNo="1930" StepType="AD">
@@ -1352,9 +1352,9 @@
     </Step>
     <Step SeqNo="1960" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000365" Table="AD_Column">
+        <Data AD_Column_ID="111" Column="Name" oldValue="i_ofc_captain_pic">Captain or PIC</Data>
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="111" Column="Name" oldValue="i_ofc_captain_pic">Captain or PIC</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="i_ofc_captain_pic">I_Captain_PIC</Data>
       </PO>
     </Step>
@@ -1386,17 +1386,17 @@
     </Step>
     <Step SeqNo="2010" StepType="AD">
       <PO AD_Table_ID="276" Action="U" Record_ID="1000057" Table="AD_Element">
-        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="i_ofc_client_id">I_ClientID</Data>
         <Data AD_Column_ID="2603" Column="Name" oldValue="i_ofc_client_id">Client ID</Data>
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="i_ofc_client_id">I_ClientID</Data>
         <Data AD_Column_ID="2604" Column="Description" isOldNull="true">The Flighsheet Client ID</Data>
         <Data AD_Column_ID="4299" Column="PrintName" oldValue="i_ofc_client_id">Client ID</Data>
       </PO>
     </Step>
     <Step SeqNo="2020" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000362" Table="AD_Column">
+        <Data AD_Column_ID="111" Column="Name" oldValue="i_ofc_client_id">Client ID</Data>
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isOldNull="true">The Flighsheet Client ID</Data>
-        <Data AD_Column_ID="111" Column="Name" oldValue="i_ofc_client_id">Client ID</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="i_ofc_client_id">I_ClientID</Data>
       </PO>
     </Step>
@@ -1431,9 +1431,9 @@
     </Step>
     <Step SeqNo="2080" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000363" Table="AD_Column">
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="i_ofc_course_type">I_CourseType</Data>
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="116" Column="ColumnName" oldValue="i_ofc_course_type">I_CourseType</Data>
       </PO>
     </Step>
     <Step SeqNo="2090" StepType="AD">
@@ -1444,9 +1444,9 @@
     </Step>
     <Step SeqNo="2100" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000652" Table="AD_Field">
+        <Data AD_Column_ID="168" Column="Name" oldValue="Flt Type">i_ofc_course_type</Data>
         <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="168" Column="Name" oldValue="Flt Type">i_ofc_course_type</Data>
       </PO>
     </Step>
     <Step SeqNo="2110" StepType="AD">
@@ -1465,16 +1465,16 @@
     </Step>
     <Step SeqNo="2130" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000336" Table="AD_Field">
+        <Data AD_Column_ID="168" Column="Name" oldValue="i_ofc_course_type">Course Type</Data>
         <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="169" Column="Description" isOldNull="true">The flightsheet course type</Data>
-        <Data AD_Column_ID="168" Column="Name" oldValue="i_ofc_course_type">Course Type</Data>
       </PO>
     </Step>
     <Step SeqNo="2140" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000652" Table="AD_Field">
+        <Data AD_Column_ID="168" Column="Name" oldValue="i_ofc_course_type">Course Type</Data>
         <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="169" Column="Description" isOldNull="true">The flightsheet course type</Data>
-        <Data AD_Column_ID="168" Column="Name" oldValue="i_ofc_course_type">Course Type</Data>
       </PO>
     </Step>
     <Step SeqNo="2150" StepType="AD">
@@ -1497,16 +1497,16 @@
     </Step>
     <Step SeqNo="2180" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000371" Table="AD_Column">
-        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="112" Column="Description" isOldNull="true">The time that engines were started.  Also the start of Flight Ti</Data>
-        <Data AD_Column_ID="111" Column="Name" oldValue="i_ofc_engine_start">Engine Start</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="i_ofc_engine_start">I_EngineStart</Data>
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="i_ofc_engine_start">Engine Start</Data>
+        <Data AD_Column_ID="112" Column="Description" isOldNull="true">The time that engines were started.  Also the start of Flight Ti</Data>
       </PO>
     </Step>
     <Step SeqNo="2190" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000337" Table="AD_Field">
-        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="169" Column="Description" isOldNull="true">The time that engines were started.  Also the start of Flight Ti</Data>
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="168" Column="Name" oldValue="i_ofc_engine_start">Engine Start</Data>
       </PO>
     </Step>
@@ -1569,10 +1569,10 @@
     </Step>
     <Step SeqNo="2300" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000372" Table="AD_Column">
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="i_ofc_engine_stop">I_EngineStop</Data>
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="111" Column="Name" oldValue="i_ofc_engine_stop">Engine Stop</Data>
-        <Data AD_Column_ID="116" Column="ColumnName" oldValue="i_ofc_engine_stop">I_EngineStop</Data>
       </PO>
     </Step>
     <Step SeqNo="2310" StepType="AD">
@@ -1634,9 +1634,9 @@
     </Step>
     <Step SeqNo="2400" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000361" Table="AD_Column">
+        <Data AD_Column_ID="111" Column="Name" oldValue="i_ofc_flight_day">Flight Day</Data>
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="111" Column="Name" oldValue="i_ofc_flight_day">Flight Day</Data>
       </PO>
     </Step>
     <Step SeqNo="2410" StepType="AD">
@@ -1667,17 +1667,17 @@
     </Step>
     <Step SeqNo="2450" StepType="AD">
       <PO AD_Table_ID="276" Action="U" Record_ID="1000052" Table="AD_Element">
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="i_ofc_flight_id">Flight ID</Data>
         <Data AD_Column_ID="2602" Column="ColumnName" oldValue="i_ofc_flight_id">I_FlightID</Data>
         <Data AD_Column_ID="2603" Column="Name" oldValue="i_ofc_flight_id">Flight ID</Data>
         <Data AD_Column_ID="2604" Column="Description" isOldNull="true">The Flightsheet ID number.</Data>
-        <Data AD_Column_ID="4299" Column="PrintName" oldValue="i_ofc_flight_id">Flight ID</Data>
       </PO>
     </Step>
     <Step SeqNo="2460" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000357" Table="AD_Column">
+        <Data AD_Column_ID="111" Column="Name" oldValue="i_ofc_flight_id">Flight ID</Data>
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isOldNull="true">The Flightsheet ID number.</Data>
-        <Data AD_Column_ID="111" Column="Name" oldValue="i_ofc_flight_id">Flight ID</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="i_ofc_flight_id">I_FlightID</Data>
       </PO>
     </Step>
@@ -1714,9 +1714,9 @@
     </Step>
     <Step SeqNo="2520" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000360" Table="AD_Column">
+        <Data AD_Column_ID="111" Column="Name" oldValue="i_ofc_flight_month">Flight Month</Data>
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="111" Column="Name" oldValue="i_ofc_flight_month">Flight Month</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="i_ofc_flight_month">I_FlightMonth</Data>
       </PO>
     </Step>
@@ -1748,17 +1748,17 @@
     </Step>
     <Step SeqNo="2570" StepType="AD">
       <PO AD_Table_ID="276" Action="U" Record_ID="1000074" Table="AD_Element">
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="i_ofc_flight_time_charter">Charter</Data>
         <Data AD_Column_ID="2602" Column="ColumnName" oldValue="i_ofc_flight_time_charter">I_FlightTime_Charter</Data>
         <Data AD_Column_ID="2603" Column="Name" oldValue="i_ofc_flight_time_charter">Charter Time</Data>
-        <Data AD_Column_ID="4299" Column="PrintName" oldValue="i_ofc_flight_time_charter">Charter</Data>
       </PO>
     </Step>
     <Step SeqNo="2580" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000379" Table="AD_Column">
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="i_ofc_flight_time_charter">I_FlightTime_Charter</Data>
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="111" Column="Name" oldValue="i_ofc_flight_time_charter">Charter Time</Data>
-        <Data AD_Column_ID="116" Column="ColumnName" oldValue="i_ofc_flight_time_charter">I_FlightTime_Charter</Data>
       </PO>
     </Step>
     <Step SeqNo="2590" StepType="AD">
@@ -1803,9 +1803,9 @@
     </Step>
     <Step SeqNo="2650" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000343" Table="AD_Field">
-        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="168" Column="Name" oldValue="i_ofc_flight_time_dual">i_ofc_flight_time_duald</Data>
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
       </PO>
     </Step>
     <Step SeqNo="2660" StepType="AD">
@@ -1835,16 +1835,16 @@
     </Step>
     <Step SeqNo="2700" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000375" Table="AD_Column">
+        <Data AD_Column_ID="111" Column="Name" oldValue="i_ofc_flight_time_duald">Dual Time</Data>
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="111" Column="Name" oldValue="i_ofc_flight_time_duald">Dual Time</Data>
       </PO>
     </Step>
     <Step SeqNo="2710" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000343" Table="AD_Field">
+        <Data AD_Column_ID="168" Column="Name" oldValue="i_ofc_flight_time_duald">Dual Time</Data>
         <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="168" Column="Name" oldValue="i_ofc_flight_time_duald">Dual Time</Data>
       </PO>
     </Step>
     <Step SeqNo="2720" StepType="AD">
@@ -1875,17 +1875,17 @@
     </Step>
     <Step SeqNo="2760" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000378" Table="AD_Column">
+        <Data AD_Column_ID="111" Column="Name" oldValue="i_ofc_flight_time_intro">Intro Time</Data>
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="111" Column="Name" oldValue="i_ofc_flight_time_intro">Intro Time</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="i_ofc_flight_time_intro">I_FlightTime_Intro</Data>
       </PO>
     </Step>
     <Step SeqNo="2770" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000344" Table="AD_Field">
+        <Data AD_Column_ID="168" Column="Name" oldValue="i_ofc_flight_time_intro">Intro Time</Data>
         <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="168" Column="Name" oldValue="i_ofc_flight_time_intro">Intro Time</Data>
       </PO>
     </Step>
     <Step SeqNo="2780" StepType="AD">
@@ -1915,10 +1915,10 @@
     </Step>
     <Step SeqNo="2820" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000380" Table="AD_Column">
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="i_ofc_flight_time_nonrev">I_FlightTime_Nonrev</Data>
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="111" Column="Name" oldValue="i_ofc_flight_time_nonrev">Nonrev Time</Data>
-        <Data AD_Column_ID="116" Column="ColumnName" oldValue="i_ofc_flight_time_nonrev">I_FlightTime_Nonrev</Data>
       </PO>
     </Step>
     <Step SeqNo="2830" StepType="AD">
@@ -1931,8 +1931,8 @@
     <Step SeqNo="2840" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000661" Table="AD_Field">
         <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="168" Column="Name" oldValue="Flt Time Nonrev">Nonrev Time</Data>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
       </PO>
     </Step>
     <Step SeqNo="2850" StepType="AD">
@@ -1967,9 +1967,9 @@
     </Step>
     <Step SeqNo="2900" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000662" Table="AD_Field">
+        <Data AD_Column_ID="168" Column="Name" oldValue="Flt Time Rental">i_ofc_flight_time_rental</Data>
         <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="168" Column="Name" oldValue="Flt Time Rental">i_ofc_flight_time_rental</Data>
       </PO>
     </Step>
     <Step SeqNo="2910" StepType="AD">
@@ -1979,17 +1979,17 @@
     </Step>
     <Step SeqNo="2920" StepType="AD">
       <PO AD_Table_ID="276" Action="U" Record_ID="1000072" Table="AD_Element">
-        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="i_ofc_flight_time_renta">I_FlightTime_Rental</Data>
         <Data AD_Column_ID="2603" Column="Name" oldValue="i_ofc_flight_time_rental">Rental Time</Data>
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="i_ofc_flight_time_renta">I_FlightTime_Rental</Data>
         <Data AD_Column_ID="4299" Column="PrintName" oldValue="i_ofc_flight_time_rental">Rental</Data>
       </PO>
     </Step>
     <Step SeqNo="2930" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000377" Table="AD_Column">
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="i_ofc_flight_time_renta">I_FlightTime_Rental</Data>
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="111" Column="Name" oldValue="i_ofc_flight_time_rental">Rental Time</Data>
-        <Data AD_Column_ID="116" Column="ColumnName" oldValue="i_ofc_flight_time_renta">I_FlightTime_Rental</Data>
       </PO>
     </Step>
     <Step SeqNo="2940" StepType="AD">
@@ -2001,9 +2001,9 @@
     </Step>
     <Step SeqNo="2950" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000662" Table="AD_Field">
+        <Data AD_Column_ID="168" Column="Name" oldValue="i_ofc_flight_time_rental">Rental Time</Data>
         <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="168" Column="Name" oldValue="i_ofc_flight_time_rental">Rental Time</Data>
       </PO>
     </Step>
     <Step SeqNo="2960" StepType="AD">
@@ -2027,9 +2027,9 @@
     </Step>
     <Step SeqNo="2990" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000376" Table="AD_Column">
+        <Data AD_Column_ID="111" Column="Name" oldValue="i_ofc_flight_time_solo">Solo Time</Data>
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="111" Column="Name" oldValue="i_ofc_flight_time_solo">Solo Time</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="i_ofc_flight_time_solo">I_FlightTime_Solo</Data>
       </PO>
     </Step>
@@ -2068,9 +2068,9 @@
     </Step>
     <Step SeqNo="3050" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000359" Table="AD_Column">
+        <Data AD_Column_ID="111" Column="Name" oldValue="i_ofc_flight_year">Flight Year</Data>
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="111" Column="Name" oldValue="i_ofc_flight_year">Flight Year</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="i_ofc_flight_year">I_FlightYear</Data>
       </PO>
     </Step>
@@ -2176,15 +2176,15 @@
     </Step>
     <Step SeqNo="3210" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000667" Table="AD_Field">
-        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
       </PO>
     </Step>
     <Step SeqNo="3220" StepType="AD">
       <PO AD_Table_ID="276" Action="U" Record_ID="1000080" Table="AD_Element">
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="i_ofc_invoice_number">Invoice Number</Data>
         <Data AD_Column_ID="2602" Column="ColumnName" oldValue="i_ofc_invoice_number">I_InvoiceNumber</Data>
         <Data AD_Column_ID="2603" Column="Name" oldValue="i_ofc_invoice_number">Invoice Number</Data>
-        <Data AD_Column_ID="4299" Column="PrintName" oldValue="i_ofc_invoice_number">Invoice Number</Data>
       </PO>
     </Step>
     <Step SeqNo="3230" StepType="AD">
@@ -2223,9 +2223,9 @@
     </Step>
     <Step SeqNo="3280" StepType="AD">
       <PO AD_Table_ID="276" Action="U" Record_ID="1000053" Table="AD_Element">
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="i_ofc_num_legs">Num Legs</Data>
         <Data AD_Column_ID="2602" Column="ColumnName" oldValue="i_ofc_num_legs">I_NumLegs</Data>
         <Data AD_Column_ID="2603" Column="Name" oldValue="i_ofc_num_legs">Number Legs</Data>
-        <Data AD_Column_ID="4299" Column="PrintName" oldValue="i_ofc_num_legs">Num Legs</Data>
       </PO>
     </Step>
     <Step SeqNo="3290" StepType="AD">
@@ -2264,17 +2264,17 @@
     </Step>
     <Step SeqNo="3340" StepType="AD">
       <PO AD_Table_ID="276" Action="U" Record_ID="1000063" Table="AD_Element">
-        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="i_ofc_returning_at">I_ReturningAt</Data>
-        <Data AD_Column_ID="2603" Column="Name" oldValue="i_ofc_returning_at">Returning At</Data>
         <Data AD_Column_ID="4299" Column="PrintName" oldValue="i_ofc_returning_at">Returning</Data>
+        <Data AD_Column_ID="2603" Column="Name" oldValue="i_ofc_returning_at">Returning At</Data>
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="i_ofc_returning_at">I_ReturningAt</Data>
       </PO>
     </Step>
     <Step SeqNo="3350" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000368" Table="AD_Column">
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="i_ofc_returning_at">I_ReturningAt</Data>
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="111" Column="Name" oldValue="i_ofc_returning_at">Returning At</Data>
-        <Data AD_Column_ID="116" Column="ColumnName" oldValue="i_ofc_returning_at">I_ReturningAt</Data>
       </PO>
     </Step>
     <Step SeqNo="3360" StepType="AD">
@@ -2310,9 +2310,9 @@
     </Step>
     <Step SeqNo="3410" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000382" Table="AD_Column">
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="i_ofc_simulator">I_SimulatorTi</Data>
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="116" Column="ColumnName" oldValue="i_ofc_simulator">I_SimulatorTi</Data>
       </PO>
     </Step>
     <Step SeqNo="3420" StepType="AD">
@@ -2352,9 +2352,9 @@
     </Step>
     <Step SeqNo="3470" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000671" Table="AD_Field">
+        <Data AD_Column_ID="168" Column="Name" oldValue="i_ofc_simulator">Simulator Time</Data>
         <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="168" Column="Name" oldValue="i_ofc_simulator">Simulator Time</Data>
       </PO>
     </Step>
     <Step SeqNo="3480" StepType="AD">
@@ -2386,9 +2386,9 @@
     </Step>
     <Step SeqNo="3520" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000356" Table="AD_Field">
+        <Data AD_Column_ID="168" Column="Name" oldValue="i_ofc_student_pax">Student or Passenger</Data>
         <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="168" Column="Name" oldValue="i_ofc_student_pax">Student or Passenger</Data>
       </PO>
     </Step>
     <Step SeqNo="3530" StepType="AD">
@@ -2437,16 +2437,16 @@
     </Step>
     <Step SeqNo="3600" StepType="AD">
       <PO AD_Table_ID="276" Action="U" Record_ID="1000069" Table="AD_Element">
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="i_ofc_wheels_down">Wheels Down</Data>
         <Data AD_Column_ID="2602" Column="ColumnName" oldValue="I_Wheels_own">I_WheelsDown</Data>
         <Data AD_Column_ID="2603" Column="Name" oldValue="i_ofc_wheels_down">Wheels Down</Data>
-        <Data AD_Column_ID="4299" Column="PrintName" oldValue="i_ofc_wheels_down">Wheels Down</Data>
       </PO>
     </Step>
     <Step SeqNo="3610" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000374" Table="AD_Column">
+        <Data AD_Column_ID="111" Column="Name" oldValue="i_ofc_wheels_down">Wheels Down</Data>
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="111" Column="Name" oldValue="i_ofc_wheels_down">Wheels Down</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="I_Wheels_own">I_WheelsDown</Data>
       </PO>
     </Step>
@@ -2478,9 +2478,9 @@
     </Step>
     <Step SeqNo="3660" StepType="AD">
       <PO AD_Table_ID="276" Action="U" Record_ID="1000068" Table="AD_Element">
+        <Data AD_Column_ID="4299" Column="PrintName" oldValue="i_ofc_wheels_up">Wheels Up</Data>
         <Data AD_Column_ID="2602" Column="ColumnName" oldValue="i_ofc_wheels_up">I_WheelsUp</Data>
         <Data AD_Column_ID="2603" Column="Name" oldValue="i_ofc_wheels_up">Wheels Up</Data>
-        <Data AD_Column_ID="4299" Column="PrintName" oldValue="i_ofc_wheels_up">Wheels Up</Data>
       </PO>
     </Step>
     <Step SeqNo="3670" StepType="AD">
@@ -2556,8 +2556,8 @@
     </Step>
     <Step SeqNo="3780" StepType="AD">
       <PO AD_Table_ID="489" Action="U" Record_ID="1004380" Table="AD_PrintFormatItem">
-        <Data AD_Column_ID="6946" Column="PrintName" oldValue="Flight/Route">Intended Flight</Data>
         <Data AD_Column_ID="6940" Column="Name" oldValue="intendedflt">Intended Flight</Data>
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="Flight/Route">Intended Flight</Data>
       </PO>
     </Step>
     <Step SeqNo="3790" StepType="AD">
@@ -2570,16 +2570,16 @@
     </Step>
     <Step SeqNo="3800" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000406" Table="AD_Column">
-        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isOldNull="true">Flight Time spent performing and Introductory Flight</Data>
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="111" Column="Name" oldValue="ofc_flight_time_intro">Intro Time</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="ofc_flight_time_intro">FlightTime_Intro</Data>
       </PO>
     </Step>
     <Step SeqNo="3810" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000376" Table="AD_Field">
-        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="169" Column="Description" isOldNull="true">Flight Time spent performing and Introductory Flight</Data>
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="168" Column="Name" oldValue="ofc_flight_time_intro">Intro Time</Data>
       </PO>
     </Step>
@@ -2600,15 +2600,15 @@
     </Step>
     <Step SeqNo="3840" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000424" Table="AD_Field">
-        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="169" Column="Description" isOldNull="true">Flight Time spent performing and Introductory Flight</Data>
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="168" Column="Name" oldValue="Intro">Intro Time</Data>
       </PO>
     </Step>
     <Step SeqNo="3850" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000769" Table="AD_Field">
-        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="169" Column="Description" isOldNull="true">Flight Time spent performing and Introductory Flight</Data>
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="168" Column="Name" oldValue="ofc_flight_time_intro">Intro Time</Data>
       </PO>
     </Step>
@@ -2649,6 +2649,10 @@
     </Step>
     <Step SeqNo="3920" StepType="AD">
       <PO AD_Table_ID="276" Action="D" Record_ID="1000248" Table="AD_Element">
+        <Data AD_Column_ID="2596" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="2599" Column="CreatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="2603" Column="Name" isNewNull="true" oldValue="intro"/>
+        <Data AD_Column_ID="58589" Column="FieldLength" isNewNull="true" oldValue="131089"/>
         <Data AD_Column_ID="6284" Column="PO_Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="6286" Column="PO_PrintName" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="2594" Column="AD_Element_ID" isNewNull="true" oldValue="1000248"/>
@@ -2660,15 +2664,11 @@
         <Data AD_Column_ID="2597" Column="IsActive" isNewNull="true" oldValue="true"/>
         <Data AD_Column_ID="6283" Column="PO_Description" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="6484" Column="EntityType" isNewNull="true" oldValue="MFTU"/>
-        <Data AD_Column_ID="2596" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
-        <Data AD_Column_ID="2599" Column="CreatedBy" isNewNull="true" oldValue="0"/>
         <Data AD_Column_ID="2601" Column="UpdatedBy" isNewNull="true" oldValue="0"/>
-        <Data AD_Column_ID="2603" Column="Name" isNewNull="true" oldValue="intro"/>
         <Data AD_Column_ID="2604" Column="Description" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="4299" Column="PrintName" isNewNull="true" oldValue="intro"/>
         <Data AD_Column_ID="6285" Column="PO_Name" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="58588" Column="AD_Reference_ID" isNewNull="true" oldValue="22"/>
-        <Data AD_Column_ID="58589" Column="FieldLength" isNewNull="true" oldValue="131089"/>
         <Data AD_Column_ID="58590" Column="AD_Reference_Value_ID" isNewNull="true" isOldNull="true"/>
       </PO>
     </Step>
@@ -2933,8 +2933,8 @@
     </Step>
     <Step SeqNo="4410" StepType="AD">
       <PO AD_Table_ID="489" Action="U" Record_ID="1005289" Table="AD_PrintFormatItem">
-        <Data AD_Column_ID="6946" Column="PrintName" oldValue="memberno">Member No.</Data>
         <Data AD_Column_ID="6940" Column="Name" oldValue="memberno">Membership Number</Data>
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="memberno">Member No.</Data>
       </PO>
     </Step>
     <Step SeqNo="4420" StepType="AD">
@@ -2993,8 +2993,8 @@
     </Step>
     <Step SeqNo="4500" StepType="AD">
       <PO AD_Table_ID="276" Action="U" Record_ID="1000279" Table="AD_Element">
-        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="mnth_to">Month_To</Data>
         <Data AD_Column_ID="2603" Column="Name" oldValue="mnth_to">Month_To</Data>
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="mnth_to">Month_To</Data>
         <Data AD_Column_ID="4299" Column="PrintName" oldValue="mnth_to">Month_To</Data>
       </PO>
     </Step>
@@ -3034,8 +3034,6 @@
         <Data AD_Column_ID="2594" Column="AD_Element_ID" isNewNull="true" oldValue="1000250"/>
         <Data AD_Column_ID="2602" Column="ColumnName" isNewNull="true" oldValue="nonrev"/>
         <Data AD_Column_ID="2595" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
-        <Data AD_Column_ID="2598" Column="Created" isNewNull="true" oldValue="2010-09-01 11:01:08.0"/>
-        <Data AD_Column_ID="2600" Column="Updated" isNewNull="true" oldValue="2010-09-01 11:01:08.0"/>
         <Data AD_Column_ID="2605" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="2597" Column="IsActive" isNewNull="true" oldValue="true"/>
         <Data AD_Column_ID="6283" Column="PO_Description" isNewNull="true" isOldNull="true"/>
@@ -3044,20 +3042,22 @@
         <Data AD_Column_ID="2599" Column="CreatedBy" isNewNull="true" oldValue="0"/>
         <Data AD_Column_ID="2601" Column="UpdatedBy" isNewNull="true" oldValue="0"/>
         <Data AD_Column_ID="2603" Column="Name" isNewNull="true" oldValue="nonrev"/>
-        <Data AD_Column_ID="2604" Column="Description" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="4299" Column="PrintName" isNewNull="true" oldValue="nonrev"/>
         <Data AD_Column_ID="6285" Column="PO_Name" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="58588" Column="AD_Reference_ID" isNewNull="true" oldValue="22"/>
         <Data AD_Column_ID="58589" Column="FieldLength" isNewNull="true" oldValue="131089"/>
         <Data AD_Column_ID="58590" Column="AD_Reference_Value_ID" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="2598" Column="Created" isNewNull="true" oldValue="2010-09-01 11:01:08.0"/>
+        <Data AD_Column_ID="2604" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="2600" Column="Updated" isNewNull="true" oldValue="2010-09-01 11:01:08.0"/>
       </PO>
     </Step>
     <Step SeqNo="4560" StepType="AD">
       <PO AD_Table_ID="276" Action="U" Record_ID="1000190" Table="AD_Element">
-        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="numops">NumOps</Data>
         <Data AD_Column_ID="2603" Column="Name" oldValue="numops">Number of Ops</Data>
-        <Data AD_Column_ID="2604" Column="Description" isOldNull="true">The number of operations conducted during this flight entry.</Data>
         <Data AD_Column_ID="4299" Column="PrintName" oldValue="numops">Num Of Ops</Data>
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="numops">NumOps</Data>
+        <Data AD_Column_ID="2604" Column="Description" isOldNull="true">The number of operations conducted during this flight entry.</Data>
       </PO>
     </Step>
     <Step SeqNo="4570" StepType="AD">
@@ -3099,8 +3099,8 @@
     </Step>
     <Step SeqNo="4630" StepType="AD">
       <PO AD_Table_ID="276" Action="U" Record_ID="1000259" Table="AD_Element">
-        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="OAC_AC_Maint_QtyType">ACMaintQtyType</Data>
         <Data AD_Column_ID="2603" Column="Name" oldValue="Maint Qty Type">Maintenance Qty Type</Data>
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="OAC_AC_Maint_QtyType">ACMaintQtyType</Data>
       </PO>
     </Step>
     <Step SeqNo="4640" StepType="AD">
@@ -3128,8 +3128,8 @@
     </Step>
     <Step SeqNo="4680" StepType="AD">
       <PO AD_Table_ID="276" Action="U" Record_ID="1000258" Table="AD_Element">
-        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="OAC_AC_Maint_Rate">ACMaintRate</Data>
         <Data AD_Column_ID="2604" Column="Description" oldValue="Maintenance rate in dollars per hour">Maintenance rate in cost per hour</Data>
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="OAC_AC_Maint_Rate">ACMaintRate</Data>
       </PO>
     </Step>
     <Step SeqNo="4690" StepType="AD">
@@ -3157,8 +3157,8 @@
     </Step>
     <Step SeqNo="4730" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000959" Table="AD_Column">
-        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" oldValue="Maintenance rate in cost per hour">Maintenance rate in cost per dollars/hour.</Data>
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
       </PO>
     </Step>
     <Step SeqNo="4740" StepType="AD">
@@ -3225,8 +3225,8 @@
     </Step>
     <Step SeqNo="4860" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000817" Table="AD_Column">
-        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="OAC_FltLogOpenTime">FltLogOpenTime</Data>
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
       </PO>
     </Step>
     <Step SeqNo="4870" StepType="AD">
@@ -3242,15 +3242,15 @@
     <Step SeqNo="4890" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000774" Table="AD_Column">
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="112" Column="Description" oldValue="The amount of fuel that can be carried on the plane. (Imp Gallons)">The amount of fuel that can be carried on the plane.</Data>
         <Data AD_Column_ID="111" Column="Name" oldValue="Fuel Capacity (Imp Gallons)">Fuel Capacity</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="OAC_FuelCapacity">FuelCapacity</Data>
+        <Data AD_Column_ID="112" Column="Description" oldValue="The amount of fuel that can be carried on the plane. (Imp Gallons)">The amount of fuel that can be carried on the plane.</Data>
       </PO>
     </Step>
     <Step SeqNo="4900" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000807" Table="AD_Field">
-        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="169" Column="Description" oldValue="The amount of fuel that can be carried on the plane in US Gallons.">The amount of fuel that can be carried on the plane.</Data>
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
       </PO>
     </Step>
     <Step SeqNo="4910" StepType="AD">
@@ -3319,8 +3319,8 @@
     <Step SeqNo="5030" StepType="AD">
       <PO AD_Table_ID="276" Action="U" Record_ID="1000173" Table="AD_Element">
         <Data AD_Column_ID="2602" Column="ColumnName" oldValue="IsTolerance">IsOnTolerance</Data>
-        <Data AD_Column_ID="2603" Column="Name" oldValue="Is Tolerance?">On Tolerance</Data>
         <Data AD_Column_ID="4299" Column="PrintName" oldValue="Is Tolerance?">On Tolerance</Data>
+        <Data AD_Column_ID="2603" Column="Name" oldValue="Is Tolerance?">On Tolerance</Data>
       </PO>
     </Step>
     <Step SeqNo="5040" StepType="AD">
@@ -3370,8 +3370,8 @@
     </Step>
     <Step SeqNo="5120" StepType="AD">
       <PO AD_Table_ID="276" Action="U" Record_ID="1000159" Table="AD_Element">
-        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="OAC_Manufacturer">ACManufacturer</Data>
         <Data AD_Column_ID="2603" Column="Name" oldValue="Manufacturer">AC Manufacturer</Data>
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="OAC_Manufacturer">ACManufacturer</Data>
       </PO>
     </Step>
     <Step SeqNo="5130" StepType="AD">
@@ -3505,8 +3505,8 @@
     </Step>
     <Step SeqNo="5360" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1001226" Table="AD_Column">
-        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="OAC_NextMaintHrs">ACNextMaintHrs</Data>
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
       </PO>
     </Step>
     <Step SeqNo="5370" StepType="AD">
@@ -3553,8 +3553,8 @@
     </Step>
     <Step SeqNo="5450" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000772" Table="AD_Column">
-        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="OAC_SerialNumber">ACSerialNumber</Data>
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
       </PO>
     </Step>
     <Step SeqNo="5460" StepType="AD">
@@ -3610,9 +3610,9 @@ ALTER TABLE adempiere.i_flightsheet DROP COLUMN acres_nb;</RollbackStatement>
     </Step>
     <Step SeqNo="5540" StepType="AD">
       <PO AD_Table_ID="276" Action="U" Record_ID="1000086" Table="AD_Element">
-        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="ofc_ac_resource_id">AC_Resource_ID</Data>
-        <Data AD_Column_ID="2603" Column="Name" oldValue="ofc_ac_resource_id">Aircraft</Data>
         <Data AD_Column_ID="4299" Column="PrintName" oldValue="ofc_ac_resource_id">Aircraft</Data>
+        <Data AD_Column_ID="2603" Column="Name" oldValue="ofc_ac_resource_id">Aircraft</Data>
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="ofc_ac_resource_id">AC_Resource_ID</Data>
       </PO>
     </Step>
     <Step SeqNo="5550" StepType="AD">
@@ -3753,16 +3753,6 @@ ALTER TABLE adempiere.i_flightsheet DROP COLUMN acres_nb;</RollbackStatement>
         <Data AD_Column_ID="168" Column="Name" oldValue="ofc_acknowledged_by">Acknowledged By</Data>
       </PO>
     </Step>
-    <Step DBType="Postgres" Parse="Y" SeqNo="5750" StepType="SQL">
-      <SQLStatement>ALTER TABLE adempiere.FTU_Flightsheet rename COLUMN airtime  to temp;
-ALTER TABLE adempiere.FTU_Flightsheet ADD COLUMN airtime numeric DEFAULT null;
-Update FTU_Flightsheet SET airtime = to_number(temp, '99999999');
-ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</SQLStatement>
-      <RollbackStatement>ALTER TABLE adempiere.FTU_Flightsheet rename COLUMN airtime  to temp;
-ALTER TABLE adempiere.FTU_Flightsheet ADD COLUMN airtime character varying(49);
-Update FTU_Flightsheet SET airtime = to_char(temp, '99999999');
-ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
-    </Step>
     <Step SeqNo="5760" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000756" Table="AD_Field">
         <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
@@ -3817,8 +3807,8 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
     </Step>
     <Step SeqNo="5840" StepType="AD">
       <PO AD_Table_ID="489" Action="U" Record_ID="1002178" Table="AD_PrintFormatItem">
-        <Data AD_Column_ID="6946" Column="PrintName" oldValue="ofc_acknowledged_by">Acknowledged By</Data>
         <Data AD_Column_ID="6940" Column="Name" oldValue="ofc_acknowledged_by">Acknowledged By</Data>
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="ofc_acknowledged_by">Acknowledged By</Data>
       </PO>
     </Step>
     <Step SeqNo="5850" StepType="AD">
@@ -3843,9 +3833,9 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
     </Step>
     <Step SeqNo="5890" StepType="AD">
       <PO AD_Table_ID="276" Action="U" Record_ID="1000028" Table="AD_Element">
-        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="OFC_Add_Missing_Button">AddMissingButton</Data>
         <Data AD_Column_ID="2603" Column="Name" oldValue="OFC_Add_Missing_Button">Add Missing Button</Data>
         <Data AD_Column_ID="4299" Column="PrintName" oldValue="OFC_Add_Missing_Button">Add Missing</Data>
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="OFC_Add_Missing_Button">AddMissingButton</Data>
       </PO>
     </Step>
     <Step SeqNo="5900" StepType="AD">
@@ -3859,8 +3849,8 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
     <Step SeqNo="5910" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000286" Table="AD_Field">
         <Data AD_Column_ID="170" Column="Help" isNewNull="true" oldValue="Don't delete instances - just mark them inactive."/>
-        <Data AD_Column_ID="169" Column="Description" isNewNull="true" oldValue="Clicking this button will add all possible instances to the list of courses offered."/>
         <Data AD_Column_ID="168" Column="Name" oldValue="Add to Course Instances">Add Missing Button</Data>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" oldValue="Clicking this button will add all possible instances to the list of courses offered."/>
       </PO>
     </Step>
     <Step SeqNo="5920" StepType="AD">
@@ -3884,10 +3874,10 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
     <Step SeqNo="5950" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000448" Table="AD_Column">
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="112" Column="Description" isOldNull="true">The time intervale measured in hours from the moment the aircraft leaves the ground to the moment it contacts the ground again.</Data>
         <Data AD_Column_ID="111" Column="Name" oldValue="ofc_air_time">Air Time</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="ofc_air_time">AirTime</Data>
         <Data AD_Column_ID="2608" Column="AD_Element_ID" oldValue="1000104">1000252</Data>
+        <Data AD_Column_ID="112" Column="Description" isOldNull="true">The time intervale measured in hours from the moment the aircraft leaves the ground to the moment it contacts the ground again.</Data>
       </PO>
     </Step>
     <Step SeqNo="5960" StepType="AD">
@@ -3904,10 +3894,20 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
         <Data AD_Column_ID="168" Column="Name" oldValue="ofc_air_time">Air Time</Data>
       </PO>
     </Step>
+    <Step DBType="Postgres" Parse="Y" SeqNo="5975" StepType="SQL">
+      <SQLStatement>ALTER TABLE adempiere.FTU_Flightsheet rename COLUMN airtime  to temp;
+ALTER TABLE adempiere.FTU_Flightsheet ADD COLUMN airtime numeric DEFAULT null;
+Update FTU_Flightsheet SET airtime = to_number(temp, '99999999');
+ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</SQLStatement>
+      <RollbackStatement>ALTER TABLE adempiere.FTU_Flightsheet rename COLUMN airtime  to temp;
+ALTER TABLE adempiere.FTU_Flightsheet ADD COLUMN airtime character varying(49);
+Update FTU_Flightsheet SET airtime = to_char(temp, '99999999');
+ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
+    </Step>
     <Step SeqNo="5980" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000448" Table="AD_Column">
-        <Data AD_Column_ID="118" Column="FieldLength" oldValue="49">22</Data>
         <Data AD_Column_ID="226" Column="AD_Reference_ID" oldValue="10">22</Data>
+        <Data AD_Column_ID="118" Column="FieldLength" oldValue="49">22</Data>
       </PO>
     </Step>
     <Step SeqNo="5990" StepType="AD">
@@ -3942,8 +3942,8 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
     </Step>
     <Step SeqNo="6010" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000838" Table="AD_Column">
-        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_AIRFRAME_TIME">AirframeTime</Data>
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
       </PO>
     </Step>
     <Step SeqNo="6020" StepType="AD">
@@ -4043,8 +4043,8 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
     </Step>
     <Step SeqNo="6170" StepType="AD">
       <PO AD_Table_ID="489" Action="U" Record_ID="1002179" Table="AD_PrintFormatItem">
-        <Data AD_Column_ID="6946" Column="PrintName" oldValue="ofc_authorized_by">Authorized By</Data>
         <Data AD_Column_ID="6940" Column="Name" oldValue="ofc_authorized_by">Autorized By</Data>
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="ofc_authorized_by">Authorized By</Data>
       </PO>
     </Step>
     <Step SeqNo="6180" StepType="AD">
@@ -4057,8 +4057,8 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
       <PO AD_Table_ID="101" Action="U" Record_ID="1000342" Table="AD_Column">
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="111" Column="Name" oldValue="OFC_B_Import_Audit_Trail">Import Audit Trail Button</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_B_Import_Audit_Trail">Import_Audit_Trail_B</Data>
+        <Data AD_Column_ID="111" Column="Name" oldValue="OFC_B_Import_Audit_Trail">Import Audit Trail Button</Data>
       </PO>
     </Step>
     <Step SeqNo="6200" StepType="AD">
@@ -4085,8 +4085,8 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
       <PO AD_Table_ID="101" Action="U" Record_ID="1000355" Table="AD_Column">
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="111" Column="Name" oldValue="ofc_b_import_flightsheet">Import Flightsheet Button</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="ofc_b_import_flightsheet">Import_Flightsheet_B</Data>
+        <Data AD_Column_ID="111" Column="Name" oldValue="ofc_b_import_flightsheet">Import Flightsheet Button</Data>
       </PO>
     </Step>
     <Step SeqNo="6240" StepType="AD">
@@ -4137,12 +4137,12 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
         <Data AD_Column_ID="2599" Column="CreatedBy" isNewNull="true" oldValue="0"/>
         <Data AD_Column_ID="2601" Column="UpdatedBy" isNewNull="true" oldValue="0"/>
         <Data AD_Column_ID="2603" Column="Name" isNewNull="true" oldValue="OFC BPartner ID"/>
-        <Data AD_Column_ID="2604" Column="Description" isNewNull="true" oldValue="The Business Partner the action refers to."/>
         <Data AD_Column_ID="4299" Column="PrintName" isNewNull="true" oldValue="Client BPartner"/>
         <Data AD_Column_ID="6285" Column="PO_Name" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="58588" Column="AD_Reference_ID" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="58589" Column="FieldLength" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="58590" Column="AD_Reference_Value_ID" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="2604" Column="Description" isNewNull="true" oldValue="The Business Partner the action refers to."/>
       </PO>
     </Step>
     <Step SeqNo="6300" StepType="AD">
@@ -4179,8 +4179,8 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
       <PO AD_Table_ID="101" Action="U" Record_ID="1000450" Table="AD_Column">
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isOldNull="true">Time spent in briefings</Data>
-        <Data AD_Column_ID="111" Column="Name" oldValue="ofc_briefing">Briefing</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="ofc_briefing">Briefing</Data>
+        <Data AD_Column_ID="111" Column="Name" oldValue="ofc_briefing">Briefing</Data>
       </PO>
     </Step>
     <Step SeqNo="6350" StepType="AD">
@@ -4226,8 +4226,8 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
       <PO AD_Table_ID="276" Action="U" Record_ID="1000088" Table="AD_Element">
         <Data AD_Column_ID="2602" Column="ColumnName" oldValue="ofc_captain_pic">Captain_PIC</Data>
         <Data AD_Column_ID="2603" Column="Name" oldValue="ofc_captain_pic">Captain or PIC</Data>
-        <Data AD_Column_ID="2604" Column="Description" isOldNull="true">The Captain or Pilot in Command</Data>
         <Data AD_Column_ID="4299" Column="PrintName" oldValue="ofc_captain_pic">PIC</Data>
+        <Data AD_Column_ID="2604" Column="Description" isOldNull="true">The Captain or Pilot in Command</Data>
       </PO>
     </Step>
     <Step SeqNo="6430" StepType="AD">
@@ -4255,9 +4255,9 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
     <Step SeqNo="6460" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000432" Table="AD_Column">
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="112" Column="Description" isOldNull="true">The Captain or Pilot in Command</Data>
         <Data AD_Column_ID="111" Column="Name" oldValue="ofc_captain_pic">Captain or PIC</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="ofc_captain_pic">Captain_PIC</Data>
+        <Data AD_Column_ID="112" Column="Description" isOldNull="true">The Captain or Pilot in Command</Data>
       </PO>
     </Step>
     <Step SeqNo="6470" StepType="AD">
@@ -4378,16 +4378,16 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
     </Step>
     <Step SeqNo="6610" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000368" Table="AD_Field">
-        <Data AD_Column_ID="170" Column="Help" isOldNull="true">This column should match the Business part</Data>
         <Data AD_Column_ID="169" Column="Description" isOldNull="true">The member number or ID from the Flightsheet</Data>
         <Data AD_Column_ID="168" Column="Name" oldValue="ofc_client_id">Client ID</Data>
+        <Data AD_Column_ID="170" Column="Help" isOldNull="true">This column should match the Business part</Data>
       </PO>
     </Step>
     <Step SeqNo="6620" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000684" Table="AD_Field">
         <Data AD_Column_ID="170" Column="Help" isOldNull="true">This column should match the Business part</Data>
-        <Data AD_Column_ID="169" Column="Description" isOldNull="true">The member number or ID from the Flightsheet</Data>
         <Data AD_Column_ID="168" Column="Name" oldValue="ofc_client_id">Client ID</Data>
+        <Data AD_Column_ID="169" Column="Description" isOldNull="true">The member number or ID from the Flightsheet</Data>
       </PO>
     </Step>
     <Step SeqNo="6630" StepType="AD">
@@ -4599,7 +4599,6 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
         <Data AD_Column_ID="2602" Column="ColumnName" isNewNull="true" oldValue="Course_Code"/>
         <Data AD_Column_ID="2595" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
         <Data AD_Column_ID="2598" Column="Created" isNewNull="true" oldValue="2009-10-26 11:50:48.0"/>
-        <Data AD_Column_ID="2600" Column="Updated" isNewNull="true" oldValue="2016-01-19 14:33:48.0"/>
         <Data AD_Column_ID="2605" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="2597" Column="IsActive" isNewNull="true" oldValue="true"/>
         <Data AD_Column_ID="6283" Column="PO_Description" isNewNull="true" isOldNull="true"/>
@@ -4614,6 +4613,7 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
         <Data AD_Column_ID="58588" Column="AD_Reference_ID" isNewNull="true" oldValue="10"/>
         <Data AD_Column_ID="58589" Column="FieldLength" isNewNull="true" oldValue="22"/>
         <Data AD_Column_ID="58590" Column="AD_Reference_Value_ID" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="2600" Column="Updated" isNewNull="true" oldValue="2016-01-19 14:33:48.0"/>
       </PO>
     </Step>
     <Step SeqNo="6990" StepType="AD">
@@ -4913,10 +4913,10 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
     </Step>
     <Step SeqNo="7490" StepType="AD">
       <PO AD_Table_ID="276" Action="U" Record_ID="1000095" Table="AD_Element">
-        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="ofc_engine_stop">EngineStop</Data>
         <Data AD_Column_ID="2603" Column="Name" oldValue="ofc_engine_stop">Engine Stop</Data>
         <Data AD_Column_ID="2604" Column="Description" isOldNull="true">The stop time of the engine.</Data>
         <Data AD_Column_ID="4299" Column="PrintName" oldValue="ofc_engine_stop">Engine Stop</Data>
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="ofc_engine_stop">EngineStop</Data>
       </PO>
     </Step>
     <Step SeqNo="7500" StepType="AD">
@@ -4944,16 +4944,16 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
     <Step SeqNo="7530" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000400" Table="AD_Column">
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="112" Column="Description" isOldNull="true">The stop time of the engine.</Data>
         <Data AD_Column_ID="111" Column="Name" oldValue="ofc_engine_stop">Engine Stop</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="ofc_engine_stop">EngineStop</Data>
+        <Data AD_Column_ID="112" Column="Description" isOldNull="true">The stop time of the engine.</Data>
       </PO>
     </Step>
     <Step SeqNo="7540" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000371" Table="AD_Field">
+        <Data AD_Column_ID="168" Column="Name" oldValue="ofc_engine_stop">Engine Stop</Data>
         <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="169" Column="Description" isOldNull="true">The stop time of the engine.</Data>
-        <Data AD_Column_ID="168" Column="Name" oldValue="ofc_engine_stop">Engine Stop</Data>
       </PO>
     </Step>
     <Step SeqNo="7550" StepType="AD">
@@ -4992,8 +4992,8 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
     <Step SeqNo="7610" StepType="AD">
       <PO AD_Table_ID="276" Action="U" Record_ID="1000147" Table="AD_Element">
         <Data AD_Column_ID="2602" Column="ColumnName" oldValue="OFC_Flag_Name">FlagName</Data>
-        <Data AD_Column_ID="2603" Column="Name" oldValue="OFC_Flag_Name">Flag Name</Data>
         <Data AD_Column_ID="4299" Column="PrintName" oldValue="OFC_Flag_Name">Flag Name</Data>
+        <Data AD_Column_ID="2603" Column="Name" oldValue="OFC_Flag_Name">Flag Name</Data>
       </PO>
     </Step>
     <Step SeqNo="7620" StepType="AD">
@@ -5148,7 +5148,6 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
         <Data AD_Column_ID="2594" Column="AD_Element_ID" isNewNull="true" oldValue="1000083"/>
         <Data AD_Column_ID="2602" Column="ColumnName" isNewNull="true" oldValue="Flig"/>
         <Data AD_Column_ID="2595" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
-        <Data AD_Column_ID="2598" Column="Created" isNewNull="true" oldValue="2009-11-19 16:38:44.0"/>
         <Data AD_Column_ID="2600" Column="Updated" isNewNull="true" oldValue="2016-01-19 14:40:30.0"/>
         <Data AD_Column_ID="2605" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="2597" Column="IsActive" isNewNull="true" oldValue="true"/>
@@ -5164,6 +5163,7 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
         <Data AD_Column_ID="58588" Column="AD_Reference_ID" isNewNull="true" oldValue="16"/>
         <Data AD_Column_ID="58589" Column="FieldLength" isNewNull="true" oldValue="29"/>
         <Data AD_Column_ID="58590" Column="AD_Reference_Value_ID" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="2598" Column="Created" isNewNull="true" oldValue="2009-11-19 16:38:44.0"/>
       </PO>
     </Step>
     <Step SeqNo="7860" StepType="AD">
@@ -5229,8 +5229,8 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
     <Step SeqNo="7950" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000373" Table="AD_Field">
         <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="169" Column="Description" isOldNull="true">The ID number of the Flightsheet</Data>
         <Data AD_Column_ID="168" Column="Name" oldValue="ofc_flight_id">Flight ID</Data>
+        <Data AD_Column_ID="169" Column="Description" isOldNull="true">The ID number of the Flightsheet</Data>
       </PO>
     </Step>
     <Step SeqNo="7960" StepType="AD">
@@ -5290,10 +5290,10 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
     </Step>
     <Step SeqNo="8050" StepType="AD">
       <PO AD_Table_ID="276" Action="U" Record_ID="1000102" Table="AD_Element">
-        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="ofc_flight_time_charter">FlightTime_Charter</Data>
         <Data AD_Column_ID="2603" Column="Name" oldValue="ofc_flight_time_charter">Charter</Data>
-        <Data AD_Column_ID="2604" Column="Description" isOldNull="true">The time spent performing charter operations.</Data>
         <Data AD_Column_ID="4299" Column="PrintName" oldValue="ofc_flight_time_charter">Charter</Data>
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="ofc_flight_time_charter">FlightTime_Charter</Data>
+        <Data AD_Column_ID="2604" Column="Description" isOldNull="true">The time spent performing charter operations.</Data>
       </PO>
     </Step>
     <Step SeqNo="8060" StepType="AD">
@@ -5314,8 +5314,8 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
     <Step SeqNo="8080" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000690" Table="AD_Field">
         <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="169" Column="Description" isOldNull="true">The time spent performing charter operations.</Data>
         <Data AD_Column_ID="168" Column="Name" oldValue="ofc_flight_time_charter">Charter</Data>
+        <Data AD_Column_ID="169" Column="Description" isOldNull="true">The time spent performing charter operations.</Data>
       </PO>
     </Step>
     <Step SeqNo="8090" StepType="AD">
@@ -5438,8 +5438,8 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
     </Step>
     <Step SeqNo="8280" StepType="AD">
       <PO AD_Table_ID="489" Action="U" Record_ID="1002187" Table="AD_PrintFormatItem">
-        <Data AD_Column_ID="6946" Column="PrintName" oldValue="ofc_flight_time_dual">Dual</Data>
         <Data AD_Column_ID="6940" Column="Name" oldValue="dual">Dual</Data>
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="ofc_flight_time_dual">Dual</Data>
       </PO>
     </Step>
     <Step SeqNo="8290" StepType="AD">
@@ -5679,10 +5679,10 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
     </Step>
     <Step SeqNo="8690" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000948" Table="AD_Column">
-        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="112" Column="Description" isOldNull="true">Flight time spent performing non-revenue generating work.</Data>
         <Data AD_Column_ID="111" Column="Name" oldValue="ofc_flight_time_nonrev">NonRev Time</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="Flight_ime_nonrev">FlightTime_NonRev</Data>
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isOldNull="true">Flight time spent performing non-revenue generating work.</Data>
       </PO>
     </Step>
     <Step SeqNo="8700" StepType="AD">
@@ -5703,8 +5703,8 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
     <Step SeqNo="8720" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000693" Table="AD_Field">
         <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="169" Column="Description" isOldNull="true">Flight time spent performing non-revenue generating work.</Data>
         <Data AD_Column_ID="168" Column="Name" oldValue="ofc_flight_time_nonrev">NonRev Time</Data>
+        <Data AD_Column_ID="169" Column="Description" isOldNull="true">Flight time spent performing non-revenue generating work.</Data>
       </PO>
     </Step>
     <Step SeqNo="8730" StepType="AD">
@@ -5995,8 +5995,8 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
       <PO AD_Table_ID="101" Action="U" Record_ID="1000404" Table="AD_Column">
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isOldNull="true">Flight Ti</Data>
-        <Data AD_Column_ID="111" Column="Name" oldValue="ofc_flight_time_solo">Solo Time</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="ofc_flight_time_solo">FlightTime_Solo</Data>
+        <Data AD_Column_ID="111" Column="Name" oldValue="ofc_flight_time_solo">Solo Time</Data>
       </PO>
     </Step>
     <Step SeqNo="9220" StepType="AD">
@@ -6024,8 +6024,8 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
     <Step SeqNo="9250" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000427" Table="AD_Field">
         <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="169" Column="Description" isOldNull="true">Flight Ti</Data>
         <Data AD_Column_ID="168" Column="Name" oldValue="Solo">Solo Time</Data>
+        <Data AD_Column_ID="169" Column="Description" isOldNull="true">Flight Ti</Data>
       </PO>
     </Step>
     <Step SeqNo="9260" StepType="AD">
@@ -6137,8 +6137,8 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
     </Step>
     <Step SeqNo="9450" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000549" Table="AD_Column">
-        <Data AD_Column_ID="111" Column="Name" oldValue="OFC_Flightsheet_Line_Status">Status</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Flightsheet_Line_Status">Line_Status</Data>
+        <Data AD_Column_ID="111" Column="Name" oldValue="OFC_Flightsheet_Line_Status">Status</Data>
       </PO>
     </Step>
     <Step SeqNo="9460" StepType="AD">
@@ -6163,9 +6163,9 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
     <Step SeqNo="9490" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000412" Table="AD_Column">
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="112" Column="Description" isOldNull="true">Fuel listed on the Flightsheet</Data>
         <Data AD_Column_ID="111" Column="Name" oldValue="ofc_fuel">Fuel</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="ofc_fuel">Fuel</Data>
+        <Data AD_Column_ID="112" Column="Description" isOldNull="true">Fuel listed on the Flightsheet</Data>
       </PO>
     </Step>
     <Step SeqNo="9500" StepType="AD">
@@ -6225,8 +6225,8 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
     </Step>
     <Step SeqNo="9590" StepType="AD">
       <PO AD_Table_ID="489" Action="U" Record_ID="1002194" Table="AD_PrintFormatItem">
-        <Data AD_Column_ID="6946" Column="PrintName" oldValue="ofc_fuel">Fuel</Data>
         <Data AD_Column_ID="6940" Column="Name" oldValue="ofc_fuel">Fuel</Data>
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="ofc_fuel">Fuel</Data>
       </PO>
     </Step>
     <Step SeqNo="9600" StepType="AD">
@@ -6386,8 +6386,8 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
       <PO AD_Table_ID="101" Action="U" Record_ID="1000431" Table="AD_Column">
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="111" Column="Name" oldValue="ofc_inst_resource_id">Instructor</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="ofc_inst_resource_id">Instructor_Resource_ID</Data>
+        <Data AD_Column_ID="111" Column="Name" oldValue="ofc_inst_resource_id">Instructor</Data>
       </PO>
     </Step>
     <Step SeqNo="9800" StepType="AD">
@@ -6429,8 +6429,8 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
     </Step>
     <Step SeqNo="9860" StepType="AD">
       <PO AD_Table_ID="489" Action="U" Record_ID="1002173" Table="AD_PrintFormatItem">
-        <Data AD_Column_ID="6946" Column="PrintName" oldValue="ofc_inst_resource_id">Instructor</Data>
         <Data AD_Column_ID="6940" Column="Name" oldValue="ofc_inst_resource_id">Instructor</Data>
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="ofc_inst_resource_id">Instructor</Data>
       </PO>
     </Step>
     <Step SeqNo="9870" StepType="AD">
@@ -6480,9 +6480,9 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
       <PO AD_Table_ID="101" Action="U" Record_ID="1000395" Table="AD_Column">
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="111" Column="Name" oldValue="ofc_intended_flight">Intended Flight</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="ofc_intended_flight">IntendedFlight</Data>
         <Data AD_Column_ID="2608" Column="AD_Element_ID" oldValue="1000090">1000191</Data>
+        <Data AD_Column_ID="111" Column="Name" oldValue="ofc_intended_flight">Intended Flight</Data>
       </PO>
     </Step>
     <Step SeqNo="9950" StepType="AD">
@@ -6537,13 +6537,13 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
         <Data AD_Column_ID="2596" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
         <Data AD_Column_ID="2599" Column="CreatedBy" isNewNull="true" oldValue="100"/>
         <Data AD_Column_ID="2601" Column="UpdatedBy" isNewNull="true" oldValue="100"/>
-        <Data AD_Column_ID="2603" Column="Name" isNewNull="true" oldValue="ofc_intended_flight"/>
         <Data AD_Column_ID="2604" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="4299" Column="PrintName" isNewNull="true" oldValue="ofc_intended_flight"/>
         <Data AD_Column_ID="6285" Column="PO_Name" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="58588" Column="AD_Reference_ID" isNewNull="true" oldValue="10"/>
         <Data AD_Column_ID="58589" Column="FieldLength" isNewNull="true" oldValue="100"/>
         <Data AD_Column_ID="58590" Column="AD_Reference_Value_ID" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="2603" Column="Name" isNewNull="true" oldValue="ofc_intended_flight"/>
+        <Data AD_Column_ID="4299" Column="PrintName" isNewNull="true" oldValue="ofc_intended_flight"/>
       </PO>
     </Step>
     <Step SeqNo="10010" StepType="AD">
@@ -6583,6 +6583,16 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
         <Data AD_Column_ID="226" Column="AD_Reference_ID" oldValue="19">10</Data>
       </PO>
     </Step>
+    <Step DBType="Postgres" Parse="Y" SeqNo="10075" StepType="SQL">
+      <SQLStatement>ALTER TABLE adempiere.FTU_Flightsheet rename COLUMN ofc_invoice_id  to temp;
+ALTER TABLE adempiere.FTU_Flightsheet ADD COLUMN ofc_invoice_id numeric DEFAULT null;
+Update FTU_Flightsheet SET ofc_invoice_id = to_number(temp, '99999999');
+ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</SQLStatement>
+      <RollbackStatement>ALTER TABLE adempiere.FTU_Flightsheet rename COLUMN ofc_invoice_id  to temp;
+ALTER TABLE adempiere.FTU_Flightsheet ADD COLUMN ofc_invoice_id character varying(10);
+Update FTU_Flightsheet SET ofc_invoice_id = to_char(temp, '99999999');
+ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
+    </Step>
     <Step SeqNo="10080" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000452" Table="AD_Column">
         <Data AD_Column_ID="226" Column="AD_Reference_ID" oldValue="11">10</Data>
@@ -6590,10 +6600,10 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
     </Step>
     <Step SeqNo="10090" StepType="AD">
       <PO AD_Table_ID="276" Action="U" Record_ID="1000108" Table="AD_Element">
-        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="ofc_invoice_id">Flightsheet_InvoiceNo</Data>
         <Data AD_Column_ID="2603" Column="Name" oldValue="ofc_invoice_id">Invoice Number</Data>
         <Data AD_Column_ID="4299" Column="PrintName" oldValue="ofc_invoice_id">Invoice</Data>
         <Data AD_Column_ID="58588" Column="AD_Reference_ID" oldValue="19">10</Data>
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="ofc_invoice_id">Flightsheet_InvoiceNo</Data>
       </PO>
     </Step>
     <Step SeqNo="10100" StepType="AD">
@@ -6702,8 +6712,8 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
       <PO AD_Table_ID="276" Action="U" Record_ID="1000140" Table="AD_Element">
         <Data AD_Column_ID="2602" Column="ColumnName" oldValue="OFC_IsAdvanced">IsAdvanced</Data>
         <Data AD_Column_ID="2603" Column="Name" oldValue="Is Advanced">Advanced</Data>
-        <Data AD_Column_ID="2604" Column="Description" oldValue="Is the course/flight advanced.">Is the course/flight advanced?</Data>
         <Data AD_Column_ID="4299" Column="PrintName" oldValue="Is Advanced">Advanced</Data>
+        <Data AD_Column_ID="2604" Column="Description" oldValue="Is the course/flight advanced.">Is the course/flight advanced?</Data>
       </PO>
     </Step>
     <Step SeqNo="10260" StepType="AD">
@@ -6747,8 +6757,8 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
     <Step SeqNo="10320" StepType="AD">
       <PO AD_Table_ID="276" Action="U" Record_ID="1000145" Table="AD_Element">
         <Data AD_Column_ID="2602" Column="ColumnName" oldValue="OFC_IsIntro">IsIntro</Data>
-        <Data AD_Column_ID="2603" Column="Name" oldValue="Is Intro?">Intro</Data>
         <Data AD_Column_ID="4299" Column="PrintName" oldValue="Is Intro?">Intro</Data>
+        <Data AD_Column_ID="2603" Column="Name" oldValue="Is Intro?">Intro</Data>
       </PO>
     </Step>
     <Step SeqNo="10330" StepType="AD">
@@ -6970,7 +6980,6 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
         <Data AD_Column_ID="2602" Column="ColumnName" isNewNull="true" oldValue="MedCertReqmt_ID"/>
         <Data AD_Column_ID="2595" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
         <Data AD_Column_ID="2598" Column="Created" isNewNull="true" oldValue="2009-12-26 10:47:14.0"/>
-        <Data AD_Column_ID="2600" Column="Updated" isNewNull="true" oldValue="2016-01-19 18:19:56.0"/>
         <Data AD_Column_ID="2605" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="2597" Column="IsActive" isNewNull="true" oldValue="true"/>
         <Data AD_Column_ID="6283" Column="PO_Description" isNewNull="true" isOldNull="true"/>
@@ -6978,13 +6987,14 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
         <Data AD_Column_ID="2596" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
         <Data AD_Column_ID="2599" Column="CreatedBy" isNewNull="true" oldValue="0"/>
         <Data AD_Column_ID="2601" Column="UpdatedBy" isNewNull="true" oldValue="0"/>
-        <Data AD_Column_ID="2603" Column="Name" isNewNull="true" oldValue="OFC_Med_Cert_Reqmt_ID"/>
         <Data AD_Column_ID="2604" Column="Description" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="4299" Column="PrintName" isNewNull="true" oldValue="OFC_Med_Cert_Reqmt_ID"/>
         <Data AD_Column_ID="6285" Column="PO_Name" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="58588" Column="AD_Reference_ID" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="58589" Column="FieldLength" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="58590" Column="AD_Reference_Value_ID" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="2600" Column="Updated" isNewNull="true" oldValue="2016-01-19 18:19:56.0"/>
+        <Data AD_Column_ID="2603" Column="Name" isNewNull="true" oldValue="OFC_Med_Cert_Reqmt_ID"/>
       </PO>
     </Step>
     <Step SeqNo="10730" StepType="AD">
@@ -7010,8 +7020,8 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
     </Step>
     <Step SeqNo="10770" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000319" Table="AD_Column">
-        <Data AD_Column_ID="113" Column="Help" oldValue="Tied to the value field in the c_bpartner table.  Valid if bpgroup is &quot;Members&quot;.">Tied to the value field in the c_bpartner table.  Valid if bpgroup is "Members"</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Membership_Num">MembershipNum</Data>
+        <Data AD_Column_ID="113" Column="Help" oldValue="Tied to the value field in the c_bpartner table.  Valid if bpgroup is &quot;Members&quot;.">Tied to the value field in the c_bpartner table.  Valid if bpgroup is "Members"</Data>
       </PO>
     </Step>
     <Step SeqNo="10780" StepType="AD">
@@ -7085,8 +7095,8 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
       <PO AD_Table_ID="101" Action="U" Record_ID="1000827" Table="AD_Column">
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="111" Column="Name" oldValue="ofc_numlegs">Number Legs</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="ofc_numlegs">NumberLegs</Data>
+        <Data AD_Column_ID="111" Column="Name" oldValue="ofc_numlegs">Number Legs</Data>
       </PO>
     </Step>
     <Step SeqNo="10900" StepType="AD">
@@ -7302,15 +7312,15 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
       <PO AD_Table_ID="101" Action="U" Record_ID="1000396" Table="AD_Column">
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="111" Column="Name" oldValue="ofc_returning_at">Returning At</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="Retur">ReturingAt</Data>
+        <Data AD_Column_ID="111" Column="Name" oldValue="ofc_returning_at">Returning At</Data>
       </PO>
     </Step>
     <Step SeqNo="11260" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000385" Table="AD_Field">
-        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="168" Column="Name" oldValue="ofc_returning_at">Returning At</Data>
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
       </PO>
     </Step>
     <Step SeqNo="11270" StepType="AD">
@@ -7324,8 +7334,8 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
       <PO AD_Table_ID="101" Action="U" Record_ID="1000435" Table="AD_Column">
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="111" Column="Name" oldValue="ofc_returning_at">Returning At</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="Retur">ReturingAt</Data>
+        <Data AD_Column_ID="111" Column="Name" oldValue="ofc_returning_at">Returning At</Data>
       </PO>
     </Step>
     <Step SeqNo="11290" StepType="AD">
@@ -7506,9 +7516,9 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
     <Step SeqNo="11570" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000414" Table="AD_Column">
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="112" Column="Description" oldValue="The name of the student">A sql connection to the C_BPartner_id.name field</Data>
         <Data AD_Column_ID="111" Column="Name" oldValue="Student Name">OFC_Student_Name_SQL</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Student_Name_SQL">Student_Name_SQL</Data>
+        <Data AD_Column_ID="112" Column="Description" oldValue="The name of the student">A sql connection to the C_BPartner_id.name field</Data>
       </PO>
     </Step>
     <Step SeqNo="11580" StepType="AD">
@@ -7571,8 +7581,8 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
     <Step SeqNo="11670" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000387" Table="AD_Field">
         <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="169" Column="Description" isOldNull="true">The student of passengers on the flight</Data>
         <Data AD_Column_ID="168" Column="Name" oldValue="ofc_student_pax">Student/PAX</Data>
+        <Data AD_Column_ID="169" Column="Description" isOldNull="true">The student of passengers on the flight</Data>
       </PO>
     </Step>
     <Step SeqNo="11680" StepType="AD">
@@ -7626,8 +7636,8 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
     </Step>
     <Step SeqNo="11760" StepType="AD">
       <PO AD_Table_ID="489" Action="U" Record_ID="1002175" Table="AD_PrintFormatItem">
-        <Data AD_Column_ID="6946" Column="PrintName" oldValue="ofc_student_pax">Student/PAX</Data>
         <Data AD_Column_ID="6940" Column="Name" oldValue="ofc_student_pax">Student/PAX</Data>
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="ofc_student_pax">Student/PAX</Data>
       </PO>
     </Step>
     <Step SeqNo="11770" StepType="AD">
@@ -7648,8 +7658,8 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
     </Step>
     <Step SeqNo="11800" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000267" Table="AD_Column">
-        <Data AD_Column_ID="111" Column="Name" oldValue="OFC_Student_Status">Student Status</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="OFC_Student_Status">StudentStatus</Data>
+        <Data AD_Column_ID="111" Column="Name" oldValue="OFC_Student_Status">Student Status</Data>
       </PO>
     </Step>
     <Step SeqNo="11810" StepType="AD">
@@ -7806,13 +7816,13 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
         <Data AD_Column_ID="2596" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
         <Data AD_Column_ID="2599" Column="CreatedBy" isNewNull="true" oldValue="0"/>
         <Data AD_Column_ID="2601" Column="UpdatedBy" isNewNull="true" oldValue="0"/>
-        <Data AD_Column_ID="2603" Column="Name" isNewNull="true" oldValue="wheelsdown"/>
         <Data AD_Column_ID="2604" Column="Description" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="4299" Column="PrintName" isNewNull="true" oldValue="wheelsdown"/>
         <Data AD_Column_ID="6285" Column="PO_Name" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="58588" Column="AD_Reference_ID" isNewNull="true" oldValue="16"/>
         <Data AD_Column_ID="58589" Column="FieldLength" isNewNull="true" oldValue="29"/>
         <Data AD_Column_ID="58590" Column="AD_Reference_Value_ID" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="2603" Column="Name" isNewNull="true" oldValue="wheelsdown"/>
       </PO>
     </Step>
     <Step SeqNo="12070" StepType="AD">
@@ -7839,14 +7849,12 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
         <Data AD_Column_ID="2602" Column="ColumnName" isNewNull="true" oldValue="wheelsup"/>
         <Data AD_Column_ID="2595" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
         <Data AD_Column_ID="2598" Column="Created" isNewNull="true" oldValue="2010-07-20 11:45:51.0"/>
-        <Data AD_Column_ID="2600" Column="Updated" isNewNull="true" oldValue="2010-07-20 11:45:51.0"/>
         <Data AD_Column_ID="2605" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="2597" Column="IsActive" isNewNull="true" oldValue="true"/>
         <Data AD_Column_ID="6283" Column="PO_Description" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="6484" Column="EntityType" isNewNull="true" oldValue="MFTU"/>
         <Data AD_Column_ID="2596" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
         <Data AD_Column_ID="2599" Column="CreatedBy" isNewNull="true" oldValue="0"/>
-        <Data AD_Column_ID="2601" Column="UpdatedBy" isNewNull="true" oldValue="0"/>
         <Data AD_Column_ID="2603" Column="Name" isNewNull="true" oldValue="wheelsup"/>
         <Data AD_Column_ID="2604" Column="Description" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="4299" Column="PrintName" isNewNull="true" oldValue="wheelsup"/>
@@ -7854,13 +7862,15 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
         <Data AD_Column_ID="58588" Column="AD_Reference_ID" isNewNull="true" oldValue="16"/>
         <Data AD_Column_ID="58589" Column="FieldLength" isNewNull="true" oldValue="29"/>
         <Data AD_Column_ID="58590" Column="AD_Reference_Value_ID" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="2600" Column="Updated" isNewNull="true" oldValue="2010-07-20 11:45:51.0"/>
+        <Data AD_Column_ID="2601" Column="UpdatedBy" isNewNull="true" oldValue="0"/>
       </PO>
     </Step>
     <Step SeqNo="12100" StepType="AD">
       <PO AD_Table_ID="276" Action="U" Record_ID="1000097" Table="AD_Element">
         <Data AD_Column_ID="2602" Column="ColumnName" oldValue="ofc_wheels_down">WheelsDown</Data>
-        <Data AD_Column_ID="2603" Column="Name" oldValue="ofc_wheels_down">Wheels Down</Data>
         <Data AD_Column_ID="4299" Column="PrintName" oldValue="ofc_wheels_down">Wheels Down</Data>
+        <Data AD_Column_ID="2603" Column="Name" oldValue="ofc_wheels_down">Wheels Down</Data>
       </PO>
     </Step>
     <Step SeqNo="12110" StepType="AD">
@@ -7978,8 +7988,8 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
     <Step SeqNo="12280" StepType="AD">
       <PO AD_Table_ID="276" Action="U" Record_ID="1000096" Table="AD_Element">
         <Data AD_Column_ID="2602" Column="ColumnName" oldValue="ofc_wheels_up">WheelsUp</Data>
-        <Data AD_Column_ID="2603" Column="Name" oldValue="ofc_wheels_up">Wheels Up</Data>
         <Data AD_Column_ID="4299" Column="PrintName" oldValue="ofc_wheels_up">Wheels Up</Data>
+        <Data AD_Column_ID="2603" Column="Name" oldValue="ofc_wheels_up">Wheels Up</Data>
       </PO>
     </Step>
     <Step SeqNo="12290" StepType="AD">
@@ -7993,8 +8003,8 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
     <Step SeqNo="12300" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000857" Table="AD_Field">
         <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="168" Column="Name" oldValue="ofc_wheels_up">Wheels Up</Data>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
       </PO>
     </Step>
     <Step SeqNo="12310" StepType="AD">
@@ -8340,8 +8350,8 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
       <PO AD_Table_ID="101" Action="U" Record_ID="1001076" Table="AD_Column">
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="111" Column="Name" oldValue="part_time_months">Part Time Months</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="part_time_months">MonthsPartTime</Data>
+        <Data AD_Column_ID="111" Column="Name" oldValue="part_time_months">Part Time Months</Data>
       </PO>
     </Step>
     <Step SeqNo="12890" StepType="AD">
@@ -8374,8 +8384,8 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
     <Step SeqNo="12930" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000852" Table="AD_Field">
         <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="169" Column="Description" isNewNull="true" oldValue="The registration marks of the aircraft"/>
         <Data AD_Column_ID="168" Column="Name" oldValue="AIrcraft">AC Registration</Data>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" oldValue="The registration marks of the aircraft"/>
       </PO>
     </Step>
     <Step SeqNo="12940" StepType="AD">
@@ -8440,7 +8450,6 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
         <Data AD_Column_ID="2602" Column="ColumnName" isNewNull="true" oldValue="rental"/>
         <Data AD_Column_ID="2595" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
         <Data AD_Column_ID="2598" Column="Created" isNewNull="true" oldValue="2010-09-01 11:01:07.0"/>
-        <Data AD_Column_ID="2600" Column="Updated" isNewNull="true" oldValue="2010-09-01 11:01:07.0"/>
         <Data AD_Column_ID="2605" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="2597" Column="IsActive" isNewNull="true" oldValue="true"/>
         <Data AD_Column_ID="6283" Column="PO_Description" isNewNull="true" isOldNull="true"/>
@@ -8455,6 +8464,7 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
         <Data AD_Column_ID="58588" Column="AD_Reference_ID" isNewNull="true" oldValue="22"/>
         <Data AD_Column_ID="58589" Column="FieldLength" isNewNull="true" oldValue="131089"/>
         <Data AD_Column_ID="58590" Column="AD_Reference_Value_ID" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="2600" Column="Updated" isNewNull="true" oldValue="2010-09-01 11:01:07.0"/>
       </PO>
     </Step>
     <Step SeqNo="13030" StepType="AD">
@@ -8468,8 +8478,8 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
       <PO AD_Table_ID="101" Action="U" Record_ID="1001064" Table="AD_Column">
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="111" Column="Name" oldValue="report_year">Report Year</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="report_year">ReportYear</Data>
+        <Data AD_Column_ID="111" Column="Name" oldValue="report_year">Report Year</Data>
       </PO>
     </Step>
     <Step SeqNo="13050" StepType="AD">
@@ -8507,7 +8517,6 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
         <Data AD_Column_ID="2601" Column="UpdatedBy" isNewNull="true" oldValue="0"/>
         <Data AD_Column_ID="2603" Column="Name" isNewNull="true" oldValue="seq"/>
         <Data AD_Column_ID="2604" Column="Description" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="4299" Column="PrintName" isNewNull="true" oldValue="seq"/>
         <Data AD_Column_ID="6285" Column="PO_Name" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="58588" Column="AD_Reference_ID" isNewNull="true" oldValue="11"/>
         <Data AD_Column_ID="58589" Column="FieldLength" isNewNull="true" oldValue="10"/>
@@ -8517,8 +8526,9 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
         <Data AD_Column_ID="2594" Column="AD_Element_ID" isNewNull="true" oldValue="1000329"/>
         <Data AD_Column_ID="2602" Column="ColumnName" isNewNull="true" oldValue="seq"/>
         <Data AD_Column_ID="2595" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
-        <Data AD_Column_ID="2598" Column="Created" isNewNull="true" oldValue="2014-03-02 21:33:32.0"/>
         <Data AD_Column_ID="2600" Column="Updated" isNewNull="true" oldValue="2014-03-02 21:33:32.0"/>
+        <Data AD_Column_ID="4299" Column="PrintName" isNewNull="true" oldValue="seq"/>
+        <Data AD_Column_ID="2598" Column="Created" isNewNull="true" oldValue="2014-03-02 21:33:32.0"/>
       </PO>
     </Step>
     <Step SeqNo="13090" StepType="AD">
@@ -8552,7 +8562,6 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
         <Data AD_Column_ID="2594" Column="AD_Element_ID" isNewNull="true" oldValue="1000246"/>
         <Data AD_Column_ID="2602" Column="ColumnName" isNewNull="true" oldValue="solo"/>
         <Data AD_Column_ID="2595" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
-        <Data AD_Column_ID="2598" Column="Created" isNewNull="true" oldValue="2010-09-01 11:01:07.0"/>
         <Data AD_Column_ID="2600" Column="Updated" isNewNull="true" oldValue="2010-09-01 11:01:07.0"/>
         <Data AD_Column_ID="2605" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="2597" Column="IsActive" isNewNull="true" oldValue="true"/>
@@ -8568,16 +8577,17 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
         <Data AD_Column_ID="58588" Column="AD_Reference_ID" isNewNull="true" oldValue="22"/>
         <Data AD_Column_ID="58589" Column="FieldLength" isNewNull="true" oldValue="131089"/>
         <Data AD_Column_ID="58590" Column="AD_Reference_Value_ID" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="2598" Column="Created" isNewNull="true" oldValue="2010-09-01 11:01:07.0"/>
       </PO>
     </Step>
     <Step SeqNo="13130" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1001259" Table="AD_Column">
         <Data AD_Column_ID="227" Column="AD_Reference_Value_ID" isOldNull="true">1000022</Data>
-        <Data AD_Column_ID="113" Column="Help" isOldNull="true">Select the stage of training the student is currently working towards.</Data>
         <Data AD_Column_ID="112" Column="Description" isOldNull="true">The stage of training the student is currently working towards.</Data>
         <Data AD_Column_ID="111" Column="Name" oldValue="stage">Training Stage</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="stage">StudentStage</Data>
         <Data AD_Column_ID="2608" Column="AD_Element_ID" oldValue="1000309">1000114</Data>
+        <Data AD_Column_ID="113" Column="Help" isOldNull="true">Select the stage of training the student is currently working towards.</Data>
       </PO>
     </Step>
     <Step SeqNo="13140" StepType="AD">
@@ -8626,10 +8636,10 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
     <Step SeqNo="13180" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000947" Table="AD_Column">
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="112" Column="Description" isOldNull="true">The time spent performing charter operations.</Data>
         <Data AD_Column_ID="111" Column="Name" oldValue="tour">Charter Time</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="tour">FlightTime_Charter</Data>
         <Data AD_Column_ID="2608" Column="AD_Element_ID" oldValue="1000249">1000102</Data>
+        <Data AD_Column_ID="112" Column="Description" isOldNull="true">The time spent performing charter operations.</Data>
       </PO>
     </Step>
     <Step SeqNo="13190" StepType="AD">
@@ -8659,9 +8669,9 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
     </Step>
     <Step SeqNo="13200" StepType="AD">
       <PO AD_Table_ID="276" Action="U" Record_ID="1000303" Table="AD_Element">
-        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="training">TrainingName</Data>
         <Data AD_Column_ID="2603" Column="Name" oldValue="training">Training</Data>
         <Data AD_Column_ID="4299" Column="PrintName" oldValue="training">Training</Data>
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="training">TrainingName</Data>
       </PO>
     </Step>
     <Step SeqNo="13210" StepType="AD">
@@ -8692,9 +8702,9 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
     </Step>
     <Step SeqNo="13250" StepType="AD">
       <PO AD_Table_ID="276" Action="U" Record_ID="1000280" Table="AD_Element">
-        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="tuition">Tuition</Data>
         <Data AD_Column_ID="2603" Column="Name" oldValue="tuition">Tuition</Data>
         <Data AD_Column_ID="4299" Column="PrintName" oldValue="tuition">Tuition</Data>
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="tuition">Tuition</Data>
       </PO>
     </Step>
     <Step SeqNo="13260" StepType="AD">
@@ -8747,8 +8757,8 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
     <Step SeqNo="13330" StepType="AD">
       <PO AD_Table_ID="276" Action="U" Record_ID="1000278" Table="AD_Element">
         <Data AD_Column_ID="2602" Column="ColumnName" oldValue="year_to">Year_To</Data>
-        <Data AD_Column_ID="2603" Column="Name" oldValue="year_to">Year To</Data>
         <Data AD_Column_ID="4299" Column="PrintName" oldValue="year_to">Year To</Data>
+        <Data AD_Column_ID="2603" Column="Name" oldValue="year_to">Year To</Data>
       </PO>
     </Step>
     <Step SeqNo="13340" StepType="AD">
@@ -8789,10 +8799,10 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
     </Step>
     <Step SeqNo="13400" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000769" Table="AD_Column">
-        <Data AD_Column_ID="113" Column="Help" isNewNull="true" oldValue="The Aircraft Resource being tracked."/>
-        <Data AD_Column_ID="112" Column="Description" isNewNull="true" oldValue="Aircraft Resource"/>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="S_Resource_ID">AC_Resource_ID</Data>
         <Data AD_Column_ID="2608" Column="AD_Element_ID" oldValue="1777">1000086</Data>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" oldValue="Aircraft Resource"/>
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" oldValue="The Aircraft Resource being tracked."/>
       </PO>
     </Step>
     <Step SeqNo="13410" StepType="AD">
@@ -8828,12 +8838,9 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
     </Step>
     <Step SeqNo="13450" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000391" Table="AD_Column">
-        <Data AD_Column_ID="227" Column="AD_Reference_Value_ID" isNewNull="true" oldValue="1000038"/>
         <Data AD_Column_ID="226" Column="AD_Reference_ID" oldValue="18">19</Data>
+        <Data AD_Column_ID="227" Column="AD_Reference_Value_ID" isNewNull="true" oldValue="1000038"/>
       </PO>
-    </Step>
-    <Step DBType="ALL" Parse="Y" SeqNo="13460" StepType="SQL">
-      <SQLStatement>UPDATE FTU_Aircraft ac SET CallSign = (SELECT name FROM S_Resource WHERE S_Resource_ID = ac.AC_Resource_ID);</SQLStatement>
     </Step>
     <Step SeqNo="13460" StepType="AD">
       <PO AD_Table_ID="276" Action="U" Record_ID="1000244" Table="AD_Element">
@@ -8893,8 +8900,8 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
     </Step>
     <Step SeqNo="13550" StepType="AD">
       <PO AD_Table_ID="489" Action="U" Record_ID="1003020" Table="AD_PrintFormatItem">
-        <Data AD_Column_ID="6946" Column="PrintName" oldValue="Aircraft">Call Sign</Data>
         <Data AD_Column_ID="6940" Column="Name" oldValue="Aircraft">Call Sign</Data>
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="Aircraft">Call Sign</Data>
       </PO>
     </Step>
     <Step SeqNo="13560" StepType="AD">
@@ -8947,13 +8954,17 @@ ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;</RollbackStatement>
         <Data AD_Column_ID="68024" Column="IsRange">false</Data>
       </PO>
     </Step>
+    <Step DBType="ALL" Parse="Y" SeqNo="13565" StepType="SQL">
+      <SQLStatement>UPDATE FTU_Aircraft ac SET CallSign = (SELECT name FROM S_Resource WHERE S_Resource_ID = ac.AC_Resource_ID);</SQLStatement>
+      <RollbackStatement>UPDATE FTU_Aircraft ac  SET CallSign = null;</RollbackStatement>
+    </Step>
     <Step SeqNo="13570" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000769" Table="AD_Column">
-        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="112" Column="Description" isOldNull="true">Resource</Data>
-        <Data AD_Column_ID="111" Column="Name" oldValue="Aircraft">Resource</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="AC_Resource_ID">S_Resource_ID</Data>
         <Data AD_Column_ID="2608" Column="AD_Element_ID" oldValue="1000086">1777</Data>
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="111" Column="Name" oldValue="Aircraft">Resource</Data>
       </PO>
     </Step>
     <Step SeqNo="13580" StepType="AD">
@@ -9609,13 +9620,13 @@ There are two reasons for de-activating and not deleting records:&#13;
     </Step>
     <Step SeqNo="13850" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000430" Table="AD_Column">
-        <Data AD_Column_ID="227" Column="AD_Reference_Value_ID" isNewNull="true" oldValue="1000029"/>
         <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="226" Column="AD_Reference_ID" oldValue="18">19</Data>
         <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="111" Column="Name" oldValue="Aircraft">Aircraft ID</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="AC_Resource_ID">FTU_Aircraft_ID</Data>
         <Data AD_Column_ID="2608" Column="AD_Element_ID" oldValue="1000086">1000184</Data>
+        <Data AD_Column_ID="227" Column="AD_Reference_Value_ID" isNewNull="true" oldValue="1000029"/>
       </PO>
     </Step>
     <Step SeqNo="13860" StepType="AD">
@@ -9709,8 +9720,8 @@ There are two reasons for de-activating and not deleting records:&#13;
     </Step>
     <Step SeqNo="13930" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000410" Table="AD_Field">
-        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
       </PO>
     </Step>
     <Step SeqNo="13940" StepType="AD">
@@ -9845,8 +9856,8 @@ There are two reasons for de-activating and not deleting records:&#13;
     </Step>
     <Step SeqNo="14140" StepType="AD">
       <PO AD_Table_ID="489" Action="U" Record_ID="1005817" Table="AD_PrintFormatItem">
-        <Data AD_Column_ID="6946" Column="PrintName" oldValue="Aircraft">Aircraft ID</Data>
         <Data AD_Column_ID="6940" Column="Name" oldValue="Aircraft">Aircraft ID</Data>
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="Aircraft">Aircraft ID</Data>
       </PO>
     </Step>
     <Step SeqNo="14150" StepType="AD">
@@ -10003,8 +10014,8 @@ There are two reasons for de-activating and not deleting records:&#13;
     </Step>
     <Step SeqNo="14380" StepType="AD">
       <PO AD_Table_ID="489" Action="U" Record_ID="1004584" Table="AD_PrintFormatItem">
-        <Data AD_Column_ID="6946" Column="PrintName" oldValue="Aircraft ID">Aircraft</Data>
         <Data AD_Column_ID="6940" Column="Name" oldValue="Aircraft ID">Aircraft</Data>
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="Aircraft ID">Aircraft</Data>
       </PO>
     </Step>
     <Step SeqNo="14390" StepType="AD">
@@ -10268,8 +10279,8 @@ There are two reasons for de-activating and not deleting records:&#13;
     </Step>
     <Step SeqNo="14470" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1001205" Table="AD_Field">
-        <Data AD_Column_ID="176" Column="IsDisplayed" oldValue="true">false</Data>
         <Data AD_Column_ID="181" Column="SeqNo" isOldNull="true">0</Data>
+        <Data AD_Column_ID="176" Column="IsDisplayed" oldValue="true">false</Data>
       </PO>
     </Step>
     <Step SeqNo="14480" StepType="AD">

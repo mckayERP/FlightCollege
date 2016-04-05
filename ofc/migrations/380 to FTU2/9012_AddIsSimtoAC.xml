@@ -324,16 +324,6 @@
         <Data AD_Column_ID="183" Column="IsSameLine" oldValue="true">false</Data>
       </PO>
     </Step>
-    <Step SeqNo="450" StepType="AD">
-      <PO AD_Table_ID="101" Action="U" Record_ID="1001470" Table="AD_Column">
-        <Data AD_Column_ID="50218" Column="MandatoryLogic" oldValue="@isGeneric@!'Y' &amp; @isSim@!'Y'">@isGeneric@!Y &amp; @isSim@!Y</Data>
-      </PO>
-    </Step>
-    <Step SeqNo="460" StepType="AD">
-      <PO AD_Table_ID="101" Action="U" Record_ID="1001470" Table="AD_Column">
-        <Data AD_Column_ID="50218" Column="MandatoryLogic" oldValue="@isGeneric@!Y &amp; @isSim@!Y">@IsGeneric@!Y &amp; @isSim@!Y</Data>
-      </PO>
-    </Step>
     <Step SeqNo="470" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1000770" Table="AD_Column">
         <Data AD_Column_ID="50218" Column="MandatoryLogic" isOldNull="true">@IsGeneric@!Y &amp; @isSim@!Y</Data>
@@ -460,6 +450,7 @@
     </Step>
     <Step SeqNo="620" StepType="AD">
       <PO AD_Table_ID="1000034" Action="I" Record_ID="1000020" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1000768" Column="ACRegistration">CFTD3</Data>
         <Data AD_Column_ID="1000758" Column="Created">2016-01-28 22:40:00.14</Data>
         <Data AD_Column_ID="1000759" Column="CreatedBy">100</Data>
         <Data AD_Column_ID="1000761" Column="Help" isNewNull="true"/>
@@ -474,7 +465,6 @@
         <Data AD_Column_ID="1000771" Column="ACModel" isNewNull="true"/>
         <Data AD_Column_ID="1000777" Column="ACNextMaintDate" isNewNull="true"/>
         <Data AD_Column_ID="1000775" Column="ACOilGrade" isNewNull="true"/>
-        <Data AD_Column_ID="1000768" Column="ACRegistration">CFTD3</Data>
         <Data AD_Column_ID="1000772" Column="ACSerialNumber" isNewNull="true"/>
         <Data AD_Column_ID="1000769" Column="S_Resource_ID">1000079</Data>
         <Data AD_Column_ID="1000814" Column="C_BPartner_ID" isNewNull="true"/>

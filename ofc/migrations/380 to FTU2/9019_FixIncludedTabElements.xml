@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="MFTU" Name="Fix included tab elements" ReleaseNo="FTU2" SeqNo="19">
+    <Step SeqNo="10" StepType="AD">
+      <PO AD_Table_ID="276" Action="I" Record_ID="1000498" Table="AD_Element">
+        <Data AD_Column_ID="2595" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="2594" Column="AD_Element_ID">1000498</Data>
+        <Data AD_Column_ID="2596" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="58588" Column="AD_Reference_ID">18</Data>
+        <Data AD_Column_ID="58590" Column="AD_Reference_Value_ID">278</Data>
+        <Data AD_Column_ID="2602" Column="ColumnName">License_Tab_ID</Data>
+        <Data AD_Column_ID="2598" Column="Created">2016-02-16 19:20:36.512</Data>
+        <Data AD_Column_ID="2599" Column="CreatedBy">0</Data>
+        <Data AD_Column_ID="2604" Column="Description">License information</Data>
+        <Data AD_Column_ID="6484" Column="EntityType">MFTU</Data>
+        <Data AD_Column_ID="58589" Column="FieldLength">22</Data>
+        <Data AD_Column_ID="2605" Column="Help">This tab displays information related to the aviation licenses held by the pilot.</Data>
+        <Data AD_Column_ID="2597" Column="IsActive">true</Data>
+        <Data AD_Column_ID="2603" Column="Name">License Info Tab</Data>
+        <Data AD_Column_ID="6283" Column="PO_Description" isNewNull="true"/>
+        <Data AD_Column_ID="6284" Column="PO_Help" isNewNull="true"/>
+        <Data AD_Column_ID="6285" Column="PO_Name" isNewNull="true"/>
+        <Data AD_Column_ID="6286" Column="PO_PrintName" isNewNull="true"/>
+        <Data AD_Column_ID="4299" Column="PrintName">License Info tab</Data>
+        <Data AD_Column_ID="2600" Column="Updated">2016-02-16 19:20:36.512</Data>
+        <Data AD_Column_ID="2601" Column="UpdatedBy">0</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="20" StepType="AD">
+      <PO AD_Table_ID="276" Action="I" Record_ID="1000499" Table="AD_Element">
+        <Data AD_Column_ID="2595" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="2594" Column="AD_Element_ID">1000499</Data>
+        <Data AD_Column_ID="2596" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="58588" Column="AD_Reference_ID">18</Data>
+        <Data AD_Column_ID="58590" Column="AD_Reference_Value_ID">278</Data>
+        <Data AD_Column_ID="2602" Column="ColumnName">Medical_Tab_ID</Data>
+        <Data AD_Column_ID="2598" Column="Created">2016-02-16 19:21:41.297</Data>
+        <Data AD_Column_ID="2599" Column="CreatedBy">0</Data>
+        <Data AD_Column_ID="2604" Column="Description">Medical Information</Data>
+        <Data AD_Column_ID="6484" Column="EntityType">MFTU</Data>
+        <Data AD_Column_ID="58589" Column="FieldLength">22</Data>
+        <Data AD_Column_ID="2605" Column="Help">This tab displays information related to the aviation medical category held by the pilot.</Data>
+        <Data AD_Column_ID="2597" Column="IsActive">true</Data>
+        <Data AD_Column_ID="2603" Column="Name">Medical Info Tab</Data>
+        <Data AD_Column_ID="6283" Column="PO_Description" isNewNull="true"/>
+        <Data AD_Column_ID="6284" Column="PO_Help" isNewNull="true"/>
+        <Data AD_Column_ID="6285" Column="PO_Name" isNewNull="true"/>
+        <Data AD_Column_ID="6286" Column="PO_PrintName" isNewNull="true"/>
+        <Data AD_Column_ID="4299" Column="PrintName">Medical Info tab</Data>
+        <Data AD_Column_ID="2600" Column="Updated">2016-02-16 19:21:41.297</Data>
+        <Data AD_Column_ID="2601" Column="UpdatedBy">0</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="30" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000896" Table="AD_Column">
+        <Data AD_Column_ID="112" Column="Description" oldValue="Included Tab in this Tab (Master Detail)">License information</Data>
+        <Data AD_Column_ID="111" Column="Name" oldValue="Licence Info Tab">License Info Tab</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="Licence_Info_Tab">License_Tab_ID</Data>
+        <Data AD_Column_ID="227" Column="AD_Reference_Value_ID" isOldNull="true">278</Data>
+        <Data AD_Column_ID="113" Column="Help" oldValue="You can include a Tab in a Tab. If displayed in single row record, the included tab is displayed as multi-row table.">This tab displays information related to the aviation licenses held by the pilot.</Data>
+        <Data AD_Column_ID="2608" Column="AD_Element_ID" oldValue="2026">1000498</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="40" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000917" Table="AD_Field">
+        <Data AD_Column_ID="169" Column="Description" oldValue="Included Tab in this Tab (Master Detail)">License information</Data>
+        <Data AD_Column_ID="170" Column="Help" oldValue="You can include a Tab in a Tab. If displayed in single row record, the included tab is displayed as multi-row table.">This tab displays information related to the aviation licenses held by the pilot.</Data>
+        <Data AD_Column_ID="168" Column="Name" oldValue="Included Tab">License Info Tab</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="50" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1001226" Table="AD_Field">
+        <Data AD_Column_ID="169" Column="Description" oldValue="Included Tab in this Tab (Master Detail)">License information</Data>
+        <Data AD_Column_ID="170" Column="Help" oldValue="You can include a Tab in a Tab. If displayed in single row record, the included tab is displayed as multi-row table.">This tab displays information related to the aviation licenses held by the pilot.</Data>
+        <Data AD_Column_ID="168" Column="Name" oldValue="Included Tab">License Info Tab</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="60" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000896" Table="AD_Column">
+        <Data AD_Column_ID="226" Column="AD_Reference_ID" oldValue="22">18</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="70" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000937" Table="AD_Column">
+        <Data AD_Column_ID="227" Column="AD_Reference_Value_ID" isOldNull="true">278</Data>
+        <Data AD_Column_ID="113" Column="Help" oldValue="You can include a Tab in a Tab. If displayed in single row record, the included tab is displayed as multi-row table.">This tab displays information related to the aviation medical category held by the pilot.</Data>
+        <Data AD_Column_ID="112" Column="Description" oldValue="Included Tab in this Tab (Master Detail)">Medical Information</Data>
+        <Data AD_Column_ID="111" Column="Name" oldValue="Included Tab">Medical Info Tab</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="Medical_Info_Tab">Medical_Tab_ID</Data>
+        <Data AD_Column_ID="2608" Column="AD_Element_ID" oldValue="2026">1000499</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="80" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000960" Table="AD_Field">
+        <Data AD_Column_ID="169" Column="Description" oldValue="Included Tab in this Tab (Master Detail)">Medical Information</Data>
+        <Data AD_Column_ID="170" Column="Help" oldValue="You can include a Tab in a Tab. If displayed in single row record, the included tab is displayed as multi-row table.">This tab displays information related to the aviation medical category held by the pilot.</Data>
+        <Data AD_Column_ID="168" Column="Name" oldValue="Included Tab">Medical Info Tab</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="90" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1001225" Table="AD_Field">
+        <Data AD_Column_ID="169" Column="Description" oldValue="Included Tab in this Tab (Master Detail)">Medical Information</Data>
+        <Data AD_Column_ID="170" Column="Help" oldValue="You can include a Tab in a Tab. If displayed in single row record, the included tab is displayed as multi-row table.">This tab displays information related to the aviation medical category held by the pilot.</Data>
+        <Data AD_Column_ID="168" Column="Name" oldValue="Included Tab">Medical Info Tab</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="100" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000937" Table="AD_Column">
+        <Data AD_Column_ID="226" Column="AD_Reference_ID" oldValue="22">18</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="110" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1001225" Table="AD_Field">
+        <Data AD_Column_ID="2007" Column="IsReadOnly" oldValue="true">false</Data>
+      </PO>
+    </Step>
+  </Migration>
+</Migrations>

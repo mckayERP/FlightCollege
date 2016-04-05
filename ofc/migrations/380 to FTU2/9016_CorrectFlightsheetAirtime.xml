@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="MFTU" Name="Correct flightsheet airtime" ReleaseNo="FTU2" SeqNo="16">
+    <Step DBType="Postgres" Parse="Y" SeqNo="10" StepType="SQL">
+      <SQLStatement>UPDATE FTU_Flightsheet
+SET Airtime = round((extract(epoch from (WheelsDown - WheelsUp))/3600)::numeric,1)
+WHERE
+Airtime != round((extract(epoch from (WheelsDown - WheelsUp))/3600)::numeric,1)
+AND WheelsDown is not null
+AND wheelsUp is not null
+AND WheelsDown &gt; WheelsUp;</SQLStatement>
+      <RollbackStatement>UPDATE FTU_Flightsheet
+SET Airtime = round((extract(epoch from (WheelsDown - WheelsUp))/3600)::numeric,1)
+WHERE
+Airtime != round((extract(epoch from (WheelsDown - WheelsUp))/3600)::numeric,1)
+AND WheelsDown is not null
+AND wheelsUp is not null
+AND WheelsDown &gt; WheelsUp;</RollbackStatement>
+    </Step>
+    <Step DBType="Postgres" Parse="Y" SeqNo="20" StepType="SQL">
+      <SQLStatement>UPDATE FTU_Flightsheet
+SET 
+	WheelsDown = (WheelsDown + '24 hours'),
+	Airtime = round((extract(epoch from ((wheelsdown + '24 hours') - WheelsUp))/3600)::numeric,1)
+WHERE
+Airtime != round((extract(epoch from (WheelsDown - WheelsUp))/3600)::numeric,1)
+AND round((extract(epoch from (WheelsDown - WheelsUp))/3600)::numeric,1) &lt; -10
+AND WheelsDown is not null
+AND wheelsUp is not null
+;</SQLStatement>
+      <RollbackStatement>UPDATE FTU_Flightsheet
+SET 
+	WheelsDown = (WheelsDown + '24 hours'),
+	Airtime = round((extract(epoch from ((wheelsdown + '24 hours') - WheelsUp))/3600)::numeric,1)
+WHERE
+Airtime != round((extract(epoch from (WheelsDown - WheelsUp))/3600)::numeric,1)
+AND round((extract(epoch from (WheelsDown - WheelsUp))/3600)::numeric,1) &lt; -10
+AND WheelsDown is not null
+AND wheelsUp is not null
+;</RollbackStatement>
+    </Step>
+  </Migration>
+</Migrations>
