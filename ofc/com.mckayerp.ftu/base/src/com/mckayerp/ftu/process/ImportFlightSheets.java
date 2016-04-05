@@ -958,6 +958,7 @@ public static boolean grabLock(String txName) {
 
 	private boolean isNull(String field) {
 		if (field == null 
+				|| field.trim().toUpperCase().equals("NULL")
 				|| field.trim().equals("-") 
 				|| field.trim().isEmpty()) {
 			return true;
