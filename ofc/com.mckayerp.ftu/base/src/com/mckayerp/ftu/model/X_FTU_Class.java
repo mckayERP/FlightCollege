@@ -32,7 +32,7 @@ public class X_FTU_Class extends PO implements I_FTU_Class, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160131L;
+	private static final long serialVersionUID = 20160222L;
 
     /** Standard Constructor */
     public X_FTU_Class (Properties ctx, int FTU_Class_ID, String trxName)

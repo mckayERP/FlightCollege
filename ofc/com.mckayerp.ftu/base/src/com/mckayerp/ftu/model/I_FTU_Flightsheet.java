@@ -51,6 +51,21 @@ public interface I_FTU_Flightsheet
 	/** Get Acknowledged By	  */
 	public String getAcknowledgedBy();
 
+    /** Column name AcknowledgedByID */
+    public static final String COLUMNNAME_AcknowledgedByID = "AcknowledgedByID";
+
+	/** Set Acknowledged By.
+	  * The flight authorization was acknowledged by this business partner
+	  */
+	public void setAcknowledgedByID (int AcknowledgedByID);
+
+	/** Get Acknowledged By.
+	  * The flight authorization was acknowledged by this business partner
+	  */
+	public int getAcknowledgedByID();
+
+	public org.compiere.model.I_C_BPartner getAcknowledgedB() throws RuntimeException;
+
     /** Column name AD_Client_ID */
     public static final String COLUMNNAME_AD_Client_ID = "AD_Client_ID";
 
@@ -93,6 +108,21 @@ public interface I_FTU_Flightsheet
 
 	/** Get Autorized By	  */
 	public String getAuthorizedBy();
+
+    /** Column name AuthorizedByID */
+    public static final String COLUMNNAME_AuthorizedByID = "AuthorizedByID";
+
+	/** Set Authorized By.
+	  * The flight was authorized by this business partner
+	  */
+	public void setAuthorizedByID (int AuthorizedByID);
+
+	/** Get Authorized By.
+	  * The flight was authorized by this business partner
+	  */
+	public int getAuthorizedByID();
+
+	public org.compiere.model.I_C_BPartner getAuthorizedB() throws RuntimeException;
 
     /** Column name Briefing */
     public static final String COLUMNNAME_Briefing = "Briefing";
@@ -149,6 +179,34 @@ public interface I_FTU_Flightsheet
 	  * The Captain or Pilot in Command
 	  */
 	public String getCaptain_PIC();
+
+    /** Column name CaptainID */
+    public static final String COLUMNNAME_CaptainID = "CaptainID";
+
+	/** Set Captain.
+	  * Captain or PIC for the flight.
+	  */
+	public void setCaptainID (int CaptainID);
+
+	/** Get Captain.
+	  * Captain or PIC for the flight.
+	  */
+	public int getCaptainID();
+
+	public org.compiere.model.I_C_BPartner getCaptai() throws RuntimeException;
+
+    /** Column name ContactPhone */
+    public static final String COLUMNNAME_ContactPhone = "ContactPhone";
+
+	/** Set Contact/Phone.
+	  * The Contact/Phone number of a resonsible person for the flight.
+	  */
+	public void setContactPhone (String ContactPhone);
+
+	/** Get Contact/Phone.
+	  * The Contact/Phone number of a resonsible person for the flight.
+	  */
+	public String getContactPhone();
 
     /** Column name CourseType */
     public static final String COLUMNNAME_CourseType = "CourseType";
@@ -214,6 +272,19 @@ public interface I_FTU_Flightsheet
 	  */
 	public Timestamp getEngineStop();
 
+    /** Column name Exercises */
+    public static final String COLUMNNAME_Exercises = "Exercises";
+
+	/** Set Exercises.
+	  * Flight training exercises performed
+	  */
+	public void setExercises (String Exercises);
+
+	/** Get Exercises.
+	  * Flight training exercises performed
+	  */
+	public String getExercises();
+
     /** Column name FlightDate */
     public static final String COLUMNNAME_FlightDate = "FlightDate";
 
@@ -274,6 +345,19 @@ public interface I_FTU_Flightsheet
 	  * The time spent performing charter operations.
 	  */
 	public BigDecimal getFlightTime_Charter();
+
+    /** Column name FlightTime_Dry */
+    public static final String COLUMNNAME_FlightTime_Dry = "FlightTime_Dry";
+
+	/** Set Dry Time.
+	  * Flight time where the fuel was purchased by the pilot.
+	  */
+	public void setFlightTime_Dry (BigDecimal FlightTime_Dry);
+
+	/** Get Dry Time.
+	  * Flight time where the fuel was purchased by the pilot.
+	  */
+	public BigDecimal getFlightTime_Dry();
 
     /** Column name FlightTime_Dual */
     public static final String COLUMNNAME_FlightTime_Dual = "FlightTime_Dual";
@@ -339,6 +423,17 @@ public interface I_FTU_Flightsheet
 	  * Flight time spent as a solo pilot. Includes flight tests.
 	  */
 	public BigDecimal getFlightTime_Solo();
+
+    /** Column name FTU_ACJourneyLog_ID */
+    public static final String COLUMNNAME_FTU_ACJourneyLog_ID = "FTU_ACJourneyLog_ID";
+
+	/** Set Aircraft Journey Log	  */
+	public void setFTU_ACJourneyLog_ID (int FTU_ACJourneyLog_ID);
+
+	/** Get Aircraft Journey Log	  */
+	public int getFTU_ACJourneyLog_ID();
+
+	public com.mckayerp.ftu.model.I_FTU_ACJourneyLog getFTU_ACJourneyLog() throws RuntimeException;
 
     /** Column name FTU_Aircraft_ID */
     public static final String COLUMNNAME_FTU_Aircraft_ID = "FTU_Aircraft_ID";
@@ -428,6 +523,32 @@ public interface I_FTU_Flightsheet
 	  */
 	public boolean isActive();
 
+    /** Column name IsDNCO */
+    public static final String COLUMNNAME_IsDNCO = "IsDNCO";
+
+	/** Set DNCO.
+	  * Did Not Complete Operation
+	  */
+	public void setIsDNCO (boolean IsDNCO);
+
+	/** Get DNCO.
+	  * Did Not Complete Operation
+	  */
+	public boolean isDNCO();
+
+    /** Column name IsNoShow */
+    public static final String COLUMNNAME_IsNoShow = "IsNoShow";
+
+	/** Set No-Show.
+	  * Is the flight course type one that should be charged a No-Show fee?
+	  */
+	public void setIsNoShow (boolean IsNoShow);
+
+	/** Get No-Show.
+	  * Is the flight course type one that should be charged a No-Show fee?
+	  */
+	public boolean isNoShow();
+
     /** Column name Lesson_Plan_Status */
     public static final String COLUMNNAME_Lesson_Plan_Status = "Lesson_Plan_Status";
 
@@ -478,6 +599,19 @@ public interface I_FTU_Flightsheet
 	/** Get Num Legs	  */
 	public int getNumLegs();
 
+    /** Column name OtherPax */
+    public static final String COLUMNNAME_OtherPax = "OtherPax";
+
+	/** Set Other Pax.
+	  * Other passengers on the flight
+	  */
+	public void setOtherPax (String OtherPax);
+
+	/** Get Other Pax.
+	  * Other passengers on the flight
+	  */
+	public String getOtherPax();
+
     /** Column name ReturingAt */
     public static final String COLUMNNAME_ReturingAt = "ReturingAt";
 
@@ -496,6 +630,21 @@ public interface I_FTU_Flightsheet
 	/** Get Simulator	  */
 	public BigDecimal getSimulator();
 
+    /** Column name StudentID */
+    public static final String COLUMNNAME_StudentID = "StudentID";
+
+	/** Set Student.
+	  * The student if the flight is an instructional flight.
+	  */
+	public void setStudentID (int StudentID);
+
+	/** Get Student.
+	  * The student if the flight is an instructional flight.
+	  */
+	public int getStudentID();
+
+	public org.compiere.model.I_C_BPartner getStuden() throws RuntimeException;
+
     /** Column name StudentPAX */
     public static final String COLUMNNAME_StudentPAX = "StudentPAX";
 
@@ -508,6 +657,21 @@ public interface I_FTU_Flightsheet
 	  * The student of passengers on the flight
 	  */
 	public String getStudentPAX();
+
+    /** Column name TimesEnteredByID */
+    public static final String COLUMNNAME_TimesEnteredByID = "TimesEnteredByID";
+
+	/** Set Times Entered By.
+	  * The times for this flight were entered by this business partner.
+	  */
+	public void setTimesEnteredByID (int TimesEnteredByID);
+
+	/** Get Times Entered By.
+	  * The times for this flight were entered by this business partner.
+	  */
+	public int getTimesEnteredByID();
+
+	public org.compiere.model.I_C_BPartner getTimesEnteredB() throws RuntimeException;
 
     /** Column name Updated */
     public static final String COLUMNNAME_Updated = "Updated";
@@ -555,4 +719,30 @@ public interface I_FTU_Flightsheet
 
 	/** Get Wheels Up	  */
 	public Timestamp getWheelsUp();
+
+    /** Column name XCDeparture */
+    public static final String COLUMNNAME_XCDeparture = "XCDeparture";
+
+	/** Set XCDeparture.
+	  * Cross country departure location.
+	  */
+	public void setXCDeparture (String XCDeparture);
+
+	/** Get XCDeparture.
+	  * Cross country departure location.
+	  */
+	public String getXCDeparture();
+
+    /** Column name XCDestination */
+    public static final String COLUMNNAME_XCDestination = "XCDestination";
+
+	/** Set XCDestination.
+	  * Cross country destination
+	  */
+	public void setXCDestination (String XCDestination);
+
+	/** Get XCDestination.
+	  * Cross country destination
+	  */
+	public String getXCDestination();
 }

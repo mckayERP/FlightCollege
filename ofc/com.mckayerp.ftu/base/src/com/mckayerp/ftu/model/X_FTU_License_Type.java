@@ -30,7 +30,7 @@ public class X_FTU_License_Type extends PO implements I_FTU_License_Type, I_Pers
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160131L;
+	private static final long serialVersionUID = 20160222L;
 
     /** Standard Constructor */
     public X_FTU_License_Type (Properties ctx, int FTU_License_Type_ID, String trxName)
@@ -69,8 +69,8 @@ public class X_FTU_License_Type extends PO implements I_FTU_License_Type, I_Pers
       return sb.toString();
     }
 
-	/** Set Licenses Type.
-		@param FTU_License_Type_ID Licenses Type	  */
+	/** Set Licenses and Permits ID.
+		@param FTU_License_Type_ID Licenses and Permits ID	  */
 	public void setFTU_License_Type_ID (int FTU_License_Type_ID)
 	{
 		if (FTU_License_Type_ID < 1) 
@@ -79,8 +79,8 @@ public class X_FTU_License_Type extends PO implements I_FTU_License_Type, I_Pers
 			set_ValueNoCheck (COLUMNNAME_FTU_License_Type_ID, Integer.valueOf(FTU_License_Type_ID));
 	}
 
-	/** Get Licenses Type.
-		@return Licenses Type	  */
+	/** Get Licenses and Permits ID.
+		@return Licenses and Permits ID	  */
 	public int getFTU_License_Type_ID () 
 	{
 		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_License_Type_ID);
@@ -161,20 +161,20 @@ public class X_FTU_License_Type extends PO implements I_FTU_License_Type, I_Pers
 	}
 
 	/** Set Validity Break Age.
-		@param MedCatValidityBreakAge 
+		@param OMedCatValidityBreakAge 
 		The age at which the validity period changes - typically 40 years.
 	  */
-	public void setMedCatValidityBreakAge (int MedCatValidityBreakAge)
+	public void setOMedCatValidityBreakAge (int OMedCatValidityBreakAge)
 	{
-		set_Value (COLUMNNAME_MedCatValidityBreakAge, Integer.valueOf(MedCatValidityBreakAge));
+		set_Value (COLUMNNAME_OMedCatValidityBreakAge, Integer.valueOf(OMedCatValidityBreakAge));
 	}
 
 	/** Get Validity Break Age.
 		@return The age at which the validity period changes - typically 40 years.
 	  */
-	public int getMedCatValidityBreakAge () 
+	public int getOMedCatValidityBreakAge () 
 	{
-		Integer ii = (Integer)get_Value(COLUMNNAME_MedCatValidityBreakAge);
+		Integer ii = (Integer)get_Value(COLUMNNAME_OMedCatValidityBreakAge);
 		if (ii == null)
 			 return 0;
 		return ii.intValue();

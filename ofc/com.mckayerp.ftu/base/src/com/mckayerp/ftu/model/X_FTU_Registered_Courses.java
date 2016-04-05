@@ -30,7 +30,7 @@ public class X_FTU_Registered_Courses extends PO implements I_FTU_Registered_Cou
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160131L;
+	private static final long serialVersionUID = 20160222L;
 
     /** Standard Constructor */
     public X_FTU_Registered_Courses (Properties ctx, int FTU_Registered_Courses_ID, String trxName)

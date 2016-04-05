@@ -31,7 +31,7 @@ public class X_FTU_Training_Unit extends PO implements I_FTU_Training_Unit, I_Pe
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160131L;
+	private static final long serialVersionUID = 20160222L;
 
     /** Standard Constructor */
     public X_FTU_Training_Unit (Properties ctx, int FTU_Training_Unit_ID, String trxName)
@@ -149,21 +149,18 @@ public class X_FTU_Training_Unit extends PO implements I_FTU_Training_Unit, I_Pe
         return new KeyNamePair(get_ID(), getName());
     }
 
-	/** Set Program Code.
-		@param Program_Code 
-		Program Code for FTU Program
-	  */
-	public void setProgram_Code (String Program_Code)
+	/** Set Description.
+		@param Text Description	  */
+	public void setText (String Text)
 	{
-		set_Value (COLUMNNAME_Program_Code, Program_Code);
+		set_Value (COLUMNNAME_Text, Text);
 	}
 
-	/** Get Program Code.
-		@return Program Code for FTU Program
-	  */
-	public String getProgram_Code () 
+	/** Get Description.
+		@return Description	  */
+	public String getText () 
 	{
-		return (String)get_Value(COLUMNNAME_Program_Code);
+		return (String)get_Value(COLUMNNAME_Text);
 	}
 
 	/** Set Search Key.

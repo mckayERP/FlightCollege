@@ -17,12 +17,10 @@
 /** Generated Model - DO NOT CHANGE */
 package com.mckayerp.ftu.model;
 
-import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.Properties;
 import org.compiere.model.*;
-import org.compiere.util.Env;
 
 /** Generated Model for FTU_AVDoc
  *  @author Adempiere (generated) 
@@ -33,7 +31,7 @@ public class X_FTU_AVDoc extends PO implements I_FTU_AVDoc, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160131L;
+	private static final long serialVersionUID = 20160222L;
 
     /** Standard Constructor */
     public X_FTU_AVDoc (Properties ctx, int FTU_AVDoc_ID, String trxName)
@@ -203,43 +201,59 @@ public class X_FTU_AVDoc extends PO implements I_FTU_AVDoc, I_Persistent
 		return ii.intValue();
 	}
 
-	/** Set Licence Info Tab.
-		@param Licence_Info_Tab 
-		Included Tab in this Tab (Master Detail)
+	public org.compiere.model.I_AD_Tab getLicense_Tab() throws RuntimeException
+    {
+		return (org.compiere.model.I_AD_Tab)MTable.get(getCtx(), org.compiere.model.I_AD_Tab.Table_Name)
+			.getPO(getLicense_Tab_ID(), get_TrxName());	}
+
+	/** Set License Info Tab.
+		@param License_Tab_ID 
+		License information
 	  */
-	public void setLicence_Info_Tab (BigDecimal Licence_Info_Tab)
+	public void setLicense_Tab_ID (int License_Tab_ID)
 	{
-		set_Value (COLUMNNAME_Licence_Info_Tab, Licence_Info_Tab);
+		if (License_Tab_ID < 1) 
+			set_Value (COLUMNNAME_License_Tab_ID, null);
+		else 
+			set_Value (COLUMNNAME_License_Tab_ID, Integer.valueOf(License_Tab_ID));
 	}
 
-	/** Get Licence Info Tab.
-		@return Included Tab in this Tab (Master Detail)
+	/** Get License Info Tab.
+		@return License information
 	  */
-	public BigDecimal getLicence_Info_Tab () 
+	public int getLicense_Tab_ID () 
 	{
-		BigDecimal bd = (BigDecimal)get_Value(COLUMNNAME_Licence_Info_Tab);
-		if (bd == null)
-			 return Env.ZERO;
-		return bd;
+		Integer ii = (Integer)get_Value(COLUMNNAME_License_Tab_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
 	}
 
-	/** Set Included Tab.
-		@param Medical_Info_Tab 
-		Included Tab in this Tab (Master Detail)
+	public org.compiere.model.I_AD_Tab getMedical_Tab() throws RuntimeException
+    {
+		return (org.compiere.model.I_AD_Tab)MTable.get(getCtx(), org.compiere.model.I_AD_Tab.Table_Name)
+			.getPO(getMedical_Tab_ID(), get_TrxName());	}
+
+	/** Set Medical Info Tab.
+		@param Medical_Tab_ID 
+		Medical Information
 	  */
-	public void setMedical_Info_Tab (BigDecimal Medical_Info_Tab)
+	public void setMedical_Tab_ID (int Medical_Tab_ID)
 	{
-		set_Value (COLUMNNAME_Medical_Info_Tab, Medical_Info_Tab);
+		if (Medical_Tab_ID < 1) 
+			set_Value (COLUMNNAME_Medical_Tab_ID, null);
+		else 
+			set_Value (COLUMNNAME_Medical_Tab_ID, Integer.valueOf(Medical_Tab_ID));
 	}
 
-	/** Get Included Tab.
-		@return Included Tab in this Tab (Master Detail)
+	/** Get Medical Info Tab.
+		@return Medical Information
 	  */
-	public BigDecimal getMedical_Info_Tab () 
+	public int getMedical_Tab_ID () 
 	{
-		BigDecimal bd = (BigDecimal)get_Value(COLUMNNAME_Medical_Info_Tab);
-		if (bd == null)
-			 return Env.ZERO;
-		return bd;
+		Integer ii = (Integer)get_Value(COLUMNNAME_Medical_Tab_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
 	}
 }

@@ -66,12 +66,12 @@ public interface I_FTU_TL11b_Course_Map
     /** Column name CRA_Course_Type */
     public static final String COLUMNNAME_CRA_Course_Type = "CRA_Course_Type";
 
-	/** Set CRA Course Type.
+	/** Set Course Type.
 	  * The type of flight training course followed.
 	  */
 	public void setCRA_Course_Type (String CRA_Course_Type);
 
-	/** Get CRA Course Type.
+	/** Get Course Type.
 	  * The type of flight training course followed.
 	  */
 	public String getCRA_Course_Type();

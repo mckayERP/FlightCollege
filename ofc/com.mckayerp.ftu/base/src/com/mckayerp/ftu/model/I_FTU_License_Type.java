@@ -82,10 +82,10 @@ public interface I_FTU_License_Type
     /** Column name FTU_License_Type_ID */
     public static final String COLUMNNAME_FTU_License_Type_ID = "FTU_License_Type_ID";
 
-	/** Set Licenses Type	  */
+	/** Set Licenses and Permits ID	  */
 	public void setFTU_License_Type_ID (int FTU_License_Type_ID);
 
-	/** Get Licenses Type	  */
+	/** Get Licenses and Permits ID	  */
 	public int getFTU_License_Type_ID();
 
     /** Column name FTU_Medical_Cat_ID */
@@ -125,18 +125,18 @@ public interface I_FTU_License_Type
 	  */
 	public String getLicenseType();
 
-    /** Column name MedCatValidityBreakAge */
-    public static final String COLUMNNAME_MedCatValidityBreakAge = "MedCatValidityBreakAge";
+    /** Column name OMedCatValidityBreakAge */
+    public static final String COLUMNNAME_OMedCatValidityBreakAge = "OMedCatValidityBreakAge";
 
 	/** Set Validity Break Age.
 	  * The age at which the validity period changes - typically 40 years.
 	  */
-	public void setMedCatValidityBreakAge (int MedCatValidityBreakAge);
+	public void setOMedCatValidityBreakAge (int OMedCatValidityBreakAge);
 
 	/** Get Validity Break Age.
 	  * The age at which the validity period changes - typically 40 years.
 	  */
-	public int getMedCatValidityBreakAge();
+	public int getOMedCatValidityBreakAge();
 
     /** Column name Updated */
     public static final String COLUMNNAME_Updated = "Updated";

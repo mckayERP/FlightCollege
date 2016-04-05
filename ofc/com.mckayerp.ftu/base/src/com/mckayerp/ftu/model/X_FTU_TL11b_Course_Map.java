@@ -32,7 +32,7 @@ public class X_FTU_TL11b_Course_Map extends PO implements I_FTU_TL11b_Course_Map
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160131L;
+	private static final long serialVersionUID = 20160222L;
 
     /** Standard Constructor */
     public X_FTU_TL11b_Course_Map (Properties ctx, int FTU_TL11b_Course_Map_ID, String trxName)
@@ -86,7 +86,7 @@ public class X_FTU_TL11b_Course_Map extends PO implements I_FTU_TL11b_Course_Map
 	public static final String CRA_COURSE_TYPE_IFR = "4-IFR";
 	/** Other = 5-Other */
 	public static final String CRA_COURSE_TYPE_Other = "5-Other";
-	/** Set CRA Course Type.
+	/** Set Course Type.
 		@param CRA_Course_Type 
 		The type of flight training course followed.
 	  */
@@ -96,7 +96,7 @@ public class X_FTU_TL11b_Course_Map extends PO implements I_FTU_TL11b_Course_Map
 		set_Value (COLUMNNAME_CRA_Course_Type, CRA_Course_Type);
 	}
 
-	/** Get CRA Course Type.
+	/** Get Course Type.
 		@return The type of flight training course followed.
 	  */
 	public String getCRA_Course_Type () 

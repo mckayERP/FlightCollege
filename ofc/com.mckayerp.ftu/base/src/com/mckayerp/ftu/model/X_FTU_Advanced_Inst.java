@@ -31,7 +31,7 @@ public class X_FTU_Advanced_Inst extends PO implements I_FTU_Advanced_Inst, I_Pe
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160131L;
+	private static final long serialVersionUID = 20160222L;
 
     /** Standard Constructor */
     public X_FTU_Advanced_Inst (Properties ctx, int FTU_Advanced_Inst_ID, String trxName)

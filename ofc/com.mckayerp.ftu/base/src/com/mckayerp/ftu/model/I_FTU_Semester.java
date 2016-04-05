@@ -132,28 +132,24 @@ public interface I_FTU_Semester
     /** Column name Name */
     public static final String COLUMNNAME_Name = "Name";
 
-	/** Set Semester Code.
+	/** Set Name.
 	  * Alphanumeric identifier of the entity
 	  */
 	public void setName (String Name);
 
-	/** Get Semester Code.
+	/** Get Name.
 	  * Alphanumeric identifier of the entity
 	  */
 	public String getName();
 
-    /** Column name Term_Code */
-    public static final String COLUMNNAME_Term_Code = "Term_Code";
+    /** Column name Text */
+    public static final String COLUMNNAME_Text = "Text";
 
-	/** Set Term Code.
-	  * Season/term code
-	  */
-	public void setTerm_Code (String Term_Code);
+	/** Set Description	  */
+	public void setText (String Text);
 
-	/** Get Term Code.
-	  * Season/term code
-	  */
-	public String getTerm_Code();
+	/** Get Description	  */
+	public String getText();
 
     /** Column name Updated */
     public static final String COLUMNNAME_Updated = "Updated";

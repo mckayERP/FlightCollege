@@ -33,7 +33,7 @@ public class X_FTU_Syllabus_Details extends PO implements I_FTU_Syllabus_Details
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160131L;
+	private static final long serialVersionUID = 20160222L;
 
     /** Standard Constructor */
     public X_FTU_Syllabus_Details (Properties ctx, int FTU_Syllabus_Details_ID, String trxName)

@@ -173,31 +173,35 @@ public interface I_FTU_AVDoc
 	  */
 	public boolean isActive();
 
-    /** Column name Licence_Info_Tab */
-    public static final String COLUMNNAME_Licence_Info_Tab = "Licence_Info_Tab";
+    /** Column name License_Tab_ID */
+    public static final String COLUMNNAME_License_Tab_ID = "License_Tab_ID";
 
-	/** Set Licence Info Tab.
-	  * Included Tab in this Tab (Master Detail)
+	/** Set License Info Tab.
+	  * License information
 	  */
-	public void setLicence_Info_Tab (BigDecimal Licence_Info_Tab);
+	public void setLicense_Tab_ID (int License_Tab_ID);
 
-	/** Get Licence Info Tab.
-	  * Included Tab in this Tab (Master Detail)
+	/** Get License Info Tab.
+	  * License information
 	  */
-	public BigDecimal getLicence_Info_Tab();
+	public int getLicense_Tab_ID();
 
-    /** Column name Medical_Info_Tab */
-    public static final String COLUMNNAME_Medical_Info_Tab = "Medical_Info_Tab";
+	public org.compiere.model.I_AD_Tab getLicense_Tab() throws RuntimeException;
 
-	/** Set Included Tab.
-	  * Included Tab in this Tab (Master Detail)
+    /** Column name Medical_Tab_ID */
+    public static final String COLUMNNAME_Medical_Tab_ID = "Medical_Tab_ID";
+
+	/** Set Medical Info Tab.
+	  * Medical Information
 	  */
-	public void setMedical_Info_Tab (BigDecimal Medical_Info_Tab);
+	public void setMedical_Tab_ID (int Medical_Tab_ID);
 
-	/** Get Included Tab.
-	  * Included Tab in this Tab (Master Detail)
+	/** Get Medical Info Tab.
+	  * Medical Information
 	  */
-	public BigDecimal getMedical_Info_Tab();
+	public int getMedical_Tab_ID();
+
+	public org.compiere.model.I_AD_Tab getMedical_Tab() throws RuntimeException;
 
     /** Column name Updated */
     public static final String COLUMNNAME_Updated = "Updated";

@@ -33,7 +33,7 @@ public class X_FTU_Course extends PO implements I_FTU_Course, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160131L;
+	private static final long serialVersionUID = 20160222L;
 
     /** Standard Constructor */
     public X_FTU_Course (Properties ctx, int FTU_Course_ID, String trxName)
@@ -41,9 +41,9 @@ public class X_FTU_Course extends PO implements I_FTU_Course, I_Persistent
       super (ctx, FTU_Course_ID, trxName);
       /** if (FTU_Course_ID == 0)
         {
-			setCourseTitle (null);
 			setFTU_Course_ID (0);
 			setFTU_Training_Unit_ID (0);
+			setName (null);
 			setValue (null);
         } */
     }
@@ -137,31 +137,6 @@ public class X_FTU_Course extends PO implements I_FTU_Course, I_Persistent
 	{
 		return (String)get_Value(COLUMNNAME_CourseLevel);
 	}
-
-	/** Set Course Title.
-		@param CourseTitle 
-		Course Title
-	  */
-	public void setCourseTitle (String CourseTitle)
-	{
-		set_Value (COLUMNNAME_CourseTitle, CourseTitle);
-	}
-
-	/** Get Course Title.
-		@return Course Title
-	  */
-	public String getCourseTitle () 
-	{
-		return (String)get_Value(COLUMNNAME_CourseTitle);
-	}
-
-    /** Get Record ID/ColumnName
-        @return ID/ColumnName pair
-      */
-    public KeyNamePair getKeyNamePair() 
-    {
-        return new KeyNamePair(get_ID(), getCourseTitle());
-    }
 
 	/** Set Description.
 		@param Description 
@@ -292,17 +267,42 @@ public class X_FTU_Course extends PO implements I_FTU_Course, I_Persistent
 		return false;
 	}
 
-	/** Set Course Number.
+	/** Set Name.
+		@param Name 
+		Alphanumeric identifier of the entity
+	  */
+	public void setName (String Name)
+	{
+		set_Value (COLUMNNAME_Name, Name);
+	}
+
+	/** Get Name.
+		@return Alphanumeric identifier of the entity
+	  */
+	public String getName () 
+	{
+		return (String)get_Value(COLUMNNAME_Name);
+	}
+
+    /** Get Record ID/ColumnName
+        @return ID/ColumnName pair
+      */
+    public KeyNamePair getKeyNamePair() 
+    {
+        return new KeyNamePair(get_ID(), getName());
+    }
+
+	/** Set Search Key.
 		@param Value 
-		The Course Number for the Course
+		Search key for the record in the format required - must be unique
 	  */
 	public void setValue (String Value)
 	{
 		set_Value (COLUMNNAME_Value, Value);
 	}
 
-	/** Get Course Number.
-		@return The Course Number for the Course
+	/** Get Search Key.
+		@return Search key for the record in the format required - must be unique
 	  */
 	public String getValue () 
 	{

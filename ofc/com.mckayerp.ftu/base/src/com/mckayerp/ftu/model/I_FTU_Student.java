@@ -66,12 +66,12 @@ public interface I_FTU_Student
     /** Column name C_BPartner_ID */
     public static final String COLUMNNAME_C_BPartner_ID = "C_BPartner_ID";
 
-	/** Set Student Name.
+	/** Set Business Partner .
 	  * Identifies a Business Partner
 	  */
 	public void setC_BPartner_ID (int C_BPartner_ID);
 
-	/** Get Student Name.
+	/** Get Business Partner .
 	  * Identifies a Business Partner
 	  */
 	public int getC_BPartner_ID();

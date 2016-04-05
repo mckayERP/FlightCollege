@@ -30,7 +30,7 @@ public class X_AD_ImpValRule_Cond extends PO implements I_AD_ImpValRule_Cond, I_
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160131L;
+	private static final long serialVersionUID = 20160222L;
 
     /** Standard Constructor */
     public X_AD_ImpValRule_Cond (Properties ctx, int AD_ImpValRule_Cond_ID, String trxName)
@@ -292,17 +292,17 @@ public class X_AD_ImpValRule_Cond extends PO implements I_AD_ImpValRule_Cond, I_
 		return ii.intValue();
 	}
 
-	/** Set Value.
+	/** Set Value 1.
 		@param Value1 
-		Value or value from if comparator is between ">-<"
+		Value or value from is comparator is between ">-<"
 	  */
 	public void setValue1 (String Value1)
 	{
 		set_Value (COLUMNNAME_Value1, Value1);
 	}
 
-	/** Get Value.
-		@return Value or value from if comparator is between ">-<"
+	/** Get Value 1.
+		@return Value or value from is comparator is between ">-<"
 	  */
 	public String getValue1 () 
 	{

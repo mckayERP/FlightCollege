@@ -133,18 +133,14 @@ public interface I_FTU_Training_Unit
 	  */
 	public String getName();
 
-    /** Column name Program_Code */
-    public static final String COLUMNNAME_Program_Code = "Program_Code";
+    /** Column name Text */
+    public static final String COLUMNNAME_Text = "Text";
 
-	/** Set Program Code.
-	  * Program Code for FTU Program
-	  */
-	public void setProgram_Code (String Program_Code);
+	/** Set Description	  */
+	public void setText (String Text);
 
-	/** Get Program Code.
-	  * Program Code for FTU Program
-	  */
-	public String getProgram_Code();
+	/** Get Description	  */
+	public String getText();
 
     /** Column name Updated */
     public static final String COLUMNNAME_Updated = "Updated";

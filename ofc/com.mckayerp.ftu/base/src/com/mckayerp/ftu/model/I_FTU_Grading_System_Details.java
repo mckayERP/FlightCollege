@@ -97,19 +97,6 @@ public interface I_FTU_Grading_System_Details
 	/** Get Grading System ID	  */
 	public BigDecimal getFTU_Grading_System_ID();
 
-    /** Column name GradeCode */
-    public static final String COLUMNNAME_GradeCode = "GradeCode";
-
-	/** Set Grade Code.
-	  * Alphanumeric identifier of the grade
-	  */
-	public void setGradeCode (String GradeCode);
-
-	/** Get Grade Code.
-	  * Alphanumeric identifier of the grade
-	  */
-	public String getGradeCode();
-
     /** Column name IsActive */
     public static final String COLUMNNAME_IsActive = "IsActive";
 
@@ -122,6 +109,19 @@ public interface I_FTU_Grading_System_Details
 	  * The record is active in the system
 	  */
 	public boolean isActive();
+
+    /** Column name Name */
+    public static final String COLUMNNAME_Name = "Name";
+
+	/** Set Name.
+	  * Alphanumeric identifier of the entity
+	  */
+	public void setName (String Name);
+
+	/** Get Name.
+	  * Alphanumeric identifier of the entity
+	  */
+	public String getName();
 
     /** Column name Updated */
     public static final String COLUMNNAME_Updated = "Updated";

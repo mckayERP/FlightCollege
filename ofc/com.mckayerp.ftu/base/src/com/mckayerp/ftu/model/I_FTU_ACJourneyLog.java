@@ -63,6 +63,19 @@ public interface I_FTU_ACJourneyLog
 	  */
 	public int getAD_Org_ID();
 
+    /** Column name AirTime */
+    public static final String COLUMNNAME_AirTime = "AirTime";
+
+	/** Set Air Time.
+	  * The time intervale measured in hours from the moment the aircraft leaves the ground to the moment it contacts the ground again.
+	  */
+	public void setAirTime (BigDecimal AirTime);
+
+	/** Get Air Time.
+	  * The time intervale measured in hours from the moment the aircraft leaves the ground to the moment it contacts the ground again.
+	  */
+	public BigDecimal getAirTime();
+
     /** Column name Created */
     public static final String COLUMNNAME_Created = "Created";
 
@@ -92,6 +105,32 @@ public interface I_FTU_ACJourneyLog
 	  */
 	public Timestamp getEntryDate();
 
+    /** Column name FlightDate */
+    public static final String COLUMNNAME_FlightDate = "FlightDate";
+
+	/** Set Flight Date.
+	  * The date of the start of the flight.
+	  */
+	public void setFlightDate (Timestamp FlightDate);
+
+	/** Get Flight Date.
+	  * The date of the start of the flight.
+	  */
+	public Timestamp getFlightDate();
+
+    /** Column name FlightTime */
+    public static final String COLUMNNAME_FlightTime = "FlightTime";
+
+	/** Set Flight Time.
+	  * The time intervale from the moment the aircraft first moves under its own power for the purposes of taking off until the moment it comes to rest.
+	  */
+	public void setFlightTime (BigDecimal FlightTime);
+
+	/** Get Flight Time.
+	  * The time intervale from the moment the aircraft first moves under its own power for the purposes of taking off until the moment it comes to rest.
+	  */
+	public BigDecimal getFlightTime();
+
     /** Column name FTU_ACJourneyLog_ID */
     public static final String COLUMNNAME_FTU_ACJourneyLog_ID = "FTU_ACJourneyLog_ID";
 
@@ -112,6 +151,15 @@ public interface I_FTU_ACJourneyLog
 
 	public com.mckayerp.ftu.model.I_FTU_Aircraft getFTU_Aircraft() throws RuntimeException;
 
+    /** Column name IntendedFlight */
+    public static final String COLUMNNAME_IntendedFlight = "IntendedFlight";
+
+	/** Set Intended Flight	  */
+	public void setIntendedFlight (String IntendedFlight);
+
+	/** Get Intended Flight	  */
+	public String getIntendedFlight();
+
     /** Column name IsActive */
     public static final String COLUMNNAME_IsActive = "IsActive";
 
@@ -124,6 +172,61 @@ public interface I_FTU_ACJourneyLog
 	  * The record is active in the system
 	  */
 	public boolean isActive();
+
+    /** Column name NumberLegs */
+    public static final String COLUMNNAME_NumberLegs = "NumberLegs";
+
+	/** Set Number Legs	  */
+	public void setNumberLegs (int NumberLegs);
+
+	/** Get Number Legs	  */
+	public int getNumberLegs();
+
+    /** Column name NumOps */
+    public static final String COLUMNNAME_NumOps = "NumOps";
+
+	/** Set Number of Ops.
+	  * The number of operations conducted during this flight entry.
+	  */
+	public void setNumOps (int NumOps);
+
+	/** Get Number of Ops.
+	  * The number of operations conducted during this flight entry.
+	  */
+	public int getNumOps();
+
+    /** Column name Registration */
+    public static final String COLUMNNAME_Registration = "Registration";
+
+	/** Set AC Registration	  */
+	public void setRegistration (String Registration);
+
+	/** Get AC Registration	  */
+	public String getRegistration();
+
+    /** Column name SeqNo */
+    public static final String COLUMNNAME_SeqNo = "SeqNo";
+
+	/** Set Sequence.
+	  * Method of ordering records;
+ lowest number comes first
+	  */
+	public void setSeqNo (int SeqNo);
+
+	/** Get Sequence.
+	  * Method of ordering records;
+ lowest number comes first
+	  */
+	public int getSeqNo();
+
+    /** Column name TotalAirframeTime */
+    public static final String COLUMNNAME_TotalAirframeTime = "TotalAirframeTime";
+
+	/** Set Total Airframe Time	  */
+	public void setTotalAirframeTime (BigDecimal TotalAirframeTime);
+
+	/** Get Total Airframe Time	  */
+	public BigDecimal getTotalAirframeTime();
 
     /** Column name Updated */
     public static final String COLUMNNAME_Updated = "Updated";
@@ -140,4 +243,22 @@ public interface I_FTU_ACJourneyLog
 	  * User who updated this records
 	  */
 	public int getUpdatedBy();
+
+    /** Column name WheelsDown */
+    public static final String COLUMNNAME_WheelsDown = "WheelsDown";
+
+	/** Set Wheels Down	  */
+	public void setWheelsDown (Timestamp WheelsDown);
+
+	/** Get Wheels Down	  */
+	public Timestamp getWheelsDown();
+
+    /** Column name WheelsUp */
+    public static final String COLUMNNAME_WheelsUp = "WheelsUp";
+
+	/** Set Wheels Up	  */
+	public void setWheelsUp (Timestamp WheelsUp);
+
+	/** Get Wheels Up	  */
+	public Timestamp getWheelsUp();
 }

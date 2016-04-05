@@ -33,7 +33,7 @@ public class X_FTU_Grading_System_Details extends PO implements I_FTU_Grading_Sy
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160131L;
+	private static final long serialVersionUID = 20160222L;
 
     /** Standard Constructor */
     public X_FTU_Grading_System_Details (Properties ctx, int FTU_Grading_System_Details_ID, String trxName)
@@ -43,7 +43,7 @@ public class X_FTU_Grading_System_Details extends PO implements I_FTU_Grading_Sy
         {
 			setFTU_Grading_System_Details_ID (0);
 			setFTU_Grading_System_ID (Env.ZERO);
-			setGradeCode (null);
+			setName (null);
 			setValue (null);
         } */
     }
@@ -113,21 +113,21 @@ public class X_FTU_Grading_System_Details extends PO implements I_FTU_Grading_Sy
 		return bd;
 	}
 
-	/** Set Grade Code.
-		@param GradeCode 
-		Alphanumeric identifier of the grade
+	/** Set Name.
+		@param Name 
+		Alphanumeric identifier of the entity
 	  */
-	public void setGradeCode (String GradeCode)
+	public void setName (String Name)
 	{
-		set_Value (COLUMNNAME_GradeCode, GradeCode);
+		set_Value (COLUMNNAME_Name, Name);
 	}
 
-	/** Get Grade Code.
-		@return Alphanumeric identifier of the grade
+	/** Get Name.
+		@return Alphanumeric identifier of the entity
 	  */
-	public String getGradeCode () 
+	public String getName () 
 	{
-		return (String)get_Value(COLUMNNAME_GradeCode);
+		return (String)get_Value(COLUMNNAME_Name);
 	}
 
     /** Get Record ID/ColumnName
@@ -135,7 +135,7 @@ public class X_FTU_Grading_System_Details extends PO implements I_FTU_Grading_Sy
       */
     public KeyNamePair getKeyNamePair() 
     {
-        return new KeyNamePair(get_ID(), getGradeCode());
+        return new KeyNamePair(get_ID(), getName());
     }
 
 	/** Set Search Key.

@@ -33,7 +33,7 @@ public class X_FTU_Aircraft extends PO implements I_FTU_Aircraft, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160131L;
+	private static final long serialVersionUID = 20160222L;
 
     /** Standard Constructor */
     public X_FTU_Aircraft (Properties ctx, int FTU_Aircraft_ID, String trxName)
@@ -41,6 +41,8 @@ public class X_FTU_Aircraft extends PO implements I_FTU_Aircraft, I_Persistent
       super (ctx, FTU_Aircraft_ID, trxName);
       /** if (FTU_Aircraft_ID == 0)
         {
+			setC_UOM_ID (0);
+// 1000001
 			setCallSign (null);
 			setFTU_Aircraft_ID (0);
 			setS_Resource_ID (0);
@@ -320,9 +322,9 @@ public class X_FTU_Aircraft extends PO implements I_FTU_Aircraft, I_Persistent
 		return (org.compiere.model.I_C_BPartner)MTable.get(getCtx(), org.compiere.model.I_C_BPartner.Table_Name)
 			.getPO(getC_BPartner_ID(), get_TrxName());	}
 
-	/** Set Owner.
+	/** Set Business Partner .
 		@param C_BPartner_ID 
-		The Aircraft Owner
+		Identifies a Business Partner
 	  */
 	public void setC_BPartner_ID (int C_BPartner_ID)
 	{
@@ -332,8 +334,8 @@ public class X_FTU_Aircraft extends PO implements I_FTU_Aircraft, I_Persistent
 			set_Value (COLUMNNAME_C_BPartner_ID, Integer.valueOf(C_BPartner_ID));
 	}
 
-	/** Get Owner.
-		@return The Aircraft Owner
+	/** Get Business Partner .
+		@return Identifies a Business Partner
 	  */
 	public int getC_BPartner_ID () 
 	{

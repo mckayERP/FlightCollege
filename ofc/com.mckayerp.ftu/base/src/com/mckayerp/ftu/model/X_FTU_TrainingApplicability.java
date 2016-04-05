@@ -30,7 +30,7 @@ public class X_FTU_TrainingApplicability extends PO implements I_FTU_TrainingApp
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160131L;
+	private static final long serialVersionUID = 20160222L;
 
     /** Standard Constructor */
     public X_FTU_TrainingApplicability (Properties ctx, int FTU_TrainingApplicability_ID, String trxName)
@@ -75,9 +75,9 @@ public class X_FTU_TrainingApplicability extends PO implements I_FTU_TrainingApp
 		return (org.compiere.model.I_C_BPartner)MTable.get(getCtx(), org.compiere.model.I_C_BPartner.Table_Name)
 			.getPO(getC_BPartner_ID(), get_TrxName());	}
 
-	/** Set Employee.
+	/** Set Business Partner .
 		@param C_BPartner_ID 
-		Employee the training applies to
+		Identifies a Business Partner
 	  */
 	public void setC_BPartner_ID (int C_BPartner_ID)
 	{
@@ -87,8 +87,8 @@ public class X_FTU_TrainingApplicability extends PO implements I_FTU_TrainingApp
 			set_Value (COLUMNNAME_C_BPartner_ID, Integer.valueOf(C_BPartner_ID));
 	}
 
-	/** Get Employee.
-		@return Employee the training applies to
+	/** Get Business Partner .
+		@return Identifies a Business Partner
 	  */
 	public int getC_BPartner_ID () 
 	{

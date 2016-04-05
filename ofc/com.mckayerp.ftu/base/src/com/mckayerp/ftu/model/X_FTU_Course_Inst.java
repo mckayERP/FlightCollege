@@ -30,7 +30,7 @@ public class X_FTU_Course_Inst extends PO implements I_FTU_Course_Inst, I_Persis
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160131L;
+	private static final long serialVersionUID = 20160222L;
 
     /** Standard Constructor */
     public X_FTU_Course_Inst (Properties ctx, int FTU_Course_Inst_ID, String trxName)

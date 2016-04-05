@@ -66,13 +66,13 @@ public interface I_FTU_Training_Session
     /** Column name C_BPartner_ID */
     public static final String COLUMNNAME_C_BPartner_ID = "C_BPartner_ID";
 
-	/** Set Instructor.
-	  * The instructor of the training session
+	/** Set Business Partner .
+	  * Identifies a Business Partner
 	  */
 	public void setC_BPartner_ID (int C_BPartner_ID);
 
-	/** Get Instructor.
-	  * The instructor of the training session
+	/** Get Business Partner .
+	  * Identifies a Business Partner
 	  */
 	public int getC_BPartner_ID();
 

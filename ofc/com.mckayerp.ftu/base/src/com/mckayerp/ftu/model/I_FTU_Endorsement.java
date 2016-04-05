@@ -104,10 +104,10 @@ public interface I_FTU_Endorsement
     /** Column name FTU_License_Type_ID */
     public static final String COLUMNNAME_FTU_License_Type_ID = "FTU_License_Type_ID";
 
-	/** Set Licenses Type	  */
+	/** Set Licenses and Permits ID	  */
 	public void setFTU_License_Type_ID (int FTU_License_Type_ID);
 
-	/** Get Licenses Type	  */
+	/** Get Licenses and Permits ID	  */
 	public int getFTU_License_Type_ID();
 
 	public com.mckayerp.ftu.model.I_FTU_License_Type getFTU_License_Type() throws RuntimeException;

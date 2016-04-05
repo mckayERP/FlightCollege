@@ -33,7 +33,7 @@ public class X_I_Flightsheet_Audit_Trail extends PO implements I_I_Flightsheet_A
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160131L;
+	private static final long serialVersionUID = 20160222L;
 
     /** Standard Constructor */
     public X_I_Flightsheet_Audit_Trail (Properties ctx, int I_Flightsheet_Audit_Trail_ID, String trxName)

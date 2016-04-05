@@ -30,7 +30,7 @@ public class X_FTU_Medical_Cat extends PO implements I_FTU_Medical_Cat, I_Persis
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160131L;
+	private static final long serialVersionUID = 20160222L;
 
     /** Standard Constructor */
     public X_FTU_Medical_Cat (Properties ctx, int FTU_Medical_Cat_ID, String trxName)

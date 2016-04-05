@@ -31,7 +31,7 @@ public class X_FTU_Endorsement extends PO implements I_FTU_Endorsement, I_Persis
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160131L;
+	private static final long serialVersionUID = 20160222L;
 
     /** Standard Constructor */
     public X_FTU_Endorsement (Properties ctx, int FTU_Endorsement_ID, String trxName)
@@ -116,8 +116,8 @@ public class X_FTU_Endorsement extends PO implements I_FTU_Endorsement, I_Persis
 		return (com.mckayerp.ftu.model.I_FTU_License_Type)MTable.get(getCtx(), com.mckayerp.ftu.model.I_FTU_License_Type.Table_Name)
 			.getPO(getFTU_License_Type_ID(), get_TrxName());	}
 
-	/** Set Licenses Type.
-		@param FTU_License_Type_ID Licenses Type	  */
+	/** Set Licenses and Permits ID.
+		@param FTU_License_Type_ID Licenses and Permits ID	  */
 	public void setFTU_License_Type_ID (int FTU_License_Type_ID)
 	{
 		if (FTU_License_Type_ID < 1) 
@@ -126,8 +126,8 @@ public class X_FTU_Endorsement extends PO implements I_FTU_Endorsement, I_Persis
 			set_Value (COLUMNNAME_FTU_License_Type_ID, Integer.valueOf(FTU_License_Type_ID));
 	}
 
-	/** Get Licenses Type.
-		@return Licenses Type	  */
+	/** Get Licenses and Permits ID.
+		@return Licenses and Permits ID	  */
 	public int getFTU_License_Type_ID () 
 	{
 		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_License_Type_ID);

@@ -98,19 +98,6 @@ public interface I_FTU_Course
 	  */
 	public String getCourseLevel();
 
-    /** Column name CourseTitle */
-    public static final String COLUMNNAME_CourseTitle = "CourseTitle";
-
-	/** Set Course Title.
-	  * Course Title
-	  */
-	public void setCourseTitle (String CourseTitle);
-
-	/** Get Course Title.
-	  * Course Title
-	  */
-	public String getCourseTitle();
-
     /** Column name Created */
     public static final String COLUMNNAME_Created = "Created";
 
@@ -212,6 +199,19 @@ public interface I_FTU_Course
 	  */
 	public boolean isElective();
 
+    /** Column name Name */
+    public static final String COLUMNNAME_Name = "Name";
+
+	/** Set Name.
+	  * Alphanumeric identifier of the entity
+	  */
+	public void setName (String Name);
+
+	/** Get Name.
+	  * Alphanumeric identifier of the entity
+	  */
+	public String getName();
+
     /** Column name Updated */
     public static final String COLUMNNAME_Updated = "Updated";
 
@@ -231,13 +231,13 @@ public interface I_FTU_Course
     /** Column name Value */
     public static final String COLUMNNAME_Value = "Value";
 
-	/** Set Course Number.
-	  * The Course Number for the Course
+	/** Set Search Key.
+	  * Search key for the record in the format required - must be unique
 	  */
 	public void setValue (String Value);
 
-	/** Get Course Number.
-	  * The Course Number for the Course
+	/** Get Search Key.
+	  * Search key for the record in the format required - must be unique
 	  */
 	public String getValue();
 }

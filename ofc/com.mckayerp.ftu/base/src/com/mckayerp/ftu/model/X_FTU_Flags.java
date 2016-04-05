@@ -30,7 +30,7 @@ public class X_FTU_Flags extends PO implements I_FTU_Flags, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160131L;
+	private static final long serialVersionUID = 20160222L;
 
     /** Standard Constructor */
     public X_FTU_Flags (Properties ctx, int FTU_Flags_ID, String trxName)

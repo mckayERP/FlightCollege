@@ -33,7 +33,7 @@ public class X_FTU_Flightsheet extends PO implements I_FTU_Flightsheet, I_Persis
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160131L;
+	private static final long serialVersionUID = 20160222L;
 
     /** Standard Constructor */
     public X_FTU_Flightsheet (Properties ctx, int FTU_Flightsheet_ID, String trxName)
@@ -87,6 +87,31 @@ public class X_FTU_Flightsheet extends PO implements I_FTU_Flightsheet, I_Persis
 		return (String)get_Value(COLUMNNAME_AcknowledgedBy);
 	}
 
+	public org.compiere.model.I_C_BPartner getAcknowledgedB() throws RuntimeException
+    {
+		return (org.compiere.model.I_C_BPartner)MTable.get(getCtx(), org.compiere.model.I_C_BPartner.Table_Name)
+			.getPO(getAcknowledgedByID(), get_TrxName());	}
+
+	/** Set Acknowledged By.
+		@param AcknowledgedByID 
+		The flight authorization was acknowledged by this business partner
+	  */
+	public void setAcknowledgedByID (int AcknowledgedByID)
+	{
+		set_Value (COLUMNNAME_AcknowledgedByID, Integer.valueOf(AcknowledgedByID));
+	}
+
+	/** Get Acknowledged By.
+		@return The flight authorization was acknowledged by this business partner
+	  */
+	public int getAcknowledgedByID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_AcknowledgedByID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
 	/** Set Air Time.
 		@param AirTime 
 		The time intervale measured in hours from the moment the aircraft leaves the ground to the moment it contacts the ground again.
@@ -119,6 +144,31 @@ public class X_FTU_Flightsheet extends PO implements I_FTU_Flightsheet, I_Persis
 	public String getAuthorizedBy () 
 	{
 		return (String)get_Value(COLUMNNAME_AuthorizedBy);
+	}
+
+	public org.compiere.model.I_C_BPartner getAuthorizedB() throws RuntimeException
+    {
+		return (org.compiere.model.I_C_BPartner)MTable.get(getCtx(), org.compiere.model.I_C_BPartner.Table_Name)
+			.getPO(getAuthorizedByID(), get_TrxName());	}
+
+	/** Set Authorized By.
+		@param AuthorizedByID 
+		The flight was authorized by this business partner
+	  */
+	public void setAuthorizedByID (int AuthorizedByID)
+	{
+		set_Value (COLUMNNAME_AuthorizedByID, Integer.valueOf(AuthorizedByID));
+	}
+
+	/** Get Authorized By.
+		@return The flight was authorized by this business partner
+	  */
+	public int getAuthorizedByID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_AuthorizedByID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
 	}
 
 	/** Set Briefing.
@@ -212,6 +262,48 @@ public class X_FTU_Flightsheet extends PO implements I_FTU_Flightsheet, I_Persis
 	public String getCaptain_PIC () 
 	{
 		return (String)get_Value(COLUMNNAME_Captain_PIC);
+	}
+
+	public org.compiere.model.I_C_BPartner getCaptai() throws RuntimeException
+    {
+		return (org.compiere.model.I_C_BPartner)MTable.get(getCtx(), org.compiere.model.I_C_BPartner.Table_Name)
+			.getPO(getCaptainID(), get_TrxName());	}
+
+	/** Set Captain.
+		@param CaptainID 
+		Captain or PIC for the flight.
+	  */
+	public void setCaptainID (int CaptainID)
+	{
+		set_Value (COLUMNNAME_CaptainID, Integer.valueOf(CaptainID));
+	}
+
+	/** Get Captain.
+		@return Captain or PIC for the flight.
+	  */
+	public int getCaptainID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_CaptainID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
+	/** Set Contact/Phone.
+		@param ContactPhone 
+		The Contact/Phone number of a resonsible person for the flight.
+	  */
+	public void setContactPhone (String ContactPhone)
+	{
+		set_Value (COLUMNNAME_ContactPhone, ContactPhone);
+	}
+
+	/** Get Contact/Phone.
+		@return The Contact/Phone number of a resonsible person for the flight.
+	  */
+	public String getContactPhone () 
+	{
+		return (String)get_Value(COLUMNNAME_ContactPhone);
 	}
 
 	/** CourseType AD_Reference_ID=1000033 */
@@ -316,6 +408,23 @@ public class X_FTU_Flightsheet extends PO implements I_FTU_Flightsheet, I_Persis
 		return (Timestamp)get_Value(COLUMNNAME_EngineStop);
 	}
 
+	/** Set Exercises.
+		@param Exercises 
+		Flight training exercises performed
+	  */
+	public void setExercises (String Exercises)
+	{
+		set_Value (COLUMNNAME_Exercises, Exercises);
+	}
+
+	/** Get Exercises.
+		@return Flight training exercises performed
+	  */
+	public String getExercises () 
+	{
+		return (String)get_Value(COLUMNNAME_Exercises);
+	}
+
 	/** Set Flight Date.
 		@param FlightDate 
 		The date of the start of the flight.
@@ -402,6 +511,26 @@ public class X_FTU_Flightsheet extends PO implements I_FTU_Flightsheet, I_Persis
 	public BigDecimal getFlightTime_Charter () 
 	{
 		BigDecimal bd = (BigDecimal)get_Value(COLUMNNAME_FlightTime_Charter);
+		if (bd == null)
+			 return Env.ZERO;
+		return bd;
+	}
+
+	/** Set Dry Time.
+		@param FlightTime_Dry 
+		Flight time where the fuel was purchased by the pilot.
+	  */
+	public void setFlightTime_Dry (BigDecimal FlightTime_Dry)
+	{
+		set_Value (COLUMNNAME_FlightTime_Dry, FlightTime_Dry);
+	}
+
+	/** Get Dry Time.
+		@return Flight time where the fuel was purchased by the pilot.
+	  */
+	public BigDecimal getFlightTime_Dry () 
+	{
+		BigDecimal bd = (BigDecimal)get_Value(COLUMNNAME_FlightTime_Dry);
 		if (bd == null)
 			 return Env.ZERO;
 		return bd;
@@ -505,6 +634,31 @@ public class X_FTU_Flightsheet extends PO implements I_FTU_Flightsheet, I_Persis
 		if (bd == null)
 			 return Env.ZERO;
 		return bd;
+	}
+
+	public com.mckayerp.ftu.model.I_FTU_ACJourneyLog getFTU_ACJourneyLog() throws RuntimeException
+    {
+		return (com.mckayerp.ftu.model.I_FTU_ACJourneyLog)MTable.get(getCtx(), com.mckayerp.ftu.model.I_FTU_ACJourneyLog.Table_Name)
+			.getPO(getFTU_ACJourneyLog_ID(), get_TrxName());	}
+
+	/** Set Aircraft Journey Log.
+		@param FTU_ACJourneyLog_ID Aircraft Journey Log	  */
+	public void setFTU_ACJourneyLog_ID (int FTU_ACJourneyLog_ID)
+	{
+		if (FTU_ACJourneyLog_ID < 1) 
+			set_Value (COLUMNNAME_FTU_ACJourneyLog_ID, null);
+		else 
+			set_Value (COLUMNNAME_FTU_ACJourneyLog_ID, Integer.valueOf(FTU_ACJourneyLog_ID));
+	}
+
+	/** Get Aircraft Journey Log.
+		@return Aircraft Journey Log	  */
+	public int getFTU_ACJourneyLog_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_ACJourneyLog_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
 	}
 
 	public com.mckayerp.ftu.model.I_FTU_Aircraft getFTU_Aircraft() throws RuntimeException
@@ -661,6 +815,54 @@ public class X_FTU_Flightsheet extends PO implements I_FTU_Flightsheet, I_Persis
 		return (String)get_Value(COLUMNNAME_IntendedFlight);
 	}
 
+	/** Set DNCO.
+		@param IsDNCO 
+		Did Not Complete Operation
+	  */
+	public void setIsDNCO (boolean IsDNCO)
+	{
+		set_Value (COLUMNNAME_IsDNCO, Boolean.valueOf(IsDNCO));
+	}
+
+	/** Get DNCO.
+		@return Did Not Complete Operation
+	  */
+	public boolean isDNCO () 
+	{
+		Object oo = get_Value(COLUMNNAME_IsDNCO);
+		if (oo != null) 
+		{
+			 if (oo instanceof Boolean) 
+				 return ((Boolean)oo).booleanValue(); 
+			return "Y".equals(oo);
+		}
+		return false;
+	}
+
+	/** Set No-Show.
+		@param IsNoShow 
+		Is the flight course type one that should be charged a No-Show fee?
+	  */
+	public void setIsNoShow (boolean IsNoShow)
+	{
+		set_Value (COLUMNNAME_IsNoShow, Boolean.valueOf(IsNoShow));
+	}
+
+	/** Get No-Show.
+		@return Is the flight course type one that should be charged a No-Show fee?
+	  */
+	public boolean isNoShow () 
+	{
+		Object oo = get_Value(COLUMNNAME_IsNoShow);
+		if (oo != null) 
+		{
+			 if (oo instanceof Boolean) 
+				 return ((Boolean)oo).booleanValue(); 
+			return "Y".equals(oo);
+		}
+		return false;
+	}
+
 	/** Lesson_Plan_Status AD_Reference_ID=1000036 */
 	public static final int LESSON_PLAN_STATUS_AD_Reference_ID=1000036;
 	/** Incomplete = Incomplete */
@@ -764,6 +966,23 @@ public class X_FTU_Flightsheet extends PO implements I_FTU_Flightsheet, I_Persis
 		return ii.intValue();
 	}
 
+	/** Set Other Pax.
+		@param OtherPax 
+		Other passengers on the flight
+	  */
+	public void setOtherPax (String OtherPax)
+	{
+		set_Value (COLUMNNAME_OtherPax, OtherPax);
+	}
+
+	/** Get Other Pax.
+		@return Other passengers on the flight
+	  */
+	public String getOtherPax () 
+	{
+		return (String)get_Value(COLUMNNAME_OtherPax);
+	}
+
 	/** Set Returning At.
 		@param ReturingAt Returning At	  */
 	public void setReturingAt (Timestamp ReturingAt)
@@ -795,6 +1014,31 @@ public class X_FTU_Flightsheet extends PO implements I_FTU_Flightsheet, I_Persis
 		return bd;
 	}
 
+	public org.compiere.model.I_C_BPartner getStuden() throws RuntimeException
+    {
+		return (org.compiere.model.I_C_BPartner)MTable.get(getCtx(), org.compiere.model.I_C_BPartner.Table_Name)
+			.getPO(getStudentID(), get_TrxName());	}
+
+	/** Set Student.
+		@param StudentID 
+		The student if the flight is an instructional flight.
+	  */
+	public void setStudentID (int StudentID)
+	{
+		set_Value (COLUMNNAME_StudentID, Integer.valueOf(StudentID));
+	}
+
+	/** Get Student.
+		@return The student if the flight is an instructional flight.
+	  */
+	public int getStudentID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_StudentID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
 	/** Set Student/PAX.
 		@param StudentPAX 
 		The student of passengers on the flight
@@ -810,6 +1054,31 @@ public class X_FTU_Flightsheet extends PO implements I_FTU_Flightsheet, I_Persis
 	public String getStudentPAX () 
 	{
 		return (String)get_Value(COLUMNNAME_StudentPAX);
+	}
+
+	public org.compiere.model.I_C_BPartner getTimesEnteredB() throws RuntimeException
+    {
+		return (org.compiere.model.I_C_BPartner)MTable.get(getCtx(), org.compiere.model.I_C_BPartner.Table_Name)
+			.getPO(getTimesEnteredByID(), get_TrxName());	}
+
+	/** Set Times Entered By.
+		@param TimesEnteredByID 
+		The times for this flight were entered by this business partner.
+	  */
+	public void setTimesEnteredByID (int TimesEnteredByID)
+	{
+		set_Value (COLUMNNAME_TimesEnteredByID, Integer.valueOf(TimesEnteredByID));
+	}
+
+	/** Get Times Entered By.
+		@return The times for this flight were entered by this business partner.
+	  */
+	public int getTimesEnteredByID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_TimesEnteredByID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
 	}
 
 	/** Set Search Key.
@@ -855,5 +1124,39 @@ public class X_FTU_Flightsheet extends PO implements I_FTU_Flightsheet, I_Persis
 	public Timestamp getWheelsUp () 
 	{
 		return (Timestamp)get_Value(COLUMNNAME_WheelsUp);
+	}
+
+	/** Set XCDeparture.
+		@param XCDeparture 
+		Cross country departure location.
+	  */
+	public void setXCDeparture (String XCDeparture)
+	{
+		set_Value (COLUMNNAME_XCDeparture, XCDeparture);
+	}
+
+	/** Get XCDeparture.
+		@return Cross country departure location.
+	  */
+	public String getXCDeparture () 
+	{
+		return (String)get_Value(COLUMNNAME_XCDeparture);
+	}
+
+	/** Set XCDestination.
+		@param XCDestination 
+		Cross country destination
+	  */
+	public void setXCDestination (String XCDestination)
+	{
+		set_Value (COLUMNNAME_XCDestination, XCDestination);
+	}
+
+	/** Get XCDestination.
+		@return Cross country destination
+	  */
+	public String getXCDestination () 
+	{
+		return (String)get_Value(COLUMNNAME_XCDestination);
 	}
 }

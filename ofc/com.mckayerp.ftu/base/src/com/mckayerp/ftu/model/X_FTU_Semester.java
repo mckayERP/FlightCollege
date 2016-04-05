@@ -32,7 +32,7 @@ public class X_FTU_Semester extends PO implements I_FTU_Semester, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160131L;
+	private static final long serialVersionUID = 20160222L;
 
     /** Standard Constructor */
     public X_FTU_Semester (Properties ctx, int FTU_Semester_ID, String trxName)
@@ -44,7 +44,7 @@ public class X_FTU_Semester extends PO implements I_FTU_Semester, I_Persistent
 			setFTU_Semester_ID (0);
 			setFTU_Training_Unit_ID (0);
 			setName (null);
-			setTerm_Code (null);
+			setText (null);
 			setValue (null);
         } */
     }
@@ -142,7 +142,7 @@ public class X_FTU_Semester extends PO implements I_FTU_Semester, I_Persistent
 		return ii.intValue();
 	}
 
-	/** Set Semester Code.
+	/** Set Name.
 		@param Name 
 		Alphanumeric identifier of the entity
 	  */
@@ -151,7 +151,7 @@ public class X_FTU_Semester extends PO implements I_FTU_Semester, I_Persistent
 		set_Value (COLUMNNAME_Name, Name);
 	}
 
-	/** Get Semester Code.
+	/** Get Name.
 		@return Alphanumeric identifier of the entity
 	  */
 	public String getName () 
@@ -167,30 +167,27 @@ public class X_FTU_Semester extends PO implements I_FTU_Semester, I_Persistent
         return new KeyNamePair(get_ID(), getName());
     }
 
-	/** Term_Code AD_Reference_ID=1000000 */
-	public static final int TERM_CODE_AD_Reference_ID=1000000;
+	/** Text AD_Reference_ID=1000000 */
+	public static final int TEXT_AD_Reference_ID=1000000;
 	/** S = S */
-	public static final String TERM_CODE_S = "S";
+	public static final String TEXT_S = "S";
 	/** W = W */
-	public static final String TERM_CODE_W = "W";
+	public static final String TEXT_W = "W";
 	/** F = F */
-	public static final String TERM_CODE_F = "F";
-	/** Set Term Code.
-		@param Term_Code 
-		Season/term code
-	  */
-	public void setTerm_Code (String Term_Code)
+	public static final String TEXT_F = "F";
+	/** Set Description.
+		@param Text Description	  */
+	public void setText (String Text)
 	{
 
-		set_Value (COLUMNNAME_Term_Code, Term_Code);
+		set_Value (COLUMNNAME_Text, Text);
 	}
 
-	/** Get Term Code.
-		@return Season/term code
-	  */
-	public String getTerm_Code () 
+	/** Get Description.
+		@return Description	  */
+	public String getText () 
 	{
-		return (String)get_Value(COLUMNNAME_Term_Code);
+		return (String)get_Value(COLUMNNAME_Text);
 	}
 
 	/** Set Search Key.

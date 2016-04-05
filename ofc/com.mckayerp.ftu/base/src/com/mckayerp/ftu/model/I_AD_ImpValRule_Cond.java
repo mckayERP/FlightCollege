@@ -222,13 +222,13 @@ public interface I_AD_ImpValRule_Cond
     /** Column name Value1 */
     public static final String COLUMNNAME_Value1 = "Value1";
 
-	/** Set Value.
-	  * Value or value from if comparator is between ">-<"
+	/** Set Value 1.
+	  * Value or value from is comparator is between ">-<"
 	  */
 	public void setValue1 (String Value1);
 
-	/** Get Value.
-	  * Value or value from if comparator is between ">-<"
+	/** Get Value 1.
+	  * Value or value from is comparator is between ">-<"
 	  */
 	public String getValue1();
 
