@@ -706,7 +706,6 @@ public class CalloutOrder extends CalloutEngine
 		if (M_Product_ID == null || M_Product_ID.intValue() == 0)
 		{
 			//  If the product information is deleted, zero the other items as well
-			mTab.setValue("M_AttributeSetInstance_ID", null);
 			mTab.setValue("PriceList", new BigDecimal(0));
 			mTab.setValue("PriceLimit", new BigDecimal(0));
 			mTab.setValue("PriceActual", new BigDecimal(0));
@@ -714,24 +713,20 @@ public class CalloutOrder extends CalloutEngine
 			mTab.setValue("C_Currency_ID", null);
 			mTab.setValue("Discount", new BigDecimal(0));
 			mTab.setValue("C_UOM_ID", null);
+			setAndTestASI(ctx, WindowNo, Env.isSOTrx(ctx, WindowNo), mTab, 
+					"M_AttributeSetInstance_ID", null, null);
 			return "";
 		}
 		if (steps) log.warning("init");
 
 		MProduct product = MProduct.get (ctx, M_Product_ID.intValue());
-		I_M_AttributeSetInstance asi = product.getM_AttributeSetInstance();
 		//
 		mTab.setValue("C_Charge_ID", null);
 		//	Set Attribute from context or, if null, from the Product
 		//	Get Model and check the Attribute Set Instance from the context
-		MProduct m_product = MProduct.get(Env.getCtx(), M_Product_ID);
-		mTab.setValue("M_AttributeSetInstance_ID", m_product.getEnvAttributeSetInstance(ctx, WindowNo));
-		if (Env.getContextAsInt(ctx, WindowNo, Env.TAB_INFO, "M_Product_ID") == M_Product_ID.intValue()
-			&& Env.getContextAsInt(ctx, WindowNo, Env.TAB_INFO, "M_AttributeSetInstance_ID") != 0)
-			mTab.setValue("M_AttributeSetInstance_ID", Env.getContextAsInt(ctx, WindowNo, Env.TAB_INFO, "M_AttributeSetInstance_ID"));
-		else {
-			mTab.setValue("M_AttributeSetInstance_ID", asi.getM_AttributeSetInstance_ID());
-		}
+		setAndTestASI(ctx, WindowNo, Env.isSOTrx(ctx, WindowNo), mTab, 
+				"M_AttributeSetInstance_ID", product, null);
+
 		/*****	Price Calculation see also qty	****/
 		int C_BPartner_ID = Env.getContextAsInt(ctx, WindowNo, "C_BPartner_ID");
 		BigDecimal Qty = (BigDecimal)mTab.getValue("QtyOrdered");
