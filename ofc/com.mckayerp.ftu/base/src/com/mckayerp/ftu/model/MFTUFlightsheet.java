@@ -18,13 +18,19 @@ package com.mckayerp.ftu.model;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
 import org.adempiere.exceptions.AdempiereException;
 import org.compiere.model.MBPartner;
+import org.compiere.model.MColumn;
 import org.compiere.model.MInventory;
 import org.compiere.model.MInventoryLine;
+import org.compiere.model.MMigration;
+import org.compiere.model.MMigrationData;
+import org.compiere.model.MMigrationStep;
 import org.compiere.model.MOrderLine;
 import org.compiere.model.MProduct;
 import org.compiere.model.MResourceAssignment;
@@ -35,8 +41,14 @@ import org.compiere.process.DocAction;
 import org.compiere.util.DB;
 import org.compiere.util.Env;
 import org.compiere.util.Msg;
+import org.compiere.util.Trx;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 /**
@@ -129,10 +141,22 @@ public class MFTUFlightsheet extends X_FTU_Flightsheet {
 		
 		success = generateOrder(newRecord, success);
 		success = consumeFuel(newRecord, success);
+		success = updateJourneyLog(newRecord, success);
 		
 		return success;
 	}
 	
+	private boolean updateJourneyLog(boolean newRecord, boolean success) {
+
+		if (getFTU_ACJourneyLog_ID() > 0 )
+			return success;
+
+		setFTU_ACJourneyLog_ID(MFTUACJourneyLog.updateLog(getCtx(), this, get_TrxName()));
+		saveEx();
+
+		return success;
+	}
+
 	private boolean consumeFuel(boolean newRecord, boolean success) {
 		
 		// Ignore entries that already have an internal use inventory associated with them
@@ -178,7 +202,7 @@ public class MFTUFlightsheet extends X_FTU_Flightsheet {
 		inv.setMovementDate(getFlightDate());
 		inv.setM_Warehouse_ID(m_Warehouse_ID);
 		inv.setDescription("Fuel consummed by flight ID: " + getFlightID() + ". AC: " 
-							+ ac.getACRegistration() + ", Flight Time: " + flightTime.toString());
+							+ ac.getCallSign() + ", Flight Time: " + flightTime.toString());
 		inv.saveEx();
 		
 		MInventoryLine il = new MInventoryLine(getCtx(),0,get_TrxName());
@@ -653,4 +677,491 @@ public class MFTUFlightsheet extends X_FTU_Flightsheet {
 
  		return success;
 	}	//	afterSave
+
+	public BigDecimal getFlightTime() {
+		return getFlightTime_Charter()
+				.add(getFlightTime_Dual())
+				.add(getFlightTime_Intro())
+				.add(getFlightTime_NonRev())
+				.add(getFlightTime_Rental())
+				.add(getFlightTime_Solo());
+	}
+	
+	public String toString() {
+		return  "MFTUFlightsheet ["+ this.getFTU_Flightsheet_ID() + "]" +
+				" Flight ID: " 	+ getFlightID() +
+				" Date: "		+ getFlightDate() +
+				" Course: "		+ getCourseType() +
+				" Captian/PIC: "+ this.getCaptain_PIC() +
+				" Student/Pax: "+ this.getStudentPAX() +
+				" Air time: "	+ this.getAirTime().setScale(1) +
+				" Flight time: "+ this.getFlightTime().setScale(1) +
+				" Sim time: " 	+ this.getSimulator().setScale(1) +
+				" Briefing: "	+ this.getBriefing().setScale(1);
+	}
+
+	public static MFTUFlightsheet fromXmlNode(Properties ctx, Element flightData, Calendar flightDate,
+			String trxName) {
+		
+		if (flightData == null)
+			return null;
+		
+		if ( !"flight".equals(flightData.getNodeName() ) )
+			return null;
+
+		MFTUFlightsheet flight = null;
+		
+		
+	    // <flightNumber>195781</flightNumber> [ed: this is the (Flt #xxxxxx) 
+		// in the 'Invoice' column of the Daily Flight Sheet]
+		String flightIDString = flightData.getElementsByTagName("flightNumber").item(0).getTextContent();
+		if (isNull(flightIDString)) {
+			throw new AdempiereException("Flight Number appears to be null: " + flightIDString);
+		}
+		
+		BigDecimal flightID = Env.ZERO;
+		try {
+			flightID = new BigDecimal(flightIDString);
+		}
+		catch (NumberFormatException e) {
+			throw new AdempiereException("Flight Number not in form of number: " + flightIDString + ". " + e.getMessage());
+		}
+		if (flightID == null || flightID.equals(Env.ZERO)) {
+			throw new AdempiereException("Flight Number is null or zero: " + flightIDString);
+		}
+		
+		flight = MFTUFlightsheet.getByFlightID(ctx, flightID, trxName);
+		
+		if ( flight == null ) {  // New entry
+			throw new AdempiereException("Flight not found or created for flight number: " + flightIDString);
+		}
+		
+		// <flightDate>2016-02-21</flightDate>
+		String flightDateString = flightData.getElementsByTagName("flightDate").item(0).getTextContent();	
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		if (isNull(flightDateString)) {
+			throw new AdempiereException("FlightDate is null or empty: " + flightIDString);
+		}
+		else {
+			Date d;
+			try {
+				d = dateFormat.parse(flightDateString);
+				flight.setFlightDate(new Timestamp(d.getTime()));;
+			} catch (ParseException e) {
+				throw new AdempiereException("Couldn't parse and set FlightDate: " + flightDateString);
+			}
+		}
+
+		// <isNoShow>0</isNoShow>	[ed: 1 if this *is* a no-show, 0 if not]  
+		flight.setIsNoShow(flightData.getElementsByTagName("isNoShow").item(0).getTextContent().equals("1"));
+		
+		// <isDNCO>0</isDNCO>      	[ed: 1 if this *is* a 'did not complete op', 0 if not] TODO
+		flight.setIsDNCO(flightData.getElementsByTagName("isDNCO").item(0).getTextContent().equals("1"));
+
+		// <courseType>PPL</courseType>
+		String courseType = flightData.getElementsByTagName("courseType").item(0).getTextContent();
+		if (isNull(courseType) || flight.isNoShow() || flight.isDNCO()) {
+			// Check for No-show or cancelled flights.
+			if (flight.isNoShow()) {
+				courseType = "No-Show";  // TODO Hardcoded from reference
+			}
+			else if (flight.isDNCO()) {
+				courseType = "Cancelled"; // TODO Hardcoded from reference
+			}
+		}
+		if (isNull(courseType)) {
+			throw new AdempiereException("Course Type can't be null or empty.");
+		}
+		flight.setCourseType(courseType);	
+
+		int C_BPartner_ID;
+		MBPartner bp = null;
+		String value = "";
+		String name = "";
+
+		// <clientID>1542</clientID>  Represents the customer paying for the flight.
+		value = flightData.getElementsByTagName("clientID").item(0).getTextContent();
+		if (!isNull(value)) {
+			C_BPartner_ID = 0;
+			bp = MBPartner.get(ctx, value);
+			if (bp != null && bp.getC_BPartner_ID() > 0) {
+				C_BPartner_ID = bp.getC_BPartner_ID();
+				name = bp.getName();
+			}
+			else {
+				throw new AdempiereException("Business Partner (clientID) is not known: " + flightData.getElementsByTagName("clientID").item(0).getTextContent());
+			}
+			flight.setC_BPartner_ID(C_BPartner_ID);
+			flight.setFlightsheet_ClientID(value);
+		}
+		else {
+			throw new AdempiereException("Business Partner (clientID) cannot be null: " + flightData.getElementsByTagName("clientID").item(0).getTextContent());			
+		}
+
+		// <aircraft>CGVLM</aircraft>
+		MFTUAircraft ac = MFTUAircraft.getByCallSign(ctx, flightData.getElementsByTagName("aircraft").item(0).getTextContent(), trxName);
+		if (ac != null)
+			flight.setFTU_Aircraft_ID(ac.getFTU_Aircraft_ID());
+
+		// <captainID>64</captainID>
+		value = flightData.getElementsByTagName("captainID").item(0).getTextContent();
+		if (!isNull(value)) {
+			C_BPartner_ID = 0;
+			bp = MBPartner.get(ctx, value);
+			if (bp != null && bp.getC_BPartner_ID() > 0) {
+				C_BPartner_ID = bp.getC_BPartner_ID();
+				name = bp.getName();
+			}
+			else {
+				throw new AdempiereException("Business Partner (captianID) is not known: " + flightData.getElementsByTagName("captainID"));
+			}
+			flight.setCaptainID(C_BPartner_ID);
+			flight.setCaptain_PIC(name);
+		}
+
+		// <studentID>1542</studentID>
+		value = flightData.getElementsByTagName("studentID").item(0).getTextContent();
+		if (!isNull(value)) {
+			C_BPartner_ID = 0;
+			bp = MBPartner.get(ctx, value);
+			if (bp != null && bp.getC_BPartner_ID() > 0) {
+				C_BPartner_ID = bp.getC_BPartner_ID();
+				name = bp.getName();
+			}
+			else {
+				throw new AdempiereException("Business Partner (studentID) is not known: " + flightData.getElementsByTagName("studentID"));
+			}
+			flight.setStudentID(C_BPartner_ID);
+			flight.setStudentPAX(name);
+		}
+
+		// Set instructor
+		if (flight.getCaptainID() > 0 
+				&& flight.getCaptainID() != flight.getC_BPartner_ID() 
+				&& flight.getStudentID() > 0) {
+			MFTUInstructor inst = MFTUInstructor.getByBPartnerID(ctx, flight.getCaptainID());
+			if (inst != null) {
+				flight.setFTU_Instructor_ID(inst.getFTU_Instructor_ID());
+			}
+		}
+
+		//<otherPax/>
+		value = flightData.getElementsByTagName("otherPax").item(0).getTextContent();
+		if (!isNull(value)) {
+			flight.setOtherPax(value);
+			if (flight.getStudentPAX() != null && flight.getStudentPAX().length() > 0)
+				flight.setStudentPAX(flight.getStudentPAX() + ", " + value);
+		}
+		
+		// <contactPhone/>
+		flight.setContactPhone(flightData.getElementsByTagName("contactPhone").item(0).getTextContent());
+		
+		// <exercises>16, 17, 18</exercises>
+		flight.setExercises(flightData.getElementsByTagName("exercises").item(0).getTextContent());
+		
+		// <xcDeparture/>
+		flight.setXCDeparture(flightData.getElementsByTagName("xcDeparture").item(0).getTextContent());
+		
+		// <xcDestination/>
+		flight.setXCDestination(flightData.getElementsByTagName("xcDestination").item(0).getTextContent());
+		
+		// <xcLegCount/>
+		Integer numLegs = new Integer(1);
+		value = flightData.getElementsByTagName("xcLegCount").item(0).getTextContent();
+		if (!isNull(value)) {
+			try {
+				numLegs = Integer.parseUnsignedInt(value);
+			}
+			catch (NumberFormatException e) {
+				throw new AdempiereException("xcLegCount entry is not in form of number: " + value);
+			}
+		}
+		flight.setNumLegs(numLegs.intValue());
+		
+		// <authorizedByID>64</authorizedByID>
+		value = flightData.getElementsByTagName("authorizedByID").item(0).getTextContent();
+		if (!isNull(value)) {
+			C_BPartner_ID = 0;
+			bp = MBPartner.get(ctx, value);
+			if (bp != null && bp.getC_BPartner_ID() > 0) {
+				C_BPartner_ID = bp.getC_BPartner_ID();
+				name = bp.getName();
+			}
+			else {
+				throw new AdempiereException("Business Partner (authorizedByID) is not known: " + flightData.getElementsByTagName("authorizedByID"));
+			}
+			flight.setAuthorizedByID(C_BPartner_ID);
+			flight.setAuthorizedBy(name);
+		}
+
+		// <acknowledgedByID>1542</acknowledgedByID>
+		value = flightData.getElementsByTagName("acknowledgedByID").item(0).getTextContent();
+		if (!isNull(value)) {
+			C_BPartner_ID = 0;
+			bp = MBPartner.get(ctx, value);
+			if (bp != null && bp.getC_BPartner_ID() > 0) {
+				C_BPartner_ID = bp.getC_BPartner_ID();
+				name = bp.getName();
+			}
+			else {
+				throw new AdempiereException("Business Partner (acknowledgedByID) is not known: " + flightData.getElementsByTagName("acknowledgedByID"));
+			}
+			flight.setAcknowledgedByID(C_BPartner_ID);
+			flight.setAcknowledgedBy(name);
+		}
+
+		// For times
+		DateFormat timeFormat = new SimpleDateFormat("HH:mm");
+		long oneDay = (long) 1000*60*60*24; // One day in milliseconds. 
+
+		// <engineStart>10:00</engineStart>
+		String timeString = flightData.getElementsByTagName("engineStart").item(0).getTextContent();
+		if (!isNull(timeString)) {
+			Date d;
+			Timestamp time = null;
+			try {
+				d = timeFormat.parse(timeString);
+				time = new Timestamp(flight.getFlightDate().getTime() + d.getTime());
+			} catch (ParseException e) {
+				e.printStackTrace();
+				time = null;
+			}
+			flight.setEngineStart(time);
+		}
+
+		// <engineStop>11:00</engineStop>
+		timeString = flightData.getElementsByTagName("engineStop").item(0).getTextContent();
+		if (!isNull(timeString)) {
+			Date d = null;
+			Timestamp time = null;
+			try {
+				d = timeFormat.parse(timeString);
+				time = new Timestamp(flight.getFlightDate().getTime() + d.getTime());
+			} catch (ParseException e) {
+				e.printStackTrace();
+				time = null;
+			}
+			// Check for next day
+			if (flight.getEngineStart() != null && time != null  
+					&& flight.getEngineStart().after(time)) {
+				time = new Timestamp(time.getTime() + oneDay);
+			}
+			flight.setEngineStop(time);
+		}
+		
+		// <wheelsUp>10:10</wheelsUp>
+		timeString = flightData.getElementsByTagName("wheelsUp").item(0).getTextContent();
+		if (!isNull(timeString)) {
+			Date d;
+			Timestamp time = null;
+			try {
+				d = timeFormat.parse(timeString);
+				time = new Timestamp(flight.getFlightDate().getTime() + d.getTime());
+			} catch (ParseException e) {
+				e.printStackTrace();
+				time = null;
+			}
+			flight.setWheelsUp(time);
+		}
+	    	    
+		// <wheelsDown>10:50</wheelsDown>
+		timeString = flightData.getElementsByTagName("wheelsDown").item(0).getTextContent();
+		if (!isNull(timeString)) {
+			Date d;
+			Timestamp time = null;
+			try {
+				d = timeFormat.parse(timeString);
+				time = new Timestamp(flight.getFlightDate().getTime() + d.getTime());
+			} catch (ParseException e) {
+				e.printStackTrace();
+				time = null;
+			}
+			// Check for next day
+			if (flight.getWheelsUp() != null && time != null 
+					&& flight.getWheelsUp().after(time)) {
+				time = new Timestamp(time.getTime() + oneDay);
+			}
+			flight.setWheelsDown(time);
+		}
+
+		BigDecimal flightTime = Env.ZERO;
+		// <flightTimeDual>1.0</flightTimeDual>
+		value = flightData.getElementsByTagName("flightTimeDual").item(0).getTextContent();
+		if (!isNull(value)) {
+			try {
+				flightTime = new BigDecimal(value);
+			}
+			catch (NumberFormatException e) {
+				throw new AdempiereException("flightTimeDual entry is not in form of number: " + value);
+			}
+		}
+		flight.setFlightTime_Dual(flightTime);
+		
+		// <flightTimeSolo/>
+		flightTime = Env.ZERO;
+		value = flightData.getElementsByTagName("flightTimeSolo").item(0).getTextContent();
+		if (!isNull(value)) {
+			try {
+				flightTime = new BigDecimal(value);
+			}
+			catch (NumberFormatException e) {
+				throw new AdempiereException("flightTimeSolo entry is not in form of number: " + value);
+			}
+		}
+		flight.setFlightTime_Solo(flightTime);
+
+		// <flightTimeRental/>
+		flightTime = Env.ZERO;
+		value = flightData.getElementsByTagName("flightTimeRental").item(0).getTextContent();
+		if (!isNull(value)) {
+			try {
+				flightTime = new BigDecimal(value);
+			}
+			catch (NumberFormatException e) {
+				throw new AdempiereException("flightTimeRental entry is not in form of number: " + value);
+			}
+		}
+		flight.setFlightTime_Rental(flightTime);
+
+		// <flightTimeIntro/>
+		flightTime = Env.ZERO;
+		value = flightData.getElementsByTagName("flightTimeIntro").item(0).getTextContent();
+		if (!isNull(value)) {
+			try {
+				flightTime = new BigDecimal(value);
+			}
+			catch (NumberFormatException e) {
+				throw new AdempiereException("flightTimeIntro entry is not in form of number: " + value);
+			}
+		}
+		flight.setFlightTime_Intro(flightTime);
+
+		// <flightTimeTour/>
+		flightTime = Env.ZERO;
+		value = flightData.getElementsByTagName("flightTimeTour").item(0).getTextContent();
+		if (!isNull(value)) {
+			try {
+				flightTime = new BigDecimal(value);
+			}
+			catch (NumberFormatException e) {
+				throw new AdempiereException("flightTimeTour entry is not in form of number: " + value);
+			}
+		}
+		flight.setFlightTime_Charter(flightTime);
+		
+		// <flightTimeNonRev/>
+		flightTime = Env.ZERO;
+		value = flightData.getElementsByTagName("flightTimeNonRev").item(0).getTextContent();
+		if (!isNull(value)) {
+			try {
+				flightTime = new BigDecimal(value);
+			}
+			catch (NumberFormatException e) {
+				throw new AdempiereException("flightTimeNonRev entry is not in form of number: " + value);
+			}
+		}
+		flight.setFlightTime_NonRev(flightTime);
+
+		// <flightTimeDry/>
+		flightTime = Env.ZERO;
+		value = flightData.getElementsByTagName("flightTimeDry").item(0).getTextContent();
+		if (!isNull(value)) {
+			try {
+				flightTime = new BigDecimal(value);
+			}
+			catch (NumberFormatException e) {
+				throw new AdempiereException("flightTimeDry entry is not in form of number: " + value);
+			}
+		}
+		flight.setFlightTime_Dry(flightTime);
+
+		// <airTime>0.7</airTime>
+		BigDecimal airTime = Env.ZERO;
+		value = flightData.getElementsByTagName("airTime").item(0).getTextContent();
+		if (!isNull(value)) {
+			try {
+				airTime = new BigDecimal(value);
+			}
+			catch (NumberFormatException e) {
+				throw new AdempiereException("airTime entry is not in form of number: " + value);
+			}
+		}
+		flight.setAirTime(airTime);
+		
+		// <simulatorTime/>
+		BigDecimal simulatorTime = Env.ZERO;
+		value = flightData.getElementsByTagName("simulatorTime").item(0).getTextContent();
+		if (!isNull(value)) {
+			try {
+				simulatorTime = new BigDecimal(value);
+			}
+			catch (NumberFormatException e) {
+				throw new AdempiereException("simulatorTime entry is not in form of number: " + value);
+			}
+		}
+		flight.setSimulator(simulatorTime);
+
+		// <groundBrief>0.2</groundBrief>
+		BigDecimal groundBrief = Env.ZERO;
+		value = flightData.getElementsByTagName("groundBrief").item(0).getTextContent();
+		if (!isNull(value)) {
+			try {
+				groundBrief = new BigDecimal(value);
+			}
+			catch (NumberFormatException e) {
+				throw new AdempiereException("groundBrief entry is not in form of number: " + value);
+			}
+		}
+		flight.setBriefing(groundBrief);
+
+	    // <timesEnteredByID>64</timesEnteredByID>
+		value = flightData.getElementsByTagName("timesEnteredByID").item(0).getTextContent();
+		if (!isNull(value)) {
+			C_BPartner_ID = 0;
+			bp = MBPartner.get(ctx, value);
+			if (bp != null && bp.getC_BPartner_ID() > 0) {
+				C_BPartner_ID = bp.getC_BPartner_ID();
+			}
+			else {
+				throw new AdempiereException("Business Partner (timesEnteredByID) is not known: " + flightData.getElementsByTagName("timesEnteredByID"));
+			}
+			flight.setTimesEnteredByID(C_BPartner_ID);
+		}
+
+		// <flightComments/>
+		flight.setDescription(flightData.getElementsByTagName("flightComments").item(0).getTextContent());
+		
+		// Set IntendedFlight comment
+		StringBuffer intendedFlight = new StringBuffer("");
+		if (!isNull(flight.getExercises()))
+			intendedFlight.append(flight.getExercises());
+		if (!isNull(flight.getXCDeparture())) {
+			if (intendedFlight.length() > 0)
+				intendedFlight.append(" ");
+			intendedFlight.append("[").append(flight.getXCDeparture())
+				.append(" - ").append(flight.getXCDestination())
+				.append("] ").append("(Flight date: ")
+				.append(dateFormat.format(flight.getFlightDate()))
+				.append(")");
+		}
+		if (!isNull(flight.getDescription())) {
+			if (intendedFlight.length() > 0)
+				intendedFlight.append(" ");
+			intendedFlight.append(flight.getDescription());
+		}
+		if (!isNull(intendedFlight.toString()))
+			flight.setIntendedFlight(intendedFlight.toString());
+
+		return flight;
+	}
+
+	private static boolean isNull(String field) {
+		if (field == null 
+				|| field.trim().toUpperCase().equals("NULL")
+				|| field.trim().equals("-") 
+				|| field.trim().isEmpty()) {
+			return true;
+		}
+		return false;
+	}
 }

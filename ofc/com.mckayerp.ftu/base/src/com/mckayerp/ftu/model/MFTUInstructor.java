@@ -3,6 +3,8 @@ package com.mckayerp.ftu.model;
 import java.sql.ResultSet;
 import java.util.Properties;
 
+import org.compiere.model.Query;
+
 public class MFTUInstructor extends X_FTU_Instructor {
 
 	/**
@@ -24,6 +26,18 @@ public class MFTUInstructor extends X_FTU_Instructor {
 			if (FTU_Instructor_ID == 0)
 				return null;
 			return new MFTUInstructor(ctx, FTU_Instructor_ID, trxName);
+	}
+
+	public static MFTUInstructor getByBPartnerID(Properties ctx, int C_BPartner_ID) {
+		
+		if (C_BPartner_ID <= 0)
+			return null;
+		
+		String where = MFTUInstructor.COLUMNNAME_C_BPartner_ID + "=" + C_BPartner_ID;
+		
+		return (MFTUInstructor) new Query(ctx, MFTUInstructor.Table_Name, where, null)
+				.setClient_ID()
+				.firstOnly();
 	}
 
 }
