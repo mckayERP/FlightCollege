@@ -26,14 +26,14 @@ import org.compiere.util.Env;
 
 /** Generated Model for FTU_Booking_Audit_Trail
  *  @author Adempiere (generated) 
- *  @version OFC Custom 3.8.0_2 - $Id$ */
+ *  @version Release 3.8.0 - $Id$ */
 public class X_FTU_Booking_Audit_Trail extends PO implements I_FTU_Booking_Audit_Trail, I_Persistent 
 {
 
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160222L;
+	private static final long serialVersionUID = 20160417L;
 
     /** Standard Constructor */
     public X_FTU_Booking_Audit_Trail (Properties ctx, int FTU_Booking_Audit_Trail_ID, String trxName)

@@ -24,14 +24,14 @@ import org.compiere.util.KeyNamePair;
 
 /** Generated Model for FTU_Grading_System
  *  @author Adempiere (generated) 
- *  @version OFC Custom 3.8.0_2 - $Id$ */
+ *  @version Release 3.8.0 - $Id$ */
 public class X_FTU_Grading_System extends PO implements I_FTU_Grading_System, I_Persistent 
 {
 
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160222L;
+	private static final long serialVersionUID = 20160417L;
 
     /** Standard Constructor */
     public X_FTU_Grading_System (Properties ctx, int FTU_Grading_System_ID, String trxName)

@@ -27,14 +27,14 @@ import org.compiere.util.KeyNamePair;
 
 /** Generated Model for C_BankDeposit
  *  @author Adempiere (generated) 
- *  @version OFC Custom 3.8.0_2 - $Id$ */
+ *  @version Release 3.8.0 - $Id$ */
 public class X_C_BankDeposit extends PO implements I_C_BankDeposit, I_Persistent 
 {
 
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160222L;
+	private static final long serialVersionUID = 20160417L;
 
     /** Standard Constructor */
     public X_C_BankDeposit (Properties ctx, int C_BankDeposit_ID, String trxName)

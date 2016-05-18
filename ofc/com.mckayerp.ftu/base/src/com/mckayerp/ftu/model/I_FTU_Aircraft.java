@@ -23,7 +23,7 @@ import org.compiere.util.KeyNamePair;
 
 /** Generated Interface for FTU_Aircraft
  *  @author Adempiere (generated) 
- *  @version OFC Custom 3.8.0_2
+ *  @version Release 3.8.0
  */
 public interface I_FTU_Aircraft 
 {
@@ -215,12 +215,12 @@ public interface I_FTU_Aircraft
     public static final String COLUMNNAME_AvgFuelConsumption = "AvgFuelConsumption";
 
 	/** Set Avg Fuel Consumption.
-	  * Avg Fuel Consumption in US Gallons per hour
+	  * Avg Fuel Consumption during flight operations in the aicraft unit of measure.
 	  */
 	public void setAvgFuelConsumption (BigDecimal AvgFuelConsumption);
 
 	/** Get Avg Fuel Consumption.
-	  * Avg Fuel Consumption in US Gallons per hour
+	  * Avg Fuel Consumption during flight operations in the aicraft unit of measure.
 	  */
 	public BigDecimal getAvgFuelConsumption();
 
@@ -624,6 +624,19 @@ public interface I_FTU_Aircraft
 	public int getS_Resource_ID();
 
 	public org.compiere.model.I_S_Resource getS_Resource() throws RuntimeException;
+
+    /** Column name TaxiFuelConsumption */
+    public static final String COLUMNNAME_TaxiFuelConsumption = "TaxiFuelConsumption";
+
+	/** Set Taxi Fuel Consumption.
+	  * The avg quantity of fuel consummed in taxi operations prior and after a flight, in the aircraft unit of measure.
+	  */
+	public void setTaxiFuelConsumption (BigDecimal TaxiFuelConsumption);
+
+	/** Get Taxi Fuel Consumption.
+	  * The avg quantity of fuel consummed in taxi operations prior and after a flight, in the aircraft unit of measure.
+	  */
+	public BigDecimal getTaxiFuelConsumption();
 
     /** Column name TimeToInspection */
     public static final String COLUMNNAME_TimeToInspection = "TimeToInspection";

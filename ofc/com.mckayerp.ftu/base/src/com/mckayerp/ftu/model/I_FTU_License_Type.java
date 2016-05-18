@@ -23,7 +23,7 @@ import org.compiere.util.KeyNamePair;
 
 /** Generated Interface for FTU_License_Type
  *  @author Adempiere (generated) 
- *  @version OFC Custom 3.8.0_2
+ *  @version Release 3.8.0
  */
 public interface I_FTU_License_Type 
 {

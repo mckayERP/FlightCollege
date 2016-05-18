@@ -23,7 +23,7 @@ import org.compiere.util.KeyNamePair;
 
 /** Generated Interface for I_Flightsheet_Audit_Trail
  *  @author Adempiere (generated) 
- *  @version OFC Custom 3.8.0_2
+ *  @version Release 3.8.0
  */
 public interface I_I_Flightsheet_Audit_Trail 
 {

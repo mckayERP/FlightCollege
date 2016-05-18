@@ -23,7 +23,7 @@ import org.compiere.util.KeyNamePair;
 
 /** Generated Interface for AD_ImpValRule_Action
  *  @author Adempiere (generated) 
- *  @version OFC Custom 3.8.0_2
+ *  @version Release 3.8.0
  */
 public interface I_AD_ImpValRule_Action 
 {

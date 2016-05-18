@@ -26,14 +26,14 @@ import org.compiere.util.Env;
 
 /** Generated Model for FTU_Aircraft
  *  @author Adempiere (generated) 
- *  @version OFC Custom 3.8.0_2 - $Id$ */
+ *  @version Release 3.8.0 - $Id$ */
 public class X_FTU_Aircraft extends PO implements I_FTU_Aircraft, I_Persistent 
 {
 
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160222L;
+	private static final long serialVersionUID = 20160417L;
 
     /** Standard Constructor */
     public X_FTU_Aircraft (Properties ctx, int FTU_Aircraft_ID, String trxName)
@@ -299,7 +299,7 @@ public class X_FTU_Aircraft extends PO implements I_FTU_Aircraft, I_Persistent
 
 	/** Set Avg Fuel Consumption.
 		@param AvgFuelConsumption 
-		Avg Fuel Consumption in US Gallons per hour
+		Avg Fuel Consumption during flight operations in the aicraft unit of measure.
 	  */
 	public void setAvgFuelConsumption (BigDecimal AvgFuelConsumption)
 	{
@@ -307,7 +307,7 @@ public class X_FTU_Aircraft extends PO implements I_FTU_Aircraft, I_Persistent
 	}
 
 	/** Get Avg Fuel Consumption.
-		@return Avg Fuel Consumption in US Gallons per hour
+		@return Avg Fuel Consumption during flight operations in the aicraft unit of measure.
 	  */
 	public BigDecimal getAvgFuelConsumption () 
 	{
@@ -916,6 +916,26 @@ public class X_FTU_Aircraft extends PO implements I_FTU_Aircraft, I_Persistent
 		if (ii == null)
 			 return 0;
 		return ii.intValue();
+	}
+
+	/** Set Taxi Fuel Consumption.
+		@param TaxiFuelConsumption 
+		The avg quantity of fuel consummed in taxi operations prior and after a flight, in the aircraft unit of measure.
+	  */
+	public void setTaxiFuelConsumption (BigDecimal TaxiFuelConsumption)
+	{
+		set_Value (COLUMNNAME_TaxiFuelConsumption, TaxiFuelConsumption);
+	}
+
+	/** Get Taxi Fuel Consumption.
+		@return The avg quantity of fuel consummed in taxi operations prior and after a flight, in the aircraft unit of measure.
+	  */
+	public BigDecimal getTaxiFuelConsumption () 
+	{
+		BigDecimal bd = (BigDecimal)get_Value(COLUMNNAME_TaxiFuelConsumption);
+		if (bd == null)
+			 return Env.ZERO;
+		return bd;
 	}
 
 	/** Set Time to Inspection.

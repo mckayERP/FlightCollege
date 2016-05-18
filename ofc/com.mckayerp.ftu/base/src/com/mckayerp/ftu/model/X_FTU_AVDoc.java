@@ -24,14 +24,14 @@ import org.compiere.model.*;
 
 /** Generated Model for FTU_AVDoc
  *  @author Adempiere (generated) 
- *  @version OFC Custom 3.8.0_2 - $Id$ */
+ *  @version Release 3.8.0 - $Id$ */
 public class X_FTU_AVDoc extends PO implements I_FTU_AVDoc, I_Persistent 
 {
 
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160222L;
+	private static final long serialVersionUID = 20160417L;
 
     /** Standard Constructor */
     public X_FTU_AVDoc (Properties ctx, int FTU_AVDoc_ID, String trxName)

@@ -26,14 +26,14 @@ import org.compiere.util.Env;
 
 /** Generated Model for FTU_ACJourneyLog
  *  @author Adempiere (generated) 
- *  @version OFC Custom 3.8.0_2 - $Id$ */
+ *  @version Release 3.8.0 - $Id$ */
 public class X_FTU_ACJourneyLog extends PO implements I_FTU_ACJourneyLog, I_Persistent 
 {
 
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160222L;
+	private static final long serialVersionUID = 20160417L;
 
     /** Standard Constructor */
     public X_FTU_ACJourneyLog (Properties ctx, int FTU_ACJourneyLog_ID, String trxName)

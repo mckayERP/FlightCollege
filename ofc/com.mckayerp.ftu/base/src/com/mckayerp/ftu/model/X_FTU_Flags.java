@@ -23,14 +23,14 @@ import org.compiere.model.*;
 
 /** Generated Model for FTU_Flags
  *  @author Adempiere (generated) 
- *  @version OFC Custom 3.8.0_2 - $Id$ */
+ *  @version Release 3.8.0 - $Id$ */
 public class X_FTU_Flags extends PO implements I_FTU_Flags, I_Persistent 
 {
 
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160222L;
+	private static final long serialVersionUID = 20160417L;
 
     /** Standard Constructor */
     public X_FTU_Flags (Properties ctx, int FTU_Flags_ID, String trxName)

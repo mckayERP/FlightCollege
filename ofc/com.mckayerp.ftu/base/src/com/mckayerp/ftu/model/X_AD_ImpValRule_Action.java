@@ -23,14 +23,14 @@ import org.compiere.model.*;
 
 /** Generated Model for AD_ImpValRule_Action
  *  @author Adempiere (generated) 
- *  @version OFC Custom 3.8.0_2 - $Id$ */
+ *  @version Release 3.8.0 - $Id$ */
 public class X_AD_ImpValRule_Action extends PO implements I_AD_ImpValRule_Action, I_Persistent 
 {
 
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160222L;
+	private static final long serialVersionUID = 20160417L;
 
     /** Standard Constructor */
     public X_AD_ImpValRule_Action (Properties ctx, int AD_ImpValRule_Action_ID, String trxName)

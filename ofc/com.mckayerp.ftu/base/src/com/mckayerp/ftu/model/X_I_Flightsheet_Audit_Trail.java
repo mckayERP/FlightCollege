@@ -26,14 +26,14 @@ import org.compiere.util.KeyNamePair;
 
 /** Generated Model for I_Flightsheet_Audit_Trail
  *  @author Adempiere (generated) 
- *  @version OFC Custom 3.8.0_2 - $Id$ */
+ *  @version Release 3.8.0 - $Id$ */
 public class X_I_Flightsheet_Audit_Trail extends PO implements I_I_Flightsheet_Audit_Trail, I_Persistent 
 {
 
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160222L;
+	private static final long serialVersionUID = 20160417L;
 
     /** Standard Constructor */
     public X_I_Flightsheet_Audit_Trail (Properties ctx, int I_Flightsheet_Audit_Trail_ID, String trxName)
