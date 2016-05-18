@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="MFTU" Name="Add model validator to OFC client" ReleaseNo="FTU2" SeqNo="23">
+    <Step SeqNo="10" StepType="AD">
+      <PO AD_Table_ID="112" Action="U" Record_ID="1000000" Table="AD_Client">
+        <Data AD_Column_ID="13058" Column="ModelValidationClasses" isOldNull="true">com.mckayerp.ftu.model.FTUModelValidator</Data>
+      </PO>
+    </Step>
+  </Migration>
+</Migrations>

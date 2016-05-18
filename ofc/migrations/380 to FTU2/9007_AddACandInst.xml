@@ -45,9 +45,9 @@
         <Data AD_Column_ID="1000767" Column="Value">C-150</Data>
         <Data AD_Column_ID="1001442" Column="CallSign" isNewNull="true"/>
         <Data AD_Column_ID="1000763" Column="FTU_Aircraft_ID">1000018</Data>
-        <Data AD_Column_ID="1000957" Column="AvgFuelConsumption">0</Data>
         <Data AD_Column_ID="1001462" Column="IsGeneric">true</Data>
         <Data AD_Column_ID="1000756" Column="AD_Client_ID">1000000</Data>
+        <Data AD_Column_ID="1000957" Column="AvgFuelConsumption">0</Data>
       </PO>
     </Step>
     <Step SeqNo="20" StepType="AD">
@@ -138,7 +138,7 @@ WHERE FTU_Aircraft_ID is not null;</RollbackStatement>
       <PO AD_Table_ID="107" Action="I" Record_ID="1001207" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1001453</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -184,7 +184,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001208" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1001459</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -227,7 +227,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001209" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">false</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1001451</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -270,7 +270,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001210" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">false</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1001458</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -313,7 +313,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001211" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1001452</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -356,7 +356,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001212" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1001460</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -577,18 +577,18 @@ There are two reasons for de-activating and not deleting records:&#13;
     </Step>
     <Step SeqNo="210" StepType="AD">
       <PO AD_Table_ID="101" Action="U" Record_ID="1001465" Table="AD_Column">
-        <Data AD_Column_ID="113" Column="Help" oldValue="The Help field contains a hint, comment or help about the use of this item.">The Comments field allows for free form entry of additional information.</Data>
         <Data AD_Column_ID="112" Column="Description" oldValue="Comment or Hint">Comments or additional information</Data>
         <Data AD_Column_ID="111" Column="Name" oldValue="Comment/Help">Comments</Data>
         <Data AD_Column_ID="116" Column="ColumnName" oldValue="Help">Comments</Data>
         <Data AD_Column_ID="2608" Column="AD_Element_ID" oldValue="326">230</Data>
+        <Data AD_Column_ID="113" Column="Help" oldValue="The Help field contains a hint, comment or help about the use of this item.">The Comments field allows for free form entry of additional information.</Data>
       </PO>
     </Step>
     <Step SeqNo="220" StepType="AD">
       <PO AD_Table_ID="107" Action="I" Record_ID="1001213" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1001465</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -631,7 +631,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001214" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1001464</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -674,7 +674,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001215" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1001463</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -789,7 +789,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001216" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">false</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000879</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -832,7 +832,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001217" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000880</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -875,7 +875,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001218" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000892</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -918,7 +918,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001219" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000885</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -964,7 +964,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001220" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000891</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -1007,7 +1007,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001221" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000893</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -1050,7 +1050,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001222" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1001113</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -1093,7 +1093,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001223" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000894</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -1136,7 +1136,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001224" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000895</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -1179,7 +1179,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001225" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000937</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -1222,7 +1222,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001226" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000896</Data>
         <Data AD_Column_ID="182" Column="SortNo">0</Data>
@@ -1265,7 +1265,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001227" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">false</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000886</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -1348,8 +1348,8 @@ There are two reasons for de-activating and not deleting records:&#13;
     </Step>
     <Step SeqNo="450" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1001225" Table="AD_Field">
-        <Data AD_Column_ID="2007" Column="IsReadOnly" oldValue="false">true</Data>
         <Data AD_Column_ID="57957" Column="Included_Tab_ID" oldValue="1000046">1000062</Data>
+        <Data AD_Column_ID="2007" Column="IsReadOnly" oldValue="false">true</Data>
       </PO>
     </Step>
     <Step SeqNo="460" StepType="AD">
@@ -1361,7 +1361,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001228" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">false</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000898</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -1404,7 +1404,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001229" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000899</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -1447,7 +1447,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001230" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000933</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -1491,7 +1491,7 @@ If you leave the search key empty, the system automatically creates a numeric nu
       <PO AD_Table_ID="107" Action="I" Record_ID="1001231" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000900</Data>
         <Data AD_Column_ID="182" Column="SortNo">1</Data>
@@ -1534,7 +1534,7 @@ If you leave the search key empty, the system automatically creates a numeric nu
       <PO AD_Table_ID="107" Action="I" Record_ID="1001232" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000929</Data>
         <Data AD_Column_ID="182" Column="SortNo">2</Data>
@@ -1577,7 +1577,7 @@ If you leave the search key empty, the system automatically creates a numeric nu
       <PO AD_Table_ID="107" Action="I" Record_ID="1001233" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000934</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -1620,7 +1620,7 @@ If you leave the search key empty, the system automatically creates a numeric nu
       <PO AD_Table_ID="107" Action="I" Record_ID="1001234" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000904</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -1666,7 +1666,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001235" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000935</Data>
         <Data AD_Column_ID="182" Column="SortNo">-3</Data>
@@ -1709,7 +1709,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001236" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000936</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -1752,7 +1752,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001237" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000938</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -1795,7 +1795,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001238" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">false</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000930</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -1878,16 +1878,16 @@ There are two reasons for de-activating and not deleting records:&#13;
     </Step>
     <Step SeqNo="590" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1001226" Table="AD_Field">
-        <Data AD_Column_ID="170" Column="Help" oldValue="You can include a Tab in a Tab. If displayed in single row record, the included tab is displayed as multi-row table.">Included tab</Data>
         <Data AD_Column_ID="169" Column="Description" oldValue="Included Tab in this Tab (Master Detail)">Licenses and Ratings</Data>
         <Data AD_Column_ID="168" Column="Name" oldValue="Included Tab">Licenses and Ratings</Data>
+        <Data AD_Column_ID="170" Column="Help" oldValue="You can include a Tab in a Tab. If displayed in single row record, the included tab is displayed as multi-row table.">Included tab</Data>
       </PO>
     </Step>
     <Step SeqNo="600" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1001225" Table="AD_Field">
-        <Data AD_Column_ID="170" Column="Help" oldValue="You can include a Tab in a Tab. If displayed in single row record, the included tab is displayed as multi-row table.">Included tab.</Data>
         <Data AD_Column_ID="169" Column="Description" oldValue="Included Tab in this Tab (Master Detail)">Medical Certification</Data>
         <Data AD_Column_ID="168" Column="Name" oldValue="Included Tab">Medical Certification</Data>
+        <Data AD_Column_ID="170" Column="Help" oldValue="You can include a Tab in a Tab. If displayed in single row record, the included tab is displayed as multi-row table.">Included tab.</Data>
       </PO>
     </Step>
     <Step SeqNo="610" StepType="AD">
@@ -7355,10 +7355,7 @@ There are two reasons for de-activating and not deleting records:&#13;
 Delete from FTU_Instructor;</RollbackStatement>
     </Step>
     <Step DBType="Postgres" Parse="Y" SeqNo="3170" StepType="SQL">
-      <SQLStatement>DELETE FROM FTU_Instructor WHERE FTU_Instructor_ID IN (1000033, 1000029);
-
-UPDATE FTU_Flightsheet fs
-SET FTU_Instructor_ID = (SELECT inst.FTU_Instructor_ID FROM FTU_Instructor inst WHERE fs.Inst_Resource_ID = inst.S_Resource_ID);</SQLStatement>
+      <SQLStatement>DELETE FROM FTU_Instructor WHERE FTU_Instructor_ID IN (1000032, 1000028);  UPDATE FTU_Flightsheet fs SET FTU_Instructor_ID = (SELECT inst.FTU_Instructor_ID FROM FTU_Instructor inst WHERE fs.Inst_Resource_ID = inst.S_Resource_ID);</SQLStatement>
       <RollbackStatement>UPDATE FTU_Flightsheet fs
 SET FTU_Instructor_ID = null;</RollbackStatement>
     </Step>
@@ -7408,7 +7405,7 @@ SET FTU_Instructor_ID = null;</RollbackStatement>
       <PO AD_Table_ID="107" Action="I" Record_ID="1001239" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000416</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -7451,7 +7448,7 @@ SET FTU_Instructor_ID = null;</RollbackStatement>
       <PO AD_Table_ID="107" Action="I" Record_ID="1001240" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">false</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000415</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -7494,7 +7491,7 @@ SET FTU_Instructor_ID = null;</RollbackStatement>
       <PO AD_Table_ID="107" Action="I" Record_ID="1001241" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">false</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000424</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -7537,7 +7534,7 @@ SET FTU_Instructor_ID = null;</RollbackStatement>
       <PO AD_Table_ID="107" Action="I" Record_ID="1001242" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000423</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -7581,7 +7578,7 @@ If you leave the search key empty, the system automatically creates a numeric nu
       <PO AD_Table_ID="107" Action="I" Record_ID="1001243" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000453</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -7624,7 +7621,7 @@ If you leave the search key empty, the system automatically creates a numeric nu
       <PO AD_Table_ID="107" Action="I" Record_ID="1001244" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000428</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -7667,7 +7664,7 @@ If you leave the search key empty, the system automatically creates a numeric nu
       <PO AD_Table_ID="107" Action="I" Record_ID="1001245" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000419</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -7710,7 +7707,7 @@ If you leave the search key empty, the system automatically creates a numeric nu
       <PO AD_Table_ID="107" Action="I" Record_ID="1001246" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000425</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -7753,7 +7750,7 @@ If you leave the search key empty, the system automatically creates a numeric nu
       <PO AD_Table_ID="107" Action="I" Record_ID="1001247" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000420</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -7799,7 +7796,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001248" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000549</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -7842,7 +7839,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001249" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000427</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -7885,7 +7882,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001250" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000429</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -7928,7 +7925,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001251" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000430</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -7971,7 +7968,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001252" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000431</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -8014,7 +8011,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001253" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000432</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -8057,7 +8054,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001254" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000433</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -8100,7 +8097,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001255" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000434</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -8143,7 +8140,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001256" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000426</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -8186,7 +8183,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001257" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000437</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -8229,7 +8226,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001258" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000436</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -8272,7 +8269,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001259" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000435</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -8315,7 +8312,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001260" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000438</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -8358,7 +8355,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001261" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000439</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -8401,7 +8398,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001262" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000440</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -8444,7 +8441,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001263" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000441</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -8487,7 +8484,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001264" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000448</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -8530,7 +8527,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001265" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000446</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -8573,7 +8570,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001266" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000442</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -8616,7 +8613,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001267" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000445</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -8659,7 +8656,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001268" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000447</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -8702,7 +8699,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001269" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000444</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -8745,7 +8742,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001270" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000443</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -8788,7 +8785,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001271" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000450</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -8831,7 +8828,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001272" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000449</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -8874,7 +8871,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001273" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000451</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -8917,7 +8914,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001274" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000716</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -8960,7 +8957,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001275" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000452</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -9003,7 +9000,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001276" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000750</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -9046,7 +9043,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001277" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000748</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -9087,8 +9084,8 @@ There are two reasons for de-activating and not deleting records:&#13;
     </Step>
     <Step SeqNo="3580" StepType="AD">
       <PO AD_Table_ID="116" Action="U" Record_ID="1000038" Table="AD_Menu">
-        <Data AD_Column_ID="229" Column="Name" oldValue="Maintenance">Fleet Maintenance</Data>
         <Data AD_Column_ID="230" Column="Description" oldValue="Aircraft Maintenance">Maintenance of the Fleet data and maintenance records</Data>
+        <Data AD_Column_ID="229" Column="Name" oldValue="Maintenance">Fleet Maintenance</Data>
       </PO>
     </Step>
     <Step SeqNo="3590" StepType="AD">
@@ -9135,10 +9132,10 @@ There are two reasons for de-activating and not deleting records:&#13;
     </Step>
     <Step SeqNo="3610" StepType="AD">
       <PO AD_Table_ID="452" Action="U" Record_ID="10" Table="AD_TreeNodeMM">
-        <Data AD_Column_ID="6160" Column="AD_Tree_ID" oldValue="10">10</Data>
         <Data AD_Column_ID="6155" Column="Parent_ID" oldValue="0">1000007</Data>
         <Data AD_Column_ID="6157" Column="SeqNo" oldValue="999">6</Data>
         <Data AD_Column_ID="6161" Column="Node_ID" oldValue="1000071">1000071</Data>
+        <Data AD_Column_ID="6160" Column="AD_Tree_ID" oldValue="10">10</Data>
       </PO>
     </Step>
     <Step SeqNo="3620" StepType="AD">
@@ -9345,7 +9342,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001278" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">false</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000536</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -9388,7 +9385,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001279" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000540</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -9431,7 +9428,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001280" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000544</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -9474,7 +9471,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001281" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000547</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -9518,7 +9515,7 @@ If you leave the search key empty, the system automatically creates a numeric nu
       <PO AD_Table_ID="107" Action="I" Record_ID="1001282" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000537</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -9561,7 +9558,7 @@ If you leave the search key empty, the system automatically creates a numeric nu
       <PO AD_Table_ID="107" Action="I" Record_ID="1001283" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000878</Data>
         <Data AD_Column_ID="182" Column="SortNo">1</Data>
@@ -9604,7 +9601,7 @@ If you leave the search key empty, the system automatically creates a numeric nu
       <PO AD_Table_ID="107" Action="I" Record_ID="1001284" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000897</Data>
         <Data AD_Column_ID="182" Column="SortNo">2</Data>
@@ -9647,7 +9644,7 @@ If you leave the search key empty, the system automatically creates a numeric nu
       <PO AD_Table_ID="107" Action="I" Record_ID="1001285" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000875</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -9690,7 +9687,7 @@ If you leave the search key empty, the system automatically creates a numeric nu
       <PO AD_Table_ID="107" Action="I" Record_ID="1001286" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000542</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -9736,7 +9733,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001287" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000874</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -9779,7 +9776,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001288" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000872</Data>
         <Data AD_Column_ID="182" Column="SortNo">-3</Data>
@@ -9822,7 +9819,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001289" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000873</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -9865,7 +9862,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001290" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000541</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -9909,7 +9906,7 @@ There are two reasons for de-activating and not deleting records:&#13;
         <Data AD_Column_ID="59704" Column="PreferredWidth" isNewNull="true"/>
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000871</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -9951,7 +9948,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001292" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000866</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -9994,7 +9991,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001293" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000862</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -10037,7 +10034,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001294" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000865</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -10080,7 +10077,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001295" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000870</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -10123,7 +10120,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001296" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000868</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -10166,7 +10163,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001297" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000876</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -10209,7 +10206,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001298" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000867</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -10252,7 +10249,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001299" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000877</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -10295,7 +10292,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001300" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000864</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -10338,7 +10335,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001301" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000860</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -10381,7 +10378,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001302" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000859</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -10424,7 +10421,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001303" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000863</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -10467,7 +10464,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001304" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000857</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -10510,7 +10507,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001305" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000858</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -10553,7 +10550,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001306" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000861</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -10596,7 +10593,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001307" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000855</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -10639,7 +10636,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001308" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000856</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -10682,7 +10679,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="I" Record_ID="1001309" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">false</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1000543</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -10783,9 +10780,9 @@ There are two reasons for de-activating and not deleting records:&#13;
     </Step>
     <Step SeqNo="4380" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="1000906" Table="AD_Field">
-        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="168" Column="Name" oldValue="Aviation Document ID">Aviation Document</Data>
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
       </PO>
     </Step>
     <Step SeqNo="4390" StepType="AD">
@@ -10858,9 +10855,8 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="D" Record_ID="1000923" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid" isNewNull="true" oldValue="true"/>
-        <Data AD_Column_ID="59703" Column="HideInListView" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="59703" Column="IsEmbedded" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="74868" Column="IsAllowCopy" isNewNull="true" oldValue="false"/>
-        <Data AD_Column_ID="174" Column="AD_Column_ID" isNewNull="true" oldValue="1000878"/>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true" oldValue="1"/>
         <Data AD_Column_ID="186" Column="IsEncrypted" isNewNull="true" oldValue="false"/>
         <Data AD_Column_ID="582" Column="UpdatedBy" isNewNull="true" oldValue="0"/>
@@ -10878,9 +10874,7 @@ There are two reasons for de-activating and not deleting records:&#13;
         <Data AD_Column_ID="172" Column="AD_Tab_ID" isNewNull="true" oldValue="1000044"/>
         <Data AD_Column_ID="167" Column="AD_Field_ID" isNewNull="true" oldValue="1000923"/>
         <Data AD_Column_ID="580" Column="CreatedBy" isNewNull="true" oldValue="0"/>
-        <Data AD_Column_ID="581" Column="Updated" isNewNull="true" oldValue="2010-08-13 10:37:03.0"/>
         <Data AD_Column_ID="2007" Column="IsReadOnly" isNewNull="true" oldValue="false"/>
-        <Data AD_Column_ID="170" Column="Help" isNewNull="true" oldValue="A Business Partner is anyone with whom you transact.  This can include Vendor, Customer, Employee or Salesperson"/>
         <Data AD_Column_ID="5375" Column="AD_FieldGroup_ID" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="9969" Column="ObscureType" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="15011" Column="AD_Reference_ID" isNewNull="true" isOldNull="true"/>
@@ -10895,6 +10889,9 @@ There are two reasons for de-activating and not deleting records:&#13;
         <Data AD_Column_ID="169" Column="Description" isNewNull="true" oldValue="Identifies a Business Partner"/>
         <Data AD_Column_ID="168" Column="Name" isNewNull="true" oldValue="Business Partner "/>
         <Data AD_Column_ID="59704" Column="PreferredWidth" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="174" Column="AD_Column_ID" isNewNull="true" oldValue="1000878"/>
+        <Data AD_Column_ID="581" Column="Updated" isNewNull="true" oldValue="2010-08-13 10:37:03.0"/>
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" oldValue="A Business Partner is anyone with whom you transact.  This can include Vendor, Customer, Employee or Salesperson"/>
       </PO>
     </Step>
     <Step SeqNo="4510" StepType="AD">
@@ -11027,7 +11024,7 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="D" Record_ID="1000952" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid" isNewNull="true" oldValue="true"/>
-        <Data AD_Column_ID="59703" Column="HideInListView" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="59703" Column="IsEmbedded" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="74868" Column="IsAllowCopy" isNewNull="true" oldValue="false"/>
         <Data AD_Column_ID="174" Column="AD_Column_ID" isNewNull="true" oldValue="1000900"/>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true" oldValue="1"/>
@@ -11035,7 +11032,6 @@ There are two reasons for de-activating and not deleting records:&#13;
         <Data AD_Column_ID="582" Column="UpdatedBy" isNewNull="true" oldValue="0"/>
         <Data AD_Column_ID="384" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
         <Data AD_Column_ID="578" Column="IsActive" isNewNull="true" oldValue="true"/>
-        <Data AD_Column_ID="579" Column="Created" isNewNull="true" oldValue="2010-08-13 11:21:00.0"/>
         <Data AD_Column_ID="383" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
         <Data AD_Column_ID="180" Column="DisplayLength" isNewNull="true" oldValue="10"/>
         <Data AD_Column_ID="176" Column="IsDisplayed" isNewNull="true" oldValue="true"/>
@@ -11049,7 +11045,6 @@ There are two reasons for de-activating and not deleting records:&#13;
         <Data AD_Column_ID="580" Column="CreatedBy" isNewNull="true" oldValue="0"/>
         <Data AD_Column_ID="581" Column="Updated" isNewNull="true" oldValue="2010-08-13 11:54:49.0"/>
         <Data AD_Column_ID="2007" Column="IsReadOnly" isNewNull="true" oldValue="false"/>
-        <Data AD_Column_ID="170" Column="Help" isNewNull="true" oldValue="A Business Partner is anyone with whom you transact.  This can include Vendor, Customer, Employee or Salesperson"/>
         <Data AD_Column_ID="5375" Column="AD_FieldGroup_ID" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="9969" Column="ObscureType" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="15011" Column="AD_Reference_ID" isNewNull="true" isOldNull="true"/>
@@ -11064,13 +11059,15 @@ There are two reasons for de-activating and not deleting records:&#13;
         <Data AD_Column_ID="169" Column="Description" isNewNull="true" oldValue="Identifies a Business Partner"/>
         <Data AD_Column_ID="168" Column="Name" isNewNull="true" oldValue="Business Partner "/>
         <Data AD_Column_ID="59704" Column="PreferredWidth" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="579" Column="Created" isNewNull="true" oldValue="2010-08-13 11:21:00.0"/>
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" oldValue="A Business Partner is anyone with whom you transact.  This can include Vendor, Customer, Employee or Salesperson"/>
       </PO>
     </Step>
     <Step SeqNo="4770" StepType="AD">
       <PO AD_Table_ID="107" Action="D" Record_ID="1001231" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid" isNewNull="true" oldValue="true"/>
-        <Data AD_Column_ID="59703" Column="HideInListView" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="59703" Column="IsEmbedded" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="74868" Column="IsAllowCopy" isNewNull="true" oldValue="true"/>
         <Data AD_Column_ID="174" Column="AD_Column_ID" isNewNull="true" oldValue="1000900"/>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true" oldValue="1"/>
@@ -11082,17 +11079,14 @@ There are two reasons for de-activating and not deleting records:&#13;
         <Data AD_Column_ID="383" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
         <Data AD_Column_ID="180" Column="DisplayLength" isNewNull="true" oldValue="10"/>
         <Data AD_Column_ID="176" Column="IsDisplayed" isNewNull="true" oldValue="true"/>
-        <Data AD_Column_ID="183" Column="IsSameLine" isNewNull="true" oldValue="false"/>
         <Data AD_Column_ID="184" Column="IsHeading" isNewNull="true" oldValue="false"/>
         <Data AD_Column_ID="185" Column="IsFieldOnly" isNewNull="true" oldValue="false"/>
         <Data AD_Column_ID="181" Column="SeqNo" isNewNull="true" oldValue="10"/>
-        <Data AD_Column_ID="2745" Column="IsCentrallyMaintained" isNewNull="true" oldValue="true"/>
         <Data AD_Column_ID="172" Column="AD_Tab_ID" isNewNull="true" oldValue="1000062"/>
         <Data AD_Column_ID="167" Column="AD_Field_ID" isNewNull="true" oldValue="1001231"/>
         <Data AD_Column_ID="580" Column="CreatedBy" isNewNull="true" oldValue="0"/>
         <Data AD_Column_ID="581" Column="Updated" isNewNull="true" oldValue="2016-01-23 10:17:20.0"/>
         <Data AD_Column_ID="2007" Column="IsReadOnly" isNewNull="true" oldValue="false"/>
-        <Data AD_Column_ID="170" Column="Help" isNewNull="true" oldValue="A Business Partner is anyone with whom you transact.  This can include Vendor, Customer, Employee or Salesperson"/>
         <Data AD_Column_ID="5375" Column="AD_FieldGroup_ID" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="9969" Column="ObscureType" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="15011" Column="AD_Reference_ID" isNewNull="true" isOldNull="true"/>
@@ -11107,11 +11101,13 @@ There are two reasons for de-activating and not deleting records:&#13;
         <Data AD_Column_ID="169" Column="Description" isNewNull="true" oldValue="Identifies a Business Partner"/>
         <Data AD_Column_ID="168" Column="Name" isNewNull="true" oldValue="Business Partner "/>
         <Data AD_Column_ID="59704" Column="PreferredWidth" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="183" Column="IsSameLine" isNewNull="true" oldValue="false"/>
+        <Data AD_Column_ID="2745" Column="IsCentrallyMaintained" isNewNull="true" oldValue="true"/>
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" oldValue="A Business Partner is anyone with whom you transact.  This can include Vendor, Customer, Employee or Salesperson"/>
       </PO>
     </Step>
     <Step SeqNo="4780" StepType="AD">
       <PO AD_Table_ID="101" Action="D" Record_ID="1000900" Table="AD_Column">
-        <Data AD_Column_ID="13448" Column="ColumnSQL" isNewNull="true" oldValue="(SELECT C_BPartner_ID from FTU_AVDOC WHERE FTU_AVDOC.FTU_AVDOC_ID = FTU_Pilot_Medical.FTU_AVDOC_ID)"/>
         <Data AD_Column_ID="117" Column="DefaultValue" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="109" Column="AD_Column_ID" isNewNull="true" oldValue="1000900"/>
         <Data AD_Column_ID="114" Column="AD_Table_ID" isNewNull="true" oldValue="1000041"/>
@@ -11151,21 +11147,20 @@ There are two reasons for de-activating and not deleting records:&#13;
         <Data AD_Column_ID="56187" Column="IsAllowLogging" isNewNull="true" oldValue="true"/>
         <Data AD_Column_ID="56352" Column="FormatPattern" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="128" Column="IsEncrypted" isNewNull="true" oldValue="N"/>
-        <Data AD_Column_ID="112" Column="Description" isNewNull="true" oldValue="Identifies a Business Partner"/>
         <Data AD_Column_ID="111" Column="Name" isNewNull="true" oldValue="Business Partner "/>
         <Data AD_Column_ID="116" Column="ColumnName" isNewNull="true" oldValue="C_BPartner_ID"/>
         <Data AD_Column_ID="59702" Column="AD_Chart_ID" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="2608" Column="AD_Element_ID" isNewNull="true" oldValue="187"/>
         <Data AD_Column_ID="68024" Column="IsRange" isNewNull="true" oldValue="false"/>
+        <Data AD_Column_ID="13448" Column="ColumnSQL" isNewNull="true" oldValue="(SELECT C_BPartner_ID from FTU_AVDOC WHERE FTU_AVDOC.FTU_AVDOC_ID = FTU_Pilot_Medical.FTU_AVDOC_ID)"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" oldValue="Identifies a Business Partner"/>
       </PO>
     </Step>
     <Step SeqNo="4790" StepType="AD">
       <PO AD_Table_ID="107" Action="D" Record_ID="1001283" Table="AD_Field">
-        <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid" isNewNull="true" oldValue="true"/>
-        <Data AD_Column_ID="59703" Column="HideInListView" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="59703" Column="IsEmbedded" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="74868" Column="IsAllowCopy" isNewNull="true" oldValue="true"/>
-        <Data AD_Column_ID="174" Column="AD_Column_ID" isNewNull="true" oldValue="1000878"/>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true" oldValue="1"/>
         <Data AD_Column_ID="186" Column="IsEncrypted" isNewNull="true" oldValue="false"/>
         <Data AD_Column_ID="582" Column="UpdatedBy" isNewNull="true" oldValue="0"/>
@@ -11183,9 +11178,7 @@ There are two reasons for de-activating and not deleting records:&#13;
         <Data AD_Column_ID="172" Column="AD_Tab_ID" isNewNull="true" oldValue="1000063"/>
         <Data AD_Column_ID="167" Column="AD_Field_ID" isNewNull="true" oldValue="1001283"/>
         <Data AD_Column_ID="580" Column="CreatedBy" isNewNull="true" oldValue="0"/>
-        <Data AD_Column_ID="581" Column="Updated" isNewNull="true" oldValue="2016-01-23 15:48:16.0"/>
         <Data AD_Column_ID="2007" Column="IsReadOnly" isNewNull="true" oldValue="false"/>
-        <Data AD_Column_ID="170" Column="Help" isNewNull="true" oldValue="A Business Partner is anyone with whom you transact.  This can include Vendor, Customer, Employee or Salesperson"/>
         <Data AD_Column_ID="5375" Column="AD_FieldGroup_ID" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="9969" Column="ObscureType" isNewNull="true" isOldNull="true"/>
         <Data AD_Column_ID="15011" Column="AD_Reference_ID" isNewNull="true" isOldNull="true"/>
@@ -11200,6 +11193,10 @@ There are two reasons for de-activating and not deleting records:&#13;
         <Data AD_Column_ID="169" Column="Description" isNewNull="true" oldValue="Identifies a Business Partner"/>
         <Data AD_Column_ID="168" Column="Name" isNewNull="true" oldValue="Business Partner "/>
         <Data AD_Column_ID="59704" Column="PreferredWidth" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="174" Column="AD_Column_ID" isNewNull="true" oldValue="1000878"/>
+        <Data AD_Column_ID="581" Column="Updated" isNewNull="true" oldValue="2016-01-23 15:48:16.0"/>
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" oldValue="A Business Partner is anyone with whom you transact.  This can include Vendor, Customer, Employee or Salesperson"/>
       </PO>
     </Step>
     <Step SeqNo="4800" StepType="AD">
@@ -11313,8 +11310,8 @@ There are two reasons for de-activating and not deleting records:&#13;
     </Step>
     <Step SeqNo="4970" StepType="AD">
       <PO AD_Table_ID="489" Action="U" Record_ID="1002177" Table="AD_PrintFormatItem">
-        <Data AD_Column_ID="6946" Column="PrintName" oldValue="ofc_num_legs">Num Legs</Data>
         <Data AD_Column_ID="6940" Column="Name" oldValue="ofc_num_legs">Num Legs</Data>
+        <Data AD_Column_ID="6946" Column="PrintName" oldValue="ofc_num_legs">Num Legs</Data>
       </PO>
     </Step>
     <Step SeqNo="4980" StepType="AD">
@@ -11483,8 +11480,8 @@ There are two reasons for de-activating and not deleting records:&#13;
       <PO AD_Table_ID="107" Action="U" Record_ID="1001252" Table="AD_Field">
         <Data AD_Column_ID="174" Column="AD_Column_ID" oldValue="1000431">1001461</Data>
         <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
-        <Data AD_Column_ID="7714" Column="EntityType" oldValue="U">MFTU</Data>
         <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="7714" Column="EntityType" oldValue="U">MFTU</Data>
         <Data AD_Column_ID="168" Column="Name" oldValue="Instructor">Instructor ID</Data>
       </PO>
     </Step>

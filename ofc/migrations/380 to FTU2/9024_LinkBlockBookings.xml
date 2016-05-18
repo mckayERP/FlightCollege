@@ -1,0 +1,565 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="MFTU" Name="Link Block Bookings via product class" ReleaseNo="FTU2" SeqNo="24">
+    <Step SeqNo="10" StepType="AD">
+      <PO AD_Table_ID="53382" Action="I" Record_ID="1000003" Table="M_Product_Class">
+        <Data AD_Column_ID="63147" Column="IsDefault">false</Data>
+        <Data AD_Column_ID="63149" Column="Name">BB150</Data>
+        <Data AD_Column_ID="63150" Column="Updated">2016-04-11 08:38:57.171</Data>
+        <Data AD_Column_ID="63148" Column="M_Product_Class_Parent_ID" isNewNull="true"/>
+        <Data AD_Column_ID="63140" Column="M_Product_Class_ID">1000003</Data>
+        <Data AD_Column_ID="63141" Column="AD_Client_ID">1000000</Data>
+        <Data AD_Column_ID="63142" Column="AD_Org_ID">1000000</Data>
+        <Data AD_Column_ID="63143" Column="Created">2016-04-11 08:38:57.171</Data>
+        <Data AD_Column_ID="63144" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="63145" Column="Description">Eligible for Block Booking BB150</Data>
+        <Data AD_Column_ID="63146" Column="IsActive">true</Data>
+        <Data AD_Column_ID="63151" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="63152" Column="Value">BB150</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="20" StepType="AD">
+      <PO AD_Table_ID="53382" Action="I" Record_ID="1000004" Table="M_Product_Class">
+        <Data AD_Column_ID="63147" Column="IsDefault">false</Data>
+        <Data AD_Column_ID="63149" Column="Name">BB172</Data>
+        <Data AD_Column_ID="63150" Column="Updated">2016-04-11 08:39:10.968</Data>
+        <Data AD_Column_ID="63148" Column="M_Product_Class_Parent_ID" isNewNull="true"/>
+        <Data AD_Column_ID="63140" Column="M_Product_Class_ID">1000004</Data>
+        <Data AD_Column_ID="63141" Column="AD_Client_ID">1000000</Data>
+        <Data AD_Column_ID="63142" Column="AD_Org_ID">1000000</Data>
+        <Data AD_Column_ID="63143" Column="Created">2016-04-11 08:39:10.968</Data>
+        <Data AD_Column_ID="63144" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="63145" Column="Description">Eligible for Block Booking BB172</Data>
+        <Data AD_Column_ID="63146" Column="IsActive">true</Data>
+        <Data AD_Column_ID="63151" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="63152" Column="Value">BB172</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="30" StepType="AD">
+      <PO AD_Table_ID="53382" Action="I" Record_ID="1000005" Table="M_Product_Class">
+        <Data AD_Column_ID="63147" Column="IsDefault">false</Data>
+        <Data AD_Column_ID="63149" Column="Name">BB76</Data>
+        <Data AD_Column_ID="63150" Column="Updated">2016-04-11 08:39:25.488</Data>
+        <Data AD_Column_ID="63148" Column="M_Product_Class_Parent_ID" isNewNull="true"/>
+        <Data AD_Column_ID="63140" Column="M_Product_Class_ID">1000005</Data>
+        <Data AD_Column_ID="63141" Column="AD_Client_ID">1000000</Data>
+        <Data AD_Column_ID="63142" Column="AD_Org_ID">1000000</Data>
+        <Data AD_Column_ID="63143" Column="Created">2016-04-11 08:39:25.488</Data>
+        <Data AD_Column_ID="63144" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="63145" Column="Description">Eligible for Block Booking BB76</Data>
+        <Data AD_Column_ID="63146" Column="IsActive">true</Data>
+        <Data AD_Column_ID="63151" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="63152" Column="Value">BB76</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="40" StepType="AD">
+      <PO AD_Table_ID="53382" Action="I" Record_ID="1000006" Table="M_Product_Class">
+        <Data AD_Column_ID="63147" Column="IsDefault">false</Data>
+        <Data AD_Column_ID="63149" Column="Name">BBINST</Data>
+        <Data AD_Column_ID="63150" Column="Updated">2016-04-11 08:39:41.437</Data>
+        <Data AD_Column_ID="63148" Column="M_Product_Class_Parent_ID" isNewNull="true"/>
+        <Data AD_Column_ID="63140" Column="M_Product_Class_ID">1000006</Data>
+        <Data AD_Column_ID="63141" Column="AD_Client_ID">1000000</Data>
+        <Data AD_Column_ID="63142" Column="AD_Org_ID">1000000</Data>
+        <Data AD_Column_ID="63143" Column="Created">2016-04-11 08:39:41.437</Data>
+        <Data AD_Column_ID="63144" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="63145" Column="Description">Eligible for Block Booking BBINST</Data>
+        <Data AD_Column_ID="63146" Column="IsActive">true</Data>
+        <Data AD_Column_ID="63151" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="63152" Column="Value">BBINST</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="50" StepType="AD">
+      <PO AD_Table_ID="53382" Action="I" Record_ID="1000007" Table="M_Product_Class">
+        <Data AD_Column_ID="63147" Column="IsDefault">false</Data>
+        <Data AD_Column_ID="63149" Column="Name">BBCFTD3</Data>
+        <Data AD_Column_ID="63150" Column="Updated">2016-04-11 08:40:02.213</Data>
+        <Data AD_Column_ID="63148" Column="M_Product_Class_Parent_ID" isNewNull="true"/>
+        <Data AD_Column_ID="63140" Column="M_Product_Class_ID">1000007</Data>
+        <Data AD_Column_ID="63141" Column="AD_Client_ID">1000000</Data>
+        <Data AD_Column_ID="63142" Column="AD_Org_ID">1000000</Data>
+        <Data AD_Column_ID="63143" Column="Created">2016-04-11 08:40:02.213</Data>
+        <Data AD_Column_ID="63144" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="63145" Column="Description">Eligible for Block Booking BBCFTD3</Data>
+        <Data AD_Column_ID="63146" Column="IsActive">true</Data>
+        <Data AD_Column_ID="63151" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="63152" Column="Value">BBCFTD3</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="60" StepType="AD">
+      <PO AD_Table_ID="814" Action="I" Record_ID="1000111" Table="AD_UserQuery">
+        <Data AD_Column_ID="14359" Column="AD_User_ID">100</Data>
+        <Data AD_Column_ID="14360" Column="AD_Table_ID">208</Data>
+        <Data AD_Column_ID="14353" Column="Created">2016-04-11 08:41:09.273</Data>
+        <Data AD_Column_ID="14350" Column="AD_Client_ID">1000000</Data>
+        <Data AD_Column_ID="14351" Column="AD_Org_ID">1000000</Data>
+        <Data AD_Column_ID="14355" Column="Updated">2016-04-11 08:41:09.273</Data>
+        <Data AD_Column_ID="14356" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="14354" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="53251" Column="AD_Tab_ID">180</Data>
+        <Data AD_Column_ID="14358" Column="Description" isNewNull="true"/>
+        <Data AD_Column_ID="14357" Column="Name">** Last Query **</Data>
+        <Data AD_Column_ID="14352" Column="IsActive">true</Data>
+        <Data AD_Column_ID="14349" Column="AD_UserQuery_ID">1000111</Data>
+        <Data AD_Column_ID="14361" Column="Code">M_Product_Category_ID&lt;^&gt;=&lt;^&gt;1000003&lt;^&gt;&lt;^&gt;AND&lt;^&gt;&lt;^&gt;</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="70" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000483" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="80" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000240" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="90" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000212" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="100" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000253" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="110" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000477" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="120" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000434" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="130" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000391" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="140" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000222" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="150" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000439" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="160" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000463" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="170" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000425" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="180" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000236" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="190" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000438" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="200" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000302" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="210" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000223" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="220" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000479" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="230" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000228" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="240" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000424" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="250" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000219" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="260" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000238" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="270" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000226" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="280" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000230" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="290" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000225" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="300" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000241" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="310" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000291" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="320" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000480" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="330" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000473" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="340" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000172" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="350" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000418" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="360" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000423" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="370" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000211" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="380" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000221" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="390" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000304" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="400" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000213" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="410" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000431" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="420" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000296" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="430" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000373" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="440" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000217" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="450" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000229" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="460" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000420" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="470" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000220" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="480" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000482" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="490" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000466" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="500" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000484" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="510" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000486" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="520" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000467" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="530" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000227" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="540" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000290" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="550" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000384" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="560" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000451" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="570" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000224" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="580" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000232" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="590" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000210" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="600" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000214" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="610" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000306" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="620" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000474" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="630" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000347" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="640" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000397" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="650" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000218" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="660" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000437" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="670" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000417" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="680" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000216" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="690" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000231" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="700" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000261" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="710" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000233" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="720" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000208" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="730" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000481" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="740" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000457" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="750" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000215" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="760" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000459" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000006</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="770" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000235" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000005</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="780" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000190" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000004</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="790" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000191" Table="M_Product">
+        <Data AD_Column_ID="2012" Column="M_Product_Category_ID" oldValue="1000002">1000033</Data>
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000003</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="800" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000192" Table="M_Product">
+        <Data AD_Column_ID="2012" Column="M_Product_Category_ID" oldValue="1000002">1000033</Data>
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000003</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="810" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000458" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000007</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="820" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000193" Table="M_Product">
+        <Data AD_Column_ID="2012" Column="M_Product_Category_ID" oldValue="1000002">1000034</Data>
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000003</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="830" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000194" Table="M_Product">
+        <Data AD_Column_ID="2012" Column="M_Product_Category_ID" oldValue="1000002">1000033</Data>
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000004</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="840" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000195" Table="M_Product">
+        <Data AD_Column_ID="2012" Column="M_Product_Category_ID" oldValue="1000002">1000033</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="850" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000195" Table="M_Product">
+        <Data AD_Column_ID="2012" Column="M_Product_Category_ID" oldValue="1000033">1000034</Data>
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000004</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="860" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000196" Table="M_Product">
+        <Data AD_Column_ID="2012" Column="M_Product_Category_ID" oldValue="1000002">1000033</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="870" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000197" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000003</Data>
+        <Data AD_Column_ID="2012" Column="M_Product_Category_ID" oldValue="1000002">1000033</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="880" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000198" Table="M_Product">
+        <Data AD_Column_ID="2012" Column="M_Product_Category_ID" oldValue="1000002">1000033</Data>
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000003</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="890" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000199" Table="M_Product">
+        <Data AD_Column_ID="2012" Column="M_Product_Category_ID" oldValue="1000002">1000033</Data>
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000003</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="900" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000200" Table="M_Product">
+        <Data AD_Column_ID="2012" Column="M_Product_Category_ID" oldValue="1000002">1000020</Data>
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000004</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="910" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000201" Table="M_Product">
+        <Data AD_Column_ID="2012" Column="M_Product_Category_ID" oldValue="1000002">1000034</Data>
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000003</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="920" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000202" Table="M_Product">
+        <Data AD_Column_ID="2012" Column="M_Product_Category_ID" oldValue="1000002">1000034</Data>
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000003</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="930" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000203" Table="M_Product">
+        <Data AD_Column_ID="2012" Column="M_Product_Category_ID" oldValue="1000002">1000034</Data>
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000004</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="940" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000196" Table="M_Product">
+        <Data AD_Column_ID="67104" Column="M_Product_Class_ID" isOldNull="true">1000004</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="950" StepType="AD">
+      <PO AD_Table_ID="208" Action="U" Record_ID="1000200" Table="M_Product">
+        <Data AD_Column_ID="2012" Column="M_Product_Category_ID" oldValue="1000020">1000033</Data>
+      </PO>
+    </Step>
+  </Migration>
+</Migrations>

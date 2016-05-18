@@ -168,11 +168,24 @@
         <Data AD_Column_ID="68024" Column="IsRange">false</Data>
       </PO>
     </Step>
+    <Step DBType="Postgres" Parse="Y" SeqNo="55" StepType="SQL">
+      <SQLStatement>ALTER TABLE adempiere.FTU_aircraft rename COLUMN fuelproductid  to temp;
+ALTER TABLE adempiere.FTU_aircraft ADD COLUMN fuelproductid numeric DEFAULT null;
+Update adempiere.FTU_aircraft SET fuelproductid = to_number(temp, '99999999');
+ALTER TABLE adempiere.FTU_aircraft DROP COLUMN temp;
+
+</SQLStatement>
+      <RollbackStatement>ALTER TABLE adempiere.FTU_aircraft rename COLUMN fuelproductid  to temp;
+ALTER TABLE adempiere.ftu_aircraft ADD COLUMN fuelproductid character varying(22);
+ALTER TABLE adempiere.ftu_aircraft ALTER COLUMN fuelproductid SET DEFAULT NULL::character varying;
+Update adempiere.FTU_aircraft SET fuelproductid = to_char(temp, '99999999');
+ALTER TABLE adempiere.FTU_aircraft DROP COLUMN temp;</RollbackStatement>
+    </Step>
     <Step SeqNo="60" StepType="AD">
       <PO AD_Table_ID="107" Action="I" Record_ID="1001310" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1001467</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
@@ -401,7 +414,7 @@
       <PO AD_Table_ID="107" Action="I" Record_ID="1001311" Table="AD_Field">
         <Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
         <Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
-        <Data AD_Column_ID="59703" Column="HideInListView">false</Data>
+        <Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
         <Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
         <Data AD_Column_ID="174" Column="AD_Column_ID">1001468</Data>
         <Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="MFTU" Name="Change data access level" ReleaseNo="FTU2" SeqNo="26">
+    <Step SeqNo="10" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000021" Table="AD_Table">
+        <Data AD_Column_ID="354" Column="AccessLevel" oldValue="4">3</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="20" StepType="AD">
+      <PO AD_Table_ID="100" Action="U" Record_ID="1000037" Table="AD_Table">
+        <Data AD_Column_ID="354" Column="AccessLevel" oldValue="7">3</Data>
+      </PO>
+    </Step>
+  </Migration>
+</Migrations>

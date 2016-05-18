@@ -1,0 +1,948 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="MFTU" Name="Add Views" ReleaseNo="FTU2" SeqNo="27">
+    <Comments>Add Block Booking V</Comments>
+    <Step DBType="Postgres" Parse="Y" SeqNo="10" StepType="SQL">
+      <Comments>Add Block Booking V</Comments>
+      <SQLStatement>CREATE OR REPLACE VIEW adempiere.ftu_blockbooking_v AS 
+
+SELECT bp.ad_client_id,
+    bp.ad_org_id,
+    bp.isactive,
+    bp.created,
+    bp.createdby,
+    bp.updated,
+    bp.updatedby,
+    bp.c_bpartner_id,
+    bp.totalopenbalance,
+	SUM(
+	CASE WHEN bb.value = 'BB76' THEN balance 
+	ELSE 0
+	END) as BB76,
+	SUM(CASE WHEN bb.value = 'BB172' THEN balance 
+	ELSE 0
+	END) as BB172,
+	SUM(CASE WHEN bb.value = 'BB150' THEN balance 
+	ELSE 0
+	END) as BB150,
+	SUM(CASE WHEN bb.value = 'BBINST' THEN balance 
+	ELSE 0
+	END) as BBINST,
+	SUM(CASE WHEN bb.value = 'BBCFTD3' THEN balance 
+	ELSE 0
+	END) as BBCFTD3
+FROM
+C_BPartner bp
+JOIN (SELECT i.c_bpartner_id,
+            p.value,
+            sum(il.QtyInvoiced) AS balance
+           FROM c_invoice i
+		JOIN c_invoiceline il on i.C_Invoice_ID = il.C_Invoice_ID
+		JOIN m_product p on il.M_Product_ID = p.M_Product_ID
+		JOIN m_product_category pc on pc.m_product_category_id = p.m_product_category_id
+          WHERE pc.name::text = 'Block Booking'::text 
+		AND i.ad_client_id = 1000000::numeric 
+		AND i.isactive = 'Y'::bpchar
+		AND i.isSOTrx =  'Y'::bpchar
+		AND i.DocStatus in ('CO', 'CL')
+          GROUP BY i.c_bpartner_id, p.value
+          ORDER BY i.c_bpartner_id) bb ON bb.c_bpartner_ID = bp.c_bpartner_id
+  Group BY bp.ad_client_id,
+    bp.ad_org_id,
+    bp.isactive,
+    bp.created,
+    bp.createdby,
+    bp.updated,
+    bp.updatedby,
+    bp.c_bpartner_id,
+    bp.totalopenbalance;
+
+ALTER TABLE adempiere.ftu_blockbooking_v
+  OWNER TO adempiere;
+</SQLStatement>
+      <RollbackStatement>DROP VIEW adempiere.ftu_blockbooking_v;</RollbackStatement>
+    </Step>
+    <Step DBType="Postgres" Parse="Y" SeqNo="20" StepType="SQL">
+      <Comments>adempiere.ftu_deferreddefectlist_v</Comments>
+      <SQLStatement>CREATE OR REPLACE VIEW adempiere.ftu_deferreddefectlist_v AS 
+ SELECT dl.ad_client_id,
+    dl.ad_org_id,
+    dl.created,
+    dl.createdby,
+    dl.isactive,
+    dl.ftu_defectlog_id,
+    dl.defectdate,
+    dl.defectdesc,
+    dl.defectstatus,
+    dl.defecttype,
+    dl.deferreddate,
+    dl.rectification,
+    dl.repaireddate,
+    dl.updated,
+    dl.updatedby,
+    dl.ftu_aircraft_id,
+    r.name,
+    ac.acmanufacturer,
+    ac.acmodel,
+    ac.acnextmaintdate,
+    ac.acnextmainthrs
+   FROM adempiere.ftu_defectlog dl,
+    adempiere.ftu_aircraft ac,
+    adempiere.s_resource r
+  WHERE dl.ftu_aircraft_id = ac.ftu_aircraft_id AND ac.s_resource_id = r.s_resource_id AND dl.deferreddate IS NOT NULL AND dl.repaireddate IS NULL
+  ORDER BY r.name, dl.deferreddate;
+
+ALTER TABLE adempiere.ftu_deferreddefectlist_v
+  OWNER TO adempiere;
+</SQLStatement>
+      <RollbackStatement>DROP VIEW adempiere.ftu_deferreddefectlist_v;</RollbackStatement>
+    </Step>
+    <Step DBType="Postgres" Parse="Y" SeqNo="30" StepType="SQL">
+      <Comments>adempiere.ftu_masterdefectlist_v</Comments>
+      <SQLStatement>CREATE OR REPLACE VIEW adempiere.ftu_masterdefectlist_v AS 
+ SELECT dl.ad_client_id,
+    dl.ad_org_id,
+    dl.created,
+    dl.createdby,
+    dl.isactive,
+    dl.ftu_defectlog_id,
+    dl.defectdate,
+    dl.defectdesc,
+    dl.defectstatus,
+    dl.defecttype,
+    dl.deferreddate,
+    dl.rectification,
+    dl.repaireddate,
+    dl.updated,
+    dl.updatedby,
+    dl.ftu_aircraft_id,
+    r.name,
+    ac.acmanufacturer,
+    ac.acmodel,
+    ac.acnextmaintdate,
+    ac.acnextmainthrs
+   FROM adempiere.ftu_defectlog dl,
+    adempiere.ftu_aircraft ac,
+    adempiere.s_resource r
+  WHERE dl.ftu_aircraft_id = ac.ftu_aircraft_id 
+	AND ac.s_resource_id = r.s_resource_id 
+	AND dl.repaireddate IS NULL
+  ORDER BY r.name, dl.deferreddate;
+
+ALTER TABLE adempiere.ftu_masterdefectlist_v
+  OWNER TO adempiere;
+</SQLStatement>
+      <RollbackStatement>DROP VIEW adempiere.ftu_masterdefectlist_v;</RollbackStatement>
+    </Step>
+    <Step DBType="Postgres" Parse="Y" SeqNo="40" StepType="SQL">
+      <Comments>adempiere.ftu_ac_multiday_flighttimes_v</Comments>
+      <SQLStatement>CREATE OR REPLACE VIEW adempiere.ftu_ac_multiday_flighttimes_v AS 
+ SELECT fs.ad_client_id,
+    fs.ad_org_id,
+    to_char(fs.flightdate, 'yy-MM'::text) AS flightmonth,
+    fs.flightdate as fltdate,
+    fs.flightdate,
+    ac.callsign,
+    fs.flighttime_dual AS dual,
+    fs.flighttime_solo,
+    fs.flighttime_rental,
+    fs.flighttime_intro,
+    fs.flighttime_charter,
+    fs.flighttime_nonrev,
+    fs.flighttime_dual + fs.flighttime_solo + fs.flighttime_rental + fs.flighttime_intro + fs.flighttime_charter + fs.flighttime_nonrev AS flighttime,
+    fs.airtime,
+    (fs.airtime * ac.avgfuelconsumption + COALESCE(ac.TaxiFuelConsumption,0))* ff.dividerate AS fuelused,
+        CASE
+            WHEN ac.acmaintqtytype::text = 'Airtime'::text THEN ac.acmaintrate * fs.airtime
+            WHEN ac.acmaintqtytype::text = 'Flighttime'::text THEN ac.acmaintrate * (fs.flighttime_dual + fs.flighttime_solo + fs.flighttime_rental + fs.flighttime_intro + fs.flighttime_charter + fs.flighttime_nonrev)
+            ELSE 0::numeric
+        END AS maintexpenses
+   FROM ftu_flightsheet fs
+    JOIN ftu_aircraft ac ON ac.FTU_Aircraft_ID = fs.FTU_Aircraft_ID
+    JOIN M_Product p on P.M_Product_ID = ac.fuelProductID
+    JOIN C_UOM_Conversion ff ON ff.C_UOM_ID = p.C_UOM_ID AND ff.C_UOM_TO_ID = ac.C_UOM_ID
+  WHERE 
+	(fs.airtime &gt; 0::numeric OR (fs.flighttime_dual + fs.flighttime_solo + fs.flighttime_rental + fs.flighttime_intro + fs.flighttime_charter + fs.flighttime_nonrev) &gt; 0::numeric) 
+	AND fs.isactive = 'Y'::bpchar
+	AND fs.flightDate &gt; '1 april 2016'
+  ORDER BY to_char(fs.flightdate, 'yy-MM'::text), fs.flightdate, ac.name;
+  
+ALTER TABLE adempiere.ftu_ac_multiday_flighttimes_v
+  OWNER TO adempiere;
+</SQLStatement>
+      <RollbackStatement>DROP VIEW adempiere.ftu_ac_multiday_flighttimes_v;</RollbackStatement>
+    </Step>
+    <Step DBType="Postgres" Parse="Y" SeqNo="60" StepType="SQL">
+      <Comments>adempiere.FTU_masterdefectlist_v</Comments>
+      <SQLStatement>CREATE OR REPLACE VIEW adempiere.FTU_masterdefectlist_v AS 
+ SELECT dl.ad_client_id,
+    dl.ad_org_id,
+    dl.created,
+    dl.createdby,
+    dl.isactive,
+    dl.ftu_defectlog_id,
+    dl.defectdate,
+    dl.defectdesc,
+    dl.defectstatus,
+    dl.defecttype,
+    dl.deferreddate,
+    dl.rectification,
+    dl.repaireddate,
+    dl.updated,
+    dl.updatedby,
+    dl.ftu_aircraft_id,
+    ac.name,
+    ac.acmanufacturer,
+    ac.acmodel,
+    ac.acnextmaintdate,
+    ac.acnextmainthrs
+   FROM adempiere.ftu_defectlog dl,
+    adempiere.ftu_aircraft ac
+  WHERE dl.ftu_aircraft_id = ac.ftu_aircraft_id AND dl.repaireddate IS NULL
+  ORDER BY ac.name, dl.deferreddate;</SQLStatement>
+      <RollbackStatement>DROP VIEW adempiere.FTU_masterdefectlist_v;</RollbackStatement>
+    </Step>
+    <Step DBType="Postgres" Parse="Y" SeqNo="70" StepType="SQL">
+      <Comments>adempiere.ftu_ac_status_v</Comments>
+      <SQLStatement>CREATE OR REPLACE VIEW adempiere.ftu_ac_status_v AS 
+ SELECT acs.AD_Client_ID,
+ acs.AD_Org_ID,
+ acs.Created,
+ acs.CreatedBy,
+ acs.Updated,
+ acs.UpdatedBy,
+ acs.IsActive,
+	acs.ftu_aircraft_id,
+	acs.name,
+	acs.airframetime,
+	acs.acnextmaintdate,
+	acs.acnextmainthrs,
+	acs.acnextmainthrs - acs.airframetime as timetoinspection,
+        CASE
+            WHEN dli.inspect &gt; 0 THEN 'Offline - Inspection'::text
+	    WHEN dls.snags &gt; 0 THEN 'U/S'::text
+            ELSE 'Serviceable'::text
+        END AS status,
+        dls.snags
+   FROM adempiere.ftu_aircraft acs
+     LEFT JOIN ( SELECT ftu_defectlog.ftu_aircraft_id,
+            count(ftu_defectlog.ftu_defectlog_id) AS snags
+           FROM adempiere.ftu_defectlog
+          WHERE ftu_defectlog.defectstatus::text = 'U/S'::text
+          GROUP BY ftu_defectlog.ftu_aircraft_id) dls ON acs.ftu_aircraft_id = dls.ftu_aircraft_id
+     LEFT JOIN ( SELECT ftu_defectlog.ftu_aircraft_id,
+            count(ftu_defectlog.ftu_defectlog_id) AS inspect
+           FROM adempiere.ftu_defectlog
+          WHERE ftu_defectlog.defectstatus::text = 'Inspection'::text
+          GROUP BY ftu_defectlog.ftu_aircraft_id) dli ON acs.ftu_aircraft_id = dli.ftu_aircraft_id
+ORDER BY status, timetoinspection;
+
+ALTER TABLE adempiere.ftu_ac_status_v
+  OWNER TO adempiere;</SQLStatement>
+      <RollbackStatement>DROP VIEW adempiere.ftu_ac_status_v;</RollbackStatement>
+    </Step>
+    <Step DBType="Postgres" Parse="Y" SeqNo="80" StepType="SQL">
+      <Comments>adempiere.ftu_booking_audit_trail_ac_v</Comments>
+      <SQLStatement>CREATE OR REPLACE VIEW adempiere.FTU_booking_audit_trail_ac_v AS 
+ SELECT FTU_booking_audit_trail.ftu_booking_audit_trail_id,
+    FTU_booking_audit_trail.ad_client_id,
+    FTU_booking_audit_trail.ad_org_id,
+    FTU_booking_audit_trail.c_bpartner_id,
+    FTU_booking_audit_trail.assigndatefrom,
+    FTU_booking_audit_trail.s_resource_id,
+        CASE
+            WHEN FTU_booking_audit_trail.actionperformed::text = 'Aircraft Cancellation'::text THEN (-1)
+            WHEN FTU_booking_audit_trail.actionperformed::text = 'Aircraft Booking'::text THEN 1
+            ELSE 0
+        END AS bookingcount
+   FROM adempiere.ftu_booking_audit_trail;
+
+ALTER TABLE adempiere.ftu_booking_audit_trail_ac_v
+  OWNER TO adempiere;</SQLStatement>
+      <RollbackStatement>DROP TABLE adempiere.ftu_booking_audit_trail_ac_v;</RollbackStatement>
+    </Step>
+    <Step DBType="Postgres" Parse="Y" SeqNo="90" StepType="SQL">
+      <Comments>adempiere.ftu_student_flight_summary_v</Comments>
+      <SQLStatement>CREATE OR REPLACE VIEW adempiere.ftu_student_flight_summary_v AS 
+ SELECT ftu_class.value AS class,
+    c_bpartner.name,
+    ftu_student.studentstatus AS status,
+        CASE
+            WHEN (date_part('ISOYEAR'::text, ftu_flightsheet.flightdate) * 52::double precision + date_part('WEEK'::text, ftu_flightsheet.flightdate)) &gt;= (date_part('ISOYEAR'::text, 'now'::text::date) * 52::double precision + date_part('WEEK'::text, 'now'::text::date) - 4::double precision) THEN to_char(ftu_flightsheet.flightdate, 'IY-IW'::text)
+            ELSE '0 - All Prev'::text
+        END AS yrwk,
+    sum(ftu_flightsheet.flighttime_dual + ftu_flightsheet.flighttime_solo + ftu_flightsheet.flighttime_rental + ftu_flightsheet.flighttime_intro + ftu_flightsheet.flighttime_charter) AS flt_time,
+    sum(ftu_flightsheet.airtime) AS air_time,
+    sum(ftu_flightsheet.simulator) AS sim,
+    sum(ftu_flightsheet.briefing) AS brief,
+    sum(
+        CASE
+            WHEN ftu_flightsheet.coursetype::text = 'Cancelled'::text THEN 1
+            ELSE 0
+        END) AS cancellations,
+    sum(
+        CASE
+            WHEN ftu_flightsheet.coursetype::text = 'No-Show'::text THEN 1
+            ELSE 0
+        END) AS noshow,
+    sum(
+        CASE
+            WHEN ftu_flightsheet.coursetype::text = 'Rental'::text THEN 1
+            ELSE 0
+        END) AS rental,
+    sum(
+        CASE
+            WHEN ftu_flightsheet.coursetype::text = 'Night'::text THEN 1
+            ELSE 0
+        END) AS night,
+    sum(
+        CASE
+            WHEN ftu_flightsheet.coursetype::text = 'Multi Engine'::text THEN 1
+            ELSE 0
+        END) AS multi,
+    sum(
+        CASE
+            WHEN ftu_flightsheet.coursetype::text = 'CPL'::text THEN 1
+            ELSE 0
+        END) AS cpl,
+    sum(
+        CASE
+            WHEN ftu_flightsheet.coursetype::text = 'Single IFR'::text THEN 1
+            ELSE 0
+        END) AS single_ifr,
+    sum(
+        CASE
+            WHEN ftu_flightsheet.coursetype::text = 'RFP'::text THEN 1
+            ELSE 0
+        END) AS rfp,
+    sum(
+        CASE
+            WHEN ftu_flightsheet.coursetype::text = 'Instructor'::text THEN 1
+            ELSE 0
+        END) AS instructor,
+    sum(
+        CASE
+            WHEN ftu_flightsheet.coursetype::text = 'Intro'::text THEN 1
+            ELSE 0
+        END) AS intro,
+    sum(
+        CASE
+            WHEN ftu_flightsheet.coursetype::text = 'Other'::text THEN 1
+            ELSE 0
+        END) AS other,
+    sum(
+        CASE
+            WHEN ftu_flightsheet.coursetype::text = 'Tour'::text THEN 1
+            ELSE 0
+        END) AS tour,
+    sum(
+        CASE
+            WHEN ftu_flightsheet.coursetype::text = 'PPL'::text THEN 1
+            ELSE 0
+        END) AS ppl,
+    sum(
+        CASE
+            WHEN ftu_flightsheet.coursetype::text = 'Multi IFR'::text THEN 1
+            ELSE 0
+        END) AS multi_ifr
+   FROM adempiere.ftu_flightsheet,
+    adempiere.ftu_student,
+    adempiere.c_bpartner,
+    adempiere.ftu_class
+  WHERE ftu_flightsheet.c_bpartner_id::text = c_bpartner.c_bpartner_id::text AND ftu_student.ftu_class_id = ftu_class.ftu_class_id AND ftu_student.c_bpartner_id = c_bpartner.c_bpartner_id AND ftu_student.studentstatus::text = 'Enrolled'::text
+  GROUP BY ftu_class.value, c_bpartner.name,
+        CASE
+            WHEN (date_part('ISOYEAR'::text, ftu_flightsheet.flightdate) * 52::double precision + date_part('WEEK'::text, ftu_flightsheet.flightdate)) &gt;= (date_part('ISOYEAR'::text, 'now'::text::date) * 52::double precision + date_part('WEEK'::text, 'now'::text::date) - 4::double precision) THEN to_char(ftu_flightsheet.flightdate, 'IY-IW'::text)
+            ELSE '0 - All Prev'::text
+        END, ftu_student.studentstatus
+  ORDER BY ftu_class.value, c_bpartner.name,
+        CASE
+            WHEN (date_part('ISOYEAR'::text, ftu_flightsheet.flightdate) * 52::double precision + date_part('WEEK'::text, ftu_flightsheet.flightdate)) &gt;= (date_part('ISOYEAR'::text, 'now'::text::date) * 52::double precision + date_part('WEEK'::text, 'now'::text::date) - 4::double precision) THEN to_char(ftu_flightsheet.flightdate, 'IY-IW'::text)
+            ELSE '0 - All Prev'::text
+        END, ftu_student.studentstatus;
+
+ALTER TABLE adempiere.ftu_student_flight_summary_v
+  OWNER TO adempiere;</SQLStatement>
+      <RollbackStatement>DROP VIEW adempiere.ftu_student_flight_summary_v;</RollbackStatement>
+    </Step>
+    <Step DBType="Postgres" Parse="Y" SeqNo="100" StepType="SQL">
+      <Comments>adempiere.ftu_class_flight_avg_v;</Comments>
+      <SQLStatement>CREATE OR REPLACE VIEW adempiere.ftu_class_flight_avg_v AS 
+ SELECT ftu_student_flight_summary_v.class,
+    ftu_student_flight_summary_v.yrwk,
+    avg(ftu_student_flight_summary_v.flt_time) AS aflt_time,
+    avg(ftu_student_flight_summary_v.air_time) AS aair_time,
+    avg(ftu_student_flight_summary_v.sim) AS asim,
+    avg(ftu_student_flight_summary_v.brief) AS abrief,
+    avg(ftu_student_flight_summary_v.cancellations) AS acan,
+    avg(ftu_student_flight_summary_v.noshow) AS anoshow,
+    avg(ftu_student_flight_summary_v.rental) AS arental,
+    avg(ftu_student_flight_summary_v.night) AS anight,
+    avg(ftu_student_flight_summary_v.multi) AS amulti,
+    avg(ftu_student_flight_summary_v.cpl) AS acpl,
+    avg(ftu_student_flight_summary_v.single_ifr) AS asingle_ifr,
+    avg(ftu_student_flight_summary_v.rfp) AS arfp,
+    avg(ftu_student_flight_summary_v.instructor) AS ainst,
+    avg(ftu_student_flight_summary_v.intro) AS aintro,
+    avg(ftu_student_flight_summary_v.other) AS aother,
+    avg(ftu_student_flight_summary_v.tour) AS atour,
+    avg(ftu_student_flight_summary_v.ppl) AS appl,
+    avg(ftu_student_flight_summary_v.multi_ifr) AS amulti_ifr
+   FROM adempiere.ftu_student_flight_summary_v
+  GROUP BY ftu_student_flight_summary_v.class, ftu_student_flight_summary_v.yrwk
+  ORDER BY ftu_student_flight_summary_v.class DESC, ftu_student_flight_summary_v.yrwk;
+
+ALTER TABLE adempiere.ftu_class_flight_avg_v
+  OWNER TO adempiere;</SQLStatement>
+      <RollbackStatement>DROP VIEW adempiere.ftu_class_flight_avg_v;</RollbackStatement>
+    </Step>
+    <Step DBType="Postgres" Parse="Y" SeqNo="110" StepType="SQL">
+      <Comments>adempiere.ftu_class_flight_summary_v</Comments>
+      <SQLStatement>CREATE OR REPLACE VIEW adempiere.ftu_class_flight_summary_v AS   
+SELECT 
+	ftu_class.value AS class,
+	CASE
+		WHEN (date_part('ISOYEAR'::text, ftu_flightsheet.flightdate) * 52::double precision + date_part('WEEK'::text, ftu_flightsheet.flightdate)) &gt;= (date_part('ISOYEAR'::text, 'now'::text::date) * 52::double precision + date_part('WEEK'::text, 'now'::text::date) - 4::double precision) THEN to_char(ftu_flightsheet.flightdate, 'IY-IW'::text)
+		ELSE '0 - All Prev'::text
+	END AS yrwk,
+	sum(CASE
+		WHEN ftu_flightsheet.coursetype::text = 'Cancelled'::text THEN 1
+		ELSE 0
+	   END) AS cancellations,
+	sum(CASE
+	        WHEN ftu_flightsheet.coursetype::text = 'No-Show'::text THEN 1
+	        ELSE 0
+	    END) AS noshow,
+	sum(CASE
+	        WHEN ftu_flightsheet.coursetype::text = 'Rental'::text THEN 1
+	        ELSE 0
+	    END) AS rental,
+	sum(CASE
+	        WHEN ftu_flightsheet.coursetype::text = 'Night'::text THEN 1
+	        ELSE 0
+	    END) AS night,
+	sum(CASE
+	        WHEN ftu_flightsheet.coursetype::text = 'Multi Engine'::text THEN 1
+	        ELSE 0
+	    END) AS multi,
+	sum(CASE
+	        WHEN ftu_flightsheet.coursetype::text = 'CPL'::text THEN 1
+	        ELSE 0
+	    END) AS cpl,
+	sum(CASE
+	        WHEN ftu_flightsheet.coursetype::text = 'Single IFR'::text THEN 1
+	        ELSE 0
+	    END) AS single_ifr,
+	sum(CASE
+	        WHEN ftu_flightsheet.coursetype::text = 'RFP'::text THEN 1
+	        ELSE 0
+	    END) AS rfp,
+	sum(CASE
+	        WHEN ftu_flightsheet.coursetype::text = 'Instructor'::text THEN 1
+	        ELSE 0
+	    END) AS instructor,
+	sum(CASE
+	        WHEN ftu_flightsheet.coursetype::text = 'Intro'::text THEN 1
+	        ELSE 0
+	    END) AS intro,
+	sum(CASE
+	        WHEN ftu_flightsheet.coursetype::text = 'Other'::text THEN 1
+	        ELSE 0
+	    END) AS other,
+	sum(CASE
+	        WHEN ftu_flightsheet.coursetype::text = 'Tour'::text THEN 1
+	        ELSE 0
+	    END) AS tour,
+	sum(CASE
+	        WHEN ftu_flightsheet.coursetype::text = 'PPL'::text THEN 1
+	        ELSE 0
+	    END) AS ppl,
+	sum(CASE
+	        WHEN ftu_flightsheet.coursetype::text = 'Multi IFR'::text THEN 1
+	        ELSE 0
+	    END) AS multi_ifr,
+	sum(ftu_flightsheet.flighttime_dual + ftu_flightsheet.flighttime_solo + ftu_flightsheet.flighttime_rental + ftu_flightsheet.flighttime_intro + ftu_flightsheet.flighttime_charter) AS flt_time,
+	sum(ftu_flightsheet.airtime) AS air_time,
+	sum(ftu_flightsheet.simulator) AS sim,
+	sum(ftu_flightsheet.briefing) AS brief
+FROM 
+	adempiere.ftu_flightsheet,
+	adempiere.ftu_student,
+	adempiere.ftu_class   
+WHERE 
+	ftu_flightsheet.c_bpartner_id::text = ftu_student.c_bpartner_id::text 
+	AND ftu_student.ftu_class_id = ftu_class.ftu_class_id AND ftu_student.studentstatus::text = 'Enrolled'::text   
+GROUP BY 
+	ftu_class.value,
+	CASE
+		WHEN (date_part('ISOYEAR'::text, ftu_flightsheet.flightdate) * 52::double precision + date_part('WEEK'::text, ftu_flightsheet.flightdate)) &gt;= (date_part('ISOYEAR'::text, 'now'::text::date) * 52::double precision + date_part('WEEK'::text, 'now'::text::date) - 4::double precision) THEN to_char(ftu_flightsheet.flightdate, 'IY-IW'::text)
+		ELSE '0 - All Prev'::text
+	END
+ORDER BY ftu_class.value,
+	CASE
+		WHEN (date_part('ISOYEAR'::text, ftu_flightsheet.flightdate) * 52::double precision + date_part('WEEK'::text, ftu_flightsheet.flightdate)) &gt;= (date_part('ISOYEAR'::text, 'now'::text::date) * 52::double precision + date_part('WEEK'::text, 'now'::text::date) - 4::double precision) THEN to_char(ftu_flightsheet.flightdate, 'IY-IW'::text)
+		ELSE '0 - All Prev'::text
+	END;
+
+ALTER TABLE adempiere.ftu_class_flight_summary_v   OWNER TO adempiere; </SQLStatement>
+      <RollbackStatement>DROP VIEW adempiere.ftu_class_flight_summary_v;</RollbackStatement>
+    </Step>
+    <Step DBType="Postgres" Parse="Y" SeqNo="120" StepType="SQL">
+      <Comments>adempiere.ftu_class_list_v</Comments>
+      <SQLStatement>CREATE OR REPLACE VIEW adempiere.ftu_class_list_v AS 
+ SELECT bp.ad_client_id,
+    bp.ad_org_id,
+    c.ftu_class_id,
+    c.name AS class,
+    bp.c_bpartner_id,
+    u.ad_user_id,
+    bp.value AS memberno,
+    bp.name,
+    s.dateenrolled,
+    u.name AS contact_name,
+    u.email,
+    u.phone,
+    u.phone2,
+    s.studentstatus,
+    ( SELECT rl.name
+           FROM adempiere.ad_reference r,
+            adempiere.ad_ref_list rl
+          WHERE r.ad_reference_id = rl.ad_reference_id AND r.name::text = 'OFC Student Stage'::text AND rl.value::text = s.studentstage::text) AS stage
+   FROM adempiere.ftu_student s,
+    adempiere.ftu_class c,
+    adempiere.c_bpartner bp,
+    adempiere.ad_user u
+  WHERE s.c_bpartner_id = bp.c_bpartner_id AND s.ftu_class_id = c.ftu_class_id AND bp.c_bpartner_id = u.c_bpartner_id;
+
+ALTER TABLE adempiere.ftu_class_list_v
+  OWNER TO adempiere;
+</SQLStatement>
+      <RollbackStatement>DROP VIEW adempiere.ftu_class_list_v;</RollbackStatement>
+    </Step>
+    <Step DBType="Postgres" Parse="Y" SeqNo="130" StepType="SQL">
+      <Comments>adempiere.ftu_membershiplist_v</Comments>
+      <SQLStatement>CREATE OR REPLACE VIEW adempiere.ftu_membershiplist_v AS 
+ SELECT bp.ad_client_id,
+    bp.ad_org_id,
+    bp.C_BPartner_ID,
+    bp.isactive,
+    bp.name,
+    bp.description,
+    u.AD_User_ID,
+    u.email,
+    u.phone,
+    u.phone2,
+    u.lastcontact,
+    st.name AS membershiptype,
+    s.c_subscription_id,
+    s.startdate,
+    s.paiduntildate,
+    s.renewaldate
+   FROM adempiere.ad_user u,
+    adempiere.c_bpartner bp,
+    adempiere.c_subscription s,
+    adempiere.c_subscriptiontype st
+  WHERE u.c_bpartner_id = bp.c_bpartner_id 
+  AND s.c_bpartner_id = bp.c_bpartner_id 
+  AND s.c_subscriptiontype_id = st.c_subscriptiontype_id
+  AND u.isactive = 'Y'
+  ORDER BY st.name, bp.name;
+
+ALTER TABLE adempiere.ftu_membershiplist_v
+  OWNER TO adempiere;</SQLStatement>
+      <RollbackStatement>DROP VIEW adempiere.ftu_membershiplist_v;</RollbackStatement>
+    </Step>
+    <Step DBType="Postgres" Parse="Y" SeqNo="140" StepType="SQL">
+      <Comments>adempiere.ftu_pcc_schedule2_details_v</Comments>
+      <SQLStatement>CREATE OR REPLACE VIEW adempiere.ftu_pcc_schedule2_details_v AS 
+ SELECT fa.ad_client_id,
+    fa.ad_org_id,
+    yr.fiscalyear,
+        CASE
+            WHEN s.isvocational = 'Y'::bpchar AND p.istuitionfee = 'Y'::bpchar THEN 0
+            ELSE
+            CASE
+                WHEN s.isvocational = 'N'::bpchar AND p.istuitionfee = 'Y'::bpchar THEN 1
+                ELSE 2
+            END
+        END AS seq,
+        CASE
+            WHEN s.isvocational = 'Y'::bpchar AND p.istuitionfee = 'Y'::bpchar THEN 'Vocational Programs'::text
+            ELSE
+            CASE
+                WHEN s.isvocational = 'N'::bpchar AND p.istuitionfee = 'Y'::bpchar THEN 'Non-vocational Programs'::text
+                ELSE 'Other Revenue'::text
+            END
+        END AS type,
+        CASE
+            WHEN p.istuitionfee = 'Y'::bpchar THEN s.fundingsource
+            ELSE NULL::character varying
+        END AS fscode,
+        CASE
+            WHEN p.istuitionfee = 'Y'::bpchar THEN lv.list_value
+            ELSE NULL::character varying
+        END AS fundingsource,
+    bp.name AS customer,
+    s.isvocational,
+    s.isfulltime,
+    p.name AS product,
+    p.istuitionfee,
+    fa.amtacctcr - fa.amtacctdr AS revenue
+   FROM adempiere.c_elementvalue ev,
+    adempiere.c_period per,
+    adempiere.c_year yr,
+    adempiere.fact_acct fa
+     LEFT JOIN (adempiere.ftu_student s
+     JOIN adempiere.ftu_class c ON c.ftu_class_id = s.ftu_class_id) ON s.c_bpartner_id = fa.c_bpartner_id AND fa.dateacct &gt;=
+        CASE
+            WHEN s.dateenrolled IS NULL THEN c.startdate
+            ELSE s.dateenrolled
+        END AND fa.dateacct &lt;=
+        CASE
+            WHEN s.datedeparted IS NULL THEN c.enddate
+            ELSE s.datedeparted
+        END
+     LEFT JOIN adempiere.m_product p ON p.m_product_id = fa.m_product_id
+     LEFT JOIN adempiere.c_bpartner bp ON bp.c_bpartner_id = fa.c_bpartner_id
+     LEFT JOIN ( SELECT ad_ref_list.name AS list_value,
+            ad_ref_list.value AS code
+           FROM adempiere.ad_ref_list,
+            adempiere.ad_reference
+          WHERE ad_ref_list.ad_reference_id = ad_reference.ad_reference_id AND ad_reference.name::text = 'FundingSource'::text) lv ON lv.code::text = s.fundingsource::text
+  WHERE fa.ad_client_id = 1000000::numeric AND fa.postingtype = 'A'::bpchar AND fa.account_id = ev.c_elementvalue_id AND ev.value::text = '41000'::text AND per.c_period_id = fa.c_period_id AND per.c_year_id = yr.c_year_id
+  ORDER BY yr.fiscalyear,
+        CASE
+            WHEN s.isvocational = 'Y'::bpchar AND p.istuitionfee = 'Y'::bpchar THEN 0
+            ELSE
+            CASE
+                WHEN s.isvocational = 'N'::bpchar AND p.istuitionfee = 'Y'::bpchar THEN 1
+                ELSE 2
+            END
+        END,
+        CASE
+            WHEN p.istuitionfee = 'Y'::bpchar THEN s.fundingsource
+            ELSE NULL::character varying
+        END;
+
+ALTER TABLE adempiere.ftu_pcc_schedule2_details_v
+  OWNER TO adempiere;
+</SQLStatement>
+      <RollbackStatement>DROP VIEW adempiere.ftu_pcc_schedule2_details_v;</RollbackStatement>
+    </Step>
+    <Step DBType="Postgres" Parse="Y" SeqNo="150" StepType="SQL">
+      <Comments>adempiere.FTU_rv_submitted_grades</Comments>
+      <SQLStatement>CREATE OR REPLACE VIEW adempiere.FTU_rv_submitted_grades AS 
+ SELECT ftu_registered_courses.ad_client_id,
+    ftu_registered_courses.ad_org_id,
+    ftu_semester.calendaryear,
+    ftu_class.name AS class,
+    ftu_student.studentnum AS student_number,
+    c_bpartner.name,
+    ftu_training_unit.program_code AS program,
+    ftu_semester.value AS semester,
+    ftu_course.value AS course_code,
+    ftu_course.coursetitle AS course_title,
+    ftu_course.coursehrs AS hours,
+    ftu_course_grade.coursegrade AS grade
+   FROM adempiere.ftu_course,
+    adempiere.ftu_semester,
+    adempiere.ftu_training_unit,
+    adempiere.ftu_student,
+    adempiere.ftu_registered_courses
+     LEFT JOIN adempiere.ftu_course_grade ON ftu_course_grade.ftu_registered_courses_id = ftu_registered_courses.ftu_registered_courses_id,
+    adempiere.ftu_course_inst,
+    adempiere.c_bpartner,
+    adempiere.ftu_class
+  WHERE (ftu_course_grade.isgradesubmitted IS NULL OR ftu_course_grade.isgradesubmitted = 'Y'::bpchar) AND ftu_course.ftu_training_unit_id = ftu_training_unit.ftu_training_unit_id AND ftu_student.c_bpartner_id = c_bpartner.c_bpartner_id AND ftu_registered_courses.ftu_course_inst_id = ftu_course_inst.ftu_course_inst_id AND ftu_registered_courses.ftu_student_id = ftu_student.ftu_student_id AND ftu_course_inst.ftu_course_id = ftu_course.ftu_course_id AND ftu_course_inst.ftu_semester_id = ftu_semester.ftu_semester_id AND ftu_class.ftu_class_id = ftu_student.ftu_class_id
+  ORDER BY ftu_class.name, c_bpartner.name, ftu_semester.calendaryear, ftu_course.value;
+
+ALTER TABLE adempiere.FTU_rv_submitted_grades
+  OWNER TO adempiere;</SQLStatement>
+      <RollbackStatement>drop view adempiere.FTU_rv_submitted_grades;</RollbackStatement>
+    </Step>
+    <Step DBType="Postgres" Parse="Y" SeqNo="160" StepType="SQL">
+      <Comments>adempiere.ftu_student_bookings_v</Comments>
+      <SQLStatement>CREATE OR REPLACE VIEW adempiere.ftu_student_bookings_v AS 
+ SELECT ftu_class.value AS class,
+    c_bpartner.name,
+    ftu_booking_audit_trail.actionperformed,
+    s_resourcetype.name AS resourcetype,
+    s_resource.name AS resource,
+    ftu_booking_audit_trail.assigndatefrom AS slot,
+    date_part('year'::text, ftu_booking_audit_trail.assigndatefrom) AS year,
+    date_part('month'::text, ftu_booking_audit_trail.assigndatefrom) AS month,
+    date_part('week'::text, ftu_booking_audit_trail.assigndatefrom) AS week,
+        CASE
+            WHEN ftu_booking_audit_trail.actionperformed::text = 'Aircraft Cancellation'::text OR ftu_booking_audit_trail.actionperformed::text = 'Instructor Cancellation'::text THEN (-1)
+            WHEN ftu_booking_audit_trail.actionperformed::text = 'Aircraft Booking'::text OR ftu_booking_audit_trail.actionperformed::text = 'Instructor Booking'::text THEN 1
+            ELSE NULL::integer
+        END AS bookingcount
+   FROM adempiere.ftu_booking_audit_trail,
+    adempiere.c_bpartner,
+    adempiere.ftu_student,
+    adempiere.ftu_class,
+    adempiere.s_resource,
+    adempiere.s_resourcetype
+  WHERE ftu_booking_audit_trail.c_bpartner_id = c_bpartner.c_bpartner_id AND ftu_booking_audit_trail.s_resource_id = s_resource.s_resource_id AND c_bpartner.c_bpartner_id = ftu_student.c_bpartner_id AND ftu_student.ftu_class_id = ftu_class.ftu_class_id AND s_resource.s_resourcetype_id = s_resourcetype.s_resourcetype_id AND ftu_student.studentstatus::text = 'Enrolled'::text
+  ORDER BY ftu_class.name, c_bpartner.name, ftu_booking_audit_trail.assigndatefrom;
+
+ALTER TABLE adempiere.ftu_student_bookings_v
+  OWNER TO adempiere;
+</SQLStatement>
+      <RollbackStatement>DROP VIEW adempiere.ftu_student_bookings_v;</RollbackStatement>
+    </Step>
+    <Step DBType="Postgres" Parse="Y" SeqNo="170" StepType="SQL">
+      <Comments>adempiere.ftu_student_bookings_summary_v</Comments>
+      <SQLStatement>DROP TABLE adempiere.ftu_student_bookings_summary_v;
+CREATE OR REPLACE VIEW adempiere.ftu_student_bookings_summary_v AS 
+ SELECT ftu_booking_audit_trail.ad_client_id,
+    ftu_booking_audit_trail.ad_org_id,
+    now() AS created,
+    ftu_class.value AS class,
+    c_bpartner.name,
+    date_part('week'::text, ftu_booking_audit_trail.assigndatefrom) AS bookingweek,
+    sum(
+        CASE
+            WHEN ftu_booking_audit_trail.actionperformed::text = 'Aircraft Cancellation'::text THEN (-1)
+            WHEN ftu_booking_audit_trail.actionperformed::text = 'Aircraft Booking'::text THEN 1
+            ELSE 0
+        END) AS bookingcount
+   FROM adempiere.ftu_booking_audit_trail,
+    adempiere.c_bpartner,
+    adempiere.ftu_student,
+    adempiere.ftu_class
+  WHERE ftu_booking_audit_trail.c_bpartner_id = c_bpartner.c_bpartner_id 
+	AND c_bpartner.c_bpartner_id = ftu_student.c_bpartner_id 
+	AND ftu_student.ftu_class_id = ftu_class.ftu_class_id 
+	AND ftu_booking_audit_trail.assigndatefrom &gt; now() 
+	AND (date_part('ISOYEAR'::text, ftu_booking_audit_trail.assigndatefrom) * 52::double precision + date_part('week'::text, ftu_booking_audit_trail.assigndatefrom)) &gt; (date_part('ISOYEAR'::text, now()) * 52::double precision + date_part('week'::text, now())) AND (date_part('ISOYEAR'::text, ftu_booking_audit_trail.assigndatefrom) * 52::double precision + date_part('week'::text, ftu_booking_audit_trail.assigndatefrom)) &lt; (date_part('ISOYEAR'::text, now()) * 52::double precision + date_part('week'::text, now()) + 3::double precision) 
+	AND ftu_student.studentstatus::text = 'Enrolled'::text
+  GROUP BY ftu_class.value, c_bpartner.name, ftu_booking_audit_trail.ad_client_id, ftu_booking_audit_trail.ad_org_id, 
+	date_part('week'::text, ftu_booking_audit_trail.assigndatefrom)
+  ORDER BY ftu_class.value, c_bpartner.name;
+
+ALTER TABLE adempiere.ftu_student_bookings_summary_v
+  OWNER TO adempiere;
+
+</SQLStatement>
+      <RollbackStatement>drop view adempiere.ftu_student_bookings_summary_v;</RollbackStatement>
+    </Step>
+    <Step DBType="Postgres" Parse="Y" SeqNo="180" StepType="SQL">
+      <Comments>adempiere.ftu_student_flight_summary_v</Comments>
+      <SQLStatement>CREATE OR REPLACE VIEW adempiere.ftu_student_flight_summary_v AS 
+ SELECT ftu_class.value AS class,
+    c_bpartner.name,
+    ftu_student.studentstatus AS status,
+        CASE
+            WHEN (date_part('ISOYEAR'::text, ftu_flightsheet.flightdate) * 52::double precision + date_part('WEEK'::text, ftu_flightsheet.flightdate)) &gt;= (date_part('ISOYEAR'::text, 'now'::text::date) * 52::double precision + date_part('WEEK'::text, 'now'::text::date) - 4::double precision) THEN to_char(ftu_flightsheet.flightdate, 'IY-IW'::text)
+            ELSE '0 - All Prev'::text
+        END AS yrwk,
+    sum(ftu_flightsheet.flighttime_dual + ftu_flightsheet.flighttime_solo + ftu_flightsheet.flighttime_rental + ftu_flightsheet.flighttime_intro + ftu_flightsheet.flighttime_charter) AS flt_time,
+    sum(ftu_flightsheet.airtime) AS air_time,
+    sum(ftu_flightsheet.simulator) AS sim,
+    sum(ftu_flightsheet.briefing) AS brief,
+    sum(
+        CASE
+            WHEN ftu_flightsheet.coursetype::text = 'Cancelled'::text THEN 1
+            ELSE 0
+        END) AS cancellations,
+    sum(
+        CASE
+            WHEN ftu_flightsheet.coursetype::text = 'No-Show'::text THEN 1
+            ELSE 0
+        END) AS noshow,
+    sum(
+        CASE
+            WHEN ftu_flightsheet.coursetype::text = 'Rental'::text THEN 1
+            ELSE 0
+        END) AS rental,
+    sum(
+        CASE
+            WHEN ftu_flightsheet.coursetype::text = 'Night'::text THEN 1
+            ELSE 0
+        END) AS night,
+    sum(
+        CASE
+            WHEN ftu_flightsheet.coursetype::text = 'Multi Engine'::text THEN 1
+            ELSE 0
+        END) AS multi,
+    sum(
+        CASE
+            WHEN ftu_flightsheet.coursetype::text = 'CPL'::text THEN 1
+            ELSE 0
+        END) AS cpl,
+    sum(
+        CASE
+            WHEN ftu_flightsheet.coursetype::text = 'Single IFR'::text THEN 1
+            ELSE 0
+        END) AS single_ifr,
+    sum(
+        CASE
+            WHEN ftu_flightsheet.coursetype::text = 'RFP'::text THEN 1
+            ELSE 0
+        END) AS rfp,
+    sum(
+        CASE
+            WHEN ftu_flightsheet.coursetype::text = 'Instructor'::text THEN 1
+            ELSE 0
+        END) AS instructor,
+    sum(
+        CASE
+            WHEN ftu_flightsheet.coursetype::text = 'Intro'::text THEN 1
+            ELSE 0
+        END) AS intro,
+    sum(
+        CASE
+            WHEN ftu_flightsheet.coursetype::text = 'Other'::text THEN 1
+            ELSE 0
+        END) AS other,
+    sum(
+        CASE
+            WHEN ftu_flightsheet.coursetype::text = 'Tour'::text THEN 1
+            ELSE 0
+        END) AS tour,
+    sum(
+        CASE
+            WHEN ftu_flightsheet.coursetype::text = 'PPL'::text THEN 1
+            ELSE 0
+        END) AS ppl,
+    sum(
+        CASE
+            WHEN ftu_flightsheet.coursetype::text = 'Multi IFR'::text THEN 1
+            ELSE 0
+        END) AS multi_ifr
+   FROM adempiere.ftu_flightsheet,
+    adempiere.ftu_student,
+    adempiere.c_bpartner,
+    adempiere.ftu_class
+  WHERE ftu_flightsheet.c_bpartner_id::text = c_bpartner.c_bpartner_id::text AND ftu_student.ftu_class_id = ftu_class.ftu_class_id AND ftu_student.c_bpartner_id = c_bpartner.c_bpartner_id AND ftu_student.studentstatus::text = 'Enrolled'::text
+  GROUP BY ftu_class.value, c_bpartner.name,
+        CASE
+            WHEN (date_part('ISOYEAR'::text, ftu_flightsheet.flightdate) * 52::double precision + date_part('WEEK'::text, ftu_flightsheet.flightdate)) &gt;= (date_part('ISOYEAR'::text, 'now'::text::date) * 52::double precision + date_part('WEEK'::text, 'now'::text::date) - 4::double precision) THEN to_char(ftu_flightsheet.flightdate, 'IY-IW'::text)
+            ELSE '0 - All Prev'::text
+        END, ftu_student.studentstatus
+  ORDER BY ftu_class.value, c_bpartner.name,
+        CASE
+            WHEN (date_part('ISOYEAR'::text, ftu_flightsheet.flightdate) * 52::double precision + date_part('WEEK'::text, ftu_flightsheet.flightdate)) &gt;= (date_part('ISOYEAR'::text, 'now'::text::date) * 52::double precision + date_part('WEEK'::text, 'now'::text::date) - 4::double precision) THEN to_char(ftu_flightsheet.flightdate, 'IY-IW'::text)
+            ELSE '0 - All Prev'::text
+        END, ftu_student.studentstatus;
+
+ALTER TABLE adempiere.ftu_student_flight_summary_v
+  OWNER TO adempiere;</SQLStatement>
+      <RollbackStatement>Drop view adempiere.ftu_student_flight_summary_v;</RollbackStatement>
+    </Step>
+    <Step DBType="Postgres" Parse="Y" SeqNo="190" StepType="SQL">
+      <Comments>adempiere.ftu_student_flight_week_v</Comments>
+      <SQLStatement>CREATE OR REPLACE VIEW adempiere.ftu_student_flight_week_v AS 
+ SELECT ftu_class.value AS class,
+    c_bpartner.name,
+    to_char(ftu_flightsheet.flightdate, 'IY-IW'::text) AS yrwk,
+    sum(
+        CASE
+            WHEN ftu_flightsheet.coursetype::text = 'Cancelled'::text THEN 1
+            ELSE 0
+        END) AS cancellations,
+    sum(
+        CASE
+            WHEN ftu_flightsheet.coursetype::text = 'No-Show'::text THEN 1
+            ELSE 0
+        END) AS noshow,
+    sum(ftu_flightsheet.flighttime_dual + ftu_flightsheet.flighttime_solo + ftu_flightsheet.flighttime_rental + ftu_flightsheet.flighttime_intro + ftu_flightsheet.flighttime_charter) AS flt_time,
+    sum(ftu_flightsheet.airtime) AS air_time,
+    sum(ftu_flightsheet.simulator) AS sim,
+    sum(ftu_flightsheet.briefing) AS brief
+   FROM adempiere.ftu_flightsheet,
+    adempiere.ftu_student,
+    adempiere.c_bpartner,
+    adempiere.ftu_class
+  WHERE ftu_flightsheet.flightsheet_clientid::text = c_bpartner.value::text AND ftu_student.ftu_class_id = ftu_class.ftu_class_id AND ftu_student.c_bpartner_id = c_bpartner.c_bpartner_id
+  GROUP BY ftu_class.value, c_bpartner.name, to_char(ftu_flightsheet.flightdate, 'IY-IW'::text)
+  ORDER BY ftu_class.value, c_bpartner.name, to_char(ftu_flightsheet.flightdate, 'IY-IW'::text);
+
+ALTER TABLE adempiere.ftu_student_flight_week_v
+  OWNER TO adempiere;
+</SQLStatement>
+      <RollbackStatement>drop view adempiere.ftu_student_flight_week_v;</RollbackStatement>
+    </Step>
+    <Step DBType="Postgres" Parse="Y" SeqNo="200" StepType="SQL">
+      <Comments>adempiere.t_ftu_flightsheet</Comments>
+      <SQLStatement>--DROP TABLE adempiere.t_ftu_flightsheet;
+CREATE TABLE adempiere.t_ftu_flightsheet
+(
+  ad_client_id numeric(10,0) NOT NULL,
+  ad_org_id numeric(10,0) NOT NULL,
+  created timestamp without time zone NOT NULL,
+  createdby numeric(10,0) NOT NULL,
+  description character varying(255),
+  isactive character(1) NOT NULL DEFAULT 'Y'::bpchar,
+  updated timestamp without time zone,
+  updatedby numeric(10,0),
+  value character varying(40),
+  ftu_flightsheet_id numeric(10,0) NOT NULL,
+  flightid numeric(10,0),
+  numlegs numeric(10,0),
+  flightdate timestamp without time zone,
+  flightsheet_clientid character varying(20),
+  coursetype character varying(60),
+  ftu_aircraft_id numeric(10,0),
+  ftu_instructor_id numeric(10,0),
+  captainpic character varying(100),
+  studentpax character varying(100),
+  intendedflight character varying(250),
+  returningat timestamp without time zone,
+  authorizedby character varying(40),
+  acknowledgedby character varying(60),
+  enginestart timestamp without time zone,
+  enginestop timestamp without time zone,
+  wheelsup timestamp without time zone,
+  wheelsdown timestamp without time zone,
+  flighttime_dual numeric,
+  flighttime_solo numeric,
+  flighttime_rental numeric,
+  flighttime_intro numeric,
+  flighttime_charter numeric,
+  flighttime_nonrev numeric,
+  airtime numeric,
+  simulator numeric,
+  briefing numeric,
+  fuel numeric,
+  flightsheet_invoiceno numeric(10,0),
+  c_bpartner_id numeric(10,0) DEFAULT NULL::numeric,
+  line_status character varying(20) DEFAULT NULL::character varying,
+  c_order_id numeric(10,0) DEFAULT NULL::numeric,
+  ftu_syllabus_details_id numeric(10,0) DEFAULT NULL::numeric,
+  lesson_plan_status character varying(14) DEFAULT NULL::character varying,
+  total_dual numeric,
+  total_solo numeric,
+  total_sim numeric,
+  total_time numeric,
+  ftu_class_id numeric(10,0),
+  isvocational character(1) NOT NULL DEFAULT 'N'::bpchar,
+  isfulltime character(1) NOT NULL DEFAULT 'N'::bpchar,
+  startdate timestamp without time zone,
+  enddate timestamp without time zone,
+  CONSTRAINT t_ftu_flightsheet_pk PRIMARY KEY (ftu_flightsheet_id),
+  CONSTRAINT t_ftu_flightsheet_isactive_check CHECK (isactive = ANY (ARRAY['Y'::bpchar, 'N'::bpchar]))
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE adempiere.t_ftu_flightsheet
+  OWNER TO adempiere;
+</SQLStatement>
+      <RollbackStatement>DROP TABLE adempiere.t_ftu_flightsheet;</RollbackStatement>
+    </Step>
+    <Step DBType="Postgres" Parse="Y" SeqNo="210" StepType="SQL">
+      <Comments>adempiere.rv_ftu_training_record</Comments>
+      <SQLStatement>CREATE OR REPLACE VIEW adempiere.rv_ftu_training_record AS   SELECT bp.ad_client_id,     bp.ad_org_id,     tr.created,     tr.createdby,     tr.updated,     tr.updatedby,     tr.isactive,     bp.c_bpartner_id,     bp.name,     bp.value,     t.name AS training,     t.istrainingmandatory,     t.maxtraininginterval,     ts.typeoftraining AS type,     ts.trainingdate,     tr.trainingresult,     ts.trainingdate + ((to_char(t.maxtraininginterval, '999'::text) || ' years'::text)::interval) AS renewaldeadline    FROM adempiere.c_bpartner bp,     adempiere.ftu_training_record tr,     adempiere.ftu_training_session ts,     adempiere.ftu_training t   WHERE bp.ad_client_id = 1000000::numeric  	AND bp.isemployee = 'Y'::bpchar  	AND bp.c_bpartner_id = tr.c_bpartner_id  	AND tr.isactive = 'Y'::bpchar  	AND tr.ftu_training_session_id = ts.ftu_training_session_id  	AND ts.isactive = 'Y'::bpchar  	AND ts.ftu_training_id = t.ftu_training_id  	AND t.isactive = 'Y'::bpchar  	AND (ts.trainingdate + ((to_char(t.maxtraininginterval, '999'::text) || ' years'::text)::interval)) &gt; now()   ORDER BY bp.name, t.name, ts.typeoftraining, ts.trainingdate;  ALTER TABLE adempiere.rv_ftu_training_record   OWNER TO adempiere; </SQLStatement>
+      <RollbackStatement>DROP table adempiere.rv_ftu_training_record;
+
+</RollbackStatement>
+    </Step>
+    <Step DBType="Postgres" Parse="Y" SeqNo="220" StepType="SQL">
+      <Comments>adempiere.rv_ftu_training_required</Comments>
+      <SQLStatement>CREATE OR REPLACE VIEW adempiere.rv_ftu_training_required AS   SELECT bpt.ad_client_id,     bpt.ad_org_id,     bpt.created,     bpt.createdby,     bpt.updated,     bpt.updatedby,     bpt.isactive,     bpt.c_bpartner_id,     bpt.name,     bpt.value,     bpt.training,     bpt.istrainingmandatory,     bpt.maxtraininginterval,     tlast.tlast AS last_trained    FROM ( SELECT bp.ad_client_id,             bp.ad_org_id,             bp.created,             bp.createdby,             bp.updated,             bp.updatedby,             bp.isactive,             t.ftu_training_id,             t.name AS training,             t.istrainingmandatory,             t.maxtraininginterval,             bp.c_bpartner_id,             bp.name,             bp.value,             bp.isemployee            FROM adempiere.c_bpartner bp,             adempiere.ftu_training t,             adempiere.hr_employee hr           WHERE bp.isemployee = 'Y'::bpchar  		AND bp.ad_client_id = 1000000::numeric  		AND t.istrainingmandatory = 'Y'::bpchar  		AND hr.c_bpartner_id = bp.c_bpartner_id  		AND (hr.enddate IS NULL OR hr.enddate &gt; now())) bpt      LEFT JOIN ( SELECT ts.ftu_training_id,             max(ts.ftu_training_session_id) AS max,             tr.c_bpartner_id            FROM adempiere.ftu_training t,             adempiere.ftu_training_session ts,             adempiere.ftu_training_record tr           WHERE t.ftu_training_id = ts.ftu_training_id AND ts.trainingdate &gt; (now() - ((to_char(t.maxtraininginterval, '999'::text) || ' years'::text)::interval)) AND ts.ftu_training_session_id = tr.ftu_training_session_id           GROUP BY ts.ftu_training_id, tr.c_bpartner_id) tsb ON tsb.ftu_training_id = bpt.ftu_training_id AND tsb.c_bpartner_id = bpt.c_bpartner_id      LEFT JOIN ( SELECT ts.ftu_training_id,             max(ts.trainingdate) AS tlast,             tr.c_bpartner_id            FROM adempiere.ftu_training t,             adempiere.ftu_training_session ts,             adempiere.ftu_training_record tr           WHERE t.ftu_training_id = ts.ftu_training_id AND ts.ftu_training_session_id = tr.ftu_training_session_id           GROUP BY ts.ftu_training_id, tr.c_bpartner_id) tlast ON tlast.ftu_training_id = bpt.ftu_training_id AND tlast.c_bpartner_id = bpt.c_bpartner_id      JOIN ( SELECT t.name,             ta_1.ftu_training_id,             em.c_bpartner_id            FROM ( SELECT bp.name,                     j.name AS job,                     jc.name AS jobcategory,                     ja.validfrom,                     ja.validto,                     jc.c_jobcategory_id,                     bp.c_bpartner_id                    FROM adempiere.c_bpartner bp,                     adempiere.ad_user u,                     adempiere.c_job j,                     adempiere.c_jobassignment ja,                     adempiere.c_jobcategory jc                   WHERE bp.c_bpartner_id = u.c_bpartner_id AND u.ad_user_id = ja.ad_user_id AND ja.validfrom &lt;= now() AND (ja.validto IS NULL OR ja.validto &gt;= now()) AND ja.c_job_id = j.c_job_id AND j.c_jobcategory_id = jc.c_jobcategory_id) em              LEFT JOIN adempiere.ftu_trainingapplicability ta_1 ON (ta_1.c_jobcategory_id::numeric = em.c_jobcategory_id OR ta_1.c_jobcategory_id::numeric = 1000005::numeric) AND ta_1.c_bpartner_id IS NULL OR ta_1.c_bpartner_id = em.c_bpartner_id              LEFT JOIN adempiere.ftu_training t ON ta_1.ftu_training_id = t.ftu_training_id           GROUP BY t.name, ta_1.ftu_training_id, em.c_bpartner_id) ta ON ta.ftu_training_id = bpt.ftu_training_id AND ta.c_bpartner_id = bpt.c_bpartner_id   WHERE tsb.ftu_training_id IS NULL   ORDER BY bpt.training, bpt.name;  ALTER TABLE adempiere.rv_ftu_training_required   OWNER TO adempiere; </SQLStatement>
+      <RollbackStatement>DROP VIEW adempiere.rv_ftu_training_required;</RollbackStatement>
+    </Step>
+  </Migration>
+</Migrations>
