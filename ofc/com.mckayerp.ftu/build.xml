@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- ============================================= -->
-<!-- com.mckay.erp.ofc                             -->
+<!-- com.mckayerp.ftu                             -->
 <!-- ============================================= -->
 
-<project name="com.mckay.erp.ofc" default="dist" basedir=".">
+<project name="com.mckayerp.ftu" default="dist" basedir=".">
 
   <description>
-    This buildfile is used to build the com.mckay.erp.ofc subproject within 
+    This buildfile is used to build the com.mckayerp.ftu subproject within 
     the OFC project.
   </description>
 
@@ -34,12 +34,13 @@
     <pathelement path="${adempiere.trunk}/tools/lib/servlet-api.jar" />  	
   	<pathelement path="${adempiere.trunk}/tools/lib/cron4j-2.2.1.jar" />
     <pathelement path="${adempiere.trunk}/base/build/Base.jar" />
+    <pathelement path="${adempiere.trunk}/packages/*.jar" />
     <pathelement path="${htmlget.home}/bin" />
   </path>
 	
 
   <target name="init" description="initialization target">
-    <echo message="=========== Build com.mckay.erp.ofc"/>
+    <echo message="=========== Build com.mckayerp.ftu"/>
     <!-- create the time stamp -->
     <tstamp/>
     <!-- create the build directory structure used by compile -->
@@ -56,7 +57,13 @@
   
   <target name="compile" depends="makedir">
     <!-- compile the java code from ${src} into ${build.dir} -->
-    <javac target="1.7" fork="true" destdir="${build.dir}" deprecation="on" debug="on" memoryinitialsize="512m" memorymaximumsize="512m">
+    <javac target="1.8" fork="true" 
+    	destdir="${build.dir}" 
+    	deprecation="on" 
+    	debug="on" 
+    	memoryinitialsize="512m" 
+    	memorymaximumsize="512m"
+    	includeantruntime="false">
       <src path="${src}"/>
       <classpath refid="lib.class.path"/>
       <compilerarg line="-XDignore.symbol.file" />
