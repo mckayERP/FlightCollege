@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="MFTU" Name="Change sort order of AC Journey Log" ReleaseNo="FTU2" SeqNo="29">
+    <Step SeqNo="10" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1001338" Table="AD_Field">
+        <Data AD_Column_ID="182" Column="SortNo" isOldNull="true">-10.000000000000</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="20" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1001345" Table="AD_Field">
+        <Data AD_Column_ID="182" Column="SortNo" isOldNull="true">-20.000000000000</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="30" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1001397" Table="AD_Field">
+        <Data AD_Column_ID="182" Column="SortNo" isOldNull="true">-10.000000000000</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="40" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1001404" Table="AD_Field">
+        <Data AD_Column_ID="182" Column="SortNo" isOldNull="true">-20.000000000000</Data>
+      </PO>
+    </Step>
+  </Migration>
+</Migrations>
