@@ -6,7 +6,7 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/serverRoot/src/main/server"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/install/src"/>
         <wb-resource deploy-path="/" source-path="/zkwebui" tag="defaultRootSource"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/com.mckayerp.ftu/base/src"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/com.mckayerp.ftu/src/base"/>
         <dependent-module archiveName="webui.war" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/adempiereTrunk/zkwebui/dist/webui.war">
             <dependency-type>uses</dependency-type>
         </dependent-module>
