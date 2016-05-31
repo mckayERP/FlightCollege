@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="MFTU" Name="Change the sort order of the journey logs" ReleaseNo="FTU2" SeqNo="30">
+    <Step SeqNo="10" StepType="AD">
+      <PO AD_Table_ID="106" Action="U" Record_ID="1000041" Table="AD_Tab">
+        <Data AD_Column_ID="2742" Column="OrderByClause" isOldNull="true">TotalAirframeTime DESC</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="20" StepType="AD">
+      <PO AD_Table_ID="106" Action="U" Record_ID="1000066" Table="AD_Tab">
+        <Data AD_Column_ID="2742" Column="OrderByClause" oldValue="FTU_Aircraft_ID, FlightDate DESC, WheelsUp Desc">FTU_Aircraft_ID, TotalAirframeTime Desc</Data>
+      </PO>
+    </Step>
+  </Migration>
+</Migrations>
