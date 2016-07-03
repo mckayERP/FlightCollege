@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Bank Reconciliation Report" pageWidth="612" pageHeight="792" columnWidth="512" leftMargin="50" rightMargin="50" topMargin="50" bottomMargin="20" uuid="2d4f86fc-5058-4f0c-ac7d-cee360ef0d76">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="148"/>
+	<parameter name="C_BANKACCOUNT_ID" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[1000000]]></defaultValueExpression>
+	</parameter>
+	<parameter name="REPORT_DATE" class="java.sql.Timestamp">
+		<defaultValueExpression><![CDATA[java.sql.Timestamp.valueOf("2011-02-28 00:00:00")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Bank_Reconciliation_Report_AR_Outstanding" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["./Bank_Reconciliation_Report_AR_Outstanding.jasper"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Bank_Reconciliation_Report_AP_Outstanding" class="java.lang.String">
+		<defaultValueExpression><![CDATA["./Bank_Reconciliation_Report_AP_Outstanding.jasper"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Bank_Reconciliation_Report_Cash_Outstanding" class="java.lang.String">
+		<defaultValueExpression><![CDATA["./Bank_Reconciliation_Report_Cash_Outstanding.jasper"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+	b.c_bank_id,
+	b."name" as bank_name,
+	b.routingno,
+	b.description,
+	ba.isactive,
+	ba.bankaccounttype,
+	ba.accountno,
+	ba.currentbalance,
+	ba.creditlimit,
+	ba.description,
+	c.iso_code as currency_code,
+	sjb.journal_balance
+FROM
+	adempiere.c_bankaccount ba,
+	adempiere.c_bank b,
+	adempiere.c_currency c,
+	(SELECT
+		sum(faa.amtacctdr - faa.amtacctcr) as journal_balance
+	FROM
+		adempiere.c_bankaccount_acct baa,
+		adempiere.c_validcombination aa,
+		adempiere.fact_acct faa
+	WHERE
+		baa.c_bankaccount_id = $P{C_BANKACCOUNT_ID}
+		AND baa.b_asset_acct = aa.c_validcombination_id
+		AND faa.account_id = aa.account_id
+		AND faa.postingtype = 'A'
+		AND faa.dateacct <= $P{REPORT_DATE}) sjb
+WHERE
+	ba.c_bankaccount_id = $P{C_BANKACCOUNT_ID}
+	AND ba.c_bank_id = b.c_bank_id
+	AND c.c_currency_id = ba.c_currency_id
+;]]>
+	</queryString>
+	<field name="c_bank_id" class="java.math.BigDecimal"/>
+	<field name="bank_name" class="java.lang.String"/>
+	<field name="routingno" class="java.lang.String"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="isactive" class="java.lang.String"/>
+	<field name="bankaccounttype" class="java.lang.String"/>
+	<field name="accountno" class="java.lang.String"/>
+	<field name="currentbalance" class="java.math.BigDecimal"/>
+	<field name="creditlimit" class="java.math.BigDecimal"/>
+	<field name="currency_code" class="java.lang.String"/>
+	<field name="journal_balance" class="java.math.BigDecimal"/>
+	<variable name="Sub_AP_Total" class="java.math.BigDecimal" calculation="System"/>
+	<variable name="Sub_AR_Total" class="java.math.BigDecimal" calculation="System"/>
+	<variable name="Sub_Cash_Total" class="java.math.BigDecimal" calculation="System"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="45" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="495" height="24" uuid="549ab59e-6d79-4ca3-87b1-e850ed8243b0"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bank Reconciliation Report]]></text>
+			</staticText>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="224" y="24" width="159" height="18" uuid="10ac0104-b293-46d1-b2bb-c86ae2e3fea5"/>
+				<textFieldExpression><![CDATA[$P{REPORT_DATE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="124" y="24" width="100" height="18" uuid="67a65112-975c-4dbe-96e1-c6d7c8b73a32"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[As at: ]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="325" splitType="Stretch">
+			<textField>
+				<reportElement x="32" y="0" width="92" height="20" uuid="e9cac6a1-8c9f-4231-93e7-f4455c1db9ed"/>
+				<textFieldExpression><![CDATA[$F{bank_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="173" y="0" width="80" height="20" uuid="1e8717b9-2434-42cc-9426-84b582b669e2"/>
+				<textFieldExpression><![CDATA[$F{accountno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="371" y="0" width="124" height="20" uuid="8a8eca74-3d1a-4ed0-a865-0c881eabc645"/>
+				<textFieldExpression><![CDATA[$F{currency_code}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="32" height="20" uuid="0ee195d3-26b6-46db-94c8-96b0542c4366"/>
+				<text><![CDATA[Bank:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="124" y="0" width="49" height="20" uuid="6d64e66d-2eac-4019-89b9-b07b910fcfda"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Account: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="287" y="0" width="29" height="20" uuid="f5e57614-e7da-416f-a2f9-5905bc48d9e3"/>
+				<textFieldExpression><![CDATA[$F{bankaccounttype}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="253" y="0" width="34" height="20" uuid="e68bca09-095f-48a3-b84b-b6bc5e8f6036"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Type: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="316" y="0" width="51" height="20" uuid="51b25e15-e85a-4668-bdfd-1ff812989a14"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Currency: ]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="378" y="31" width="134" height="20" uuid="70e570d5-85cf-45a5-8209-3e500d867eb7"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{journal_balance}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Band" pattern="¤ #,##0.00">
+				<reportElement positionType="Float" x="378" y="266" width="134" height="20" uuid="aef8fd64-e9fb-4a1c-b669-eaf165c1166b"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($V{Sub_AP_Total} == null ? new BigDecimal(0.0) : $V{Sub_AP_Total})
+.add($V{Sub_AR_Total} == null ? new BigDecimal(0.0) : $V{Sub_AR_Total})
+.add($V{Sub_Cash_Total} == null ? new BigDecimal(0.0) : $V{Sub_Cash_Total})]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Band" pattern="¤ #,##0.00">
+				<reportElement positionType="Float" x="378" y="301" width="134" height="20" uuid="09693a05-3eb2-4d47-b0bc-300626527198"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{journal_balance}.add($V{Sub_AP_Total} == null ? new BigDecimal(0.0) : $V{Sub_AP_Total})
+.add($V{Sub_AR_Total} == null ? new BigDecimal(0.0) : $V{Sub_AR_Total})
+.add($V{Sub_Cash_Total} == null ? new BigDecimal(0.0) : $V{Sub_Cash_Total})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="31" width="378" height="20" uuid="4caa06c2-9c21-495e-a3ed-3503bb6a97b6"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reconciled Bank Balance]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="266" width="378" height="20" uuid="9205f661-3ab9-4bf9-949e-33d97d9045dc"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Outstanding]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="301" width="378" height="20" uuid="2fcefcc4-d573-4f62-aa74-ff2ba2f9473f"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cash Book Balance]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="32" y="81" width="480" height="58" isRemoveLineWhenBlank="true" uuid="7601de4a-9727-4895-8d38-88f0fe4ee913"/>
+				<subreportParameter name="sqREPORT_DATE">
+					<subreportParameterExpression><![CDATA[$P{REPORT_DATE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="sqC_BANKACCOUNT_ID">
+					<subreportParameterExpression><![CDATA[$P{C_BANKACCOUNT_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<returnValue subreportVariable="TOTAL_AMT" toVariable="Sub_AP_Total"/>
+				<subreportExpression><![CDATA[$P{Bank_Reconciliation_Report_AP_Outstanding}]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="32" y="139" width="480" height="58" isRemoveLineWhenBlank="true" uuid="fce42ce9-0e81-4621-80ee-8edaf73940dc"/>
+				<subreportParameter name="sqREPORT_DATE">
+					<subreportParameterExpression><![CDATA[$P{REPORT_DATE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="sqC_BANKACCOUNT_ID">
+					<subreportParameterExpression><![CDATA[$P{C_BANKACCOUNT_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<returnValue subreportVariable="TOTAL_AMT" toVariable="Sub_AR_Total"/>
+				<subreportExpression><![CDATA[$P{Bank_Reconciliation_Report_AR_Outstanding}]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="32" y="197" width="480" height="58" isRemoveLineWhenBlank="true" uuid="0480f984-d243-4688-a131-b6a29de9c17e"/>
+				<subreportParameter name="sqREPORT_DATE">
+					<subreportParameterExpression><![CDATA[$P{REPORT_DATE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="sqC_BANKACCOUNT_ID">
+					<subreportParameterExpression><![CDATA[$P{C_BANKACCOUNT_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<returnValue subreportVariable="TOTAL_AMT" toVariable="Sub_Cash_Total"/>
+				<subreportExpression><![CDATA[$P{Bank_Reconciliation_Report_Cash_Outstanding} ]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="0" y="61" width="148" height="20" uuid="3fe3fb59-3792-464e-8cb0-5f868b510659"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Outstanding Items]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="375" y="0" width="80" height="20" uuid="c0069df8-c592-48f5-b92f-ba9dede29eaf"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="455" y="0" width="40" height="20" uuid="97df4343-1c21-42f1-baf5-da23635aba11"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

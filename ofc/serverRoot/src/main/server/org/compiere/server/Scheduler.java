@@ -322,7 +322,7 @@ public class Scheduler extends AdempiereServer
 						else { // Fix error
 							columnName = columnName.substring(0, index);
 							//	try Env
-							String env = Env.getContext(getCtx(), columnName);
+							String env = Env.getContext(Env.getCtx(), columnName);
 							if (env.length() == 0)
 							{
 								log.warning(sPara.getColumnName()

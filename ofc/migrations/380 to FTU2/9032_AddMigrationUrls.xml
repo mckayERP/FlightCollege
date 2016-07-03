@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="MFTU" Name="Add System Config entries for flightsheet URLs" ReleaseNo="FTU2" SeqNo="32">
+    <Step SeqNo="10" StepType="AD">
+      <PO AD_Table_ID="50009" Action="I" Record_ID="1000007" Table="AD_SysConfig">
+        <Data AD_Column_ID="50194" Column="IsActive">true</Data>
+        <Data AD_Column_ID="50196" Column="Value">https://www.flight-sheets.com/servlet/OFC-FlightSheets?login=551&amp;password=4291b061581b0db2514a7ec371043ac2</Data>
+        <Data AD_Column_ID="50190" Column="Created">2016-06-06 06:30:52.181</Data>
+        <Data AD_Column_ID="50187" Column="AD_SysConfig_ID">1000007</Data>
+        <Data AD_Column_ID="50188" Column="AD_Client_ID">1000000</Data>
+        <Data AD_Column_ID="50189" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="50191" Column="Updated">2016-06-06 06:30:52.181</Data>
+        <Data AD_Column_ID="50192" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="50193" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="53270" Column="EntityType">MFTU</Data>
+        <Data AD_Column_ID="53271" Column="ConfigurationLevel">C</Data>
+        <Data AD_Column_ID="50195" Column="Name">MFTU_FLIGHTSHEET_LOGIN_URL</Data>
+        <Data AD_Column_ID="50197" Column="Description">The URL to use when reading the flightsheet data</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="20" StepType="AD">
+      <PO AD_Table_ID="50009" Action="I" Record_ID="1000008" Table="AD_SysConfig">
+        <Data AD_Column_ID="50194" Column="IsActive">true</Data>
+        <Data AD_Column_ID="50196" Column="Value">https://www.flight-sheets.com/servlet/OFC-FlightSheets?enteredby=551&amp;enteredbypassword=4291b061581b0db2514a7ec371043ac2</Data>
+        <Data AD_Column_ID="50190" Column="Created">2016-06-06 06:32:35.544</Data>
+        <Data AD_Column_ID="50187" Column="AD_SysConfig_ID">1000008</Data>
+        <Data AD_Column_ID="50188" Column="AD_Client_ID">1000000</Data>
+        <Data AD_Column_ID="50189" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="50191" Column="Updated">2016-06-06 06:32:35.544</Data>
+        <Data AD_Column_ID="50192" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="50193" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="53270" Column="EntityType">MFTU</Data>
+        <Data AD_Column_ID="53271" Column="ConfigurationLevel">C</Data>
+        <Data AD_Column_ID="50195" Column="Name">MFTU_FLIGHTSHEET_UPDATE_URL</Data>
+        <Data AD_Column_ID="50197" Column="Description">The URL to use when setting flightsheet data</Data>
+      </PO>
+    </Step>
+  </Migration>
+</Migrations>

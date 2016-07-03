@@ -3,6 +3,7 @@ package com.mckayerp.ftu.process;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -14,6 +15,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.adempiere.exceptions.AdempiereException;
+import org.compiere.model.MSysConfig;
 import org.compiere.model.Query;
 import org.compiere.process.ProcessInfoParameter;
 import org.compiere.process.SvrProcess;
@@ -29,7 +31,10 @@ import com.mckayerp.ftu.model.MFTUFlightsheet;
 
 public class LoadFlightsheetFromXML extends SvrProcess {
 
-	private String loginURL;
+	private static final String SYSCONFIG_MFTU_FLIGHTSHEET_LOGIN_URL = "MFTU_FLIGHTSHEET_LOGIN_URL";
+	private static final String SYSCONFIG_MFTU_FLIGHTSHEET_UPDATE_URL = "MFTU_FLIGHTSHEET_UPDATE_URL";
+	private static String loginURL="https://www.flight-sheets.com/servlet/OFC-FlightSheets?login=551&password=4291b061581b0db2514a7ec371043ac2";
+	private static String updateURL="https://www.flight-sheets.com/servlet/OFC-FlightSheets?enteredby=551&enteredbypassword=4291b061581b0db2514a7ec371043ac2";
 	private Timestamp startTime = null;
 	private Timestamp stopTime = null;
 
@@ -38,7 +43,8 @@ public class LoadFlightsheetFromXML extends SvrProcess {
 	private Calendar		stopDate = Calendar.getInstance();
 
 	public LoadFlightsheetFromXML() {
-		// TODO Auto-generated constructor stub
+		//  Check the configuration for the URL of the client flightsheet
+		loginURL = MSysConfig.getValue(SYSCONFIG_MFTU_FLIGHTSHEET_LOGIN_URL,loginURL,Env.getAD_Client_ID(Env.getCtx()));
 	}
 
 	@Override
@@ -65,9 +71,11 @@ public class LoadFlightsheetFromXML extends SvrProcess {
 				}
 			}
 			else if (name.equals("LoginURL")) {
-				loginURL = para[i].getParameter().toString();
-				if (loginURL.isEmpty())
+				if (para[i].getParameter().toString().isEmpty())
 					log.severe("LoginURL is mandatory");
+				else {
+					loginURL = para[i].getParameter().toString();
+				}
 			}
 			else
 				log.log(Level.SEVERE, "Unknown Parameter: " + name);
@@ -115,7 +123,7 @@ public class LoadFlightsheetFromXML extends SvrProcess {
 				String url = loginURL + "&useraction=26&bookingDate=" + dateFormat.format(startDate.getTime());
 				log.fine("Loading flights on " + dateFormat.format(startDate.getTime()) + " from " + url);
 				
-				Document flightSheet = loadFlightsheetDocument(url);
+				Document flightSheet = getXMLDocument(url);
 				
 				NodeList flights = flightSheet.getDocumentElement().getElementsByTagName("flight");
 				log.fine("Read " + flights.getLength() + " flights from URL.");
@@ -155,10 +163,95 @@ public class LoadFlightsheetFromXML extends SvrProcess {
 		return "Load Flightsheets completed.";
 	}
 
-    private static Document loadFlightsheetDocument(String url) throws Exception {    	
+    public static Document getXMLDocument(String url) 
+    		throws ParserConfigurationException, SAXException, IOException {    	
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         factory.setNamespaceAware(false);
         factory.setIgnoringComments(true);
         return factory.newDocumentBuilder().parse(url);
     }
+
+	public String getLoginURL() {
+		return loginURL;
+	}
+
+	/**
+	 * Set the Flightsheet invoice/order number to link back to the ADemiere data
+	 * @param flightID
+	 * @param invoiceNumber
+	 * @return
+	 */
+	public static boolean setFlightsheetInvoice(int flightID, String invoiceNumber) {
+		if (flightID == 0)
+			return false;
+		
+		if (invoiceNumber == null || invoiceNumber.isEmpty())
+			invoiceNumber = "-"; // null string for flightsheet. See MFTUFlightsheet.isNull().
+		
+		//  Check the configuration for the URL of the client flightsheet
+		updateURL = MSysConfig.getValue(SYSCONFIG_MFTU_FLIGHTSHEET_UPDATE_URL,updateURL,Env.getAD_Client_ID(Env.getCtx()));
+		
+		// Add actions
+		updateURL = updateURL + "&useraction=27&flightnumber=" + flightID
+				+ "&invoicenumber=" + invoiceNumber;
+		
+		try {
+			Document response = getXMLDocument(updateURL);
+			NodeList statusNodeList = response.getDocumentElement().getElementsByTagName("updateInvoiceNumberReturnStatus");
+			for (int i = 0; i < statusNodeList.getLength(); i++ ) {
+
+				Element statusElement = (Element) statusNodeList.item(i);
+
+				try {
+					
+					// Check the response flight ID to see if it matches
+					String flightIDString = statusElement.getElementsByTagName("flightNumber").item(0).getTextContent();
+					if (MFTUFlightsheet.isNull(flightIDString)) {
+						return false;
+					}
+					
+					BigDecimal responseFlightID = Env.ZERO;
+					try {
+						responseFlightID = new BigDecimal(flightIDString);
+					}
+					catch (NumberFormatException e) {
+						throw new AdempiereException("Response Flight Number not in form of number: " + flightIDString + ". " + e.getMessage());
+					}
+					
+					if (responseFlightID == null || responseFlightID.equals(Env.ZERO)) {
+						return false;
+					}
+					
+					if (responseFlightID.intValue() != flightID) {
+						throw new AdempiereException("Response flight ID does not match. Sent " + flightID + ". Received " + flightIDString);
+					}
+
+					// Test the invoice number to see if there is a match
+					String invoiceNumberString = statusElement.getElementsByTagName("invoiceNumber").item(0).getTextContent();
+					if (MFTUFlightsheet.isNull(invoiceNumberString) && !MFTUFlightsheet.isNull(invoiceNumber)) {
+						return false;
+					}
+					
+					if (!invoiceNumberString.equals(invoiceNumber)) {
+						return false;
+					}
+					
+					return true;
+					
+				} catch (AdempiereException e) {
+					String msg = "Unable to set Invoice/Order for flight ID " + flightID;
+					msg += " " + e.getMessage();
+					throw new AdempiereException(msg);
+				}
+			}
+			
+		} catch (ParserConfigurationException
+				| SAXException 
+				| IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return false;
+	}
 }

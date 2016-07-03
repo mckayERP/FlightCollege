@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Instructor Hours" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4b35215c-7da3-4580-8c7d-6f85e4e68f58">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="Date" class="java.sql.Timestamp">
+		<defaultValueExpression><![CDATA[java.sql.Timestamp.valueOf("2009-12-01 00:00:00")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Date_To" class="java.sql.Timestamp">
+		<defaultValueExpression><![CDATA[java.sql.Timestamp.valueOf("2010-12-01 00:00:00")]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT d.Instructor, sum(d.qtyinvoiced) AS hours, sum(d."no-shows") AS "no-shows", sum(d.qtyinvoiced + d."no-shows") AS total_hours, sum(d."Adv Inst") as adv_inst
+From
+(select i.documentno, il.line, i.dateinvoiced, p."name", p."name" as Instructor, il.qtyinvoiced,il.priceactual, 0 as "no-shows", 0 as "Adv Inst"
+from
+	c_invoiceline il,
+	c_invoice i,
+	m_product p,
+	m_product_category pc
+where
+i.AD_Client_ID = 1000000 AND
+il.c_invoice_id = i.c_invoice_id AND
+i.issotrx = 'Y' and
+i.isapproved = 'Y' AND
+(i.docstatus = 'CO' OR i.docstatus='CL') AND
+i.dateinvoiced >= $P{Date} AND
+i.dateinvoiced <= $P{Date_To} AND
+il.m_product_id = p.m_product_id AND
+p.m_product_category_id = pc.m_product_category_id AND
+pc."name" = 'Instructor'
+UNION
+select i.documentno, il.line, i.dateinvoiced, p."name", substring(il.description from 'Instructor: (.*)') as Instructor, 0 as qtyinvoiced, il.priceactual, il.qtyinvoiced as "no-shows", 0 as "Adv Inst"
+from
+	c_invoiceline il,
+	c_invoice i,
+	m_product p,
+	m_product_category pc
+where
+i.AD_Client_ID = 1000000 AND
+il.c_invoice_id = i.c_invoice_id AND
+i.issotrx = 'Y' and
+i.isapproved = 'Y' AND
+(i.docstatus = 'CO' OR i.docstatus='CL') AND
+i.dateinvoiced >= $P{Date} AND
+i.dateinvoiced <= $P{Date_To} AND
+il.m_product_id = p.m_product_id AND
+p.m_product_category_id = pc.m_product_category_id AND
+p."name" = 'No-Show' AND
+substring(il.description from 'Instructor: (.*)') is not null AND
+priceactual > 0
+UNION
+select i.documentno, il.line, i.dateinvoiced, p."name", rp."name" as Instructor, 0,il.priceactual, 0 as "no-shows", il.qtyinvoiced as "Adv Inst"
+from
+	c_invoiceline il,
+	c_invoice i,
+	m_product p,
+	s_resource sr,
+	m_product rp
+where
+i.AD_Client_ID = 1000000 AND
+il.c_invoice_id = i.c_invoice_id AND
+i.issotrx = 'Y' and
+i.isapproved = 'Y' AND
+(i.docstatus = 'CO' OR i.docstatus='CL') AND
+i.dateinvoiced >= $P{Date} AND
+i.dateinvoiced <= $P{Date_To} AND
+il.m_product_id = p.m_product_id AND
+p."value" = 'ADVINST') d
+Group BY Instructor
+ORDER BY Instructor ASC;]]>
+	</queryString>
+	<field name="instructor" class="java.lang.String"/>
+	<field name="hours" class="java.math.BigDecimal"/>
+	<field name="no-shows" class="java.lang.Long"/>
+	<field name="total_hours" class="java.math.BigDecimal"/>
+	<field name="adv_inst" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="44" splitType="Stretch">
+			<image isUsingCache="true" isLazy="true">
+				<reportElement x="2" y="2" width="121" height="41" uuid="09c75692-ca82-4f7d-b054-6e93bb3c8e71"/>
+				<imageExpression><![CDATA["http://main1:8088/CustomReports/ofc_logo_180.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="2" y="2" width="570" height="33" uuid="a1b46726-2246-42eb-b785-9908b4d8fb71"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Instructor Hours]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="19">
+			<textField>
+				<reportElement x="181" y="0" width="100" height="17" uuid="82da1594-e61b-40b3-b846-9ee36ecd28fa"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="281" y="0" width="26" height="17" uuid="f7b7e7bc-23ec-4ae4-ae00-dc73e2bc250f"/>
+				<textElement textAlignment="Center" markup="none">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ to ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="307" y="0" width="100" height="17" uuid="67caa302-64e8-448b-9143-7dc6dc6796e2"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Date_To}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="27">
+			<line>
+				<reportElement x="2" y="22" width="570" height="1" uuid="3b58fa15-6af1-49bd-939f-85cef5009128"/>
+			</line>
+			<staticText>
+				<reportElement x="351" y="3" width="100" height="20" uuid="e35c3eaf-4f71-4745-97da-559145bf20f6"/>
+				<textElement textAlignment="Right" markup="none">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Hours]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="3" width="128" height="20" uuid="996e9708-fe3c-4fad-a5fc-58c1135d37ab"/>
+				<textElement textAlignment="Center" markup="none">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Instructor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="251" y="3" width="100" height="20" uuid="56f53cd8-92fe-4bdb-a4df-79555c6ab174"/>
+				<textElement textAlignment="Right" markup="none">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No Shows]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="151" y="3" width="100" height="20" uuid="df66526e-6aee-4104-b2cc-4b71ae47558d"/>
+				<textElement textAlignment="Right" markup="none">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hours]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="451" y="3" width="100" height="20" uuid="49f96aad-7369-4849-9a46-86c70733fa08"/>
+				<textElement textAlignment="Right" markup="none">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Adv Inst Hours]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="23" y="0" width="128" height="20" uuid="d61cfa59-74c7-4dcb-9da4-c5f287b87cf7"/>
+				<textFieldExpression><![CDATA[$F{instructor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="151" y="0" width="100" height="20" uuid="c49d77ad-c957-4d3f-9ad6-75192ad800d0"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{hours}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="251" y="0" width="100" height="20" uuid="4d1b1db1-5da9-4e88-957e-9c2fbefd6ac9"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{no-shows}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="351" y="0" width="100" height="20" uuid="4f6a9828-8025-4127-bff7-ea5d7fd363ef"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{total_hours}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="451" y="2" width="100" height="18" uuid="0b4329dd-0b36-41a9-927d-bd86941c2808"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{adv_inst}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="57" splitType="Stretch">
+			<textField>
+				<reportElement x="438" y="40" width="93" height="15" uuid="2ebc4d56-f9e2-48b6-9e17-63ab4f29c63c"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER} + " of "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="531" y="40" width="41" height="15" uuid="d695c99e-a7c0-4d48-a0ee-54b5b4716b79"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="33" width="572" height="22" uuid="f1ada450-7bf9-4482-b8c7-6afcf1dfedc3"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[20 Lindbergh Private | Ottawa  ON  |  K1V 1H7
+613.523.2142  |  dispatch@ofc.ca]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="19" width="572" height="14" uuid="82e9e3ae-2d5c-4a10-af56-746c0c6bc30b"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OTTAWA FLYING CLUB]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

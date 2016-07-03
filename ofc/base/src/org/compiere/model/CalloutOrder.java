@@ -724,7 +724,7 @@ public class CalloutOrder extends CalloutEngine
 		mTab.setValue("C_Charge_ID", null);
 		//	Set Attribute from context or, if null, from the Product
 		//	Get Model and check the Attribute Set Instance from the context
-		setAndTestASI(ctx, WindowNo, Env.isSOTrx(ctx, WindowNo), mTab, 
+		M_AttributeSetInstance_ID = setAndTestASI(ctx, WindowNo, Env.isSOTrx(ctx, WindowNo), mTab, 
 				"M_AttributeSetInstance_ID", product, null);
 
 		/*****	Price Calculation see also qty	****/
@@ -781,7 +781,6 @@ public class CalloutOrder extends CalloutEngine
 			{
 				BigDecimal QtyOrdered = (BigDecimal)mTab.getValue("QtyOrdered");
 				int M_Warehouse_ID = Env.getContextAsInt(ctx, WindowNo, "M_Warehouse_ID");
-				M_AttributeSetInstance_ID = Env.getContextAsInt(ctx, WindowNo, "M_AttributeSetInstance_ID");
 				BigDecimal available = MStorage.getQtyAvailable
 					(M_Warehouse_ID, M_Product_ID.intValue(), M_AttributeSetInstance_ID, null);
 				if (available == null)

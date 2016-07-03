@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="MFTU" Name="Fix Class List View" ReleaseNo="FTU2" SeqNo="39">
+    <Step SeqNo="10" StepType="AD">
+      <PO AD_Table_ID="102" Action="U" Record_ID="1000022" Table="AD_Reference">
+        <Data AD_Column_ID="130" Column="Name" oldValue="OFC Student Stage">FTU Student Stage</Data>
+      </PO>
+    </Step>
+    <Step DBType="ALL" Parse="Y" SeqNo="20" StepType="SQL">
+      <Comments>-- View: adempiere.ftu_class_list_v</Comments>
+      <SQLStatement>-- View: adempiere.ftu_class_list_v
+
+DROP VIEW adempiere.ftu_class_list_v;
+
+CREATE OR REPLACE VIEW adempiere.ftu_class_list_v AS 
+ SELECT bp.ad_client_id,
+    bp.ad_org_id,
+    c.ftu_class_id,
+    c.name AS class,
+    bp.c_bpartner_id,
+    u.ad_user_id,
+    bp.value AS memberno,
+    bp.name,
+    s.dateenrolled,
+    u.name AS contact_name,
+    u.email,
+    u.phone,
+    u.phone2,
+    s.studentstatus,
+    ( SELECT rl.name
+           FROM adempiere.ad_reference r,
+            adempiere.ad_ref_list rl
+          WHERE r.ad_reference_id = rl.ad_reference_id AND r.name::text = 'FTU Student Stage'::text AND rl.value::text = s.studentstage::text) AS studentstage
+   FROM adempiere.ftu_student s,
+    adempiere.ftu_class c,
+    adempiere.c_bpartner bp,
+    adempiere.ad_user u
+  WHERE s.c_bpartner_id = bp.c_bpartner_id AND s.ftu_class_id = c.ftu_class_id AND bp.c_bpartner_id = u.c_bpartner_id;
+
+ALTER TABLE adempiere.ftu_class_list_v
+  OWNER TO adempiere;
+</SQLStatement>
+      <RollbackStatement>-- View: adempiere.ftu_class_list_v
+
+DROP VIEW adempiere.ftu_class_list_v;
+
+CREATE OR REPLACE VIEW adempiere.ftu_class_list_v AS 
+ SELECT bp.ad_client_id,
+    bp.ad_org_id,
+    c.ftu_class_id,
+    c.name AS class,
+    bp.c_bpartner_id,
+    u.ad_user_id,
+    bp.value AS memberno,
+    bp.name,
+    s.dateenrolled,
+    u.name AS contact_name,
+    u.email,
+    u.phone,
+    u.phone2,
+    s.studentstatus,
+    ( SELECT rl.name
+           FROM adempiere.ad_reference r,
+            adempiere.ad_ref_list rl
+          WHERE r.ad_reference_id = rl.ad_reference_id AND r.name::text = 'OFC Student Stage'::text AND rl.value::text = s.studentstage::text) AS stage
+   FROM adempiere.ftu_student s,
+    adempiere.ftu_class c,
+    adempiere.c_bpartner bp,
+    adempiere.ad_user u
+  WHERE s.c_bpartner_id = bp.c_bpartner_id AND s.ftu_class_id = c.ftu_class_id AND bp.c_bpartner_id = u.c_bpartner_id;
+
+ALTER TABLE adempiere.ftu_class_list_v
+  OWNER TO adempiere;
+</RollbackStatement>
+    </Step>
+  </Migration>
+</Migrations>

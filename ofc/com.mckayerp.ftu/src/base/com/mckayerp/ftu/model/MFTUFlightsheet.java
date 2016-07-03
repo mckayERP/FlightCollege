@@ -16,40 +16,27 @@
 package com.mckayerp.ftu.model;
 
 import java.math.BigDecimal;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Properties;
-
-import org.adempiere.exceptions.AdempiereException;
-import org.compiere.model.MBPartner;
-import org.compiere.model.MColumn;
-import org.compiere.model.MInventory;
-import org.compiere.model.MInventoryLine;
-import org.compiere.model.MMigration;
-import org.compiere.model.MMigrationData;
-import org.compiere.model.MMigrationStep;
-import org.compiere.model.MOrderLine;
-import org.compiere.model.MProduct;
-import org.compiere.model.MResourceAssignment;
-import org.compiere.model.MUOMConversion;
-import org.compiere.model.Query;
-import org.compiere.model.MOrder;
-import org.compiere.process.DocAction;
-import org.compiere.util.DB;
-import org.compiere.util.Env;
-import org.compiere.util.Msg;
-import org.compiere.util.Trx;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Properties;
+
+import org.adempiere.exceptions.AdempiereException;
+import org.compiere.apps.APanel;
+import org.compiere.model.MBPartner;
+import org.compiere.model.MOrder;
+import org.compiere.model.Query;
+import org.compiere.util.CLogger;
+import org.compiere.util.Env;
+import org.w3c.dom.Element;
+
+import com.mckayerp.ftu.process.LoadFlightsheetFromXML;
 
 /**
  * @author mckayERP
@@ -86,8 +73,8 @@ public class MFTUFlightsheet extends X_FTU_Flightsheet {
 		String whereClause = "FlightID = " + flightID.intValue();
 		MFTUFlightsheet flight = (MFTUFlightsheet) new Query(ctx, MFTUFlightsheet.Table_Name, whereClause, trxName)
 								.setClient_ID()
-								.setOnlyActiveRecords(true)
-								.first();
+								.setOnlyActiveRecords(false)
+								.firstOnly();
 		
 		if (flight == null) {
 			flight = new MFTUFlightsheet(ctx,0,trxName);
@@ -104,6 +91,12 @@ public class MFTUFlightsheet extends X_FTU_Flightsheet {
 	 */
 	protected boolean beforeSave(boolean newRecord)
 	{
+		// Check if the flight as been made inactive
+		if (!newRecord && this.get_ValueOld(COLUMNNAME_IsActive).equals("Y") 
+				&&this.get_Value(COLUMNNAME_IsActive).equals("N") ) {
+			log.warning("The Aircraft Journey Log will need to be regenerated.");
+		}
+		
 		// Check that the essentials have been set
 		if (this.getFlightID() == 0) {
 			log.saveError("Error", "FlightID cannot be zero/null");
@@ -154,6 +147,7 @@ public class MFTUFlightsheet extends X_FTU_Flightsheet {
 	public static MFTUFlightsheet fromXmlNode(Properties ctx, Element flightData, Calendar flightDate,
 			String trxName) {
 		
+		
 		if (flightData == null)
 			return null;
 		
@@ -162,6 +156,7 @@ public class MFTUFlightsheet extends X_FTU_Flightsheet {
 
 		MFTUFlightsheet flight = null;
 		
+		CLogger log = CLogger.getCLogger("com.mckayerp.ftu.model.MFTUFLightsheet");
 		
 	    // <flightNumber>195781</flightNumber> [ed: this is the (Flt #xxxxxx) 
 		// in the 'Invoice' column of the Daily Flight Sheet]
@@ -169,6 +164,7 @@ public class MFTUFlightsheet extends X_FTU_Flightsheet {
 		if (isNull(flightIDString)) {
 			throw new AdempiereException("Flight Number appears to be null: " + flightIDString);
 		}
+		log.fine("Loading flightsheet flight: " + flightIDString);
 		
 		BigDecimal flightID = Env.ZERO;
 		try {
@@ -180,12 +176,14 @@ public class MFTUFlightsheet extends X_FTU_Flightsheet {
 		if (flightID == null || flightID.equals(Env.ZERO)) {
 			throw new AdempiereException("Flight Number is null or zero: " + flightIDString);
 		}
+		log.fine("    Able to parse flight ID: " + flightID);
 		
 		flight = MFTUFlightsheet.getByFlightID(ctx, flightID, trxName);
 		
 		if ( flight == null ) {  // New entry
 			throw new AdempiereException("Flight not found or created for flight number: " + flightIDString);
 		}
+		log.fine("    Created flight log entry.");
 		
 		// <flightDate>2016-02-21</flightDate>
 		String flightDateString = flightData.getElementsByTagName("flightDate").item(0).getTextContent();	
@@ -198,8 +196,9 @@ public class MFTUFlightsheet extends X_FTU_Flightsheet {
 			try {
 				d = dateFormat.parse(flightDateString);
 				flight.setFlightDate(new Timestamp(d.getTime()));;
+				log.fine("    Set flight date to: " + flight.getFlightDate());
 			} catch (ParseException e) {
-				throw new AdempiereException("Couldn't parse and set FlightDate: " + flightDateString);
+				throw new AdempiereException("Couldn't parse and set FlightDate: " + flightDateString + " for flight ID " + flightIDString);
 			}
 		}
 
@@ -221,10 +220,11 @@ public class MFTUFlightsheet extends X_FTU_Flightsheet {
 			}
 		}
 		if (isNull(courseType)) {
-			throw new AdempiereException("Course Type can't be null or empty.");
+			throw new AdempiereException("Course Type can't be null or empty for flight ID " + flightIDString);
 		}
 		flight.setCourseType(courseType);	
-
+		log.fine("    Set course type to: " + courseType);
+		
 		int C_BPartner_ID;
 		MBPartner bp = null;
 		String value = "";
@@ -233,6 +233,12 @@ public class MFTUFlightsheet extends X_FTU_Flightsheet {
 		// <clientID>1542</clientID>  Represents the customer paying for the flight.
 		value = flightData.getElementsByTagName("clientID").item(0).getTextContent();
 		if (!isNull(value)) {
+			if (courseType.equals("Intro")) {
+				value = "Intro";
+			}
+			else if (courseType.equals("Tour")) {
+				value = "Tour";
+			}
 			C_BPartner_ID = 0;
 			bp = MBPartner.get(ctx, value);
 			if (bp != null && bp.getC_BPartner_ID() > 0) {
@@ -240,19 +246,29 @@ public class MFTUFlightsheet extends X_FTU_Flightsheet {
 				name = bp.getName();
 			}
 			else {
-				throw new AdempiereException("Business Partner (clientID) is not known: " + flightData.getElementsByTagName("clientID").item(0).getTextContent());
+				throw new AdempiereException("Business Partner (clientID) is not known: " 
+							+ flightData.getElementsByTagName("clientID").item(0).getTextContent() 
+							+ " for flight ID " + flightIDString);
 			}
 			flight.setC_BPartner_ID(C_BPartner_ID);
 			flight.setFlightsheet_ClientID(value);
+			log.fine("    Set client to: " + value + " " + bp.getName());
 		}
 		else {
-			throw new AdempiereException("Business Partner (clientID) cannot be null: " + flightData.getElementsByTagName("clientID").item(0).getTextContent());			
+			throw new AdempiereException("Business Partner (clientID) cannot be null: " 
+						+ flightData.getElementsByTagName("clientID").item(0).getTextContent() 
+						+ " for flight ID " + flightIDString);			
 		}
 
 		// <aircraft>CGVLM</aircraft>
 		MFTUAircraft ac = MFTUAircraft.getByCallSign(ctx, flightData.getElementsByTagName("aircraft").item(0).getTextContent(), trxName);
-		if (ac != null)
+		if (ac != null) {
 			flight.setFTU_Aircraft_ID(ac.getFTU_Aircraft_ID());
+			log.fine("    Set the aircraft to: " + ac.getName());
+		}
+		else {
+			log.fine("    No aircraft identified.");
+		}
 
 		// <captainID>64</captainID>
 		value = flightData.getElementsByTagName("captainID").item(0).getTextContent();
@@ -264,10 +280,14 @@ public class MFTUFlightsheet extends X_FTU_Flightsheet {
 				name = bp.getName();
 			}
 			else {
-				throw new AdempiereException("Business Partner (captianID) is not known: " + flightData.getElementsByTagName("captainID"));
+				throw new AdempiereException("Business Partner (captianID) is not known: " + value + " for flight ID " + flightIDString);
 			}
 			flight.setCaptainID(C_BPartner_ID);
 			flight.setCaptain_PIC(name);
+			log.fine("    Set captain to: " + value + " " + name);
+		}
+		else {
+			log.fine("    No captain identified.");
 		}
 
 		// <studentID>1542</studentID>
@@ -280,16 +300,24 @@ public class MFTUFlightsheet extends X_FTU_Flightsheet {
 				name = bp.getName();
 			}
 			else {
-				throw new AdempiereException("Business Partner (studentID) is not known: " + flightData.getElementsByTagName("studentID"));
+				throw new AdempiereException("Business Partner (studentID) is not known: " 
+							+ flightData.getElementsByTagName("studentID") 
+							+ " for flight ID " + flightIDString);
 			}
 			flight.setStudentID(C_BPartner_ID);
 			flight.setStudentPAX(name);
+			log.fine("    Set student to: " + value + " " + name);
+		}
+		else {
+			log.fine("    No student identified.");
 		}
 
 		// Set instructor
 		if (flight.getCaptainID() > 0 
 				&& flight.getCaptainID() != flight.getC_BPartner_ID() 
-				&& flight.getStudentID() > 0) {
+				&& (flight.getStudentID() > 0 
+					|| flight.getCourseType().equals(MFTUFlightsheet.COURSETYPE_Intro)
+					|| flight.getCourseType().equals(MFTUFlightsheet.COURSETYPE_Tour))) {
 			MFTUInstructor inst = MFTUInstructor.getByBPartnerID(ctx, flight.getCaptainID());
 			if (inst != null) {
 				flight.setFTU_Instructor_ID(inst.getFTU_Instructor_ID());
@@ -324,7 +352,7 @@ public class MFTUFlightsheet extends X_FTU_Flightsheet {
 				numLegs = Integer.parseUnsignedInt(value);
 			}
 			catch (NumberFormatException e) {
-				throw new AdempiereException("xcLegCount entry is not in form of number: " + value);
+				throw new AdempiereException("xcLegCount entry is not in form of number: " + value + " for flight ID " + flightIDString);
 			}
 		}
 		flight.setNumLegs(numLegs.intValue());
@@ -339,7 +367,9 @@ public class MFTUFlightsheet extends X_FTU_Flightsheet {
 				name = bp.getName();
 			}
 			else {
-				throw new AdempiereException("Business Partner (authorizedByID) is not known: " + flightData.getElementsByTagName("authorizedByID"));
+				throw new AdempiereException("Business Partner (authorizedByID) is not known: " 
+						+ flightData.getElementsByTagName("authorizedByID")
+						+ " for flight ID " + flightIDString);
 			}
 			flight.setAuthorizedByID(C_BPartner_ID);
 			flight.setAuthorizedBy(name);
@@ -355,7 +385,9 @@ public class MFTUFlightsheet extends X_FTU_Flightsheet {
 				name = bp.getName();
 			}
 			else {
-				throw new AdempiereException("Business Partner (acknowledgedByID) is not known: " + flightData.getElementsByTagName("acknowledgedByID"));
+				throw new AdempiereException("Business Partner (acknowledgedByID) is not known: " 
+							+ flightData.getElementsByTagName("acknowledgedByID")
+							+ " for flight ID " + flightIDString);
 			}
 			flight.setAcknowledgedByID(C_BPartner_ID);
 			flight.setAcknowledgedBy(name);
@@ -606,7 +638,7 @@ public class MFTUFlightsheet extends X_FTU_Flightsheet {
 		return flight;
 	}
 
-	private static boolean isNull(String field) {
+	public static boolean isNull(String field) {
 		if (field == null 
 				|| field.trim().toUpperCase().equals("NULL")
 				|| field.trim().equals("-") 
@@ -624,5 +656,40 @@ public class MFTUFlightsheet extends X_FTU_Flightsheet {
 		processing = state;
 	}
 	
+	/**
+	 * Set the invoice number on the Flightsheet system
+	 * @return true if successful
+	 */
+	public boolean setFlightsheetInvoice() {
+		if (this.getFlightID() == 0)
+			return false;
+		
+		String orderDocumentNo = "";
+		
+		try {
+			String hostname = InetAddress.getLocalHost().getHostName();
+			if (hostname != null && hostname.equals("MHIW947"))  // TODO Hardcoded - make configurable
+				return true;
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		MOrder order = (MOrder) this.getC_Order();
+		if (order != null) {
+			orderDocumentNo = order.getDocumentNo();
+		}
+
+		return LoadFlightsheetFromXML.setFlightsheetInvoice(getFlightID(), orderDocumentNo);
+	}
+	
+	/** Set Order.
+	* @param C_Order_ID 
+	* Order
+	*/
+	public void setC_Order_ID (int C_Order_ID)
+	{
+		super.setC_Order_ID(C_Order_ID);
+		setFlightsheetInvoice();
+	}
 
 }

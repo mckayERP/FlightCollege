@@ -21,6 +21,7 @@
   <!-- set path to include the necessary jar files for javac -->
   <path id="lib.class.path">
     <pathelement path="${classpath}"/>
+  	<pathelement path="${dist.dir}/${adempiere.customJarFile}"/>
     <pathelement path="${adempiere.trunk}/lib/CCTools.jar"/>
     <pathelement path="${adempiere.trunk}/lib/Adempiere.jar"/>
     <pathelement path="${adempiere.trunk}/lib/oracle.jar"/>

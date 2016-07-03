@@ -1,0 +1,722 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Student Performance Report" language="groovy" pageWidth="792" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1fe757fb-8c28-469d-995c-c056f8d17bd9">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="97"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<subDataset name="bookingcrosstab" uuid="fbecbfda-7c5e-4d11-8a9b-3f66f0671ebf">
+		<parameter name="subClass" class="java.lang.String">
+			<defaultValueExpression><![CDATA["AL201005"]]></defaultValueExpression>
+		</parameter>
+		<parameter name="lookahead_weeks_sub" class="java.lang.Integer" isForPrompting="false">
+			<defaultValueExpression><![CDATA[4]]></defaultValueExpression>
+		</parameter>
+		<parameter name="lookback_weeks_sub" class="java.lang.Integer" isForPrompting="false">
+			<defaultValueExpression><![CDATA[4]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT
+     ftu_student_bookings_v."class" AS ftu_student_bookings_v_class,
+     ftu_student_bookings_v."name" AS ftu_student_bookings_v_name,
+     ftu_student_bookings_v."resourcetype" AS ftu_student_bookings_v_resourcetype,
+     ftu_student_bookings_v."year" AS ftu_student_bookings_v_year,
+     ftu_student_bookings_v."week" AS ftu_student_bookings_v_week,
+     ftu_student_bookings_v."bookingcount" AS ftu_student_bookings_v_bookingcount
+FROM
+     "adempiere"."ftu_student_bookings_v" ftu_student_bookings_v
+WHERE
+     ftu_student_bookings_v."class" = $P{subClass} AND
+     ftu_student_bookings_v."slot" > now() - ($P{lookback_weeks_sub}+1)*7 AND
+     ftu_student_bookings_v."week" > (date_part('week', now())-$P{lookback_weeks_sub}) AND
+     ftu_student_bookings_v."week" < (date_part('week', now())+$P{lookahead_weeks_sub})]]>
+		</queryString>
+		<field name="ftu_student_bookings_v_class" class="java.lang.String"/>
+		<field name="ftu_student_bookings_v_name" class="java.lang.String"/>
+		<field name="ftu_student_bookings_v_resourcetype" class="java.lang.String"/>
+		<field name="ftu_student_bookings_v_year" class="java.lang.Double"/>
+		<field name="ftu_student_bookings_v_week" class="java.lang.Double"/>
+		<field name="ftu_student_bookings_v_bookingcount" class="java.lang.Integer"/>
+	</subDataset>
+	<subDataset name="FlightRec" uuid="07e681dd-8a97-4f61-96a8-9d44bc77aa45">
+		<parameter name="subClass" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT
+     ftu_student_flight_summary_v."class" AS ftu_student_flight_summary_v_class,
+     ftu_student_flight_summary_v."name" AS ftu_student_flight_summary_v_name,
+     ftu_student_flight_summary_v."yrwk" AS ftu_student_flight_summary_v_yrwk,
+     to_char(ftu_student_flight_summary_v."flt_time", '990.0') || '/'::varchar ||
+     to_char(ftu_student_flight_summary_v."sim", '90.0') || '/'::varchar ||
+     to_char(ftu_student_flight_summary_v."brief", '90.0') AS ftu_student_flight_summary_v_flt_time,
+     ftu_student_flight_summary_v."noshow" AS ftu_student_flight_summary_v_noshow,
+     ftu_student_flight_summary_v."cancellations" AS ftu_student_flight_summary_v_cancellations
+FROM
+     "adempiere"."ftu_student_flight_summary_v" ftu_student_flight_summary_v
+WHERE
+     ftu_student_flight_summary_v."class" = $P{subClass}::varchar]]>
+		</queryString>
+		<field name="ftu_student_flight_summary_v_class" class="java.lang.String"/>
+		<field name="ftu_student_flight_summary_v_name" class="java.lang.String"/>
+		<field name="ftu_student_flight_summary_v_yrwk" class="java.lang.String"/>
+		<field name="ftu_student_flight_summary_v_flt_time" class="java.lang.String"/>
+		<field name="ftu_student_flight_summary_v_noshow" class="java.lang.Long"/>
+		<field name="ftu_student_flight_summary_v_cancellations" class="java.lang.Long"/>
+	</subDataset>
+	<subDataset name="FlightSummary" uuid="f8e4e540-22fd-4ebe-9d34-caee981d7b20">
+		<parameter name="subClass" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT
+     ftu_class_flight_avg_v."class" AS ftu_class_flight_avg_v_class,
+     ftu_class_flight_avg_v."yrwk" AS ftu_class_flight_avg_v_yrwk,
+     to_char(ftu_class_flight_avg_v."aflt_time",'990.0') || '/'::varchar ||
+     to_char(ftu_class_flight_avg_v."asim",'90.0') || '/'::varchar ||
+     to_char(ftu_class_flight_avg_v."abrief",'90.0') AS ftu_class_flight_avg_v_flt_time,
+     ftu_class_flight_avg_v."anoshow" AS ftu_class_flight_avg_v_noshow,
+     ftu_class_flight_avg_v."acan" AS ftu_class_flight_avg_v_cancellations
+FROM
+     "adempiere"."ftu_class_flight_avg_v" ftu_class_flight_avg_v
+WHERE
+     ftu_class_flight_avg_v."class" = $P{subClass}::varchar]]>
+		</queryString>
+		<field name="ftu_class_flight_avg_v_class" class="java.lang.String"/>
+		<field name="ftu_class_flight_avg_v_yrwk" class="java.lang.String"/>
+		<field name="ftu_class_flight_avg_v_flt_time" class="java.lang.String"/>
+		<field name="ftu_class_flight_avg_v_noshow" class="java.math.BigDecimal"/>
+		<field name="ftu_class_flight_avg_v_cancellations" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="Student Status" uuid="8e594151-9614-4a2b-a0e7-eb26b3351dca">
+		<parameter name="subClass" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[SELECT
+     ftu_class."value" AS class_name,
+     c_bpartner."name" AS c_bpartner_name,
+     ftu_student."studentstatus" AS ftu_student_studentstatus,
+     ftu_student."studentstage" AS ftu_student_studentstage,
+     ftu_student."dateenrolled" AS ftu_student_dateenrolled,
+     ftu_student."datedeparted" AS ftu_student_datedeparted,
+     ftu_student."description" AS ftu_student_description,
+     ftu_student."comments" AS ftu_student_comments
+FROM
+     "adempiere"."c_bpartner" c_bpartner INNER JOIN "adempiere"."ftu_student" ftu_student ON c_bpartner."c_bpartner_id" = ftu_student."c_bpartner_id"
+     INNER JOIN "adempiere"."ftu_class" ftu_class ON ftu_student."ftu_class_id" = ftu_class."ftu_class_id"
+WHERE
+     ftu_student.isactive = 'Y' AND ftu_class."value" = $P{subClass}::varchar]]>
+		</queryString>
+		<field name="class_name" class="java.lang.String"/>
+		<field name="c_bpartner_name" class="java.lang.String"/>
+		<field name="ftu_student_studentstatus" class="java.lang.String"/>
+		<field name="ftu_student_studentstage" class="java.lang.String"/>
+		<field name="ftu_student_dateenrolled" class="java.sql.Timestamp"/>
+		<field name="ftu_student_datedeparted" class="java.sql.Timestamp"/>
+		<field name="ftu_student_description" class="java.lang.String"/>
+		<field name="ftu_student_comments" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="lookahead_weeks_main" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[4]]></defaultValueExpression>
+	</parameter>
+	<parameter name="lookback_weeks_main" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[4]]></defaultValueExpression>
+	</parameter>
+	<parameter name="AD_Client_ID" class="java.math.BigDecimal" isForPrompting="false">
+		<defaultValueExpression><![CDATA[1000000]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FTU_Training_Unit_ID" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[1000013]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FTU_Class_ID" class="java.math.BigDecimal" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FTU_Class_ID_for_query" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{FTU_Class_ID}==null? "true": "FTU_Class.FTU_Class_ID=".concat($P{FTU_Class_ID}.toString())]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     ftu_class."value" AS class_name,
+     ftu_training_unit."name" AS training_unit_name,
+     to_char(current_date,'IW') as weeknum,
+     to_char(current_date,'DD-Mon-YY') as curdate,
+     count(ftu_student.ftu_student_id) as cnt
+FROM
+        "adempiere"."ftu_student" ftu_student
+	INNER JOIN "adempiere"."ftu_class" ftu_class
+		ON ftu_student.ftu_class_id = ftu_class.ftu_class_id
+	INNER JOIN "adempiere"."ftu_training_unit" ftu_training_unit
+		ON ftu_class."ftu_training_unit_id" = ftu_training_unit."ftu_training_unit_id"
+WHERE
+	ftu_class."ftu_training_unit_id" = $P{FTU_Training_Unit_ID} AND
+	$P!{FTU_Class_ID_for_query} AND
+	ftu_class."ad_client_id" = $P{AD_Client_ID} AND
+	ftu_student.student_status = 'Enrolled'
+GROUP BY
+	ftu_class_name, ftu_training_unit_name, weeknum, curdate
+ORDER BY
+	ftu_class_name DESC]]>
+	</queryString>
+	<field name="class_name" class="java.lang.String"/>
+	<field name="training_unit_name" class="java.lang.String"/>
+	<field name="weeknum" class="java.lang.String"/>
+	<field name="curdate" class="java.lang.String"/>
+	<field name="cnt" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="24">
+			<line>
+				<reportElement x="0" y="22" width="752" height="1" uuid="9482b2de-47f7-4571-b74c-c0bedd5f7e97"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="0" width="752" height="23" uuid="5f2078a6-7a8b-4476-bdec-429ed4329ba6"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Student Performance Report]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="498">
+			<rectangle radius="10">
+				<reportElement x="209" y="306" width="304" height="34" uuid="c63568e9-4b32-4352-aa63-899d1648c441"/>
+			</rectangle>
+			<textField>
+				<reportElement x="52" y="104" width="660" height="20" uuid="d0173797-2a07-40ff-b894-17b8421cf311"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{class_name} + "   " + $F{training_unit_name}]]></textFieldExpression>
+			</textField>
+			<elementGroup>
+				<rectangle radius="10">
+					<reportElement x="209" y="131" width="349" height="34" uuid="843c4d8b-1146-4fe9-8be4-af8ae5e75c52"/>
+				</rectangle>
+				<textField isStretchWithOverflow="true" pattern="">
+					<reportElement x="323" y="130" width="54" height="20" uuid="e6accff7-0721-42a2-b187-acd7f40a5403"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{curdate}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="251" y="130" width="72" height="20" uuid="ee9b3ba2-43d8-414c-bd89-ac39042f04d5"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<text><![CDATA[Current date (]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="377" y="130" width="83" height="20" uuid="db20069e-6385-4ec6-84b3-f271e4e53fb1"/>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[) is week number ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="226" y="150" width="321" height="14" uuid="918aaaca-3dca-40e8-a383-a29c0ef64b5b"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+					<text><![CDATA[Weeks are Monday to Sunday. Numbers are Flt Time/ Sim/ Briefing]]></text>
+				</staticText>
+				<textField pattern="###0">
+					<reportElement x="460" y="130" width="61" height="20" uuid="566b310a-b455-465b-8223-0d42711d6786"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{weeknum}]]></textFieldExpression>
+				</textField>
+			</elementGroup>
+			<crosstab>
+				<reportElement x="12" y="173" width="721" height="60" uuid="ff82fb6f-3536-4cc2-965d-1271c29f5753"/>
+				<crosstabDataset>
+					<dataset>
+						<datasetRun subDataset="FlightRec" uuid="58480711-1b99-4d3b-915f-921cdd26267e">
+							<datasetParameter name="subClass">
+								<datasetParameterExpression><![CDATA[$F{class_name}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+					</dataset>
+				</crosstabDataset>
+				<crosstabHeaderCell>
+					<cellContents>
+						<staticText>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="143" height="41" uuid="2f2c58c9-8c8a-4911-a47e-e49124ace648"/>
+							<textElement verticalAlignment="Middle">
+								<font fontName="Arial" isBold="true"/>
+							</textElement>
+							<text><![CDATA[Student Flight Time
+by Week]]></text>
+						</staticText>
+					</cellContents>
+				</crosstabHeaderCell>
+				<rowGroup name="ftu_student_flight_summary_v_name" width="143">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{ftu_student_flight_summary_v_name}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="10" y="0" width="133" height="11" uuid="cae184ea-cf62-44ed-b7fa-3b64e02baf38"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[""+$V{ftu_student_flight_summary_v_name}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents/>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="ftu_student_flight_summary_v_yrwk" height="41">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{ftu_student_flight_summary_v_yrwk}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="26" width="90" height="15" uuid="fa6db55d-9e76-4c48-bf2e-4cfe2abe5234"/>
+								<textElement verticalAlignment="Bottom">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{ftu_student_flight_summary_v_yrwk}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents/>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="ftu_student_flight_summary_v_flt_timeMeasure" class="java.lang.String">
+					<measureExpression><![CDATA[$F{ftu_student_flight_summary_v_flt_time}]]></measureExpression>
+				</measure>
+				<crosstabCell width="92" height="12">
+					<cellContents>
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField isBlankWhenNull="true">
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="90" height="11" uuid="4d027635-b3f6-4fc6-bc3d-aa5b297aa58c"/>
+							<textElement textAlignment="Left" verticalAlignment="Middle">
+								<font fontName="DejaVu Sans Mono" size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{ftu_student_flight_summary_v_flt_timeMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell height="15" rowTotalGroup="ftu_student_flight_summary_v_name">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="15" uuid="6926c847-0bcf-4972-97af-9eeba9e1f8d1"/>
+							<textFieldExpression><![CDATA[$V{ftu_student_flight_summary_v_flt_timeMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="50" columnTotalGroup="ftu_student_flight_summary_v_yrwk">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="15" uuid="0c5bf3b4-b268-4983-aca8-b189d1d89f31"/>
+							<textFieldExpression><![CDATA[$V{ftu_student_flight_summary_v_flt_timeMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="ftu_student_flight_summary_v_name" columnTotalGroup="ftu_student_flight_summary_v_yrwk">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField isBlankWhenNull="true">
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="15" uuid="0de0d440-8acb-4630-aa53-f1ed4061a70c"/>
+							<textFieldExpression><![CDATA[$V{ftu_student_flight_summary_v_flt_timeMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+			<break>
+				<reportElement x="0" y="274" width="100" height="1" uuid="042de879-8187-4e83-8c77-2e4284d43ed6"/>
+			</break>
+			<staticText>
+				<reportElement x="10" y="281" width="42" height="20" uuid="f5494758-c6e8-48c2-a234-e1266ee59961"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Class:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="52" y="281" width="681" height="20" uuid="460aef0c-c2d4-4f07-b29f-b2374dc8f560"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{class_name} + "   " + $F{training_unit_name}]]></textFieldExpression>
+			</textField>
+			<crosstab>
+				<reportElement x="52" y="347" width="681" height="103" uuid="76fea403-6db3-41d3-8e94-35b408968199"/>
+				<crosstabDataset>
+					<dataset>
+						<datasetRun subDataset="bookingcrosstab" uuid="fc57c088-a178-46d5-b8f3-47aa37ae70ca">
+							<datasetParameter name="subClass">
+								<datasetParameterExpression><![CDATA[$F{class_name}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="lookahead_weeks_sub">
+								<datasetParameterExpression><![CDATA[$P{lookahead_weeks_main}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="lookback_weeks_sub">
+								<datasetParameterExpression><![CDATA[$P{lookback_weeks_main}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+					</dataset>
+				</crosstabDataset>
+				<crosstabHeaderCell>
+					<cellContents>
+						<staticText>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="136" height="82" uuid="6dbe41ed-966c-4f17-894a-f5d105e888ee"/>
+							<textElement verticalAlignment="Middle">
+								<font fontName="Arial" size="12" isBold="true"/>
+							</textElement>
+							<text><![CDATA[Student Bookings
+by Week]]></text>
+						</staticText>
+					</cellContents>
+				</crosstabHeaderCell>
+				<rowGroup name="ftu_student_bookings_v_name" width="136">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{ftu_student_bookings_v_name}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="7" y="0" width="126" height="11" uuid="4996bd98-8005-4ef1-9985-989753c459be"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font fontName="Arial" size="8" isItalic="false"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{ftu_student_bookings_v_name}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents/>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="ftu_student_bookings_v_year" height="15">
+					<bucket class="java.lang.Integer">
+						<bucketExpression><![CDATA[$F{ftu_student_bookings_v_year}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField pattern="###0">
+								<reportElement style="Crosstab Data Text" mode="Transparent" x="1" y="0" width="27" height="15" uuid="7e3219a9-3597-44e4-b0c3-cf664584d98a"/>
+								<box>
+									<topPen lineWidth="0.0" lineStyle="Solid"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid"/>
+									<bottomPen lineWidth="0.0" lineStyle="Solid"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid"/>
+								</box>
+								<textElement verticalAlignment="Middle" rotation="None">
+									<font fontName="Arial" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{ftu_student_bookings_v_year}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents/>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<columnGroup name="ftu_student_bookings_v_week" height="15">
+					<bucket class="java.lang.Integer">
+						<bucketExpression><![CDATA[$F{ftu_student_bookings_v_week}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="1" y="0" width="27" height="15" isPrintInFirstWholeBand="true" uuid="61e14180-697a-42b4-b1c2-e94cbed701f0"/>
+								<box>
+									<topPen lineWidth="0.0" lineStyle="Solid"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid"/>
+									<bottomPen lineWidth="0.0" lineStyle="Solid"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid"/>
+								</box>
+								<textElement verticalAlignment="Middle">
+									<font fontName="Arial" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{ftu_student_bookings_v_week}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents/>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<columnGroup name="ftu_student_bookings_v_resourcetype" height="52">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{ftu_student_bookings_v_resourcetype}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="1" y="0" width="27" height="50" uuid="533547c3-557a-48db-9183-eb4f6c47c075"/>
+								<box>
+									<topPen lineWidth="0.0" lineStyle="Solid"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid"/>
+									<bottomPen lineWidth="0.0" lineStyle="Solid"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid"/>
+								</box>
+								<textElement textAlignment="Left" verticalAlignment="Middle" rotation="Left">
+									<font fontName="Arial" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{ftu_student_bookings_v_resourcetype}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents/>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="ftu_student_bookings_v_bookingcountMeasure" class="java.lang.Integer" calculation="Sum">
+					<measureExpression><![CDATA[$F{ftu_student_bookings_v_bookingcount}]]></measureExpression>
+				</measure>
+				<crosstabCell width="28" height="12">
+					<cellContents>
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="1" y="0" width="27" height="11" uuid="c56d97b6-f4b0-4c35-ac09-b8668b630a1c"/>
+							<box>
+								<topPen lineWidth="0.0" lineStyle="Solid"/>
+								<leftPen lineWidth="0.0" lineStyle="Solid"/>
+								<bottomPen lineWidth="0.0" lineStyle="Solid"/>
+								<rightPen lineWidth="0.0" lineStyle="Solid"/>
+							</box>
+							<textElement verticalAlignment="Middle">
+								<font fontName="Courier New" size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{ftu_student_bookings_v_bookingcountMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+			<textField pattern="###0">
+				<reportElement x="435" y="306" width="61" height="20" uuid="46db4966-e2f7-4eb1-95b7-11c7c5836dd5"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{weeknum}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="226" y="326" width="270" height="14" uuid="15baf70b-d730-4fa7-afd2-114123d4fc9e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<text><![CDATA[(Weeks are Monday to Sunday.)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="226" y="306" width="72" height="20" uuid="23769450-200a-4398-a861-3b0552af7fa4"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Current date (]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="">
+				<reportElement x="298" y="306" width="54" height="20" uuid="5051a769-39c8-4ec0-b1d2-a7940e76d05e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{curdate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="104" width="42" height="20" uuid="14281dcb-4c93-4e18-85c8-b8fbd258007d"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Class:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="352" y="306" width="83" height="20" uuid="4cee53c6-7932-4a59-add0-9cffee946e2d"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[) is week number ]]></text>
+			</staticText>
+			<crosstab>
+				<reportElement positionType="Float" x="12" y="233" width="721" height="35" uuid="ad708710-7ef5-4222-bcc4-9d2e67df4be3"/>
+				<crosstabDataset>
+					<dataset>
+						<datasetRun subDataset="FlightSummary" uuid="0900f73f-d166-410c-884a-7d32160183c8">
+							<datasetParameter name="subClass">
+								<datasetParameterExpression><![CDATA[$F{class_name}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+					</dataset>
+				</crosstabDataset>
+				<crosstabHeaderCell>
+					<cellContents>
+						<staticText>
+							<reportElement style="Crosstab Data Text" x="0" y="1" width="143" height="15" uuid="6a1db163-ed99-44ed-9d08-41f6ff771752"/>
+							<textElement verticalAlignment="Middle">
+								<font fontName="Arial" isBold="true"/>
+							</textElement>
+							<text><![CDATA[Class Average by Week]]></text>
+						</staticText>
+					</cellContents>
+				</crosstabHeaderCell>
+				<rowGroup name="ftu_class_flight_avg_v_class" width="143">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{ftu_class_flight_avg_v_class}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="10" y="0" width="133" height="11" uuid="7d41c816-a619-485b-b831-c705c13173b2"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{ftu_class_flight_avg_v_class}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents/>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="ftu_class_flight_avg_v_yrwk" height="17">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{ftu_class_flight_avg_v_yrwk}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="2" width="90" height="15" uuid="7e80748a-4e08-4a4c-bb73-f8c456f31720"/>
+								<textElement verticalAlignment="Bottom">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{ftu_class_flight_avg_v_yrwk}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents/>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="ftu_class_flight_avg_v_flt_timeMeasure" class="java.lang.String">
+					<measureExpression><![CDATA[$F{ftu_class_flight_avg_v_flt_time}]]></measureExpression>
+				</measure>
+				<crosstabCell width="92" height="12">
+					<cellContents>
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField isBlankWhenNull="true">
+							<reportElement style="Crosstab Data Text" mode="Transparent" x="0" y="0" width="90" height="11" uuid="cfc80eae-bbe4-4486-9940-f429bda98542"/>
+							<textElement textAlignment="Left" verticalAlignment="Middle">
+								<font fontName="DejaVu Sans Mono" size="8" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{ftu_class_flight_avg_v_flt_timeMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell height="15" rowTotalGroup="ftu_class_flight_avg_v_class">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="15" uuid="4867ca7e-e35b-4fe2-b92b-a291e94e0beb"/>
+							<textFieldExpression><![CDATA[$V{ftu_class_flight_avg_v_flt_timeMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="50" columnTotalGroup="ftu_class_flight_avg_v_yrwk">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="15" uuid="8f6fe51c-a6f5-4817-bb72-ca25a2a84c9c"/>
+							<textFieldExpression><![CDATA[$V{ftu_class_flight_avg_v_flt_timeMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="ftu_class_flight_avg_v_class" columnTotalGroup="ftu_class_flight_avg_v_yrwk">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField isBlankWhenNull="true">
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="15" uuid="85d91f78-a386-4ce7-a861-536e9ecf527d"/>
+							<textFieldExpression><![CDATA[$V{ftu_class_flight_avg_v_flt_timeMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+			<staticText>
+				<reportElement x="10" y="11" width="42" height="20" uuid="3d85f325-2583-4d5c-be40-bf02a29ee03e"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Class:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="52" y="11" width="660" height="20" uuid="6a4966eb-a22a-4b3f-9d32-008b51d56a62"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{class_name} + "   " + $F{training_unit_name}]]></textFieldExpression>
+			</textField>
+			<break>
+				<reportElement positionType="Float" x="0" y="93" width="100" height="1" uuid="e3bb9fdf-0473-4710-a4a1-9bc8656801c8"/>
+			</break>
+			<subreport isUsingCache="true">
+				<reportElement x="59" y="43" width="653" height="37" uuid="d73f3f16-12e1-48af-96bf-69bf2261c821"/>
+				<subreportParameter name="subClass">
+					<subreportParameterExpression><![CDATA[$F{class_name}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["ftu_student_performance_report2_353_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="50">
+			<staticText>
+				<reportElement x="263" y="15" width="226" height="20" uuid="7ceb6e35-6e1f-4b92-a948-841cb885db15"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ottawa Flying Club]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="632" y="15" width="80" height="20" uuid="3802a357-7dc6-47ce-ba52-e30281ef29f6"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="712" y="15" width="40" height="20" uuid="bd530857-d788-4130-9616-98310ee0d712"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd-MMM-yy">
+				<reportElement x="0" y="15" width="100" height="20" uuid="6bbcd722-510a-451d-9eb8-a33874ac3353"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

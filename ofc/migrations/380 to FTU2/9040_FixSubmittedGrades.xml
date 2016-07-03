@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="MFTU" Name="Fix submitted grades report" ReleaseNo="FTU2" SeqNo="40">
+    <Step DBType="ALL" Parse="Y" SeqNo="0" StepType="SQL">
+      <Comments>adempiere.ftu_submitted_grades_rv</Comments>
+      <SQLStatement>-- View: adempiere.ftu_rv_submitted_grades
+
+ DROP VIEW adempiere.ftu_rv_submitted_grades;
+
+CREATE OR REPLACE VIEW adempiere.ftu_submitted_grades_rv AS 
+ SELECT ftu_registered_courses.ad_client_id,
+    ftu_registered_courses.ad_org_id,
+    ftu_semester.calendaryear,
+    ftu_class.name AS class,
+    ftu_student.studentnum,
+    c_bpartner.name,
+    ftu_training_unit.program_code AS program,
+    ftu_semester.value AS semester,
+    ftu_course.value AS coursecode,
+    ftu_course.name AS coursetitle,
+    ftu_course.coursehrs AS hours,
+    ftu_course_grade.coursegrade AS grade
+   FROM adempiere.ftu_course,
+    adempiere.ftu_semester,
+    adempiere.ftu_training_unit,
+    adempiere.ftu_student,
+    adempiere.ftu_registered_courses
+     LEFT JOIN adempiere.ftu_course_grade ON ftu_course_grade.ftu_registered_courses_id = ftu_registered_courses.ftu_registered_courses_id,
+    adempiere.ftu_course_inst,
+    adempiere.c_bpartner,
+    adempiere.ftu_class
+  WHERE (ftu_course_grade.isgradesubmitted IS NULL OR ftu_course_grade.isgradesubmitted = 'Y'::bpchar) AND ftu_course.ftu_training_unit_id = ftu_training_unit.ftu_training_unit_id AND ftu_student.c_bpartner_id = c_bpartner.c_bpartner_id AND ftu_registered_courses.ftu_course_inst_id = ftu_course_inst.ftu_course_inst_id AND ftu_registered_courses.ftu_student_id = ftu_student.ftu_student_id AND ftu_course_inst.ftu_course_id = ftu_course.ftu_course_id AND ftu_course_inst.ftu_semester_id = ftu_semester.ftu_semester_id AND ftu_class.ftu_class_id = ftu_student.ftu_class_id
+  ORDER BY ftu_class.name, c_bpartner.name, ftu_semester.calendaryear, ftu_course.value;
+
+ALTER TABLE adempiere.ftu_submitted_grades_rv
+  OWNER TO adempiere;
+</SQLStatement>
+      <RollbackStatement>-- View: adempiere.ftu_rv_submitted_grades
+
+DROP VIEW adempiere.ftu_submitted_grades_rv;
+
+CREATE OR REPLACE VIEW adempiere.ftu_rv_submitted_grades AS 
+ SELECT ftu_registered_courses.ad_client_id,
+    ftu_registered_courses.ad_org_id,
+    ftu_semester.calendaryear,
+    ftu_class.name AS class,
+    ftu_student.studentnum AS student_number,
+    c_bpartner.name,
+    ftu_training_unit.program_code AS program,
+    ftu_semester.value AS semester,
+    ftu_course.value AS course_code,
+    ftu_course.name AS course_title,
+    ftu_course.coursehrs AS hours,
+    ftu_course_grade.coursegrade AS grade
+   FROM adempiere.ftu_course,
+    adempiere.ftu_semester,
+    adempiere.ftu_training_unit,
+    adempiere.ftu_student,
+    adempiere.ftu_registered_courses
+     LEFT JOIN adempiere.ftu_course_grade ON ftu_course_grade.ftu_registered_courses_id = ftu_registered_courses.ftu_registered_courses_id,
+    adempiere.ftu_course_inst,
+    adempiere.c_bpartner,
+    adempiere.ftu_class
+  WHERE (ftu_course_grade.isgradesubmitted IS NULL OR ftu_course_grade.isgradesubmitted = 'Y'::bpchar) AND ftu_course.ftu_training_unit_id = ftu_training_unit.ftu_training_unit_id AND ftu_student.c_bpartner_id = c_bpartner.c_bpartner_id AND ftu_registered_courses.ftu_course_inst_id = ftu_course_inst.ftu_course_inst_id AND ftu_registered_courses.ftu_student_id = ftu_student.ftu_student_id AND ftu_course_inst.ftu_course_id = ftu_course.ftu_course_id AND ftu_course_inst.ftu_semester_id = ftu_semester.ftu_semester_id AND ftu_class.ftu_class_id = ftu_student.ftu_class_id
+  ORDER BY ftu_class.name, c_bpartner.name, ftu_semester.calendaryear, ftu_course.value;
+
+ALTER TABLE adempiere.ftu_rv_submitted_grades
+  OWNER TO adempiere;
+</RollbackStatement>
+    </Step>
+    <Step SeqNo="10" StepType="AD">
+      <PO AD_Table_ID="116" Action="U" Record_ID="1000015" Table="AD_Menu">
+        <Data AD_Column_ID="229" Column="Name" oldValue="OFC_RV_Submitted_Grades">Submitted Grades Report</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="20" StepType="AD">
+      <PO AD_Table_ID="284" Action="U" Record_ID="1000001" Table="AD_Process">
+        <Data AD_Column_ID="4023" Column="Value" oldValue="OFC_RV_Submitted_Grades">Submitted_Grades</Data>
+        <Data AD_Column_ID="2809" Column="Name" oldValue="OFC_RV_Submitted_Grades">Submitted Grades</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="30" StepType="AD">
+      <PO AD_Table_ID="116" Action="U" Record_ID="1000015" Table="AD_Menu">
+        <Data AD_Column_ID="229" Column="Name" oldValue="Submitted Grades Report">Submitted Grades</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="40" StepType="AD">
+      <PO AD_Table_ID="361" Action="U" Record_ID="1000001" Table="AD_ReportView">
+        <Data AD_Column_ID="4392" Column="Name" oldValue="OFC_RV_Submitted_Grades">Submitted_Grades_RV</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="50" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000307" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isOldNull="true">The ID of the Student at the FTU</Data>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="Student Number">StudentNum</Data>
+        <Data AD_Column_ID="2608" Column="AD_Element_ID" oldValue="1000033">1000040</Data>
+      </PO>
+    </Step>
+  </Migration>
+</Migrations>

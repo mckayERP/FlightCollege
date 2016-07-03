@@ -222,6 +222,7 @@ public class MFTUACJourneyLog extends X_FTU_ACJourneyLog {
 		String where = MFTUFlightsheet.COLUMNNAME_FTU_ACJourneyLog_ID + "=" + this.getFTU_ACJourneyLog_ID();
 		return new Query(ctx, MFTUFlightsheet.Table_Name, where, trxName)
 					.setClient_ID()
+					.setOnlyActiveRecords(true)
 					.setOrderBy(MFTUFlightsheet.COLUMNNAME_WheelsUp)
 					.list();
 	}

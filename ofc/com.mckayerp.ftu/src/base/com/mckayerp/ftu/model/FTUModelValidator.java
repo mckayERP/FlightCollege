@@ -18,8 +18,10 @@ import org.compiere.model.I_M_Product_Class;
 import org.compiere.model.MBPartner;
 import org.compiere.model.MClient;
 import org.compiere.model.MCostDetail;
+import org.compiere.model.MInOutLine;
 import org.compiere.model.MInventory;
 import org.compiere.model.MInventoryLine;
+import org.compiere.model.MInvoiceLine;
 import org.compiere.model.MOrder;
 import org.compiere.model.MOrderLine;
 import org.compiere.model.MPriceList;
@@ -28,6 +30,7 @@ import org.compiere.model.MProduct;
 import org.compiere.model.MProductCategory;
 import org.compiere.model.MProductPricing;
 import org.compiere.model.MResourceAssignment;
+import org.compiere.model.MTax;
 import org.compiere.model.MTransaction;
 import org.compiere.model.MUOMConversion;
 import org.compiere.model.ModelValidationEngine;
@@ -40,6 +43,15 @@ import org.compiere.util.DB;
 import org.compiere.util.Env;
 
 public class FTUModelValidator implements ModelValidator {
+	
+	public FTUModelValidator() {
+		super();
+		String where = MTax.COLUMNNAME_Name + "= 'Exempt'";
+		m_exempt_c_tax_id = new Query(Env.getCtx(), MTax.Table_Name, where, null)
+		 					.setClient_ID()
+		 					.setOnlyActiveRecords(true)
+		 					.firstIdOnly();
+	}
 
 	private class CustomerBlockBookings {
 		
@@ -184,6 +196,8 @@ public class FTUModelValidator implements ModelValidator {
 					orderLine.setC_Currency_ID(pp.getC_Currency_ID());
 					orderLine.setDiscount(pp.getDiscount());
 					orderLine.setQtyOrdered(orderLine.getQtyEntered());
+					if(m_hasAdvancedInstruction && m_exempt_c_tax_id > 0 )
+						orderLine.setC_Tax_ID(m_exempt_c_tax_id);
 					orderLine.saveEx();
 				}
 			}
@@ -215,6 +229,8 @@ public class FTUModelValidator implements ModelValidator {
 	/** Client			*/
 	private int		m_AD_Client_ID = -1;
 	private int[] m_blockBookingProducts;
+	private boolean m_hasAdvancedInstruction = false;
+	private int m_exempt_c_tax_id = 0;
 
 	@Override
 	public void initialize(ModelValidationEngine engine, MClient client) {
@@ -259,21 +275,56 @@ public class FTUModelValidator implements ModelValidator {
 			// Ignore updates while the model is being validated
 			if (fs.isBeingModelValidated())
 				return null;
+
+			log.fine(I_FTU_Flightsheet.Table_Name + " Flightsheet ID: " + fs.getFTU_Flightsheet_ID() + " Type: "+type);
+
+			// Ignore pending flightsheet entries
+			if (isNew && fs.getCourseType().matches("\\(pending\\)")) {
+				return null;
+			}
+
 			fs.setBeingModelValidated(true);
-
-			log.fine(fs.Table_Name + " Flightsheet ID: " + fs.getFTU_Flightsheet_ID() + " Type: "+type);
-
-			// Ignore cancelled and pending flightsheet entries
-			if (isNew && (fs.getCourseType().matches("Cancelled") || 
-		    			fs.getCourseType().matches("\\(pending\\)"))) {
+			
+			// Ignore inactive flights - void the associated entries
+			if (isChange && (po.is_ValueChanged("isActive") && !fs.isActive())
+					|| po.is_ValueChanged(MFTUFlightsheet.COLUMNNAME_IsNoShow) && !fs.isNoShow()) {
+				MOrder order = (MOrder) fs.getC_Order();
+				if (order != null && order.getC_Order_ID() > 0) {
+					if (order.getDocStatus().equals(MOrder.STATUS_Drafted)) {
+						order.deleteEx(true);
+					}
+					else {
+						order.voidIt();
+						order.setDocStatus(MOrder.STATUS_Voided);
+						order.saveEx();
+					}
+					//fs.setC_Order_ID(0);  // Null - will be done by the order process. 
+				}
+				MInventory inv = (MInventory) fs.getM_Inventory();
+				if (inv != null && inv.getM_Inventory_ID() > 0) {
+					inv.voidIt();
+					inv.saveEx();
+					fs.setM_Inventory_ID(0);
+				}
 				return null;
 			}
 			
-			// These calls will update and save the flightsheet entry, triggering
-			// other validations
-			fsGenerateOrder(fs, isNew);
-			fsConsumeFuel(fs, isNew);
-			fsUpdateJourneyLog(fs, isNew);
+			if (!fs.isActive())
+				return null;
+
+			if (fs.getCourseType().matches("Cancelled")) {
+				if (fs.getLine_Status() == null || !fs.getLine_Status().equals("Closed")) { 
+	    			fs.setLine_Status("Closed");
+	    			fs.saveEx();
+				}
+			}
+			else {	
+				// These calls will update and save the flightsheet entry, triggering
+				// other validations
+				fsGenerateOrder(fs);
+				fsConsumeFuel(fs);
+				fsUpdateJourneyLog(fs);
+			}
 			//
 			fs.setBeingModelValidated(false);
 			return null;
@@ -319,7 +370,7 @@ public class FTUModelValidator implements ModelValidator {
 		if (po instanceof MOrder) {	
 			boolean isDelete = (TYPE_AFTER_DELETE == type);
 
-			// If M_Inventory entries are deleted, check if these are referenced from the flightsheet and remove the reference.
+			// If M_Order entries are deleted, check if these are referenced from the flightsheet and remove the reference.
 			if (isDelete && ((MOrder) po).getC_Order_ID() > 0) {
 				log.fine(po.get_TableName() + " Type: "+type);
 				String where =  MOrder.COLUMNNAME_C_Order_ID + "=" + ((MOrder) po).getC_Order_ID();
@@ -341,7 +392,7 @@ public class FTUModelValidator implements ModelValidator {
 
 		if (po instanceof MInventory) {	
 			log.fine(po.get_TableName() + " Timing: "+ timing);
-			boolean isVoided = (this.TIMING_AFTER_REVERSECORRECT == timing || this.TIMING_AFTER_VOID == timing);
+			boolean isVoided = (ModelValidator.TIMING_AFTER_REVERSECORRECT == timing || ModelValidator.TIMING_AFTER_VOID == timing);
 			
 			// If M_Inventory entries are voided, check if these are referenced from the flightsheet and remove the reference.
 			if (isVoided) {
@@ -358,8 +409,10 @@ public class FTUModelValidator implements ModelValidator {
 
 		if (po instanceof MOrder) {	
 			log.fine(po.get_TableName() + " Timing: "+ timing);
-			boolean isVoided = (this.TIMING_AFTER_REVERSECORRECT == timing || this.TIMING_AFTER_VOID == timing);
-			boolean isPrepare = (this.TIMING_BEFORE_PREPARE == timing);
+			boolean isVoided = (ModelValidator.TIMING_AFTER_REVERSECORRECT == timing || ModelValidator.TIMING_AFTER_VOID == timing);
+			boolean isPrepare = (ModelValidator.TIMING_BEFORE_PREPARE == timing);
+			boolean isCompleted = (ModelValidator.TIMING_AFTER_COMPLETE == timing);
+			boolean isReactivated = (ModelValidator.TIMING_AFTER_REACTIVATE == timing);
 			
 			// If C_Order entries are voided, check if these are referenced from the flightsheet and remove the reference.
 			if (isVoided) {
@@ -369,20 +422,115 @@ public class FTUModelValidator implements ModelValidator {
 													 .list();
 				for (MFTUFlightsheet flight : flights) {
 					flight.setC_Order_ID(0);
-					flight.setLine_Status("Open");
 					flight.saveEx();
 				}
 			} // isVoided
 			
+			if (isReactivated) {
+				// Delete the reference to the order lines from the invoice lines
+				MOrder order = (MOrder) po;
+				MOrderLine[] orderLines = order.getLines();
+				String where = MInvoiceLine.COLUMNNAME_C_OrderLine_ID + "= ?";
+				Query invoiceLineQuery = new Query(po.getCtx(), MInvoiceLine.Table_Name, where, po.get_TrxName())
+													 .setClient_ID();
+				where = MInOutLine.COLUMNNAME_C_OrderLine_ID + "= ?";
+				Query inOutLineQuery = new Query(po.getCtx(), MInOutLine.Table_Name, where, po.get_TrxName())
+													 .setClient_ID();
+				for (MOrderLine orderLine : orderLines) {
+					List<MInvoiceLine> invoiceLines = invoiceLineQuery
+														.setParameters(orderLine.getC_OrderLine_ID())
+														.list();
+					for (MInvoiceLine line : invoiceLines) {
+						line.setC_OrderLine_ID(-1);
+						line.saveEx();
+					}
+					
+					List<MInOutLine> inOutLines = inOutLineQuery
+							.setParameters(orderLine.getC_OrderLine_ID())
+							.list();
+					for (MInOutLine line : inOutLines) {
+						line.setC_OrderLine_ID(-1);
+						line.saveEx();
+					}
+					
+					MProduct product = (MProduct) orderLine.getM_Product();
+					if (!product.isStocked()) {
+						orderLine.setQtyDelivered(Env.ZERO);
+						orderLine.setQtyReserved(Env.ZERO);
+						orderLine.saveEx();
+					}
+				}
+								
+			} // isReactivated
+			
 			if (isPrepare) {
+				setHasAdvancedInstruction(po);
 				orderAddBlockBookings(po);
+				setExemptTaxes(po);
+			}
+			
+			if (isCompleted) {
+				String where =  MOrder.COLUMNNAME_C_Order_ID + "=" + ((MOrder) po).getC_Order_ID();
+				List<MFTUFlightsheet> flights = new Query(po.getCtx(), MFTUFlightsheet.Table_Name, where, po.get_TrxName() )
+													 .setClient_ID()
+													 .list();
+				for (MFTUFlightsheet flight : flights) {
+					flight.setLine_Status("Closed");
+					flight.saveEx();
+				}				
 			}
 		}
 
 		return null;
 	}
 	
+	private void setHasAdvancedInstruction( PO po) {
+		// Determine if there is an advanced instruction product.
+		int advancedInstructionProduct_ID = 1000248;  // Hardcoded
+		m_hasAdvancedInstruction = false;
+		MOrder order = (MOrder) po;
+		MOrderLine[] orderLines = order.getLines();
+		for (MOrderLine orderLine : orderLines) {
+			int m_product_id = orderLine.getM_Product_ID();
+			if (m_product_id == advancedInstructionProduct_ID) {
+				m_hasAdvancedInstruction = true;
+				break;
+			}
+		}
+	}
 	
+	private void setExemptTaxes(PO po) {
+		// Set the tax on tuition items to exempt for 
+		// vocational students purchasing vocational training items
+		// All tuition items and block booking items that are on an order
+		// that also includes the Advanced Instruction item are tax exempt
+		
+		MOrder order = (MOrder) po;
+		MOrderLine[] orderLines = order.getLines();
+		
+		if (m_hasAdvancedInstruction) {
+			for (MOrderLine orderLine : orderLines) {
+				if (orderLine == null)
+					continue;
+				
+				if (orderLine.getM_Product_ID() == 0)
+					continue;
+				
+				MProduct product = (MProduct) orderLine.getM_Product();
+				if (product == null || product.get_ID() == 0)
+					continue;
+				
+				I_M_Product_Category productCategory = product.getM_Product_Category();
+				boolean isBlockBooking = (productCategory != null && productCategory.getName().equals("Block Booking"));
+				//
+				if (product.isTuitionFee() || isBlockBooking) {
+					orderLine.setC_Tax_ID(m_exempt_c_tax_id);
+					orderLine.saveEx();
+				}
+			}
+		}
+	}
+
 	private void orderAddBlockBookings(PO po) {
 		// Add block bookings if they don't exist.
 		// Match for eligible product and block booking is product class = block booking product value
@@ -394,6 +542,11 @@ public class FTUModelValidator implements ModelValidator {
 			return;
 		
 		MOrder order = (MOrder) po;
+		
+		// Don't proceed unless the ApplyBlockBooking flag is selected.
+		if (!order.isApplyBlockBookings())
+			return;
+		
 		MOrderLine[] orderLines = order.getLines();
 		
 		boolean hasBlockBookingProducts = false;
@@ -552,13 +705,18 @@ public class FTUModelValidator implements ModelValidator {
 		return m_blockBookingProducts != null && m_blockBookingProducts.length > 0;
 	}
 
-	private boolean fsGenerateOrder(MFTUFlightsheet fs, boolean newRecord) {
+	private boolean fsGenerateOrder(MFTUFlightsheet fs) {
 		
 		boolean success = true;
 
 		// Ignore entries that already have an order associated with them
 		// TODO check if the order is completed and should be closed.
-		if (!newRecord && fs.getC_Order_ID() > 0) {
+		if (fs.getC_Order_ID() > 0) {
+			return success;
+		}
+		
+		// Ignore lines that are closed
+		if (fs.getLine_Status() == "Closed") {
 			return success;
 		}
 		
@@ -571,8 +729,12 @@ public class FTUModelValidator implements ModelValidator {
 		// If there is no time or no-show, then the line is not ready for billing 
 		// yet.
 		if (!(flightTime.add(brief).add(sim).add(fuel).doubleValue()>0.0 || 
-				fs.getCourseType().matches("No-Show")))
+				fs.getCourseType().matches("No-Show"))) {
+			fs.setC_Order_ID(0);
+			fs.setLine_Status("Closed");
+			fs.saveEx();
 			return success;
+		}
     	
     	log.fine("Creating order for Flight ID: " + fs.getFlightID() + " Type: " + fs.getCourseType());
     	
@@ -788,11 +950,11 @@ public class FTUModelValidator implements ModelValidator {
 	        		.append(" Air Time: ")
 	        		.append(fs.getAirTime().setScale(1).toPlainString());
  
-		        	 MResourceAssignment ra = new MResourceAssignment(fs.getCtx(),0,fs.get_TrxName());
-		        	 ra.setS_Resource_ID(ac.getS_Resource_ID());
-		        	 ra.setAssignDateFrom(engStart);
-		        	 ra.setAssignDateTo(engStop);
-		        	 // only use flight time and sim.  The sim appears as an aircraft.
+	        	 MResourceAssignment ra = new MResourceAssignment(fs.getCtx(),0,fs.get_TrxName());
+	        	 ra.setS_Resource_ID(ac.getS_Resource_ID());
+	        	 ra.setAssignDateFrom(engStart);
+	        	 ra.setAssignDateTo(engStop);
+	        	 // only use flight time and sim.  The sim appears as an aircraft.
 	        	 ra.setQty(flightTime.add(sim));
 	        	 ra.setIsConfirmed(true);
 	        	 ra.setName(name.toString());
@@ -852,7 +1014,7 @@ public class FTUModelValidator implements ModelValidator {
 
 		        	// Add order line for Aircraft
 		     		line = new MOrderLine(order);
-		     		line.setS_ResourceAssignment_ID(ac.getS_Resource_ID());
+		     		line.setS_ResourceAssignment_ID(ra.getS_ResourceAssignment_ID());
 		     		line.setM_Product_ID(acProduct.getM_Product_ID());
 		     		line.setC_UOM_ID(acProduct.getC_UOM_ID());
 		     		line.setDescription(description.toString());
@@ -1012,14 +1174,13 @@ public class FTUModelValidator implements ModelValidator {
 	     		
  		if (order != null && order.getC_Order_ID() > 0) {
  			fs.setC_Order_ID(order.getC_Order_ID());
- 			fs.setLine_Status("Closed");
  			fs.saveEx();
  		}
 
  		return success;
 	}	//	fsGenerateOrder
 	
-	private boolean fsUpdateJourneyLog(MFTUFlightsheet fs, boolean newRecord) {
+	private boolean fsUpdateJourneyLog(MFTUFlightsheet fs) {
 		
 		boolean success = true;
 
@@ -1036,12 +1197,12 @@ public class FTUModelValidator implements ModelValidator {
 		return success;
 	} // fsUpdateJourneyLog
 
-	private boolean fsConsumeFuel(MFTUFlightsheet fs, boolean newRecord) {
+	private boolean fsConsumeFuel(MFTUFlightsheet fs) {
 		
 		boolean success = true;
 		
 		// Ignore entries that already have an internal use inventory associated with them
-		if (!newRecord && fs.getM_Inventory_ID() > 0) {
+		if (fs.getM_Inventory_ID() > 0) {
 			return success;
 		}
 		

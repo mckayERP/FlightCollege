@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Bank_Reconciliation_Report_AP_Outstanding" pageWidth="463" pageHeight="752" columnWidth="463" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isFloatColumnFooter="true" uuid="9ac8728b-444d-4e07-bb5c-5e1ad10c476b">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="sqC_BANKACCOUNT_ID" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[1000000]]></defaultValueExpression>
+	</parameter>
+	<parameter name="sqREPORT_DATE" class="java.sql.Timestamp">
+		<defaultValueExpression><![CDATA[java.sql.Timestamp.valueOf("2011-02-28 00:00:00")]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+		rltt.list_value as Tender_Type, rltrxt.list_value as Trx_Type, p.documentno, p.dateacct, bp."name", c.iso_code as currency_code, p.payamt, fai.amtsourcedr - fai.amtsourcecr as amtsource, fai.amtacctdr - fai.amtacctcr as amtacct
+	FROM
+		adempiere.c_payment p
+		left outer join adempiere.c_bankstatementline bsl on bsl.c_payment_id = p.c_payment_id
+		left outer join (SELECT
+					ad_ref_list."name" as list_value,
+					ad_ref_list."value" as code
+				FROM
+					adempiere.ad_ref_list,
+					adempiere.ad_reference
+				where
+					ad_ref_list.ad_reference_id = ad_reference.ad_reference_id
+					AND ad_reference."name" = 'C_Payment Tender Type') rltt on rltt.code = p.tendertype
+		left outer join (SELECT
+					ad_ref_list."name" as list_value,
+					ad_ref_list."value" as code
+				FROM
+					adempiere.ad_ref_list,
+					adempiere.ad_reference
+				where
+					ad_ref_list.ad_reference_id = ad_reference.ad_reference_id
+					AND ad_reference."name" = 'C_Payment Trx Type') rltrxt on rltrxt.code = p.trxtype,
+		adempiere.c_bankaccount_acct baa,
+		adempiere.c_validcombination ia,
+		adempiere.fact_acct fai,
+		adempiere.c_currency c,
+		adempiere.c_bpartner bp
+
+	WHERE
+		baa.c_bankaccount_id = $P{sqC_BANKACCOUNT_ID}
+		AND p.c_bankaccount_id = baa.c_bankaccount_id
+		AND baa.b_intransit_acct = ia.c_validcombination_id
+		AND fai.account_id = ia.account_id
+		AND fai.ad_table_id = 335 -- C_Payment
+		AND fai.postingtype = 'A'
+		AND p.c_payment_id = fai.record_id
+		AND fai.dateacct <= $P{sqREPORT_DATE}
+		AND (p.isreconciled = 'N' OR p.isreconciled = 'Y' AND bsl.dateacct >$P{sqREPORT_DATE})
+		AND p.isreceipt = 'N'
+		AND p.trxtype != 'X'
+		AND p.docstatus in ('CO', 'CL', 'RE', 'VO')
+		AND p.c_currency_id = c.c_currency_id
+		AND p.c_bpartner_id = bp.c_bpartner_id
+	ORDER BY
+		p.documentno
+;]]>
+	</queryString>
+	<field name="tender_type" class="java.lang.String"/>
+	<field name="trx_type" class="java.lang.String"/>
+	<field name="documentno" class="java.lang.String"/>
+	<field name="dateacct" class="java.sql.Timestamp"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="currency_code" class="java.lang.String"/>
+	<field name="payamt" class="java.math.BigDecimal"/>
+	<field name="amtsource" class="java.math.BigDecimal"/>
+	<field name="amtacct" class="java.math.BigDecimal"/>
+	<variable name="TOTAL_AMT" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{amtacct}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="48" splitType="Stretch">
+			<staticText>
+				<reportElement x="16" y="25" width="40" height="20" uuid="6014a777-1d45-4e8e-a934-ea4ff8311c98"/>
+				<textElement verticalAlignment="Bottom"/>
+				<text><![CDATA[Doc No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="56" y="25" width="53" height="20" uuid="170afdc1-d226-4388-adcc-a2ec8c4864db"/>
+				<textElement verticalAlignment="Bottom"/>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="109" y="25" width="100" height="20" uuid="7582b531-031f-49c6-b992-fd175d2e7495"/>
+				<textElement verticalAlignment="Bottom"/>
+				<text><![CDATA[BP Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="227" y="25" width="90" height="20" uuid="72b0c840-e9f1-432a-b884-4dcd52a29e8a"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<text><![CDATA[Source Amt]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="319" y="25" width="27" height="20" uuid="c54f0d16-a90d-464b-aa6a-525691a22272"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<text><![CDATA[Cur]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="346" y="25" width="73" height="20" uuid="fd47a392-5c95-413a-8c1b-87064ec5e157"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<text><![CDATA[Acct Amt]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="6" width="463" height="20" uuid="9fa3645f-bb2c-4eb0-94b4-f4d1064ff21f"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Accounts Payable Outstanding]]></text>
+			</staticText>
+			<line>
+				<reportElement x="16" y="46" width="403" height="1" uuid="966ce7c5-743f-4f0e-8365-a8ac0539e452"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<textField>
+				<reportElement x="16" y="0" width="40" height="14" uuid="176b69e5-7018-4a96-ba3f-e55fbcf77f28"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{documentno}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="227" y="0" width="90" height="14" uuid="175d989a-5668-47bb-b768-efe37d3d89e4"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{amtsource}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="346" y="0" width="73" height="14" uuid="b34605f9-6f2e-4e92-8dc4-fd79e6f956e2"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{amtacct}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd-MMM-yy">
+				<reportElement x="56" y="0" width="53" height="14" uuid="79dbd4e1-dad6-49c4-b5d4-442bb432fc79"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dateacct}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="109" y="0" width="116" height="14" uuid="63055ff1-566e-4708-b1b6-d1b712135d6d"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="317" y="0" width="29" height="14" uuid="0da14066-3c04-46fb-8146-dc0e7948e994"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{currency_code}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="29" splitType="Stretch">
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="398" y="8" width="65" height="15" uuid="741601a1-1d38-4d09-a7c5-2f747b0fbc2a"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTAL_AMT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="177" y="8" width="221" height="15" uuid="e1b479a8-cb49-43c3-af78-08407cba0767"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Accounts Payable Outstanding: ]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+</jasperReport>

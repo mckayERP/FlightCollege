@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="MFTU" Name="Fix courseTitle in FTU_Course" ReleaseNo="FTU2" SeqNo="35">
+    <Step DBType="ALL" Parse="Y" SeqNo="0" StepType="SQL">
+      <SQLStatement>ALTER TABLE ftu_course RENAME coursetitle  TO name;
+</SQLStatement>
+      <RollbackStatement>ALTER TABLE ftu_course RENAME name  TO coursetitle;</RollbackStatement>
+    </Step>
+  </Migration>
+</Migrations>

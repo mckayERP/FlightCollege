@@ -63,6 +63,7 @@ public class UpdateJourneyLogs extends SvrProcess {
 		
 		List<MFTUAircraft> fleet = new Query(getCtx(), MFTUAircraft.Table_Name, "", get_TrxName())
 									.setClient_ID()
+									.setOnlyActiveRecords(true)
 									.list();
 		
 		for (MFTUAircraft ac : fleet) {

@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Bank_Reconciliation_Report_AP_Outstanding" pageWidth="463" pageHeight="752" columnWidth="463" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isFloatColumnFooter="true" uuid="987489f8-aaba-43fa-a3a3-7341813d84b9">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="sqC_BANKACCOUNT_ID" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[1000000]]></defaultValueExpression>
+	</parameter>
+	<parameter name="sqREPORT_DATE" class="java.sql.Timestamp">
+		<defaultValueExpression><![CDATA[java.sql.Timestamp.valueOf("2014-01-12 00:00:00")]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+		rltt.list_value as Tender_Type, rltrxt.list_value as Trx_Type, c."name", c.dateacct,  'Cash' as type, cl.amount, cur.iso_code as currency_code, fai.amtsourcedr - fai.amtsourcecr as amtsource, fai.amtacctdr - fai.amtacctcr as amtacct
+	FROM
+		adempiere.c_cash c,
+		adempiere.c_cashline cl,
+		adempiere.c_payment p
+		left outer join adempiere.c_bankstatementline bsl on bsl.c_payment_id = p.c_payment_id
+		left outer join adempiere.c_bankdepositline bdl on bdl.c_payment_id = p.c_payment_id
+		left outer join adempiere.c_bankdeposit bd on bd.c_bankdeposit_id = bdl.c_bankdeposit_id		left outer join (SELECT
+					ad_ref_list."name" as list_value,
+					ad_ref_list."value" as code
+				FROM
+					adempiere.ad_ref_list,
+					adempiere.ad_reference
+				where
+					ad_ref_list.ad_reference_id = ad_reference.ad_reference_id
+					AND ad_reference."name" = 'C_Payment Tender Type') rltt on rltt.code = p.tendertype
+		left outer join (SELECT
+					ad_ref_list."name" as list_value,
+					ad_ref_list."value" as code
+				FROM
+					adempiere.ad_ref_list,
+					adempiere.ad_reference
+				where
+					ad_ref_list.ad_reference_id = ad_reference.ad_reference_id
+					AND ad_reference."name" = 'C_Payment Trx Type') rltrxt on rltrxt.code = p.trxtype,
+		adempiere.c_bankaccount_acct baa,
+		adempiere.c_validcombination ia,
+		adempiere.fact_acct fai,
+		adempiere.c_currency cur
+	WHERE
+		baa.c_bankaccount_id = $P{sqC_BANKACCOUNT_ID}
+		AND p.c_bankaccount_id = baa.c_bankaccount_id
+		AND baa.b_intransit_acct = ia.c_validcombination_id
+		AND fai.account_id = ia.account_id
+		AND fai.ad_table_id = 407 -- Cash Journal 407
+		AND c.c_cash_id = fai.record_id
+		AND cl.c_cashline_id = fai.line_id
+		AND fai.dateacct <= $P{sqREPORT_DATE}
+		AND fai.postingtype = 'A'
+		AND cl.c_cash_id = c.c_cash_id
+		AND cl.cashtype = 'T'
+		AND cl.c_payment_id = p.c_payment_id
+		AND p.payamt != 0
+		AND (bsl.c_bankstatementline_id is null OR  bsl.dateacct >$P{sqREPORT_DATE})
+		AND (bdl.c_bankdepositline_id is null OR  bd.dateacct >$P{sqREPORT_DATE})
+		AND cl.c_currency_id = cur.c_currency_id
+
+UNION
+
+SELECT
+		rltt.list_value as Tender_Type, rltrxt.list_value as Trx_Type, pp.documentno as name, pp.dateacct, 'Deposit' as type, pp.payamt as amount, c.iso_code as currency_code, pp.payamt as amtsource, pp.payamt as amtacct
+FROM
+		adempiere.c_payment pp
+		left outer join adempiere.c_bankstatementline bsl on bsl.c_payment_id = pp.c_payment_id
+		left outer join adempiere.c_bankdepositline bdl on bdl.c_payment_id = pp.c_payment_id
+		left outer join adempiere.c_bankdeposit bd on bd.c_bankdeposit_id = bdl.c_bankdeposit_id		left outer join (SELECT
+					ad_ref_list."name" as list_value,
+					ad_ref_list."value" as code
+				FROM
+					adempiere.ad_ref_list,
+					adempiere.ad_reference
+				where
+					ad_ref_list.ad_reference_id = ad_reference.ad_reference_id
+					AND ad_reference."name" = 'C_Payment Tender Type') rltt on rltt.code = pp.tendertype
+		left outer join (SELECT
+					ad_ref_list."name" as list_value,
+					ad_ref_list."value" as code
+				FROM
+					adempiere.ad_ref_list,
+					adempiere.ad_reference
+				where
+					ad_ref_list.ad_reference_id = ad_reference.ad_reference_id
+					AND ad_reference."name" = 'C_Payment Trx Type') rltrxt on rltrxt.code = pp.trxtype,
+		--adempiere.c_bankaccount_acct ba,
+		--adempiere.c_validcombination ia,
+		--adempiere.fact_acct fai,
+		adempiere.c_currency c
+
+	WHERE
+		pp.c_bankaccount_id = $P{sqC_BANKACCOUNT_ID}
+		--AND p.c_bankaccount_id = baa.c_bankaccount_id
+		--AND baa.b_intransit_acct = ia.c_validcombination_id
+		--AND fai.account_id = ia.account_id
+		--AND fai.ad_table_id = 100063 -- C_BankDeposit
+		--AND fai.postingtype = 'A'
+		--AND p.c_payment_id = fai.record_id
+		AND pp.dateacct <= $P{sqREPORT_DATE}
+		AND (pp.IsReconciled = 'N' AND bsl.c_bankstatementline_id is null
+			OR  pp.isReconciled = 'Y' AND bsl.dateacct >$P{sqREPORT_DATE}
+			OR  pp.isReconciled = 'Y' AND bd.dateacct >$P{sqREPORT_DATE})
+		AND pp.trxtype = 'X'
+		AND pp.tendertype = 'G'
+		AND pp.docstatus in ('CO', 'CL', 'RE')
+		AND pp.c_currency_id = c.c_currency_id
+		AND pp.payamt != 0
+		--AND p.c_bpartner_id = bp.c_bpartner_id
+	ORDER BY
+		name
+;]]>
+	</queryString>
+	<field name="tender_type" class="java.lang.String"/>
+	<field name="trx_type" class="java.lang.String"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="dateacct" class="java.sql.Timestamp"/>
+	<field name="type" class="java.lang.String"/>
+	<field name="amount" class="java.math.BigDecimal"/>
+	<field name="currency_code" class="java.lang.String"/>
+	<field name="amtsource" class="java.math.BigDecimal"/>
+	<field name="amtacct" class="java.math.BigDecimal"/>
+	<variable name="TOTAL_AMT" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{amtacct}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="48" splitType="Stretch">
+			<staticText>
+				<reportElement x="17" y="26" width="104" height="20" uuid="3bdd8b3b-c76e-4956-a351-5861d2b04d6a"/>
+				<text><![CDATA[Item]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="188" y="26" width="53" height="20" uuid="04dc40ef-f966-4573-97bd-2aad262eb2eb"/>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="260" y="26" width="58" height="20" uuid="16f2f170-6dff-4197-ace7-fb35e726b9b4"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Source Amt]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="320" y="26" width="27" height="20" uuid="098833cf-9dec-4bc7-bdcb-b947c7ef9d51"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Cur]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="347" y="26" width="73" height="20" uuid="954082c8-8e69-40f3-af4f-756d3fa35dab"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Acct Amt]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="121" y="26" width="52" height="20" uuid="ffdd7bab-06c3-45b6-866d-17cc05603960"/>
+				<text><![CDATA[Type]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="5" width="463" height="20" uuid="7a67750b-5fd0-4d11-90b2-a2bdcc3895d2"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Deposits/Withdrawls Outstanding]]></text>
+			</staticText>
+			<line>
+				<reportElement x="17" y="45" width="403" height="1" uuid="6728e653-e819-4757-94c5-0e6074250f1d"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="17" splitType="Stretch">
+			<textField>
+				<reportElement x="17" y="1" width="104" height="14" uuid="f1e48bdb-5ec1-4bb0-956f-98ae26f96fb1"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="260" y="1" width="58" height="14" uuid="754cb3b1-dc23-4c81-be9d-2ed32a733c97"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{amtsource}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="347" y="1" width="73" height="14" uuid="909fb45c-4496-4c93-ad46-5778b58c91db"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{amtacct}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd-MMM-yy">
+				<reportElement x="188" y="1" width="53" height="14" uuid="e322c2ad-e634-4131-b232-610c6d09d3da"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dateacct}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="318" y="1" width="29" height="14" uuid="15a03807-84f4-4148-99a1-598e48341bb9"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{currency_code}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="121" y="1" width="52" height="14" uuid="833aceee-e144-460d-a58a-3831fdb584d5"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{type}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="29" splitType="Stretch">
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="398" y="8" width="65" height="15" uuid="133610ae-7c16-4c59-a6e5-aa00a1ff6443"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTAL_AMT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="138" y="8" width="260" height="15" uuid="c9f90f91-900e-4c09-aecc-2155319def34"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Cash Deposits/(Withdrawls) Outstanding: ]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+</jasperReport>
