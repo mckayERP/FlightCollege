@@ -24,6 +24,7 @@ import org.compiere.model.MInventoryLine;
 import org.compiere.model.MInvoiceLine;
 import org.compiere.model.MOrder;
 import org.compiere.model.MOrderLine;
+import org.compiere.model.MOrg;
 import org.compiere.model.MPriceList;
 import org.compiere.model.MPriceListVersion;
 import org.compiere.model.MProduct;
@@ -33,6 +34,7 @@ import org.compiere.model.MResourceAssignment;
 import org.compiere.model.MTax;
 import org.compiere.model.MTransaction;
 import org.compiere.model.MUOMConversion;
+import org.compiere.model.MWarehouse;
 import org.compiere.model.ModelValidationEngine;
 import org.compiere.model.ModelValidator;
 import org.compiere.model.PO;
@@ -767,15 +769,30 @@ public class FTUModelValidator implements ModelValidator {
 			order = new MOrder(fs.getCtx(), 0, fs.get_TrxName());
 		}
 
-		// Check to see if the business partner is set
-		if ((order.getC_BPartner_ID()==0))
-		{
-			order.setC_BPartner_ID(fs.getC_BPartner_ID());
-			order.setDateOrdered(fs.getFlightDate());
-			order.setM_Warehouse_ID(m_M_Warehouse_ID); //Use default
-			order.setC_DocTypeTarget_ID("WI"); //Credit Order
-			order.saveEx();
+		// Check the organization
+		if(fs.getAD_Org_ID() > 0) {
+			order.setAD_Org_ID(fs.getAD_Org_ID());
 		}
+		
+		// Check to see if the business partner is set
+		if (fs.getC_BPartner_ID()>0) {
+			order.setC_BPartner_ID(fs.getC_BPartner_ID());
+		}
+
+		if (m_M_Warehouse_ID == 0) {  // If logged in as * with no org/warehouse selected.
+			MWarehouse[] warehouses = MWarehouse.getForOrg(fs.getCtx(), fs.getAD_Org_ID());
+			for (MWarehouse wh : warehouses) {
+				if (wh.getM_Warehouse_ID() > 0) {
+					m_M_Warehouse_ID = wh.getM_Warehouse_ID();
+					break;
+				}
+			}
+		}
+		order.setM_Warehouse_ID(m_M_Warehouse_ID); //Use default			
+		order.setDateOrdered(fs.getFlightDate());
+		order.setC_DocTypeTarget_ID("WI"); //Credit Order
+
+		order.saveEx();
 
 		log.fine("Creating orders - Order ID: " + order_id);
 
@@ -952,6 +969,7 @@ public class FTUModelValidator implements ModelValidator {
  
 	        	 MResourceAssignment ra = new MResourceAssignment(fs.getCtx(),0,fs.get_TrxName());
 	        	 ra.setS_Resource_ID(ac.getS_Resource_ID());
+	        	 ra.setAD_Org_ID(fs.getAD_Org_ID());
 	        	 ra.setAssignDateFrom(engStart);
 	        	 ra.setAssignDateTo(engStop);
 	        	 // only use flight time and sim.  The sim appears as an aircraft.
@@ -1063,6 +1081,7 @@ public class FTUModelValidator implements ModelValidator {
 
 	        	 MResourceAssignment ra = new MResourceAssignment(fs.getCtx(),0,fs.get_TrxName());
 	        	 ra.setS_Resource_ID(inst.getS_Resource_ID());
+	        	 ra.setAD_Org_ID(fs.getAD_Org_ID());
 	        	 ra.setAssignDateFrom(engStart);
 	        	 ra.setAssignDateTo(engStop);
 	        	 // add any sim and brief time to the instructor time.
