@@ -1182,6 +1182,7 @@ public class DocumentEngine implements DocAction
 					options[index++] = DocumentEngine.ACTION_ReActivate;
 				}
 		}
+		}
 		return index;
 	}
 	
