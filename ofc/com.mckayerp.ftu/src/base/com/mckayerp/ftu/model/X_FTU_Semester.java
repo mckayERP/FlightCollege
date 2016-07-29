@@ -1,6 +1,6 @@
 /******************************************************************************
- * Product: Adempiere ERP & CRM Smart Business Solution                       *
- * Copyright (C) 1999-2007 ComPiere, Inc. All Rights Reserved.                *
+ * Product: ADempiere ERP & CRM Smart Business Solution                       *
+ * Copyright (C) 2006-2016 ADempiere Foundation, All Rights Reserved.         *
  * This program is free software, you can redistribute it and/or modify it    *
  * under the terms version 2 of the GNU General Public License as published   *
  * by the Free Software Foundation. This program is distributed in the hope   *
@@ -11,8 +11,7 @@
  * with this program, if not, write to the Free Software Foundation, Inc.,    *
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.                     *
  * For the text or an alternative of this public license, you may reach us    *
- * ComPiere, Inc., 2620 Augustine Dr. #245, Santa Clara, CA 95054, USA        *
- * or via info@compiere.org or http://www.compiere.org/license.html           *
+ * or via info@adempiere.net or http://www.adempiere.net/license.html         *
  *****************************************************************************/
 /** Generated Model - DO NOT CHANGE */
 package com.mckayerp.ftu.model;
@@ -32,7 +31,7 @@ public class X_FTU_Semester extends PO implements I_FTU_Semester, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160417L;
+	private static final long serialVersionUID = 20160721L;
 
     /** Standard Constructor */
     public X_FTU_Semester (Properties ctx, int FTU_Semester_ID, String trxName)
@@ -44,7 +43,6 @@ public class X_FTU_Semester extends PO implements I_FTU_Semester, I_Persistent
 			setFTU_Semester_ID (0);
 			setFTU_Training_Unit_ID (0);
 			setName (null);
-			setText (null);
 			setValue (null);
         } */
     }
@@ -92,6 +90,23 @@ public class X_FTU_Semester extends PO implements I_FTU_Semester, I_Persistent
 	public Timestamp getCalendarYear () 
 	{
 		return (Timestamp)get_Value(COLUMNNAME_CalendarYear);
+	}
+
+	/** Set Description.
+		@param Description 
+		Optional short description of the record
+	  */
+	public void setDescription (String Description)
+	{
+		set_Value (COLUMNNAME_Description, Description);
+	}
+
+	/** Get Description.
+		@return Optional short description of the record
+	  */
+	public String getDescription () 
+	{
+		return (String)get_Value(COLUMNNAME_Description);
 	}
 
 	/** Set Sememster ID.
@@ -167,27 +182,30 @@ public class X_FTU_Semester extends PO implements I_FTU_Semester, I_Persistent
         return new KeyNamePair(get_ID(), getName());
     }
 
-	/** Text AD_Reference_ID=1000000 */
-	public static final int TEXT_AD_Reference_ID=1000000;
+	/** TermCode AD_Reference_ID=1000000 */
+	public static final int TERMCODE_AD_Reference_ID=1000000;
 	/** S = S */
-	public static final String TEXT_S = "S";
+	public static final String TERMCODE_S = "S";
 	/** W = W */
-	public static final String TEXT_W = "W";
+	public static final String TERMCODE_W = "W";
 	/** F = F */
-	public static final String TEXT_F = "F";
-	/** Set Description.
-		@param Text Description	  */
-	public void setText (String Text)
+	public static final String TERMCODE_F = "F";
+	/** Set Term Code.
+		@param TermCode 
+		The code for the semester
+	  */
+	public void setTermCode (String TermCode)
 	{
 
-		set_Value (COLUMNNAME_Text, Text);
+		set_Value (COLUMNNAME_TermCode, TermCode);
 	}
 
-	/** Get Description.
-		@return Description	  */
-	public String getText () 
+	/** Get Term Code.
+		@return The code for the semester
+	  */
+	public String getTermCode () 
 	{
-		return (String)get_Value(COLUMNNAME_Text);
+		return (String)get_Value(COLUMNNAME_TermCode);
 	}
 
 	/** Set Search Key.

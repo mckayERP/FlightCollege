@@ -1,6 +1,6 @@
 /******************************************************************************
- * Product: Adempiere ERP & CRM Smart Business Solution                       *
- * Copyright (C) 1999-2007 ComPiere, Inc. All Rights Reserved.                *
+ * Product: ADempiere ERP & CRM Smart Business Solution                       *
+ * Copyright (C) 2006-2016 ADempiere Foundation, All Rights Reserved.         *
  * This program is free software, you can redistribute it and/or modify it    *
  * under the terms version 2 of the GNU General Public License as published   *
  * by the Free Software Foundation. This program is distributed in the hope   *
@@ -11,8 +11,7 @@
  * with this program, if not, write to the Free Software Foundation, Inc.,    *
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.                     *
  * For the text or an alternative of this public license, you may reach us    *
- * ComPiere, Inc., 2620 Augustine Dr. #245, Santa Clara, CA 95054, USA        *
- * or via info@compiere.org or http://www.compiere.org/license.html           *
+ * or via info@adempiere.net or http://www.adempiere.net/license.html         *
  *****************************************************************************/
 /** Generated Model - DO NOT CHANGE */
 package com.mckayerp.ftu.model;
@@ -31,7 +30,7 @@ public class X_FTU_Training_Unit extends PO implements I_FTU_Training_Unit, I_Pe
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160417L;
+	private static final long serialVersionUID = 20160721L;
 
     /** Standard Constructor */
     public X_FTU_Training_Unit (Properties ctx, int FTU_Training_Unit_ID, String trxName)
@@ -101,6 +100,23 @@ public class X_FTU_Training_Unit extends PO implements I_FTU_Training_Unit, I_Pe
 		return ii.intValue();
 	}
 
+	/** Set Description.
+		@param Description 
+		Optional short description of the record
+	  */
+	public void setDescription (String Description)
+	{
+		set_Value (COLUMNNAME_Description, Description);
+	}
+
+	/** Get Description.
+		@return Optional short description of the record
+	  */
+	public String getDescription () 
+	{
+		return (String)get_Value(COLUMNNAME_Description);
+	}
+
 	/** Set Training Unit ID.
 		@param FTU_Training_Unit_ID 
 		ID (Key) of the Training Unit
@@ -148,20 +164,6 @@ public class X_FTU_Training_Unit extends PO implements I_FTU_Training_Unit, I_Pe
     {
         return new KeyNamePair(get_ID(), getName());
     }
-
-	/** Set Description.
-		@param Text Description	  */
-	public void setText (String Text)
-	{
-		set_Value (COLUMNNAME_Text, Text);
-	}
-
-	/** Get Description.
-		@return Description	  */
-	public String getText () 
-	{
-		return (String)get_Value(COLUMNNAME_Text);
-	}
 
 	/** Set Search Key.
 		@param Value 

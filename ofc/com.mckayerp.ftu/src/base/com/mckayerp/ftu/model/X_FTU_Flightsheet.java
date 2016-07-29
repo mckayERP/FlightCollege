@@ -1,6 +1,6 @@
 /******************************************************************************
- * Product: Adempiere ERP & CRM Smart Business Solution                       *
- * Copyright (C) 1999-2007 ComPiere, Inc. All Rights Reserved.                *
+ * Product: ADempiere ERP & CRM Smart Business Solution                       *
+ * Copyright (C) 2006-2016 ADempiere Foundation, All Rights Reserved.         *
  * This program is free software, you can redistribute it and/or modify it    *
  * under the terms version 2 of the GNU General Public License as published   *
  * by the Free Software Foundation. This program is distributed in the hope   *
@@ -11,8 +11,7 @@
  * with this program, if not, write to the Free Software Foundation, Inc.,    *
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.                     *
  * For the text or an alternative of this public license, you may reach us    *
- * ComPiere, Inc., 2620 Augustine Dr. #245, Santa Clara, CA 95054, USA        *
- * or via info@compiere.org or http://www.compiere.org/license.html           *
+ * or via info@adempiere.net or http://www.adempiere.net/license.html         *
  *****************************************************************************/
 /** Generated Model - DO NOT CHANGE */
 package com.mckayerp.ftu.model;
@@ -33,7 +32,7 @@ public class X_FTU_Flightsheet extends PO implements I_FTU_Flightsheet, I_Persis
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160417L;
+	private static final long serialVersionUID = 20160721L;
 
     /** Standard Constructor */
     public X_FTU_Flightsheet (Properties ctx, int FTU_Flightsheet_ID, String trxName)
@@ -342,6 +341,8 @@ public class X_FTU_Flightsheet extends PO implements I_FTU_Flightsheet, I_Persis
 	public static final String COURSETYPE_VFROTT = "VFR OTT";
 	/** Other Tuition = Other Tuition */
 	public static final String COURSETYPE_OtherTuition = "Other Tuition";
+	/** Checkout = Checkout */
+	public static final String COURSETYPE_Checkout = "Checkout";
 	/** Set Course Type.
 		@param CourseType Course Type	  */
 	public void setCourseType (String CourseType)
@@ -686,8 +687,8 @@ public class X_FTU_Flightsheet extends PO implements I_FTU_Flightsheet, I_Persis
 		return ii.intValue();
 	}
 
-	/** Set OFC_Flightsheet ID.
-		@param FTU_Flightsheet_ID OFC_Flightsheet ID	  */
+	/** Set Flight.
+		@param FTU_Flightsheet_ID Flight	  */
 	public void setFTU_Flightsheet_ID (int FTU_Flightsheet_ID)
 	{
 		if (FTU_Flightsheet_ID < 1) 
@@ -696,8 +697,8 @@ public class X_FTU_Flightsheet extends PO implements I_FTU_Flightsheet, I_Persis
 			set_ValueNoCheck (COLUMNNAME_FTU_Flightsheet_ID, Integer.valueOf(FTU_Flightsheet_ID));
 	}
 
-	/** Get OFC_Flightsheet ID.
-		@return OFC_Flightsheet ID	  */
+	/** Get Flight.
+		@return Flight	  */
 	public int getFTU_Flightsheet_ID () 
 	{
 		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_Flightsheet_ID);

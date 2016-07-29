@@ -1,6 +1,6 @@
 /******************************************************************************
- * Product: Adempiere ERP & CRM Smart Business Solution                       *
- * Copyright (C) 1999-2007 ComPiere, Inc. All Rights Reserved.                *
+ * Product: ADempiere ERP & CRM Smart Business Solution                       *
+ * Copyright (C) 2006-2016 ADempiere Foundation, All Rights Reserved.         *
  * This program is free software, you can redistribute it and/or modify it    *
  * under the terms version 2 of the GNU General Public License as published   *
  * by the Free Software Foundation. This program is distributed in the hope   *
@@ -11,8 +11,7 @@
  * with this program, if not, write to the Free Software Foundation, Inc.,    *
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.                     *
  * For the text or an alternative of this public license, you may reach us    *
- * ComPiere, Inc., 2620 Augustine Dr. #245, Santa Clara, CA 95054, USA        *
- * or via info@compiere.org or http://www.compiere.org/license.html           *
+ * or via info@adempiere.net or http://www.adempiere.net/license.html         *
  *****************************************************************************/
 package com.mckayerp.ftu.model;
 
@@ -63,6 +62,49 @@ public interface I_FTU_DefectLog
 	  */
 	public int getAD_Org_ID();
 
+    /** Column name ApprovalAmt */
+    public static final String COLUMNNAME_ApprovalAmt = "ApprovalAmt";
+
+	/** Set Approval Amount.
+	  * Document Approval Amount
+	  */
+	public void setApprovalAmt (BigDecimal ApprovalAmt);
+
+	/** Get Approval Amount.
+	  * Document Approval Amount
+	  */
+	public BigDecimal getApprovalAmt();
+
+    /** Column name C_BPartner_ID */
+    public static final String COLUMNNAME_C_BPartner_ID = "C_BPartner_ID";
+
+	/** Set Business Partner .
+	  * Identifies a Business Partner
+	  */
+	public void setC_BPartner_ID (int C_BPartner_ID);
+
+	/** Get Business Partner .
+	  * Identifies a Business Partner
+	  */
+	public int getC_BPartner_ID();
+
+	public org.compiere.model.I_C_BPartner getC_BPartner() throws RuntimeException;
+
+    /** Column name C_DocType_ID */
+    public static final String COLUMNNAME_C_DocType_ID = "C_DocType_ID";
+
+	/** Set Document Type.
+	  * Document type or rules
+	  */
+	public void setC_DocType_ID (int C_DocType_ID);
+
+	/** Get Document Type.
+	  * Document type or rules
+	  */
+	public int getC_DocType_ID();
+
+	public org.compiere.model.I_C_DocType getC_DocType() throws RuntimeException;
+
     /** Column name Created */
     public static final String COLUMNNAME_Created = "Created";
 
@@ -79,6 +121,32 @@ public interface I_FTU_DefectLog
 	  */
 	public int getCreatedBy();
 
+    /** Column name DateDoc */
+    public static final String COLUMNNAME_DateDoc = "DateDoc";
+
+	/** Set Document Date.
+	  * Date of the Document
+	  */
+	public void setDateDoc (Timestamp DateDoc);
+
+	/** Get Document Date.
+	  * Date of the Document
+	  */
+	public Timestamp getDateDoc();
+
+    /** Column name Defect */
+    public static final String COLUMNNAME_Defect = "Defect";
+
+	/** Set Defect.
+	  * The defect description
+	  */
+	public void setDefect (String Defect);
+
+	/** Get Defect.
+	  * The defect description
+	  */
+	public String getDefect();
+
     /** Column name DefectDate */
     public static final String COLUMNNAME_DefectDate = "DefectDate";
 
@@ -91,28 +159,6 @@ public interface I_FTU_DefectLog
 	  * The date the defect was entered in the log
 	  */
 	public Timestamp getDefectDate();
-
-    /** Column name DefectDesc */
-    public static final String COLUMNNAME_DefectDesc = "DefectDesc";
-
-	/** Set Defect.
-	  * The defect description
-	  */
-	public void setDefectDesc (String DefectDesc);
-
-	/** Get Defect.
-	  * The defect description
-	  */
-	public String getDefectDesc();
-
-    /** Column name DefectStatus */
-    public static final String COLUMNNAME_DefectStatus = "DefectStatus";
-
-	/** Set Defect Status	  */
-	public void setDefectStatus (String DefectStatus);
-
-	/** Get Defect Status	  */
-	public String getDefectStatus();
 
     /** Column name DefectType */
     public static final String COLUMNNAME_DefectType = "DefectType";
@@ -127,6 +173,21 @@ public interface I_FTU_DefectLog
 	  */
 	public String getDefectType();
 
+    /** Column name DeferredBy */
+    public static final String COLUMNNAME_DeferredBy = "DeferredBy";
+
+	/** Set Deferred By.
+	  * The User that deferred the snag.
+	  */
+	public void setDeferredBy (int DeferredBy);
+
+	/** Get Deferred By.
+	  * The User that deferred the snag.
+	  */
+	public int getDeferredBy();
+
+	public org.compiere.model.I_AD_User getDeferre() throws RuntimeException;
+
     /** Column name DeferredDate */
     public static final String COLUMNNAME_DeferredDate = "DeferredDate";
 
@@ -139,6 +200,101 @@ public interface I_FTU_DefectLog
 	  * The date the defect was deferred.
 	  */
 	public Timestamp getDeferredDate();
+
+    /** Column name DeferredNote */
+    public static final String COLUMNNAME_DeferredNote = "DeferredNote";
+
+	/** Set Deferred Note.
+	  * A note that will be added to the Journey Logs to indicate that the defect has been deferred and any operational limitations that result.
+	  */
+	public void setDeferredNote (String DeferredNote);
+
+	/** Get Deferred Note.
+	  * A note that will be added to the Journey Logs to indicate that the defect has been deferred and any operational limitations that result.
+	  */
+	public String getDeferredNote();
+
+    /** Column name Description */
+    public static final String COLUMNNAME_Description = "Description";
+
+	/** Set Description.
+	  * Optional short description of the record
+	  */
+	public void setDescription (String Description);
+
+	/** Get Description.
+	  * Optional short description of the record
+	  */
+	public String getDescription();
+
+    /** Column name Doc_User_ID */
+    public static final String COLUMNNAME_Doc_User_ID = "Doc_User_ID";
+
+	/** Set Document Owner.
+	  * The AD_User_ID of the document owner.
+	  */
+	public void setDoc_User_ID (int Doc_User_ID);
+
+	/** Get Document Owner.
+	  * The AD_User_ID of the document owner.
+	  */
+	public int getDoc_User_ID();
+
+	public org.compiere.model.I_AD_User getDoc_User() throws RuntimeException;
+
+    /** Column name DocAction */
+    public static final String COLUMNNAME_DocAction = "DocAction";
+
+	/** Set Document Action.
+	  * The targeted status of the document
+	  */
+	public void setDocAction (String DocAction);
+
+	/** Get Document Action.
+	  * The targeted status of the document
+	  */
+	public String getDocAction();
+
+    /** Column name DocStatus */
+    public static final String COLUMNNAME_DocStatus = "DocStatus";
+
+	/** Set Document Status.
+	  * The current status of the document
+	  */
+	public void setDocStatus (String DocStatus);
+
+	/** Get Document Status.
+	  * The current status of the document
+	  */
+	public String getDocStatus();
+
+    /** Column name DocumentNo */
+    public static final String COLUMNNAME_DocumentNo = "DocumentNo";
+
+	/** Set Document No.
+	  * Document sequence number of the document
+	  */
+	public void setDocumentNo (String DocumentNo);
+
+	/** Get Document No.
+	  * Document sequence number of the document
+	  */
+	public String getDocumentNo();
+
+    /** Column name EnteredBy */
+    public static final String COLUMNNAME_EnteredBy = "EnteredBy";
+
+	/** Set Entered By.
+	  * The User that entered (accepted) the snag, which could be different then the business partner who noticed the problem and the person who created the entry.
+	  */
+	public void setEnteredBy (int EnteredBy);
+
+	/** Get Entered By.
+	  * The User that entered (accepted) the snag, which could be different then the business partner who noticed the problem and the person who created the entry.
+	  */
+	public int getEnteredBy();
+
+	public org.compiere.model.I_AD_User getEntere() throws RuntimeException;
 
     /** Column name FTU_Aircraft_ID */
     public static final String COLUMNNAME_FTU_Aircraft_ID = "FTU_Aircraft_ID";
@@ -154,11 +310,46 @@ public interface I_FTU_DefectLog
     /** Column name FTU_DefectLog_ID */
     public static final String COLUMNNAME_FTU_DefectLog_ID = "FTU_DefectLog_ID";
 
-	/** Set Aircraft Defect Log ID	  */
+	/** Set Defect	  */
 	public void setFTU_DefectLog_ID (int FTU_DefectLog_ID);
 
-	/** Get Aircraft Defect Log ID	  */
+	/** Get Defect	  */
 	public int getFTU_DefectLog_ID();
+
+    /** Column name FTU_Flightsheet_ID */
+    public static final String COLUMNNAME_FTU_Flightsheet_ID = "FTU_Flightsheet_ID";
+
+	/** Set Flight	  */
+	public void setFTU_Flightsheet_ID (int FTU_Flightsheet_ID);
+
+	/** Get Flight	  */
+	public int getFTU_Flightsheet_ID();
+
+	public com.mckayerp.ftu.model.I_FTU_Flightsheet getFTU_Flightsheet() throws RuntimeException;
+
+    /** Column name FTU_MaintWorkOrderLine_ID */
+    public static final String COLUMNNAME_FTU_MaintWorkOrderLine_ID = "FTU_MaintWorkOrderLine_ID";
+
+	/** Set Maintenance Work Order Line ID	  */
+	public void setFTU_MaintWorkOrderLine_ID (int FTU_MaintWorkOrderLine_ID);
+
+	/** Get Maintenance Work Order Line ID	  */
+	public int getFTU_MaintWorkOrderLine_ID();
+
+	public com.mckayerp.ftu.model.I_FTU_MaintWorkOrderLine getFTU_MaintWorkOrderLine() throws RuntimeException;
+
+    /** Column name IdentifiedDate */
+    public static final String COLUMNNAME_IdentifiedDate = "IdentifiedDate";
+
+	/** Set Date Identified.
+	  * The date the issue was identified
+	  */
+	public void setIdentifiedDate (Timestamp IdentifiedDate);
+
+	/** Get Date Identified.
+	  * The date the issue was identified
+	  */
+	public Timestamp getIdentifiedDate();
 
     /** Column name IsActive */
     public static final String COLUMNNAME_IsActive = "IsActive";
@@ -173,6 +364,80 @@ public interface I_FTU_DefectLog
 	  */
 	public boolean isActive();
 
+    /** Column name IsApproved */
+    public static final String COLUMNNAME_IsApproved = "IsApproved";
+
+	/** Set Approved.
+	  * Indicates if this document requires approval
+	  */
+	public void setIsApproved (boolean IsApproved);
+
+	/** Get Approved.
+	  * Indicates if this document requires approval
+	  */
+	public boolean isApproved();
+
+    /** Column name IsDeferred */
+    public static final String COLUMNNAME_IsDeferred = "IsDeferred";
+
+	/** Set Deferred.
+	  * Is the defect deferred?
+	  */
+	public void setIsDeferred (boolean IsDeferred);
+
+	/** Get Deferred.
+	  * Is the defect deferred?
+	  */
+	public boolean isDeferred();
+
+    /** Column name IsRepaired */
+    public static final String COLUMNNAME_IsRepaired = "IsRepaired";
+
+	/** Set Repaired.
+	  * Is the defect repaired or resolved?
+	  */
+	public void setIsRepaired (boolean IsRepaired);
+
+	/** Get Repaired.
+	  * Is the defect repaired or resolved?
+	  */
+	public boolean isRepaired();
+
+    /** Column name Processed */
+    public static final String COLUMNNAME_Processed = "Processed";
+
+	/** Set Processed.
+	  * The document has been processed
+	  */
+	public void setProcessed (boolean Processed);
+
+	/** Get Processed.
+	  * The document has been processed
+	  */
+	public boolean isProcessed();
+
+    /** Column name ProcessedOn */
+    public static final String COLUMNNAME_ProcessedOn = "ProcessedOn";
+
+	/** Set Processed On.
+	  * The date+time (expressed in decimal format) when the document has been processed
+	  */
+	public void setProcessedOn (BigDecimal ProcessedOn);
+
+	/** Get Processed On.
+	  * The date+time (expressed in decimal format) when the document has been processed
+	  */
+	public BigDecimal getProcessedOn();
+
+    /** Column name Processing */
+    public static final String COLUMNNAME_Processing = "Processing";
+
+	/** Set Process Now	  */
+	public void setProcessing (boolean Processing);
+
+	/** Get Process Now	  */
+	public boolean isProcessing();
+
     /** Column name Rectification */
     public static final String COLUMNNAME_Rectification = "Rectification";
 
@@ -186,6 +451,21 @@ public interface I_FTU_DefectLog
 	  */
 	public String getRectification();
 
+    /** Column name RectifiedBy */
+    public static final String COLUMNNAME_RectifiedBy = "RectifiedBy";
+
+	/** Set Rectified By.
+	  * The user that marked the issue rectified. 
+	  */
+	public void setRectifiedBy (int RectifiedBy);
+
+	/** Get Rectified By.
+	  * The user that marked the issue rectified. 
+	  */
+	public int getRectifiedBy();
+
+	public org.compiere.model.I_AD_User getRectifie() throws RuntimeException;
+
     /** Column name RepairedDate */
     public static final String COLUMNNAME_RepairedDate = "RepairedDate";
 
@@ -198,6 +478,15 @@ public interface I_FTU_DefectLog
 	  * The date the defect was repaired.
 	  */
 	public Timestamp getRepairedDate();
+
+    /** Column name TotalAirframeTime */
+    public static final String COLUMNNAME_TotalAirframeTime = "TotalAirframeTime";
+
+	/** Set Total Airframe Time	  */
+	public void setTotalAirframeTime (BigDecimal TotalAirframeTime);
+
+	/** Get Total Airframe Time	  */
+	public BigDecimal getTotalAirframeTime();
 
     /** Column name Updated */
     public static final String COLUMNNAME_Updated = "Updated";
