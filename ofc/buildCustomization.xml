@@ -43,6 +43,9 @@
 	<copy todir="${adempiere.customLibDir}" file="${adempiere.customJarFile}" verbose="true"/>
 	<copy todir="${adempiere.zkCustomLibDir}" file="${adempiere.zkCustomJarFile}" verbose="true"/>	
     <copy todir="${adempiere.customLibDir}" file="${adempiere.serverCustomJarFile}" verbose="true"/>
+    <copy todir="${ofc.install}" file="${adempiere.customJarFile}" verbose="true"/>
+    <copy todir="${ofc.install}" file="${adempiere.zkCustomJarFile}" verbose="true"/>  
+    <copy todir="${ofc.install}" file="${adempiere.serverCustomJarFile}" verbose="true"/>
   	<ant inheritAll="false" dir="migrations"/>
   </target>
 
