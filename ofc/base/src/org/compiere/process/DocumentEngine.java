@@ -343,6 +343,15 @@ public class DocumentEngine implements DocAction
 			return voidIt();
 		if (ACTION_Post.equals(m_action))
 			return postIt();
+		
+		if (m_document != null && m_document instanceof DocOptions) {
+			if (((DocOptions) m_document).processCustomAction(m_action)) {
+				m_status = m_document.getDocStatus();
+				return true;
+			}
+			return false;
+		}
+		
 		//
 		return false;
 	}	//	processDocument
@@ -634,6 +643,10 @@ public class DocumentEngine implements DocAction
 	 */
 	public String[] getActionOptions()
 	{
+		if (m_document instanceof DocOptions) {
+			return ((DocOptions) m_document).getCustomizedActionOptions();
+		}
+		
 		if (isInvalid())
 			return new String[] {ACTION_Prepare, ACTION_Invalidate, 
 				ACTION_Unlock, ACTION_Void};
@@ -889,6 +902,14 @@ public class DocumentEngine implements DocAction
 			throw new IllegalArgumentException("Doc action array parameter is null");
 		
 		int index = 0;
+
+		MTable table = MTable.get(Env.getCtx(), AD_Table_ID);
+		PO po = table.getPO(0, null);
+		if (po instanceof DocOptions) {
+			index = ((DocOptions) po).customizeValidActions(docStatus, processing, orderType, isSOTrx,
+					AD_Table_ID, docAction, options, index);
+		}
+		else {
 		
 //		Locked
 		if (processing != null)
