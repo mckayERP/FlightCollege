@@ -1,12 +1,10 @@
 package com.mckayerp.ftu.model;
 
-import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.util.Properties;
 
 import org.compiere.model.Query;
 import org.compiere.util.DB;
-import org.compiere.util.Env;
 
 public class MFTUAircraft extends X_FTU_Aircraft {
 
