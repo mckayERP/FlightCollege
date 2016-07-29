@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ftu_student_performance_report_subreport1" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="053c787b-bbf1-464b-9f53-cfca96d5d215">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="subClass" class="java.lang.String">
+		<defaultValueExpression><![CDATA["AL200909"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     ftu_class."value" AS class_name,
+     c_bpartner."name" AS c_bpartner_name,
+     ftu_student."studentstatus" AS studentstatus,
+     adrl."name" AS studentstage,
+     ftu_student."dateenrolled" AS dateenrolled,
+     ftu_student."datedeparted" AS datedeparted,
+     ftu_student."description" AS description,
+     ftu_student."comments" AS comments,
+     s_resource."name" AS primary_inst
+FROM
+     "adempiere"."c_bpartner" c_bpartner
+	INNER JOIN "adempiere"."ftu_student" ftu_student
+	  ON c_bpartner."c_bpartner_id" = ftu_student."c_bpartner_id"
+     	INNER JOIN "adempiere"."ftu_class" ftu_class
+	  ON ftu_student."ftu_class_id" = ftu_class."ftu_class_id"
+	LEFT OUTER JOIN "adempiere"."s_resource" s_resource
+	  ON ftu_student."primary_inst_id" = s_resource.s_resource_id
+	LEFT OUTER JOIN (select ad_ref_list."name",
+				 ad_ref_list."value"
+			  FROM
+				adempiere.ad_ref_list
+				INNER JOIN adempiere.ad_reference
+				ON ad_reference.ad_reference_id = ad_ref_list.ad_reference_id
+			  WHERE
+				ad_reference."name" = 'ftu Student Stage') adrl
+	  ON adrl."value" = ftu_student.studentstage
+WHERE
+     ftu_student.isactive = 'Y' AND ftu_class."value" = $P{subClass}
+ORDER BY C_BPartner."name";]]>
+	</queryString>
+	<field name="class_name" class="java.lang.String"/>
+	<field name="c_bpartner_name" class="java.lang.String"/>
+	<field name="studentstatus" class="java.lang.String"/>
+	<field name="studentstage" class="java.lang.String"/>
+	<field name="dateenrolled" class="java.sql.Timestamp"/>
+	<field name="datedeparted" class="java.sql.Timestamp"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="comments" class="java.lang.String"/>
+	<field name="primary_inst" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="26" splitType="Stretch">
+			<staticText>
+				<reportElement x="4" y="4" width="138" height="20" uuid="2b9ad566-1003-4326-8727-a60b9c9df2ee"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Student]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="142" y="4" width="86" height="20" uuid="2644d14b-0c71-4e3b-b811-e4bca49f6637"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Status]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="228" y="4" width="83" height="20" uuid="3421b471-cfcd-43f3-b8d3-25a6ac02b697"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Training Stage]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="311" y="4" width="76" height="20" uuid="33cd4bf8-6e7e-4fd4-8368-becb47d66978"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date Enrolled]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="387" y="4" width="71" height="20" uuid="865a90f6-dc56-4306-a808-e5fbb1e2a0aa"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date Departed]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="25" width="572" height="1" uuid="158a21f6-e6c5-4f0d-85f5-41b530b54494"/>
+			</line>
+			<staticText>
+				<reportElement x="458" y="4" width="114" height="20" uuid="c2e8c196-7b8b-4b3d-8cbd-e633d97e43c9"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Primary Instructor]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="45" splitType="Stretch">
+			<textField>
+				<reportElement x="4" y="0" width="138" height="12" uuid="378c7d8a-042d-4f1e-a36a-2b29a5f22395"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{c_bpartner_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="142" y="0" width="86" height="12" uuid="fb4acc79-06b2-46da-a49c-61ebc023ad93"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{studentstatus}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="228" y="0" width="83" height="12" uuid="61336486-4114-44a5-9f6d-9804ed751ecd"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{studentstage}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy/MM/dd" isBlankWhenNull="true">
+				<reportElement x="311" y="1" width="76" height="11" uuid="384285ff-69c4-4aef-bd4d-f03195d38df8"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dateenrolled}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy/MM/dd" isBlankWhenNull="true">
+				<reportElement x="387" y="0" width="71" height="12" uuid="224eb984-6c4c-4bc1-8a21-f1af78fd159c"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{datedeparted}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="22" y="13" width="482" height="15" isRemoveLineWhenBlank="true" forecolor="#000033" uuid="528abccd-4805-490b-91eb-2947ec0e822b"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="22" y="28" width="482" height="15" isRemoveLineWhenBlank="true" forecolor="#000033" uuid="24332102-a56a-4266-b1a6-be2348da4cec"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{comments}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="458" y="1" width="114" height="11" uuid="b53e3ac5-48a8-4240-8a8c-e1afae4c651d"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{primary_inst}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
