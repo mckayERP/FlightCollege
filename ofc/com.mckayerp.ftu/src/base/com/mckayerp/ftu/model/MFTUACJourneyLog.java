@@ -50,54 +50,23 @@ public class MFTUACJourneyLog extends X_FTU_ACJourneyLog {
 				+ " AND " + MFTUACJourneyLog.COLUMNNAME_FlightDate
 				+ "=" + DB.TO_STRING(flightDate.toString());
 		
-		String orderBy = MFTUACJourneyLog.COLUMNNAME_WheelsUp + " DESC";
+		String orderBy = MFTUACJourneyLog.COLUMNNAME_EntryDate + " DESC"; // Same as wheels down
 
 		MFTUACJourneyLog jlog = new Query(ctx, MFTUACJourneyLog.Table_Name, where, trxName)
 									.setClient_ID()
 									.setOrderBy(orderBy)
 									.first();
 		
-		if (jlog != null && jlog.getNumberLegs() == 1)  //  A summary has only one leg.
+		if (jlog != null && jlog.getNumberLegs() == 1 && jlog.getFTU_DefectLog_ID() == 0)  //  A summary has only one leg.
 			return jlog;
 		
 		return null;
 	}
 
 	public static BigDecimal getTotalAirframeTime(Properties ctx,
-			int ftu_Aircraft_ID, String trxName) {
+			int ftu_aircraft_id, String trxName) {
 		
-		/**	Logger							*/
-		final CLogger			log = CLogger.getCLogger (MFTUACJourneyLog.class);
-		
-		BigDecimal totalAirframeTime = Env.ZERO;
-		
-		String sql = "SELECT MAX(" + MFTUACJourneyLog.COLUMNNAME_TotalAirframeTime + ")"
-				+ " FROM " + MFTUACJourneyLog.Table_Name 
-				+ " WHERE " + MFTUACJourneyLog.COLUMNNAME_FTU_Aircraft_ID 
-				+ "=" + ftu_Aircraft_ID;
-		
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		try
-		{
-			pstmt = DB.prepareStatement(sql, trxName);
-			rs = pstmt.executeQuery();
-			if (rs.next())
-				totalAirframeTime = rs.getBigDecimal(1);
-		}
-		catch (SQLException e) {
-			log.severe("SQL Error finding Total Airframe Time for AC: " + ftu_Aircraft_ID);			
-		}
-		finally {
-			DB.close(rs, pstmt);
-			rs = null;
-			pstmt= null;
-		}
-		
-		if (totalAirframeTime == null)
-			totalAirframeTime = Env.ZERO;
-		
-		return totalAirframeTime;
+		return getTotalAirframeTime(ctx, ftu_aircraft_id, null, trxName);
 	}
 
 	/**
@@ -121,7 +90,7 @@ public class MFTUACJourneyLog extends X_FTU_ACJourneyLog {
 		log.info("Logging " + flight.toString());
 		
 		// Find the current totalAirframeTime from the journey log
-		BigDecimal totalAirframeTime = getTotalAirframeTime(ctx,flight.getFTU_Aircraft_ID(), trxName);
+		BigDecimal totalAirframeTime = getTotalAirframeTime(ctx,flight.getFTU_Aircraft_ID(), flight.getWheelsDown(), trxName);
 		// Add the current flight to it to get the new total.
 		totalAirframeTime = totalAirframeTime.add(flight.getAirTime());
 		
@@ -131,6 +100,7 @@ public class MFTUACJourneyLog extends X_FTU_ACJourneyLog {
 			jlog = new MFTUACJourneyLog(ctx, 0, trxName);
 			jlog.setFTU_Aircraft_ID(flight.getFTU_Aircraft_ID());
 			jlog.setFlightDate(flight.getFlightDate());
+			jlog.setEntryDate(flight.getWheelsDown());
 			jlog.setSeqNo(20);
 			jlog.setNumOps(1); 
 			jlog.setIntendedFlight(flight.getIntendedFlight());
@@ -150,6 +120,7 @@ public class MFTUACJourneyLog extends X_FTU_ACJourneyLog {
 				jlog = new MFTUACJourneyLog(ctx, 0, trxName);
 				jlog.setFTU_Aircraft_ID(flight.getFTU_Aircraft_ID());
 				jlog.setFlightDate(flight.getFlightDate());
+				jlog.setEntryDate(flight.getWheelsDown());
 				jlog.setSeqNo(20);
 				jlog.setNumOps(1);
 				jlog.setIntendedFlight("CYOW Local");  // TODO get this from database
@@ -170,6 +141,8 @@ public class MFTUACJourneyLog extends X_FTU_ACJourneyLog {
 					jlog.setWheelsUp(flight.getWheelsUp());
 				if (flight.getWheelsDown().after(jlog.getWheelsDown()))
 					jlog.setWheelsDown(flight.getWheelsDown());
+				if (flight.getWheelsDown().after(jlog.getEntryDate()))
+					jlog.setEntryDate(flight.getWheelsDown());
 				jlog.setAirTime(jlog.getAirTime().add(flight.getAirTime()));
 				jlog.setFlightTime(jlog.getFlightTime().add(flight.getFlightTime()));
 				jlog.setTotalAirframeTime(totalAirframeTime);					
@@ -245,6 +218,65 @@ public class MFTUACJourneyLog extends X_FTU_ACJourneyLog {
 		}
 		
 		return success;
+	}
+
+	/**
+	 * Get the total airframe time on a specific date.  If the asAtDate is null
+	 * the most maximum time will be returned.
+	 * @param ctx
+	 * @param ftu_Aircraft_ID
+	 * @param asAtDate
+	 * @param trxName
+	 * @return A BigDecimal representing the total airframe time in hours.
+	 */
+	public static BigDecimal getTotalAirframeTime(Properties ctx,
+			int ftu_Aircraft_ID, Timestamp asAtDate, String trxName) {
+		
+		/**	Logger							*/
+		final CLogger			log = CLogger.getCLogger (MFTUACJourneyLog.class);
+		
+		BigDecimal totalAirframeTime = Env.ZERO;
+		
+		String sql = "SELECT MAX(" + MFTUACJourneyLog.COLUMNNAME_TotalAirframeTime + ")"
+				+ " FROM " + MFTUACJourneyLog.Table_Name 
+				+ " WHERE " + MFTUACJourneyLog.COLUMNNAME_FTU_Aircraft_ID 
+				+ "=" + ftu_Aircraft_ID;
+		
+		if (asAtDate != null) {
+			sql = sql  + " AND " + MFTUACJourneyLog.COLUMNNAME_EntryDate + "<=" + DB.TO_STRING(asAtDate.toString()); 
+		}
+			
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try
+		{
+			pstmt = DB.prepareStatement(sql, trxName);
+			rs = pstmt.executeQuery();
+			if (rs.next())
+				totalAirframeTime = rs.getBigDecimal(1);
+		}
+		catch (SQLException e) {
+			log.severe("SQL Error finding Total Airframe Time for AC: " + ftu_Aircraft_ID);			
+		}
+		finally {
+			DB.close(rs, pstmt);
+			rs = null;
+			pstmt= null;
+		}
+		
+		if (totalAirframeTime == null)
+			totalAirframeTime = Env.ZERO;
+		
+		return totalAirframeTime;
+	}
+
+	public static List<MFTUACJourneyLog> getByDefectLogID(Properties ctx,
+			int ftu_DefectLog_ID, String trxName) {
+		
+		String where = MFTUACJourneyLog.COLUMNNAME_FTU_DefectLog_ID + "=" + ftu_DefectLog_ID;
+		return new Query(ctx, MFTUACJourneyLog.Table_Name, where, trxName)
+						.setClient_ID()
+						.list();
 	}
 
 }

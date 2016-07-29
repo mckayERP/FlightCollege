@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="MFTU" Name="Set parent columns in ASI window" ReleaseNo="FTU2.04" SeqNo="42">
+    <Step SeqNo="10" StepType="AD">
+      <PO AD_Table_ID="106" Action="U" Record_ID="54169" Table="AD_Tab">
+        <Data AD_Column_ID="57842" Column="Parent_Column_ID" isOldNull="true">8472</Data>
+        <Data AD_Column_ID="2044" Column="IsReadOnly" oldValue="false">true</Data>
+        <Data AD_Column_ID="2740" Column="AD_Column_ID" isOldNull="true">8499</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="20" StepType="AD">
+      <PO AD_Table_ID="106" Action="U" Record_ID="759" Table="AD_Tab">
+        <Data AD_Column_ID="57842" Column="Parent_Column_ID" isOldNull="true">8472</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="30" StepType="AD">
+      <PO AD_Table_ID="106" Action="U" Record_ID="760" Table="AD_Tab">
+        <Data AD_Column_ID="57842" Column="Parent_Column_ID" isOldNull="true">8472</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="40" StepType="AD">
+      <PO AD_Table_ID="106" Action="U" Record_ID="761" Table="AD_Tab">
+        <Data AD_Column_ID="57842" Column="Parent_Column_ID" isOldNull="true">8472</Data>
+      </PO>
+    </Step>
+  </Migration>
+</Migrations>

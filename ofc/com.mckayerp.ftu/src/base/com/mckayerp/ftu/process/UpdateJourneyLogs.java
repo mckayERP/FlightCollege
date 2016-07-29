@@ -1,37 +1,19 @@
 package com.mckayerp.ftu.process;
 
 import java.math.BigDecimal;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Properties;
-import java.util.Vector;
 import java.util.logging.Level;
 
-import oracle.sql.DATE;
-
 import org.adempiere.exceptions.AdempiereException;
-import org.adempiere.exceptions.DBException;
-import org.compiere.impexp.ImpFormat;
-import org.compiere.model.MOrder;
-import org.compiere.model.MOrderLine;
-import org.compiere.model.MResourceAssignment;
 import org.compiere.model.Query;
 import org.compiere.process.ProcessInfoParameter;
 import org.compiere.process.SvrProcess;
 import org.compiere.util.DB;
-import org.compiere.util.Env;
 
 import com.mckayerp.ftu.model.MFTUACJourneyLog;
 import com.mckayerp.ftu.model.MFTUAircraft;
 import com.mckayerp.ftu.model.MFTUFlightsheet;
-
-import HtmlGet.HtmlGet;
 
 public class UpdateJourneyLogs extends SvrProcess {
 	
@@ -57,7 +39,7 @@ public class UpdateJourneyLogs extends SvrProcess {
 		int no = DB.executeUpdate(sql, get_TrxName());
 		log.fine("Reset journey log link on flightsheet lines: " + no);
 		
-		sql = "DELETE FROM " + MFTUACJourneyLog.Table_Name;
+		sql = "DELETE FROM " + MFTUACJourneyLog.Table_Name + " WHERE COALESCE(" + MFTUACJourneyLog.COLUMNNAME_FTU_DefectLog_ID + ",0) = 0";
 		no = DB.executeUpdate(sql, get_TrxName());
 		log.fine("Deleted journey logs: " + no);
 		
