@@ -353,7 +353,7 @@ public class Match
 				.append(" m ON (lin.M_InOutLine_ID=m.M_InOutLine_ID) "
 				+ "WHERE hdr.DocStatus IN ('CO','CL')");
 			m_groupBy = " GROUP BY hdr.M_InOut_ID,hdr.DocumentNo,hdr.MovementDate,bp.Name,hdr.C_BPartner_ID,"
-				+ " lin.Line,lin.M_InOutLine_ID,p.Name,p.stdprecision,lin.M_Product_ID,lin.MovementQty, org.Name, hdr.AD_Org_ID " //JAVIER
+				+ " lin.Line,lin.M_InOutLine_ID,p.Name,uom.stdprecision,lin.M_Product_ID,lin.MovementQty, org.Name, hdr.AD_Org_ID " //JAVIER
 				// Very small values are equivalent to zero.  Round to the product standard precision.
 				+ "HAVING round(lin.MovementQty-SUM(NVL(m.Qty,0)),uom.stdprecision)"
 				+ (matched ? "=0" : "<>0");
