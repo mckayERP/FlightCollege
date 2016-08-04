@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="MFTU" Name="Fix the FTM entry in the FTU_Aircraft table" ReleaseNo="FTU2.04" SeqNo="46">
+    <Step SeqNo="10" StepType="AD">
+      <PO AD_Table_ID="1000034" Action="U" Record_ID="1000007" Table="FTU_Aircraft">
+        <Data AD_Column_ID="1000768" Column="ACRegistration" isOldNull="true">C-GFTM</Data>
+        <Data AD_Column_ID="1000767" Column="Value" oldValue="C-GFTM">FTM</Data>
+      </PO>
+    </Step>
+  </Migration>
+</Migrations>
