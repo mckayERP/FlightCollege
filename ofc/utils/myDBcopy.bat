@@ -29,7 +29,6 @@
 pause
 
 @Echo Copy backup to Amazon S3
-@REM "C:\Program Files\SprightlySoft\S3 Sync\S3Sync.exe" -AWSAccessKeyId AKIAI6LL33JEFAEWYRDQ -AWSSecretAccessKey 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 -BucketName OFCBackup -S3FolderKeyName ADempiere/ -SyncDirection Upload -LocalFolderPath C:\ADempiere\data\amazon -DeleteS3ItemsWhereNotInLocalList false -LogOnlyMode false -OutputLevel 2 -CompareFilesBy ETag -LogFilePath "C:\Documents and Settings\Administrator\Local Settings\Temp\1\S3SyncLog.txt"
 @REM Using Amazon s3 storage with versioning.  Older copies maintained according to lifecycle rules set in the S3 account.
 @aws s3 cp ExpDat.jar s3://OFCBackup/ADempiere/ExpDat/
 
