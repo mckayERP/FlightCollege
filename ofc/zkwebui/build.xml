@@ -9,7 +9,7 @@
   	</description>
 
 	<!-- set global properties for this build -->
-	<property file="../buildCustomization.properties"/>
+	<property file="../utils_dev/buildCustomization.properties"/>
 	<property name="src" value="${basedir}/WEB-INF/src"/>
 	<property name="build.dir" value="${basedir}/build/WEB-INF/classes"/>
 	<property name="dist.dir" value=".."/>

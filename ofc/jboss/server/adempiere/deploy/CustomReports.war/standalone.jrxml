@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="standalone" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" whenResourceMissingType="Error" language="java">
+	<parameter name="AD_Client_ID" class="java.math.BigDecimal"/>
+	<queryString>
+		<![CDATA[SELECT
+     ofc_class."name" AS ofc_class_name,
+     ofc_training_unit."name" AS ofc_training_unit_name,
+     to_char(current_date,'IW') as weeknum,
+     to_char(current_date,'DD-Mon-YY') as curdate
+FROM
+     adempiere.ofc_class ofc_class
+	INNER JOIN adempiere.ofc_training_unit ofc_training_unit
+		ON ofc_class.ofc_training_unit_id = ofc_training_unit.ofc_training_unit_id
+WHERE
+ 	ofc_class.AD_Client_ID = $P{AD_Client_ID}]]>
+	</queryString>
+	<field name="ofc_class_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ofc_training_unit_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="weeknum" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="curdate" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<title>
+		<band height="40">
+			<staticText>
+				<reportElement x="125" y="10" width="150" height="18"/>
+				<textElement/>
+				<text><![CDATA[Title  Test 3.5.0]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="318" y="10" width="100" height="18"/>
+				<textElement/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{AD_Client_ID}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="29">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20"/>
+				<textElement verticalAlignment="Bottom"/>
+				<text><![CDATA[Class]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="444" height="20"/>
+				<textElement verticalAlignment="Bottom"/>
+				<text><![CDATA[Training Unit Name]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="35">
+			<textField>
+				<reportElement x="7" y="7" width="84" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ofc_class_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="107" y="7" width="428" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ofc_training_unit_name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -7,7 +7,7 @@
 <project name="adempiereRoot" default="main" basedir=".">
 
   <!-- set global properties for this build -->
-  <property file="../buildCustomization.properties"/>
+  <property file="../utils_dev/buildCustomization.properties"/>
 
   <property name="src.dir" value="${basedir}/src"/>
   <property name="src.main.dir" value="${src.dir}/main"/>
@@ -105,7 +105,7 @@
   <!-- Deploy Server Files		                   -->
   <!-- =========================================== -->
   <target name="serverCustomizationDeployServer" depends="serverCustomizationJar,adempiereRootCompile">
-	<copy todir="..">
+	<copy todir="../lib">
 		<fileset dir="${build.deploy.dir}"/>
 	</copy>
   </target>

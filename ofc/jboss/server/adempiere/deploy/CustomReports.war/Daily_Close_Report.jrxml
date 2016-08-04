@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Daily_Close_Report" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<parameter name="REPORT_DATE" class="java.util.Date"/>
+	<parameter name="AD_CLIENT_ID" class="java.math.BigDecimal"/>
+	<parameter name="AD_ORG_ID" class="java.math.BigDecimal"/>
+	<queryString>
+		<![CDATA[select 	rv.datetrx,
+	rltt.tender_type,
+	CASE rltt.tender_type
+		WHEN 'Credit Card' THEN rlcc.card_type
+		ELSE null
+	END as CardType,
+	count(rv.c_payment_id) as NumTrx,
+	sum(rv.payamt) as Total
+from
+	adempiere.rv_payment rv
+	LEFT OUTER JOIN
+	(SELECT
+		ad_ref_list."name" as Tender_Type,
+		ad_ref_list."value" as code
+	from
+		adempiere.ad_ref_list,
+		adempiere.ad_reference
+	where
+		ad_ref_list.ad_reference_id = ad_reference.ad_reference_id AND
+		ad_reference."name" = 'C_Payment Tender Type') rltt
+	ON rltt.code = rv.tendertype
+	LEFT OUTER JOIN
+	(SELECT
+		ad_ref_list."name" as Card_Type,
+		ad_ref_list."value" as code
+	from
+		adempiere.ad_ref_list,
+		adempiere.ad_reference
+	where
+		ad_ref_list.ad_reference_id = ad_reference.ad_reference_id AND
+		ad_reference."name" = 'C_Payment CreditCard Type') rlcc
+	ON
+		rlcc.code = rv.creditcardtype
+WHERE
+	rv.ad_client_id = $P{AD_CLIENT_ID} AND
+	rv.ad_org_id = $P{AD_ORG_ID} AND
+	rv.isactive = 'Y' AND
+	rv.isreceipt = 'Y' AND
+	rv.datetrx = $P{REPORT_DATE}
+GROUP BY
+	rv.datetrx,
+	rltt.tender_type,
+	CardType
+ORDER BY
+	rv.datetrx ASC,
+	rltt.tender_type ASC,
+	CardType ASC;]]>
+	</queryString>
+	<field name="datetrx" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tender_type" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cardtype" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numtrx" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="TRANS_TOTAL" class="java.math.BigDecimal" resetType="Group" resetGroup="Date" calculation="Sum">
+		<variableExpression><![CDATA[$F{total}]]></variableExpression>
+	</variable>
+	<variable name="TRANS_COUNT" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{numtrx}]]></variableExpression>
+	</variable>
+	<group name="Date">
+		<groupExpression><![CDATA[$F{datetrx}]]></groupExpression>
+		<groupHeader>
+			<band height="50">
+				<textField pattern="dd MMMMM yyyy">
+					<reportElement x="0" y="0" width="572" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{datetrx}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="100" y="30" width="100" height="20"/>
+					<textElement verticalAlignment="Bottom" markup="none">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Tender Type]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="200" y="30" width="100" height="20"/>
+					<textElement verticalAlignment="Bottom">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Card Type]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="300" y="30" width="100" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Num of Trx]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="400" y="30" width="100" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total Amount]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="22">
+				<textField pattern="#,##0.00;(#,##0.00)">
+					<reportElement x="411" y="0" width="73" height="16"/>
+					<box>
+						<pen lineWidth="0.5" lineStyle="Double"/>
+						<topPen lineWidth="1.5"/>
+						<leftPen lineWidth="0.0" lineStyle="Double"/>
+						<bottomPen lineWidth="0.0" lineStyle="Double"/>
+						<rightPen lineWidth="0.0" lineStyle="Double"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{TRANS_TOTAL}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0">
+					<reportElement x="311" y="0" width="79" height="16"/>
+					<box>
+						<pen lineWidth="0.5" lineStyle="Double"/>
+						<topPen lineWidth="1.5"/>
+						<leftPen lineWidth="0.0" lineStyle="Double"/>
+						<bottomPen lineWidth="0.0" lineStyle="Double"/>
+						<rightPen lineWidth="0.0" lineStyle="Double"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{TRANS_COUNT}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="211" y="0" width="100" height="16"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Totals:]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="64" splitType="Stretch">
+			<image>
+				<reportElement x="2" y="2" width="180" height="60"/>
+				<imageExpression class="java.lang.String"><![CDATA["\\\\main1\\Adempiere\\jboss\\server\\adempiere\\deploy\\CustomReports.war\\ofc_logo_180.gif"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="211" y="10" width="179" height="33"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Daily Close Report]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="17" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="100" y="1" width="100" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tender_type}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="200" y="1" width="100" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cardtype}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="300" y="1" width="100" height="16"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{numtrx}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;(#,##0.00)">
+				<reportElement x="400" y="1" width="84" height="16"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="18" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="22" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="13" splitType="Stretch"/>
+	</summary>
+</jasperReport>

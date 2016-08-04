@@ -1,0 +1,546 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OFC Student Performance Report" language="groovy" pageWidth="792" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<style name="Crosstab Data Text" isDefault="false" hAlign="Center"/>
+	<subDataset name="bookingcrosstab">
+		<parameter name="subClass" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="lookahead_weeks_sub" class="java.lang.Integer" isForPrompting="false"/>
+		<parameter name="lookback_weeks_sub" class="java.lang.Integer" isForPrompting="false"/>
+		<queryString>
+			<![CDATA[SELECT
+     ofc_student_bookings_v."class" AS ofc_student_bookings_v_class,
+     ofc_student_bookings_v."name" AS ofc_student_bookings_v_name,
+     ofc_student_bookings_v."resourcetype" AS ofc_student_bookings_v_resourcetype,
+     ofc_student_bookings_v."year" AS ofc_student_bookings_v_year,
+     ofc_student_bookings_v."week" AS ofc_student_bookings_v_week,
+     ofc_student_bookings_v."bookingcount" AS ofc_student_bookings_v_bookingcount
+FROM
+     "adempiere"."ofc_student_bookings_v" ofc_student_bookings_v
+WHERE
+     ofc_student_bookings_v."class" = $P{subClass} AND
+     ofc_student_bookings_v."week" > (date_part('week', now())-$P{lookback_weeks_sub}) AND
+     ofc_student_bookings_v."week" < (date_part('week', now())+$P{lookahead_weeks_sub})]]>
+		</queryString>
+		<field name="ofc_student_bookings_v_class" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="ofc_student_bookings_v_name" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="ofc_student_bookings_v_resourcetype" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="ofc_student_bookings_v_year" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="ofc_student_bookings_v_week" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="ofc_student_bookings_v_bookingcount" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+	</subDataset>
+	<subDataset name="FlightRec">
+		<parameter name="subClass" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT
+     ofc_student_flight_summary_v."class" AS ofc_student_flight_summary_v_class,
+     ofc_student_flight_summary_v."name" AS ofc_student_flight_summary_v_name,
+     ofc_student_flight_summary_v."yrwk" AS ofc_student_flight_summary_v_yrwk,
+     ofc_student_flight_summary_v."flt_time"::varchar || ' / '::varchar ||
+     ofc_student_flight_summary_v."sim"::varchar || ' / '::varchar ||
+     ofc_student_flight_summary_v."brief"::varchar AS ofc_student_flight_summary_v_flt_time,
+     ofc_student_flight_summary_v."noshow" AS ofc_student_flight_summary_v_noshow,
+     ofc_student_flight_summary_v."cancellations" AS ofc_student_flight_summary_v_cancellations
+FROM
+     "adempiere"."ofc_student_flight_summary_v" ofc_student_flight_summary_v
+WHERE
+     ofc_student_flight_summary_v."class" = $P{subClass}]]>
+		</queryString>
+		<field name="ofc_student_flight_summary_v_class" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="ofc_student_flight_summary_v_name" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="ofc_student_flight_summary_v_yrwk" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="ofc_student_flight_summary_v_flt_time" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="ofc_student_flight_summary_v_noshow" class="java.lang.Long">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="ofc_student_flight_summary_v_cancellations" class="java.lang.Long">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+	</subDataset>
+	<parameter name="lookahead_weeks_main" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[4]]></defaultValueExpression>
+	</parameter>
+	<parameter name="lookback_weeks_main" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[4]]></defaultValueExpression>
+	</parameter>
+	<parameter name="AD_Client_ID" class="java.math.BigDecimal" isForPrompting="false">
+		<defaultValueExpression><![CDATA[1000000]]></defaultValueExpression>
+	</parameter>
+	<parameter name="OFC_Training_Unit_ID" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[1000013]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     ofc_class."name" AS ofc_class_name,
+     ofc_training_unit."name" AS ofc_training_unit_name,
+     to_char(current_date,'IW') as weeknum,
+     to_char(current_date,'DD-Mon-YY') as curdate
+FROM
+     "adempiere"."ofc_class" ofc_class
+	INNER JOIN "adempiere"."ofc_training_unit" ofc_training_unit
+		ON ofc_class."ofc_training_unit_id" = ofc_training_unit."ofc_training_unit_id"
+WHERE
+	ofc_class."ofc_training_unit_id" = $P{OFC_Training_Unit_ID} AND
+	ofc_class."ad_client_id" = $P{AD_Client_ID}]]>
+	</queryString>
+	<field name="ofc_class_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ofc_training_unit_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="weeknum" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="curdate" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="24">
+			<line>
+				<reportElement x="0" y="22" width="752" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="0" width="752" height="23"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Student Performance Report]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="145">
+			<break>
+				<reportElement x="0" y="0" width="100" height="1"/>
+			</break>
+			<staticText>
+				<reportElement x="10" y="5" width="42" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Class:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="52" y="5" width="681" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ofc_class_name} + " " + $F{ofc_training_unit_name}
+]]></textFieldExpression>
+			</textField>
+			<elementGroup>
+				<rectangle radius="10">
+					<reportElement x="210" y="30" width="304" height="34"/>
+				</rectangle>
+				<textField isStretchWithOverflow="true" pattern="">
+					<reportElement x="299" y="29" width="54" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{curdate}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="227" y="29" width="72" height="20"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<text><![CDATA[Current date (]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="353" y="29" width="83" height="20"/>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[) is week number ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="227" y="49" width="270" height="14"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+					<text><![CDATA[(Weeks are Monday to Sunday.)]]></text>
+				</staticText>
+				<textField pattern="###0">
+					<reportElement x="436" y="29" width="61" height="20"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{weeknum}]]></textFieldExpression>
+				</textField>
+			</elementGroup>
+			<crosstab>
+				<reportElement x="52" y="74" width="681" height="71"/>
+				<crosstabDataset>
+					<dataset>
+						<datasetRun subDataset="FlightRec">
+							<datasetParameter name="subClass">
+								<datasetParameterExpression><![CDATA[$F{ofc_class_name}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+					</dataset>
+				</crosstabDataset>
+				<crosstabHeaderCell>
+					<cellContents>
+						<staticText>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="143" height="41"/>
+							<textElement verticalAlignment="Middle">
+								<font fontName="Arial" isBold="true"/>
+							</textElement>
+							<text><![CDATA[Student Flight Time
+by Week]]></text>
+						</staticText>
+					</cellContents>
+				</crosstabHeaderCell>
+				<rowGroup name="ofc_student_flight_summary_v_name" width="143">
+					<bucket>
+						<bucketExpression class="java.lang.String"><![CDATA[$F{ofc_student_flight_summary_v_name}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="10" y="0" width="133" height="11"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression class="java.lang.String"><![CDATA[$V{ofc_student_flight_summary_v_name}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents/>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="ofc_student_flight_summary_v_yrwk" height="41">
+					<bucket>
+						<bucketExpression class="java.lang.String"><![CDATA[$F{ofc_student_flight_summary_v_yrwk}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="26" width="75" height="15"/>
+								<textElement verticalAlignment="Bottom">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression class="java.lang.String"><![CDATA[$V{ofc_student_flight_summary_v_yrwk}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents/>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="ofc_student_flight_summary_v_flt_timeMeasure" class="java.lang.String">
+					<measureExpression><![CDATA[$F{ofc_student_flight_summary_v_flt_time}]]></measureExpression>
+				</measure>
+				<crosstabCell width="77" height="12">
+					<cellContents>
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField isBlankWhenNull="true">
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="75" height="11"/>
+							<textElement verticalAlignment="Middle">
+								<font size="8"/>
+							</textElement>
+							<textFieldExpression class="java.lang.String"><![CDATA[$V{ofc_student_flight_summary_v_flt_timeMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell height="15" rowTotalGroup="ofc_student_flight_summary_v_name">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="15"/>
+							<textElement/>
+							<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{ofc_student_flight_summary_v_flt_timeMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="50" columnTotalGroup="ofc_student_flight_summary_v_yrwk">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="15"/>
+							<textElement/>
+							<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{ofc_student_flight_summary_v_flt_timeMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="ofc_student_flight_summary_v_name" columnTotalGroup="ofc_student_flight_summary_v_yrwk">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField isBlankWhenNull="true">
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="15"/>
+							<textElement/>
+							<textFieldExpression class="java.lang.String"><![CDATA[$V{ofc_student_flight_summary_v_flt_timeMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+		</band>
+		<band height="176">
+			<break>
+				<reportElement x="0" y="1" width="100" height="1"/>
+			</break>
+			<crosstab>
+				<reportElement x="52" y="67" width="681" height="103"/>
+				<crosstabDataset>
+					<dataset>
+						<datasetRun subDataset="bookingcrosstab">
+							<datasetParameter name="subClass">
+								<datasetParameterExpression><![CDATA[$F{ofc_class_name}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="lookahead_weeks_sub">
+								<datasetParameterExpression><![CDATA[$P{lookahead_weeks_main}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="lookback_weeks_sub">
+								<datasetParameterExpression><![CDATA[$P{lookback_weeks_main}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+					</dataset>
+				</crosstabDataset>
+				<crosstabHeaderCell>
+					<cellContents>
+						<staticText>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="136" height="82"/>
+							<textElement verticalAlignment="Middle">
+								<font fontName="Arial" size="12" isBold="true"/>
+							</textElement>
+							<text><![CDATA[Student Bookings
+by Week]]></text>
+						</staticText>
+					</cellContents>
+				</crosstabHeaderCell>
+				<rowGroup name="ofc_student_bookings_v_name" width="136">
+					<bucket>
+						<bucketExpression class="java.lang.String"><![CDATA[$F{ofc_student_bookings_v_name}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="7" y="0" width="126" height="11"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font fontName="Arial" size="8" isItalic="false"/>
+								</textElement>
+								<textFieldExpression class="java.lang.String"><![CDATA[$V{ofc_student_bookings_v_name}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents/>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="ofc_student_bookings_v_year" height="15">
+					<bucket>
+						<bucketExpression class="java.lang.Integer"><![CDATA[$F{ofc_student_bookings_v_year}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField pattern="###0">
+								<reportElement style="Crosstab Data Text" mode="Transparent" x="1" y="0" width="27" height="15"/>
+								<box>
+									<topPen lineWidth="0.0" lineStyle="Solid"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid"/>
+									<bottomPen lineWidth="0.0" lineStyle="Solid"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid"/>
+								</box>
+								<textElement verticalAlignment="Middle" rotation="None">
+									<font fontName="Arial" size="8"/>
+								</textElement>
+								<textFieldExpression class="java.lang.Integer"><![CDATA[$V{ofc_student_bookings_v_year}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents/>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<columnGroup name="ofc_student_bookings_v_week" height="15">
+					<bucket>
+						<bucketExpression class="java.lang.Integer"><![CDATA[$F{ofc_student_bookings_v_week}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="1" y="0" width="27" height="15" isPrintInFirstWholeBand="true"/>
+								<box>
+									<topPen lineWidth="0.0" lineStyle="Solid"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid"/>
+									<bottomPen lineWidth="0.0" lineStyle="Solid"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid"/>
+								</box>
+								<textElement verticalAlignment="Middle">
+									<font fontName="Arial" size="8"/>
+								</textElement>
+								<textFieldExpression class="java.lang.Integer"><![CDATA[$V{ofc_student_bookings_v_week}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents/>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<columnGroup name="ofc_student_bookings_v_resourcetype" height="52">
+					<bucket>
+						<bucketExpression class="java.lang.String"><![CDATA[$F{ofc_student_bookings_v_resourcetype}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="1" y="0" width="27" height="50"/>
+								<box>
+									<topPen lineWidth="0.0" lineStyle="Solid"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid"/>
+									<bottomPen lineWidth="0.0" lineStyle="Solid"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid"/>
+								</box>
+								<textElement textAlignment="Left" verticalAlignment="Middle" rotation="Left">
+									<font fontName="Arial" size="8"/>
+								</textElement>
+								<textFieldExpression class="java.lang.String"><![CDATA[$V{ofc_student_bookings_v_resourcetype}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents/>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="ofc_student_bookings_v_bookingcountMeasure" class="java.lang.Integer" calculation="Sum">
+					<measureExpression><![CDATA[$F{ofc_student_bookings_v_bookingcount}]]></measureExpression>
+				</measure>
+				<crosstabCell width="28" height="12">
+					<cellContents>
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="1" y="0" width="27" height="11"/>
+							<box>
+								<topPen lineWidth="0.0" lineStyle="Solid"/>
+								<leftPen lineWidth="0.0" lineStyle="Solid"/>
+								<bottomPen lineWidth="0.0" lineStyle="Solid"/>
+								<rightPen lineWidth="0.0" lineStyle="Solid"/>
+							</box>
+							<textElement verticalAlignment="Middle">
+								<font fontName="Arial" size="8"/>
+							</textElement>
+							<textFieldExpression class="java.lang.Integer"><![CDATA[$V{ofc_student_bookings_v_bookingcountMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+			<staticText>
+				<reportElement x="10" y="3" width="42" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Class:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="52" y="3" width="681" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ofc_class_name} + " " + $F{ofc_training_unit_name}]]></textFieldExpression>
+			</textField>
+			<elementGroup>
+				<rectangle radius="10">
+					<reportElement x="209" y="27" width="304" height="34"/>
+				</rectangle>
+				<textField pattern="dd-MMM-yy">
+					<reportElement x="298" y="26" width="54" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{curdate}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="226" y="26" width="72" height="20"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<text><![CDATA[Current date (]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="352" y="26" width="83" height="20"/>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[) is week number ]]></text>
+				</staticText>
+				<textField pattern="###0">
+					<reportElement x="435" y="26" width="61" height="20"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{weeknum}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="226" y="46" width="270" height="14"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+					<text><![CDATA[(Weeks are Monday to Sunday.)]]></text>
+				</staticText>
+			</elementGroup>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="50">
+			<staticText>
+				<reportElement x="263" y="15" width="226" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ottawa Flying Club]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="632" y="15" width="80" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="712" y="15" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd-MMM-yy">
+				<reportElement x="0" y="15" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

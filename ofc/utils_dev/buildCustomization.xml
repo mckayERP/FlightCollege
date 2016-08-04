@@ -1,16 +1,17 @@
-<project name="OFC" default="dist" basedir=".">
+<project name="OFC" default="dist" basedir="../">
     <description>
         Create cusomization jars
     </description>
 
 <!-- define properties for this build -->
-	<property file="buildCustomization.properties"/>
+	<property file="utils_dev/buildCustomization.properties"/>
 	<property name="src" value="src"/>
 	<property name="build.dir" value="build"/>
 	<target name="init" description="initialization target">
 		<echo message="=========== Build Adempiere Customizations - ${env.ENCODING}"/>
 		<!-- Create the time stamp -->
 		<tstamp/>
+		<mkdir dir="lib"/>
 	</target>
 
 	<target name="jar" depends="clean">
@@ -34,19 +35,24 @@
         <ant inheritAll="false" dir="com.mckayerp.ftu" target="clean"/>
         <ant inheritAll="false" dir="serverRoot" target="clean"/>
 		<!-- ant inheritAll="false" dir="${glrec.home}" target="clean"/ -->		
-		<delete file="${adempiere.customJarFile}"/>
-		<delete file="${adempiere.zkCustomJarFile}"/>
+		<delete file="lib/${adempiere.customJarFile}"/>
+		<delete file="lib/${adempiere.zkCustomJarFile}"/>
+	    <delete file="lib/${adempiere.serverCustomJarFile}"/>
 	</target>
 		
   <target name="dist" depends="jar" description="deploy" >
-	<echo message="=========== Install customizations"/>
-	<copy todir="${adempiere.customLibDir}" file="${adempiere.customJarFile}" verbose="true"/>
-	<copy todir="${adempiere.zkCustomLibDir}" file="${adempiere.zkCustomJarFile}" verbose="true"/>	
-    <copy todir="${adempiere.customLibDir}" file="${adempiere.serverCustomJarFile}" verbose="true"/>
-    <copy todir="${ofc.install}" file="${adempiere.customJarFile}" verbose="true"/>
-    <copy todir="${ofc.install}" file="${adempiere.zkCustomJarFile}" verbose="true"/>  
-    <copy todir="${ofc.install}" file="${adempiere.serverCustomJarFile}" verbose="true"/>
-  	<ant inheritAll="false" dir="migrations"/>
+  	<!-- build the zip file -->
+    <echo message="=========== Creating the distribution package"/>
+  	<ant inheritAll="false" dir="install" target="dist"/>
+  	
+	<echo message="=========== Installing customizations locally"/>
+    <!-- Unzip Install File         -->
+       <unzip src="${ofc.installDir}/${ofc.distDir}/${ofc.installZipFile}" 
+           dest="c:\" 
+           overwrite="yes"/>
+
+    <echo message="=========== Copying the distribution package to deploy site"/>
+    <copy todir="${ofc.install}" file="${ofc.installDir}/${ofc.distDir}/${ofc.installZipFile}" verbose="true"/>
   </target>
 
 </project>

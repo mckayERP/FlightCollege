@@ -3,7 +3,7 @@
 <!-- Install                                          -->
 <!-- ============================================= -->
 
-<project name="Install" default="dist" basedir=".">
+<project name="Install" default="jar" basedir=".">
 
 	<description>
 	    This buildfile is used to build the client subproject within 
@@ -11,11 +11,16 @@
 	  </description>
 
 	<!-- set global properties for this build -->
-	<property file="../buildCustomization.properties"/>
+    <property file="../utils_dev/buildCustomization.properties"/>
 	<property name="src" value="src"/>
 	<property name="build.dir" value="build"/>
-	<property name="dist.dir" value=".."/>
+	<property name="install.dir" value="dist"/>
+	<property name="dist.dir" value="${install.dir}/${adempiere.dir}"/>
 	<property name="jar.path" value="${adempiere.trunk}/lib"/>
+	<property name="migration.dir" value="../migrations"/>
+    <property name="report.dir" value="../reports"/>
+    <property name="jboss.dir" value="../jboss"/>
+    <property name="utils.dir" value="../utils"/>
 
 	<!-- set path to include the necessary jar files for javac -->
 	<path id="lib.class.path">
@@ -37,6 +42,7 @@
 		<tstamp/>
 		<!-- create the build directory structure used by compile -->
 		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${install.dir}"/>
 		<!-- check for the distribution directory -->
 		<available file="${dist.dir}" type="dir" property="dist.dir.exists"/>
 	</target>
@@ -51,7 +57,7 @@
 	<!-- =========================================== -->
 	<target name="compile" depends="makedir">
 		<!-- compile the java code from ${src} into ${build.dir} -->
-		<javac target="1.7" srcdir="${src}" destdir="${build.dir}" deprecation="on" debug="on">
+		<javac target="1.8" srcdir="${src}" destdir="${build.dir}" deprecation="on" debug="on">
 			<classpath refid="lib.class.path"/>
 			<compilerarg line="-XDignore.symbol.file" />
 		</javac>
@@ -70,17 +76,72 @@
 			</fileset>
 		</copy>
 	</target>
+	
+	<target name="jar" depends="compile">
+        <!-- put everything from ${build.dir} into Customization.jar file -->
+           <jar
+             jarfile="../lib/${adempiere.customJarFile}" 
+             basedir="${build.dir}"
+             update="true">
+           </jar>
+	</target>
+		
 
 	<!-- =========================================== -->
 	<!-- Distribution                                -->
 	<!-- =========================================== -->
-	<target name="dist" depends="compile">
-		<!-- put everything from ${build.dir} into Customization.jar file -->
-		<jar
-		  jarfile="${dist.dir}/${adempiere.customJarFile}" 
-		  basedir="${build.dir}"
-		  update="true">
-		</jar>
+	<target name="dist" depends="makedir">
+        <!-- Build the zip file -->
+		<!-- lib Directory            -->
+        <mkdir dir="${dist.dir}/lib"/>
+        <copy todir="${dist.dir}/lib">
+            <fileset dir="../lib">
+                <include name="${adempiere.customJarFile}"/>
+                <include name="${adempiere.zkCustomJarFile}"/>  
+                <include name="${adempiere.serverCustomJarFile}"/>
+            </fileset>
+        </copy>
+
+	    <!-- Migration Directory            -->
+        <mkdir dir="${dist.dir}/migration"/>
+        <copy todir="${dist.dir}/migration">
+            <fileset dir="${migration.dir}">
+                <include name="**/*.xml"/>
+                <include name="**/*.sql"/>
+                <exclude name="**/build.xml"/>
+            </fileset>
+        </copy>
+
+        <!-- Reports Directory            -->
+        <mkdir dir="${dist.dir}/reports"/>
+        <copy todir="${dist.dir}/reports">
+            <fileset dir="${report.dir}">
+                <include name="**/*.xml"/>
+                <include name="**/*.jasper"/>
+            </fileset>
+        </copy>
+
+        <!-- JBoss Directory            -->
+        <mkdir dir="${dist.dir}/jboss"/>
+        <copy todir="${dist.dir}/jboss">
+            <fileset dir="${jboss.dir}">
+                <include name="**/*.*"/>
+            </fileset>
+        </copy>
+
+        <!-- Utils Directory            -->
+        <mkdir dir="${dist.dir}/utils"/>
+        <copy todir="${dist.dir}/utils">
+            <fileset dir="${utils.dir}">
+                <include name="**/*.*"/>
+            </fileset>
+        </copy>
+		
+	    <!-- Create Install ZIP     -->
+	    <zip zipfile="${install.dir}/${ofc.installZipFile}"
+	        basedir="${install.dir}"
+	        includes="${adempiere.dir}/**" />
+		
 	</target>
 
 	<path id="class.path.test">
@@ -98,6 +159,7 @@
 	<target name="clean">
 		<!-- Delete the ${build.dir} directory trees -->
 		<delete dir="${build.dir}"/>
+		<delete dir="${install.dir}"/>
 	</target>
 
 </project>

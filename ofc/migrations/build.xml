@@ -10,7 +10,7 @@
   </description>
 
   <!-- Set global properties for this build -->
-  <property file="../buildCustomization.properties"/>
+  <property file="../utils_dev/buildCustomization.properties"/>
 		
   <!-- Copy migration files to dist directory -->	
   <target name="install">

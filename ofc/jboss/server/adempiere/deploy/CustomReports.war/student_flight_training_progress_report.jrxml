@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Student_Flight_Training_Progress_Report" language="groovy" pageWidth="752" pageHeight="572" orientation="Landscape" columnWidth="752" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="FT_Progress">
+		<parameter name="subc_bpartner_id" class="java.math.BigDecimal"/>
+		<queryString>
+			<![CDATA[SELECT
+  c_bpartner.c_bpartner_id,
+  ofc_class."value" AS "class",
+  c_bpartner."name",
+  ofc_syllabus_details."value" AS "LP",
+  count(ofc_flightsheet.ofc_lesson_plan_status),
+  sum(ofc_flightsheet.ofc_flight_time_dual +
+  ofc_flightsheet.ofc_flight_time_solo +
+  ofc_flightsheet.ofc_simulator) AS flt_time,
+  a.class_average AS class_average,
+  ofc_syllabus_details.ofc_hour_req,
+  ofc_syllabus_details.ofc_interphase,
+  ofc_syllabus_details.ofc_phase
+FROM
+  adempiere.ofc_flightsheet,
+  adempiere.c_bpartner,
+  adempiere.ofc_student,
+  adempiere.ofc_class,
+  adempiere.ofc_syllabus_details,
+(SELECT
+  ofc_class.ofc_class_id,
+  ofc_syllabus_details.ofc_syllabus_details_id,
+  avg(ofc_flightsheet.ofc_flight_time_dual +
+  ofc_flightsheet.ofc_flight_time_solo +
+  ofc_flightsheet.ofc_simulator) AS class_average
+ FROM
+  adempiere.ofc_flightsheet,
+  adempiere.c_bpartner,
+  adempiere.ofc_student,
+  adempiere.ofc_class,
+  adempiere.ofc_syllabus_details
+ WHERE
+  ofc_flightsheet.c_bpartner_id = c_bpartner.c_bpartner_id AND
+  ofc_flightsheet.ofc_syllabus_details_id = ofc_syllabus_details.ofc_syllabus_details_id AND
+  c_bpartner.c_bpartner_id = ofc_student.c_bpartner_id AND
+  ofc_student.ofc_class_id = ofc_class.ofc_class_id AND
+  ofc_student.ofc_student_status = 'Enrolled' AND
+  ofc_student.isactive = 'Y'
+GROUP BY
+  ofc_class.ofc_class_id,
+  ofc_syllabus_details.ofc_syllabus_details_id) a
+WHERE
+  ofc_flightsheet.c_bpartner_id = c_bpartner.c_bpartner_id AND
+  ofc_flightsheet.ofc_syllabus_details_id = ofc_syllabus_details.ofc_syllabus_details_id AND
+  c_bpartner.c_bpartner_id = ofc_student.c_bpartner_id AND
+  ofc_student.ofc_class_id = ofc_class.ofc_class_id AND
+  c_bpartner.c_bpartner_id = $P{subc_bpartner_id} AND
+  a.ofc_syllabus_details_id = ofc_flightsheet.ofc_syllabus_details_id AND
+  a.ofc_class_id = ofc_class.ofc_class_id AND
+  ofc_student.ofc_student_status = 'Enrolled' AND
+  ofc_student.isactive = 'Y'
+GROUP BY
+  c_bpartner.c_bpartner_id,
+  ofc_class."value",
+  c_bpartner."name",
+  a.class_average,
+  ofc_syllabus_details."value",
+  ofc_syllabus_details.ofc_hour_req,
+  ofc_syllabus_details.ofc_interphase,
+  ofc_syllabus_details.ofc_phase
+ORDER by
+  ofc_syllabus_details."value";]]>
+		</queryString>
+		<field name="c_bpartner_id" class="java.math.BigDecimal">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="class" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="name" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="LP" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="count" class="java.lang.Long">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="flt_time" class="java.math.BigDecimal">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="ofc_hour_req" class="java.math.BigDecimal">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="ofc_interphase" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="ofc_phase" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="class_average" class="java.math.BigDecimal"/>
+	</subDataset>
+	<parameter name="C_BPartner_ID" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="C_BPartner_ID_for_query" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{C_BPartner_ID}==null? " true": "c_bpartner.c_bpartner_id=".concat($P{C_BPartner_ID}.toString())]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     C_BPartner."name",
+     C_Bpartner.c_bpartner_id,
+     c_bpartner."name" AS c_bpartner_name,
+     ofc_student."dateenrolled" AS ofc_student_dateenrolled,
+     ofc_student."ofc_student_status" AS ofc_student_ofc_student_status,
+     ofc_student."ofc_student_stage" AS ofc_student_ofc_student_stage,
+     ofc_class."value" AS ofc_class_value,
+     flt."Flight Time",
+     flt."Sim",
+     flt."Briefing",
+     lv.list_value AS "Stage"
+FROM
+     	"adempiere"."ofc_student" ofc_student
+	INNER JOIN "adempiere"."c_bpartner" c_bpartner
+	ON ofc_student."c_bpartner_id" = c_bpartner."c_bpartner_id"
+	LEFT OUTER JOIN
+	(SELECT ad_ref_list."name" AS list_value, ad_ref_list."value" AS code FROM adempiere.ad_ref_list, adempiere.ad_reference WHERE ad_ref_list.ad_reference_id = ad_reference.ad_reference_id AND ad_reference."name" = 'OFC Student Stage') lv ON lv.code = ofc_student."ofc_student_stage"
+     INNER JOIN "adempiere"."ofc_class" ofc_class ON ofc_student."ofc_class_id" = ofc_class."ofc_class_id"
+  Left Outer Join
+	(SELECT c_bpartner_id, sum(
+ 	ofc_flightsheet.ofc_flight_time_dual +
+ 	ofc_flightsheet.ofc_flight_time_solo +
+ 	ofc_flightsheet.ofc_flight_time_rental +
+	ofc_flightsheet.ofc_flight_time_intro +
+	ofc_flightsheet.ofc_flight_time_charter +
+	ofc_flightsheet.ofc_flight_time_nonrev) AS "Flight Time",
+	sum (ofc_flightsheet.ofc_simulator) AS "Sim",
+	sum (ofc_flightsheet.ofc_briefing) AS "Briefing"
+	FROM
+ 	adempiere.ofc_flightsheet
+	GROUP BY c_bpartner_id) flt ON flt.c_bpartner_id = c_bpartner."c_bpartner_id"
+WHERE
+     $P!{C_BPartner_ID_for_query} AND
+  ofc_student.ofc_student_status = 'Enrolled' AND
+  ofc_student.isactive = 'Y']]>
+	</queryString>
+	<field name="name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="c_bpartner_id" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="c_bpartner_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ofc_student_dateenrolled" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ofc_student_ofc_student_status" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ofc_student_ofc_student_stage" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ofc_class_value" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Flight Time" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Sim" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Briefing" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Stage" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="20" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="16" splitType="Stretch"/>
+	</pageHeader>
+	<detail>
+		<band height="453" splitType="Stretch">
+			<lineChart>
+				<chart>
+					<reportElement x="43" y="143" width="652" height="294"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend position="Bottom"/>
+				</chart>
+				<categoryDataset>
+					<dataset>
+						<datasetRun subDataset="FT_Progress">
+							<datasetParameter name="subc_bpartner_id">
+								<datasetParameterExpression><![CDATA[$F{c_bpartner_id}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+					</dataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{name}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{LP}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{flt_time}]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["Standard"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{LP}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{ofc_hour_req}]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["Class Average"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{LP}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{class_average}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<linePlot isShowShapes="false">
+					<plot labelRotation="90.0"/>
+					<categoryAxisFormat>
+						<axisFormat>
+							<labelFont/>
+							<tickLabelFont>
+								<font size="8"/>
+							</tickLabelFont>
+						</axisFormat>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat>
+							<labelFont/>
+							<tickLabelFont/>
+						</axisFormat>
+					</valueAxisFormat>
+				</linePlot>
+			</lineChart>
+			<textField>
+				<reportElement x="154" y="38" width="224" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="89" y="38" width="65" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Student:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="448" y="58" width="100" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{Flight Time}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="137" y="98" width="135" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ofc_class_value}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="175" y="78" width="170" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{ofc_student_dateenrolled}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="153" y="58" width="199" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ofc_student_ofc_student_status}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="89" y="78" width="85" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date Enrolled:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="89" y="98" width="48" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Class:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="89" y="58" width="65" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Status:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="378" y="58" width="68" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Flight Time:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="38" width="93" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Training Stage:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="378" y="78" width="68" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sim Time:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="378" y="98" width="68" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Briefing:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="446" y="78" width="100" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{Sim}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="446" y="98" width="100" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{Briefing}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="470" y="38" width="100" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{Stage}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="514">
+			<multiAxisChart>
+				<chart>
+					<reportElement x="43" y="58" width="652" height="440"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend position="Top"/>
+				</chart>
+				<multiAxisPlot>
+					<plot labelRotation="90.0"/>
+					<axis>
+						<lineChart>
+							<chart>
+								<reportElement x="0" y="0" width="0" height="0" backcolor="#FFFFFF"/>
+								<chartTitle color="#000000"/>
+								<chartSubtitle color="#000000"/>
+								<chartLegend textColor="#000000" backgroundColor="#FFFFFF" position="Top"/>
+							</chart>
+							<categoryDataset>
+								<dataset>
+									<datasetRun subDataset="FT_Progress">
+										<datasetParameter name="subc_bpartner_id">
+											<datasetParameterExpression><![CDATA[$F{c_bpartner_id}]]></datasetParameterExpression>
+										</datasetParameter>
+										<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+									</datasetRun>
+								</dataset>
+								<categorySeries>
+									<seriesExpression><![CDATA[$F{name}]]></seriesExpression>
+									<categoryExpression><![CDATA[$F{LP}]]></categoryExpression>
+									<valueExpression><![CDATA[$F{flt_time}]]></valueExpression>
+								</categorySeries>
+								<categorySeries>
+									<seriesExpression><![CDATA["Standard"]]></seriesExpression>
+									<categoryExpression><![CDATA[$F{LP}]]></categoryExpression>
+									<valueExpression><![CDATA[$F{ofc_hour_req}]]></valueExpression>
+								</categorySeries>
+							</categoryDataset>
+							<linePlot isShowShapes="false">
+								<plot labelRotation="90.0"/>
+								<categoryAxisFormat>
+									<axisFormat>
+										<labelFont>
+											<font size="8"/>
+										</labelFont>
+										<tickLabelFont>
+											<font size="8"/>
+										</tickLabelFont>
+									</axisFormat>
+								</categoryAxisFormat>
+								<valueAxisFormat>
+									<axisFormat>
+										<labelFont/>
+										<tickLabelFont/>
+									</axisFormat>
+								</valueAxisFormat>
+							</linePlot>
+						</lineChart>
+					</axis>
+					<axis>
+						<lineChart>
+							<chart>
+								<reportElement mode="Transparent" x="0" y="0" width="0" height="0" backcolor="#FFFFFF"/>
+								<chartTitle color="#000000"/>
+								<chartSubtitle color="#000000"/>
+								<chartLegend textColor="#000000" backgroundColor="#FFFFFF" position="Top"/>
+							</chart>
+							<categoryDataset>
+								<dataset>
+									<datasetRun subDataset="FT_Progress">
+										<datasetParameter name="subc_bpartner_id">
+											<datasetParameterExpression><![CDATA[$F{c_bpartner_id}]]></datasetParameterExpression>
+										</datasetParameter>
+										<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+									</datasetRun>
+								</dataset>
+								<categorySeries>
+									<seriesExpression><![CDATA["Count"]]></seriesExpression>
+									<categoryExpression><![CDATA[$F{LP}]]></categoryExpression>
+									<valueExpression><![CDATA[$F{count}]]></valueExpression>
+								</categorySeries>
+							</categoryDataset>
+							<linePlot isShowShapes="false">
+								<plot labelRotation="0.0">
+									<seriesColor seriesOrder="0" color="#FFFF33"/>
+								</plot>
+								<categoryAxisFormat>
+									<axisFormat>
+										<labelFont>
+											<font size="8"/>
+										</labelFont>
+										<tickLabelFont>
+											<font size="8"/>
+										</tickLabelFont>
+									</axisFormat>
+								</categoryAxisFormat>
+								<valueAxisFormat>
+									<axisFormat axisLineColor="#000000">
+										<labelFont/>
+										<tickLabelFont/>
+									</axisFormat>
+								</valueAxisFormat>
+							</linePlot>
+						</lineChart>
+					</axis>
+				</multiAxisPlot>
+			</multiAxisChart>
+			<staticText>
+				<reportElement x="22" y="221" width="21" height="75"/>
+				<textElement rotation="Left">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hours]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="695" y="256" width="19" height="108"/>
+				<textElement rotation="Right">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Count]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="19" splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>

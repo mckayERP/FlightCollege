@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Customer Account Statement" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="StartDate" class="java.sql.Timestamp">
+		<defaultValueExpression><![CDATA[java.sql.Timestamp.valueOf("2009-12-01 00:00:00")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="EndDate" class="java.sql.Timestamp">
+		<defaultValueExpression><![CDATA[java.sql.Timestamp.valueOf("2010-05-31 23:59:59")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="AccountValue" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["11210"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="C_BPartner_ID" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[1001151]]></defaultValueExpression>
+	</parameter>
+	<parameter name="UnallocatedReceipts" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["11130"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ChequingUnallocatedReceipts" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["21240"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[Select
+da.ad_client_id, da.isactive, da.c_bpartner_id, da.client_name, da.seqno, da.postingtype, da.documentno, da.ispaid, da.dateinvoiced, da.line, da.name, da.description, da.qtyinvoiced, da.uomsymbol, da.priceactual, da.linenetamt, da.grandtotal
+from ((select
+	fa.ad_client_id, fa.isactive, bp.c_bpartner_id, bp.name as client_name, 0 as seqno, '' as postingtype, '' as documentno, '' as ispaid, '1 Jan 1970'::Timestamp as dateinvoiced, 0 as line, 'Opening Balance' as name, '' as description, 0 as qtyinvoiced, '' as uomsymbol, 0 as priceactual, sum(fa.amtacct) as linenetamt, sum(fa.amtacct) as grandtotal
+from
+	adempiere.c_bpartner bp
+	left outer join adempiere.rv_fact_acct fa on bp.c_bpartner_id = fa.c_bpartner_id
+where
+	bp.c_bpartner_id = $P{C_BPartner_ID} AND
+	(fa.accountvalue = $P{AccountValue} OR
+	 fa.accountvalue = $P{UnallocatedReceipts} OR
+	fa.accountvalue = $P{ChequingUnallocatedReceipts}) AND
+	fa.dateacct < $P{StartDate}
+GROUP BY
+	fa.ad_client_id, fa.isactive, bp.c_bpartner_id, bp.name)
+UNION
+(select ri.ad_client_id, ri.isactive, ci.c_bpartner_id, bp.name as client_name, 20 as seqno, '' as postingtype, ci.documentno, ci.ispaid, ci.dateinvoiced,ri.line,
+	CASE
+		when ri.line = 9999 then ri.taxindicator
+		else ri.name
+	END AS name, COALESCE(ri.description, ri.productdescription) as description, ri.qtyinvoiced, ri.uomsymbol, ri.priceactual,ri.linenetamt, ci.grandtotal
+from
+	adempiere.rv_c_invoice_linetax ri,
+	adempiere.c_invoice ci,
+	adempiere.c_bpartner bp
+where
+	ci.c_invoice_id = ri.c_invoice_id AND
+	ci.c_bpartner_id = bp.c_bpartner_id AND
+	ci.docstatus <> 'RE' AND
+	ri.posted = 'Y' AND
+	ri.line <> 9998 AND
+	bp.c_bpartner_id = $P{C_BPartner_ID} AND
+	ci.dateinvoiced >= $P{StartDate} AND
+	ci.dateinvoiced <= $P{EndDate})
+UNION
+(select ri.ad_client_id, ri.isactive, ci.c_bpartner_id, bp.name as client_name, 22 as seqno, '' as postingtype, ci.documentno, ci.ispaid, ci.dateinvoiced, 0 as line,
+	'Cash payment' as name, '' as description, null as qtyinvoiced, '' as uomsymbol, null as priceactual, -ri.amount as linenetamt, -ri.amount as grandtotal
+from
+	adempiere.c_cashline ri,
+	adempiere.c_cash c,
+	adempiere.c_invoice ci,
+	adempiere.c_bpartner bp
+where
+	ci.c_cashline_id = ri.c_cashline_id AND
+	c.c_cash_id = ri.c_cash_id AND
+	ci.c_bpartner_id = bp.c_bpartner_id AND
+	ci.docstatus <> 'RE' AND
+	c.docstatus <> 'RE' AND
+	ci.posted = 'Y' AND
+	c.posted = 'Y' AND
+	ri.line <> 9998 AND
+	ci.c_cashline_id is not null AND
+	bp.c_bpartner_id = $P{C_BPartner_ID} AND
+	ci.dateinvoiced >= $P{StartDate} AND
+	ci.dateinvoiced <= $P{EndDate})
+UNION
+(select
+	fa.ad_client_id, fa.isactive, bp.c_bpartner_id, bp.name as client_name, 25 as seqno, '' as postingtype, fa.documentno, '' as ispaid, fa.datetrx as dateinvoiced, 0 as line, 'Payment on account' as name, fa.documentno as description, 0 as qtyinvoiced, '' as uomsymbol, 0 as priceactual, sum(-fa.payamt) as linenetamt, sum(-fa.payamt) as grandtotal
+from
+	adempiere.rv_payment fa,
+	adempiere.c_bpartner bp
+where
+	bp.c_bpartner_id = fa.c_bpartner_id AND
+	bp.c_bpartner_id = $P{C_BPartner_ID} AND
+	fa.posted = 'Y' AND
+	fa.C_charge_id > 0 AND
+	fa.datetrx >= $P{StartDate} AND
+	fa.datetrx <= $P{EndDate}
+GROUP BY
+	fa.ad_client_id, fa.isactive, bp.c_bpartner_id, bp.name, fa.documentno, fa.datetrx, fa.tendertype)
+UNION
+(select
+	fa.ad_client_id, fa.isactive, bp.c_bpartner_id, bp.name as client_name, 30 as seqno, '' as postingtype, '' as documentno, '' as ispaid, '1 Jan 2999'::Timestamp as dateinvoiced, 0 as line, 'Closing Balance' as name, '' as description, 0 as qtyinvoiced, '' as uomsymbol, 0 as priceactual, sum(fa.amtacct) as linenetamt, sum(fa.amtacct) as grandtotal
+from
+	adempiere.c_bpartner bp
+	left outer join adempiere.rv_fact_acct fa on bp.c_bpartner_id = fa.c_bpartner_id
+where
+	bp.c_bpartner_id = $P{C_BPartner_ID} AND
+	(fa.accountvalue = $P{AccountValue} OR
+	 fa.accountvalue = $P{UnallocatedReceipts} OR
+	 fa.accountvalue = $P{ChequingUnallocatedReceipts})AND
+	fa.dateacct <= $P{EndDate}
+GROUP BY
+	fa.ad_client_id, fa.isactive, bp.c_bpartner_id, bp.name)
+	) da
+ORDER BY
+	da.client_name, da.dateinvoiced, da.seqno, da.documentno, da.line
+;]]>
+	</queryString>
+	<field name="ad_client_id" class="java.math.BigDecimal"/>
+	<field name="isactive" class="java.lang.String"/>
+	<field name="c_bpartner_id" class="java.math.BigDecimal"/>
+	<field name="client_name" class="java.lang.String"/>
+	<field name="seqno" class="java.lang.Integer"/>
+	<field name="postingtype" class="java.lang.String"/>
+	<field name="documentno" class="java.lang.String"/>
+	<field name="ispaid" class="java.lang.String"/>
+	<field name="dateinvoiced" class="java.sql.Timestamp"/>
+	<field name="line" class="java.math.BigDecimal"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="qtyinvoiced" class="java.math.BigDecimal"/>
+	<field name="uomsymbol" class="java.lang.String"/>
+	<field name="priceactual" class="java.math.BigDecimal"/>
+	<field name="linenetamt" class="java.math.BigDecimal"/>
+	<field name="grandtotal" class="java.math.BigDecimal"/>
+	<variable name="Balance" class="java.math.BigDecimal" resetType="Group" resetGroup="BPartner" calculation="Sum">
+		<variableExpression><![CDATA[new BigDecimal($F{name}.equals("Closing Balance") ? 0.0 : $F{linenetamt})]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<group name="BPartner" isStartNewPage="true" isResetPageNumber="true">
+		<groupExpression><![CDATA[$F{client_name}]]></groupExpression>
+		<groupHeader>
+			<band height="33">
+				<rectangle>
+					<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="572" height="30" backcolor="#99CCFF"/>
+					<graphicElement>
+						<pen lineWidth="2.0"/>
+					</graphicElement>
+				</rectangle>
+				<staticText>
+					<reportElement x="2" y="5" width="77" height="20"/>
+					<textElement>
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Customer:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="79" y="5" width="311" height="20"/>
+					<textElement>
+						<font size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{client_name}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="item">
+		<groupExpression><![CDATA[$F{dateinvoiced}.toString() + $F{documentno}]]></groupExpression>
+		<groupFooter>
+			<band height="4">
+				<line>
+					<reportElement positionType="Float" isPrintRepeatedValues="false" x="49" y="1" width="521" height="1" printWhenGroupChanges="item"/>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="44" splitType="Stretch">
+			<image>
+				<reportElement x="2" y="2" width="121" height="41"/>
+				<imageExpression class="java.lang.String"><![CDATA["http://main1:8088/CustomReports/ofc_logo_180.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="2" y="2" width="570" height="33"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Account Statement]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="17">
+			<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00">
+				<reportElement stretchType="RelativeToTallestObject" x="500" y="0" width="72" height="15" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} > 1.0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{Balance}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="379" y="0" width="121" height="15" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER}.compareTo(1)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[From previous page:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="17">
+			<staticText>
+				<reportElement x="2" y="0" width="47" height="15"/>
+				<textElement/>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="153" y="0" width="156" height="15"/>
+				<textElement/>
+				<text><![CDATA[Description]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="309" y="0" width="35" height="15"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Qty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="344" y="0" width="24" height="15"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[UOM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="368" y="0" width="49" height="15"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Unit Price	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="417" y="0" width="49" height="15"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Line Amt]]></text>
+			</staticText>
+			<line>
+				<reportElement x="2" y="14" width="570" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="49" y="0" width="60" height="15"/>
+				<textElement/>
+				<text><![CDATA[Doc Num]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="109" y="0" width="44" height="15"/>
+				<textElement/>
+				<text><![CDATA[Line]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="519" y="0" width="53" height="15"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Balance]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="466" y="0" width="53" height="15"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField isStretchWithOverflow="true" pattern="dd-MMM-yy">
+				<reportElement isPrintRepeatedValues="false" x="2" y="2" width="47" height="12"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{dateinvoiced}.compareTo(new java.util.Date("1 Jan 1970")) ? ($F{dateinvoiced}.compareTo(new java.util.Date("1 Jan 2999")) ? $F{dateinvoiced} : $P{EndDate} ) : $P{StartDate}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="153" y="2" width="156" height="12" isRemoveLineWhenBlank="true"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="309" y="2" width="35" height="12" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{qtyinvoiced}!=null & $F{qtyinvoiced} != 0.0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{qtyinvoiced}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="344" y="2" width="24" height="12" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{uomsymbol}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement x="368" y="2" width="49" height="12" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{priceactual} != 0.0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{priceactual}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement x="417" y="2" width="49" height="12" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{linenetamt}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="153" y="14" width="297" height="0" isRemoveLineWhenBlank="true"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement x="519" y="2" width="53" height="12"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{Balance}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="49" y="2" width="60" height="12"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{documentno}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="109" y="2" width="44" height="12">
+					<printWhenExpression><![CDATA[( $F{line} == ((BigDecimal) 0.0) ? false : ( $F{line} == ((BigDecimal) 9999) ? false : true ))]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{line}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement isPrintRepeatedValues="false" x="466" y="2" width="53" height="12" isRemoveLineWhenBlank="true" printWhenGroupChanges="item"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{grandtotal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="57" splitType="Stretch">
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="500" y="2" width="72" height="15" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{Balance}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="438" y="2" width="62" height="15" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Page total:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="438" y="40" width="93" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Page " + $V{PAGE_NUMBER} + " of "]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="BPartner">
+				<reportElement x="531" y="40" width="41" height="15"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="33" width="572" height="22"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[20 Lindbergh Private | Ottawa  ON  |  K1V 1H7
+613.523.2142  |  dispatch@ofc.ca]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="19" width="572" height="14"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OTTAWA FLYING CLUB]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>
