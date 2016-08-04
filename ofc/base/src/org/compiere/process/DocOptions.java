@@ -45,7 +45,12 @@ public interface DocOptions
 	 */
 	public String[] getCustomizedActionOptions();
 
-	public boolean processCustomAction(String m_action);
+	/**
+	 * Process a custom action similar to the {@link org.compiere.process.DocumentEngine#processIt(String) processIt()} method in DocumentEngine.java.
+	 * @param customAction - the two letter action code.
+	 * @return true is successful.
+	 */
+	public boolean processCustomAction(String customAction);
 
 
 }
