@@ -36,7 +36,7 @@ public class MFTUDefectLog extends X_FTU_DefectLog implements DocAction, DocOpti
 	private DocumentEngine m_documentEngine;
 
 	/**	Aircraft Maintenance Defect Entry   */
-	public static final String 	DOCTYPE_DefectLog     = "AMC";
+	public static final String 	DOCTYPE_DefectRecord     = "AMD";
 
 	// MFTU Custom Actions
 	/** Enter/Record defects = ME */
@@ -63,7 +63,7 @@ public class MFTUDefectLog extends X_FTU_DefectLog implements DocAction, DocOpti
 		{
 			setDocStatus(DOCSTATUS_Drafted);
 			setDocAction (DOCACTION_Enter);
-			MDocType types[] = MDocType.getOfDocBaseType(getCtx(), "AMC");
+			MDocType types[] = MDocType.getOfDocBaseType(getCtx(), DOCTYPE_DefectRecord);
 			if (types.length > 0)	//	get first
 				setC_DocType_ID(types[0].getC_DocType_ID());
 		}
@@ -310,7 +310,7 @@ public class MFTUDefectLog extends X_FTU_DefectLog implements DocAction, DocOpti
 				this.setDefectDate(now);
 			}
 
-			MDocType types[] = MDocType.getOfDocBaseType(getCtx(), DOCTYPE_DefectLog);
+			MDocType types[] = MDocType.getOfDocBaseType(getCtx(), DOCTYPE_DefectRecord);
 			if (types.length > 0)	//	get first
 				setC_DocType_ID(types[0].getC_DocType_ID());
 			else
