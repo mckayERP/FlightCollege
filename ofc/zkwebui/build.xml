@@ -12,7 +12,7 @@
 	<property file="../utils_dev/buildCustomization.properties"/>
 	<property name="src" value="${basedir}/WEB-INF/src"/>
 	<property name="build.dir" value="${basedir}/build/WEB-INF/classes"/>
-	<property name="dist.dir" value=".."/>
+	<property name="dist.dir" value="../lib"/>
 	<property name="jar.path" value="${adempiere.trunk}/lib"/>
 
 	<property name="war.name"	value="webui"/>
