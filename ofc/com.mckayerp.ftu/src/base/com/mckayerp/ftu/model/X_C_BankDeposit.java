@@ -33,7 +33,7 @@ public class X_C_BankDeposit extends PO implements I_C_BankDeposit, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160721L;
+	private static final long serialVersionUID = 20160808L;
 
     /** Standard Constructor */
     public X_C_BankDeposit (Properties ctx, int C_BankDeposit_ID, String trxName)

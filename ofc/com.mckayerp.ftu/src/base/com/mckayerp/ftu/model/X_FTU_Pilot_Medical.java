@@ -30,7 +30,7 @@ public class X_FTU_Pilot_Medical extends PO implements I_FTU_Pilot_Medical, I_Pe
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160721L;
+	private static final long serialVersionUID = 20160808L;
 
     /** Standard Constructor */
     public X_FTU_Pilot_Medical (Properties ctx, int FTU_Pilot_Medical_ID, String trxName)

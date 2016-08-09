@@ -32,7 +32,7 @@ public class X_I_Flightsheet extends PO implements I_I_Flightsheet, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160721L;
+	private static final long serialVersionUID = 20160808L;
 
     /** Standard Constructor */
     public X_I_Flightsheet (Properties ctx, int I_Flightsheet_ID, String trxName)
@@ -73,17 +73,17 @@ public class X_I_Flightsheet extends PO implements I_I_Flightsheet, I_Persistent
     }
 
 	/** Set Acknowledged By.
-		@param AcknowledgedBy Acknowledged By	  */
-	public void setAcknowledgedBy (String AcknowledgedBy)
+		@param AcknowledgedByText Acknowledged By	  */
+	public void setAcknowledgedByText (String AcknowledgedByText)
 	{
-		set_Value (COLUMNNAME_AcknowledgedBy, AcknowledgedBy);
+		set_Value (COLUMNNAME_AcknowledgedByText, AcknowledgedByText);
 	}
 
 	/** Get Acknowledged By.
 		@return Acknowledged By	  */
-	public String getAcknowledgedBy () 
+	public String getAcknowledgedByText () 
 	{
-		return (String)get_Value(COLUMNNAME_AcknowledgedBy);
+		return (String)get_Value(COLUMNNAME_AcknowledgedByText);
 	}
 
 	/** Set Activate.
@@ -141,17 +141,17 @@ public class X_I_Flightsheet extends PO implements I_I_Flightsheet, I_Persistent
 	}
 
 	/** Set Autorized By.
-		@param AuthorizedBy Autorized By	  */
-	public void setAuthorizedBy (String AuthorizedBy)
+		@param AuthorizedByText Autorized By	  */
+	public void setAuthorizedByText (String AuthorizedByText)
 	{
-		set_Value (COLUMNNAME_AuthorizedBy, AuthorizedBy);
+		set_Value (COLUMNNAME_AuthorizedByText, AuthorizedByText);
 	}
 
 	/** Get Autorized By.
 		@return Autorized By	  */
-	public String getAuthorizedBy () 
+	public String getAuthorizedByText () 
 	{
-		return (String)get_Value(COLUMNNAME_AuthorizedBy);
+		return (String)get_Value(COLUMNNAME_AuthorizedByText);
 	}
 
 	/** Set Briefing.

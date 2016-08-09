@@ -29,7 +29,7 @@ public class X_AD_ImpValRule_Action extends PO implements I_AD_ImpValRule_Action
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160721L;
+	private static final long serialVersionUID = 20160808L;
 
     /** Standard Constructor */
     public X_AD_ImpValRule_Action (Properties ctx, int AD_ImpValRule_Action_ID, String trxName)

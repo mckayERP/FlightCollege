@@ -44,26 +44,26 @@ public interface I_FTU_Flightsheet
     /** Column name AcknowledgedBy */
     public static final String COLUMNNAME_AcknowledgedBy = "AcknowledgedBy";
 
-	/** Set Acknowledged By	  */
-	public void setAcknowledgedBy (String AcknowledgedBy);
-
-	/** Get Acknowledged By	  */
-	public String getAcknowledgedBy();
-
-    /** Column name AcknowledgedByID */
-    public static final String COLUMNNAME_AcknowledgedByID = "AcknowledgedByID";
-
 	/** Set Acknowledged By.
 	  * The flight authorization was acknowledged by this business partner
 	  */
-	public void setAcknowledgedByID (int AcknowledgedByID);
+	public void setAcknowledgedBy (int AcknowledgedBy);
 
 	/** Get Acknowledged By.
 	  * The flight authorization was acknowledged by this business partner
 	  */
-	public int getAcknowledgedByID();
+	public int getAcknowledgedBy();
 
-	public org.compiere.model.I_C_BPartner getAcknowledgedB() throws RuntimeException;
+	public org.compiere.model.I_C_BPartner getAcknowledge() throws RuntimeException;
+
+    /** Column name AcknowledgedByText */
+    public static final String COLUMNNAME_AcknowledgedByText = "AcknowledgedByText";
+
+	/** Set Acknowledged By	  */
+	public void setAcknowledgedByText (String AcknowledgedByText);
+
+	/** Get Acknowledged By	  */
+	public String getAcknowledgedByText();
 
     /** Column name AD_Client_ID */
     public static final String COLUMNNAME_AD_Client_ID = "AD_Client_ID";
@@ -102,26 +102,26 @@ public interface I_FTU_Flightsheet
     /** Column name AuthorizedBy */
     public static final String COLUMNNAME_AuthorizedBy = "AuthorizedBy";
 
-	/** Set Autorized By	  */
-	public void setAuthorizedBy (String AuthorizedBy);
-
-	/** Get Autorized By	  */
-	public String getAuthorizedBy();
-
-    /** Column name AuthorizedByID */
-    public static final String COLUMNNAME_AuthorizedByID = "AuthorizedByID";
-
 	/** Set Authorized By.
 	  * The flight was authorized by this business partner
 	  */
-	public void setAuthorizedByID (int AuthorizedByID);
+	public void setAuthorizedBy (int AuthorizedBy);
 
 	/** Get Authorized By.
 	  * The flight was authorized by this business partner
 	  */
-	public int getAuthorizedByID();
+	public int getAuthorizedBy();
 
-	public org.compiere.model.I_C_BPartner getAuthorizedB() throws RuntimeException;
+	public org.compiere.model.I_C_BPartner getAuthorize() throws RuntimeException;
+
+    /** Column name AuthorizedByText */
+    public static final String COLUMNNAME_AuthorizedByText = "AuthorizedByText";
+
+	/** Set Autorized By	  */
+	public void setAuthorizedByText (String AuthorizedByText);
+
+	/** Get Autorized By	  */
+	public String getAuthorizedByText();
 
     /** Column name Briefing */
     public static final String COLUMNNAME_Briefing = "Briefing";
@@ -166,6 +166,21 @@ public interface I_FTU_Flightsheet
 
 	public org.compiere.model.I_C_Order getC_Order() throws RuntimeException;
 
+    /** Column name Captain_BPartner_ID */
+    public static final String COLUMNNAME_Captain_BPartner_ID = "Captain_BPartner_ID";
+
+	/** Set Captain.
+	  * Captain or PIC for the flight.
+	  */
+	public void setCaptain_BPartner_ID (int Captain_BPartner_ID);
+
+	/** Get Captain.
+	  * Captain or PIC for the flight.
+	  */
+	public int getCaptain_BPartner_ID();
+
+	public org.compiere.model.I_C_BPartner getCaptain_BPartner() throws RuntimeException;
+
     /** Column name Captain_PIC */
     public static final String COLUMNNAME_Captain_PIC = "Captain_PIC";
 
@@ -178,21 +193,6 @@ public interface I_FTU_Flightsheet
 	  * The Captain or Pilot in Command
 	  */
 	public String getCaptain_PIC();
-
-    /** Column name CaptainID */
-    public static final String COLUMNNAME_CaptainID = "CaptainID";
-
-	/** Set Captain.
-	  * Captain or PIC for the flight.
-	  */
-	public void setCaptainID (int CaptainID);
-
-	/** Get Captain.
-	  * Captain or PIC for the flight.
-	  */
-	public int getCaptainID();
-
-	public org.compiere.model.I_C_BPartner getCaptai() throws RuntimeException;
 
     /** Column name ContactPhone */
     public static final String COLUMNNAME_ContactPhone = "ContactPhone";
@@ -629,20 +629,20 @@ public interface I_FTU_Flightsheet
 	/** Get Simulator	  */
 	public BigDecimal getSimulator();
 
-    /** Column name StudentID */
-    public static final String COLUMNNAME_StudentID = "StudentID";
+    /** Column name Student_BPartner_ID */
+    public static final String COLUMNNAME_Student_BPartner_ID = "Student_BPartner_ID";
 
 	/** Set Student.
 	  * The student if the flight is an instructional flight.
 	  */
-	public void setStudentID (int StudentID);
+	public void setStudent_BPartner_ID (int Student_BPartner_ID);
 
 	/** Get Student.
 	  * The student if the flight is an instructional flight.
 	  */
-	public int getStudentID();
+	public int getStudent_BPartner_ID();
 
-	public org.compiere.model.I_C_BPartner getStuden() throws RuntimeException;
+	public org.compiere.model.I_C_BPartner getStudent_BPartner() throws RuntimeException;
 
     /** Column name StudentPAX */
     public static final String COLUMNNAME_StudentPAX = "StudentPAX";
@@ -657,20 +657,20 @@ public interface I_FTU_Flightsheet
 	  */
 	public String getStudentPAX();
 
-    /** Column name TimesEnteredByID */
-    public static final String COLUMNNAME_TimesEnteredByID = "TimesEnteredByID";
+    /** Column name TimesEnteredBy */
+    public static final String COLUMNNAME_TimesEnteredBy = "TimesEnteredBy";
 
 	/** Set Times Entered By.
 	  * The times for this flight were entered by this business partner.
 	  */
-	public void setTimesEnteredByID (int TimesEnteredByID);
+	public void setTimesEnteredBy (int TimesEnteredBy);
 
 	/** Get Times Entered By.
 	  * The times for this flight were entered by this business partner.
 	  */
-	public int getTimesEnteredByID();
+	public int getTimesEnteredBy();
 
-	public org.compiere.model.I_C_BPartner getTimesEnteredB() throws RuntimeException;
+	public org.compiere.model.I_C_BPartner getTimesEntere() throws RuntimeException;
 
     /** Column name Updated */
     public static final String COLUMNNAME_Updated = "Updated";

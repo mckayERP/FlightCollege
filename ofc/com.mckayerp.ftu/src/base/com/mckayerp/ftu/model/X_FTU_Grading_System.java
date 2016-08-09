@@ -30,7 +30,7 @@ public class X_FTU_Grading_System extends PO implements I_FTU_Grading_System, I_
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160721L;
+	private static final long serialVersionUID = 20160808L;
 
     /** Standard Constructor */
     public X_FTU_Grading_System (Properties ctx, int FTU_Grading_System_ID, String trxName)

@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="MFTU" Name="Fix Merge Entities" ReleaseNo="FTU2.05" SeqNo="48">
+    <Step DBType="ALL" Parse="Y" SeqNo="10" StepType="SQL">
+      <SQLStatement>ALTER TABLE adempiere.FTU_Flightsheet rename COLUMN captainid  to temp;
+ALTER TABLE adempiere.FTU_Flightsheet ADD COLUMN captainid numeric(10,0) DEFAULT null;
+Update FTU_Flightsheet SET captainid = to_number(temp, '99999999');
+ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;
+</SQLStatement>
+      <RollbackStatement>ALTER TABLE adempiere.FTU_Flightsheet rename COLUMN captainid  to temp;
+ALTER TABLE adempiere.FTU_Flightsheet ADD COLUMN captainid character varying(49);
+Update adempiere.FTU_Flightsheet SET captainid = to_char(temp, '99999999');
+ALTER TABLE adempiere.FTU_Flightsheet DROP COLUMN temp;</RollbackStatement>
+    </Step>
+    <Step DBType="ALL" Parse="Y" SeqNo="20" StepType="SQL">
+      <SQLStatement>ALTER TABLE adempiere.FTU_Flightsheet rename COLUMN studentid  to temp;
+ALTER TABLE adempiere.FTU_Flightsheet ADD COLUMN studentid numeric(10,0) DEFAULT null;
+Update FTU_Flightsheet SET studentid = to_number(temp, '99999999');
+ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;
+</SQLStatement>
+      <RollbackStatement>ALTER TABLE adempiere.FTU_Flightsheet rename COLUMN studentid  to temp;
+ALTER TABLE adempiere.FTU_Flightsheet ADD COLUMN studentid character varying(49);
+Update adempiere.FTU_Flightsheet SET studentid = to_char(temp, '99999999');
+ALTER TABLE adempiere.FTU_Flightsheet DROP COLUMN temp;</RollbackStatement>
+    </Step>
+    <Step DBType="ALL" Parse="Y" SeqNo="30" StepType="SQL">
+      <SQLStatement>ALTER TABLE adempiere.FTU_Flightsheet rename COLUMN authorizedbyid  to temp;
+ALTER TABLE adempiere.FTU_Flightsheet ADD COLUMN authorizedbyid numeric(10,0) DEFAULT null;
+Update FTU_Flightsheet SET authorizedbyid = to_number(temp, '99999999');
+ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;
+</SQLStatement>
+      <RollbackStatement>ALTER TABLE adempiere.FTU_Flightsheet rename COLUMN authorizedbyid  to temp;
+ALTER TABLE adempiere.FTU_Flightsheet ADD COLUMN authorizedbyid character varying(49);
+Update adempiere.FTU_Flightsheet SET authorizedbyid = to_char(temp, '99999999');
+ALTER TABLE adempiere.FTU_Flightsheet DROP COLUMN temp;</RollbackStatement>
+    </Step>
+    <Step DBType="ALL" Parse="Y" SeqNo="40" StepType="SQL">
+      <SQLStatement>ALTER TABLE adempiere.FTU_Flightsheet rename COLUMN acknowledgedbyid  to temp;
+ALTER TABLE adempiere.FTU_Flightsheet ADD COLUMN acknowledgedbyid numeric(10,0) DEFAULT null;
+Update FTU_Flightsheet SET acknowledgedbyid = to_number(temp, '99999999');
+ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;
+</SQLStatement>
+      <RollbackStatement>ALTER TABLE adempiere.FTU_Flightsheet rename COLUMN acknowledgedbyid  to temp;
+ALTER TABLE adempiere.FTU_Flightsheet ADD COLUMN acknowledgedbyid character varying(49);
+Update adempiere.FTU_Flightsheet SET acknowledgedbyid = to_char(temp, '99999999');
+ALTER TABLE adempiere.FTU_Flightsheet DROP COLUMN temp;</RollbackStatement>
+    </Step>
+    <Step DBType="ALL" Parse="Y" SeqNo="50" StepType="SQL">
+      <SQLStatement>ALTER TABLE adempiere.FTU_Flightsheet rename COLUMN timesenteredbyid  to temp;
+ALTER TABLE adempiere.FTU_Flightsheet ADD COLUMN timesenteredbyid numeric(10,0) DEFAULT null;
+Update FTU_Flightsheet SET timesenteredbyid = to_number(temp, '99999999');
+ALTER TABLE adempiere.FTU_flightsheet DROP COLUMN temp;
+</SQLStatement>
+      <RollbackStatement>ALTER TABLE adempiere.FTU_Flightsheet rename COLUMN timesenteredbyid  to temp;
+ALTER TABLE adempiere.FTU_Flightsheet ADD COLUMN timesenteredbyid character varying(49);
+Update adempiere.FTU_Flightsheet SET timesenteredbyid = to_char(temp, '99999999');
+ALTER TABLE adempiere.FTU_Flightsheet DROP COLUMN temp;</RollbackStatement>
+    </Step>
+    <Step SeqNo="60" StepType="AD">
+      <PO AD_Table_ID="276" Action="U" Record_ID="1000656" Table="AD_Element">
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="CaptainID">Captain_BPartner_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="70" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1001484" Table="AD_Column">
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="CaptainID">Captain_BPartner_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="80" StepType="AD">
+      <PO AD_Table_ID="276" Action="U" Record_ID="1000657" Table="AD_Element">
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="StudentID">Student_BPartner_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="90" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1001485" Table="AD_Column">
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="StudentID">Student_BPartner_ID</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="100" StepType="AD">
+      <PO AD_Table_ID="276" Action="U" Record_ID="1000092" Table="AD_Element">
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="AuthorizedBy">AuthorizedByText</Data>
+        <Data AD_Column_ID="58588" Column="AD_Reference_ID" oldValue="11">10</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="110" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000436" Table="AD_Column">
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="AuthorizedBy">AuthorizedByText</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="120" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000413" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="130" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000758" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="140" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1001258" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="150" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1001367" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="160" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1001447" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="170" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000397" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="AuthorizedBy">AuthorizedByText</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="180" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000364" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="190" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000680" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="200" StepType="AD">
+      <PO AD_Table_ID="276" Action="U" Record_ID="1000663" Table="AD_Element">
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="AuthorizedByID">AuthorizedBy</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="210" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1001492" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="AuthorizedByID">AuthorizedBy</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="220" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1001449" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="230" StepType="AD">
+      <PO AD_Table_ID="276" Action="U" Record_ID="1000093" Table="AD_Element">
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="AcknowledgedBy">AcknowledgedByText</Data>
+        <Data AD_Column_ID="58588" Column="AD_Reference_ID" oldValue="11">10</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="240" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000398" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="AcknowledgedBy">AcknowledgedByText</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="250" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000362" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="260" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000678" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="270" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1000437" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="112" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="AcknowledgedBy">AcknowledgedByText</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="280" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000411" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="290" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1000756" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="300" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1001257" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="310" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1001366" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="320" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1001446" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="169" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="330" StepType="AD">
+      <PO AD_Table_ID="276" Action="U" Record_ID="1000664" Table="AD_Element">
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="AcknowledgedByID">AcknowledgedBy</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="340" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1001493" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="AcknowledgedByID">AcknowledgedBy</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="350" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1001448" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="360" StepType="AD">
+      <PO AD_Table_ID="276" Action="U" Record_ID="1000666" Table="AD_Element">
+        <Data AD_Column_ID="2602" Column="ColumnName" oldValue="TimesEnteredByID">TimesEnteredBy</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="370" StepType="AD">
+      <PO AD_Table_ID="101" Action="U" Record_ID="1001494" Table="AD_Column">
+        <Data AD_Column_ID="113" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="116" Column="ColumnName" oldValue="TimesEnteredByID">TimesEnteredBy</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="380" StepType="AD">
+      <PO AD_Table_ID="107" Action="U" Record_ID="1001461" Table="AD_Field">
+        <Data AD_Column_ID="170" Column="Help" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+  </Migration>
+</Migrations>

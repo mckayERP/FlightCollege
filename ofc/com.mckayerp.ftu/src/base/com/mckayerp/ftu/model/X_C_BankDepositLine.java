@@ -33,7 +33,7 @@ public class X_C_BankDepositLine extends PO implements I_C_BankDepositLine, I_Pe
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160721L;
+	private static final long serialVersionUID = 20160808L;
 
     /** Standard Constructor */
     public X_C_BankDepositLine (Properties ctx, int C_BankDepositLine_ID, String trxName)

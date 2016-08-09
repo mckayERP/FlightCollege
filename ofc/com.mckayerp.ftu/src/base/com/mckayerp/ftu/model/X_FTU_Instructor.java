@@ -29,7 +29,7 @@ public class X_FTU_Instructor extends PO implements I_FTU_Instructor, I_Persiste
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160721L;
+	private static final long serialVersionUID = 20160808L;
 
     /** Standard Constructor */
     public X_FTU_Instructor (Properties ctx, int FTU_Instructor_ID, String trxName)

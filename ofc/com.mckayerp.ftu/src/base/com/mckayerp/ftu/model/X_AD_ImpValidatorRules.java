@@ -30,7 +30,7 @@ public class X_AD_ImpValidatorRules extends PO implements I_AD_ImpValidatorRules
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160721L;
+	private static final long serialVersionUID = 20160808L;
 
     /** Standard Constructor */
     public X_AD_ImpValidatorRules (Properties ctx, int AD_ImpValidatorRules_ID, String trxName)

@@ -32,7 +32,7 @@ public class X_FTU_DefectLog extends PO implements I_FTU_DefectLog, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160721L;
+	private static final long serialVersionUID = 20160808L;
 
     /** Standard Constructor */
     public X_FTU_DefectLog (Properties ctx, int FTU_DefectLog_ID, String trxName)

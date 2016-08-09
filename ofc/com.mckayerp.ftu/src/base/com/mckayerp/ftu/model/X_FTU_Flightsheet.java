@@ -32,7 +32,7 @@ public class X_FTU_Flightsheet extends PO implements I_FTU_Flightsheet, I_Persis
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160721L;
+	private static final long serialVersionUID = 20160808L;
 
     /** Standard Constructor */
     public X_FTU_Flightsheet (Properties ctx, int FTU_Flightsheet_ID, String trxName)
@@ -72,43 +72,43 @@ public class X_FTU_Flightsheet extends PO implements I_FTU_Flightsheet, I_Persis
       return sb.toString();
     }
 
-	/** Set Acknowledged By.
-		@param AcknowledgedBy Acknowledged By	  */
-	public void setAcknowledgedBy (String AcknowledgedBy)
-	{
-		set_Value (COLUMNNAME_AcknowledgedBy, AcknowledgedBy);
-	}
-
-	/** Get Acknowledged By.
-		@return Acknowledged By	  */
-	public String getAcknowledgedBy () 
-	{
-		return (String)get_Value(COLUMNNAME_AcknowledgedBy);
-	}
-
-	public org.compiere.model.I_C_BPartner getAcknowledgedB() throws RuntimeException
+	public org.compiere.model.I_C_BPartner getAcknowledge() throws RuntimeException
     {
 		return (org.compiere.model.I_C_BPartner)MTable.get(getCtx(), org.compiere.model.I_C_BPartner.Table_Name)
-			.getPO(getAcknowledgedByID(), get_TrxName());	}
+			.getPO(getAcknowledgedBy(), get_TrxName());	}
 
 	/** Set Acknowledged By.
-		@param AcknowledgedByID 
+		@param AcknowledgedBy 
 		The flight authorization was acknowledged by this business partner
 	  */
-	public void setAcknowledgedByID (int AcknowledgedByID)
+	public void setAcknowledgedBy (int AcknowledgedBy)
 	{
-		set_Value (COLUMNNAME_AcknowledgedByID, Integer.valueOf(AcknowledgedByID));
+		set_Value (COLUMNNAME_AcknowledgedBy, Integer.valueOf(AcknowledgedBy));
 	}
 
 	/** Get Acknowledged By.
 		@return The flight authorization was acknowledged by this business partner
 	  */
-	public int getAcknowledgedByID () 
+	public int getAcknowledgedBy () 
 	{
-		Integer ii = (Integer)get_Value(COLUMNNAME_AcknowledgedByID);
+		Integer ii = (Integer)get_Value(COLUMNNAME_AcknowledgedBy);
 		if (ii == null)
 			 return 0;
 		return ii.intValue();
+	}
+
+	/** Set Acknowledged By.
+		@param AcknowledgedByText Acknowledged By	  */
+	public void setAcknowledgedByText (String AcknowledgedByText)
+	{
+		set_Value (COLUMNNAME_AcknowledgedByText, AcknowledgedByText);
+	}
+
+	/** Get Acknowledged By.
+		@return Acknowledged By	  */
+	public String getAcknowledgedByText () 
+	{
+		return (String)get_Value(COLUMNNAME_AcknowledgedByText);
 	}
 
 	/** Set Air Time.
@@ -131,43 +131,43 @@ public class X_FTU_Flightsheet extends PO implements I_FTU_Flightsheet, I_Persis
 		return bd;
 	}
 
-	/** Set Autorized By.
-		@param AuthorizedBy Autorized By	  */
-	public void setAuthorizedBy (String AuthorizedBy)
-	{
-		set_Value (COLUMNNAME_AuthorizedBy, AuthorizedBy);
-	}
-
-	/** Get Autorized By.
-		@return Autorized By	  */
-	public String getAuthorizedBy () 
-	{
-		return (String)get_Value(COLUMNNAME_AuthorizedBy);
-	}
-
-	public org.compiere.model.I_C_BPartner getAuthorizedB() throws RuntimeException
+	public org.compiere.model.I_C_BPartner getAuthorize() throws RuntimeException
     {
 		return (org.compiere.model.I_C_BPartner)MTable.get(getCtx(), org.compiere.model.I_C_BPartner.Table_Name)
-			.getPO(getAuthorizedByID(), get_TrxName());	}
+			.getPO(getAuthorizedBy(), get_TrxName());	}
 
 	/** Set Authorized By.
-		@param AuthorizedByID 
+		@param AuthorizedBy 
 		The flight was authorized by this business partner
 	  */
-	public void setAuthorizedByID (int AuthorizedByID)
+	public void setAuthorizedBy (int AuthorizedBy)
 	{
-		set_Value (COLUMNNAME_AuthorizedByID, Integer.valueOf(AuthorizedByID));
+		set_Value (COLUMNNAME_AuthorizedBy, Integer.valueOf(AuthorizedBy));
 	}
 
 	/** Get Authorized By.
 		@return The flight was authorized by this business partner
 	  */
-	public int getAuthorizedByID () 
+	public int getAuthorizedBy () 
 	{
-		Integer ii = (Integer)get_Value(COLUMNNAME_AuthorizedByID);
+		Integer ii = (Integer)get_Value(COLUMNNAME_AuthorizedBy);
 		if (ii == null)
 			 return 0;
 		return ii.intValue();
+	}
+
+	/** Set Autorized By.
+		@param AuthorizedByText Autorized By	  */
+	public void setAuthorizedByText (String AuthorizedByText)
+	{
+		set_Value (COLUMNNAME_AuthorizedByText, AuthorizedByText);
+	}
+
+	/** Get Autorized By.
+		@return Autorized By	  */
+	public String getAuthorizedByText () 
+	{
+		return (String)get_Value(COLUMNNAME_AuthorizedByText);
 	}
 
 	/** Set Briefing.
@@ -246,6 +246,34 @@ public class X_FTU_Flightsheet extends PO implements I_FTU_Flightsheet, I_Persis
 		return ii.intValue();
 	}
 
+	public org.compiere.model.I_C_BPartner getCaptain_BPartner() throws RuntimeException
+    {
+		return (org.compiere.model.I_C_BPartner)MTable.get(getCtx(), org.compiere.model.I_C_BPartner.Table_Name)
+			.getPO(getCaptain_BPartner_ID(), get_TrxName());	}
+
+	/** Set Captain.
+		@param Captain_BPartner_ID 
+		Captain or PIC for the flight.
+	  */
+	public void setCaptain_BPartner_ID (int Captain_BPartner_ID)
+	{
+		if (Captain_BPartner_ID < 1) 
+			set_Value (COLUMNNAME_Captain_BPartner_ID, null);
+		else 
+			set_Value (COLUMNNAME_Captain_BPartner_ID, Integer.valueOf(Captain_BPartner_ID));
+	}
+
+	/** Get Captain.
+		@return Captain or PIC for the flight.
+	  */
+	public int getCaptain_BPartner_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_Captain_BPartner_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
 	/** Set Captain or PIC.
 		@param Captain_PIC 
 		The Captain or Pilot in Command
@@ -261,31 +289,6 @@ public class X_FTU_Flightsheet extends PO implements I_FTU_Flightsheet, I_Persis
 	public String getCaptain_PIC () 
 	{
 		return (String)get_Value(COLUMNNAME_Captain_PIC);
-	}
-
-	public org.compiere.model.I_C_BPartner getCaptai() throws RuntimeException
-    {
-		return (org.compiere.model.I_C_BPartner)MTable.get(getCtx(), org.compiere.model.I_C_BPartner.Table_Name)
-			.getPO(getCaptainID(), get_TrxName());	}
-
-	/** Set Captain.
-		@param CaptainID 
-		Captain or PIC for the flight.
-	  */
-	public void setCaptainID (int CaptainID)
-	{
-		set_Value (COLUMNNAME_CaptainID, Integer.valueOf(CaptainID));
-	}
-
-	/** Get Captain.
-		@return Captain or PIC for the flight.
-	  */
-	public int getCaptainID () 
-	{
-		Integer ii = (Integer)get_Value(COLUMNNAME_CaptainID);
-		if (ii == null)
-			 return 0;
-		return ii.intValue();
 	}
 
 	/** Set Contact/Phone.
@@ -1015,26 +1018,29 @@ public class X_FTU_Flightsheet extends PO implements I_FTU_Flightsheet, I_Persis
 		return bd;
 	}
 
-	public org.compiere.model.I_C_BPartner getStuden() throws RuntimeException
+	public org.compiere.model.I_C_BPartner getStudent_BPartner() throws RuntimeException
     {
 		return (org.compiere.model.I_C_BPartner)MTable.get(getCtx(), org.compiere.model.I_C_BPartner.Table_Name)
-			.getPO(getStudentID(), get_TrxName());	}
+			.getPO(getStudent_BPartner_ID(), get_TrxName());	}
 
 	/** Set Student.
-		@param StudentID 
+		@param Student_BPartner_ID 
 		The student if the flight is an instructional flight.
 	  */
-	public void setStudentID (int StudentID)
+	public void setStudent_BPartner_ID (int Student_BPartner_ID)
 	{
-		set_Value (COLUMNNAME_StudentID, Integer.valueOf(StudentID));
+		if (Student_BPartner_ID < 1) 
+			set_Value (COLUMNNAME_Student_BPartner_ID, null);
+		else 
+			set_Value (COLUMNNAME_Student_BPartner_ID, Integer.valueOf(Student_BPartner_ID));
 	}
 
 	/** Get Student.
 		@return The student if the flight is an instructional flight.
 	  */
-	public int getStudentID () 
+	public int getStudent_BPartner_ID () 
 	{
-		Integer ii = (Integer)get_Value(COLUMNNAME_StudentID);
+		Integer ii = (Integer)get_Value(COLUMNNAME_Student_BPartner_ID);
 		if (ii == null)
 			 return 0;
 		return ii.intValue();
@@ -1057,26 +1063,26 @@ public class X_FTU_Flightsheet extends PO implements I_FTU_Flightsheet, I_Persis
 		return (String)get_Value(COLUMNNAME_StudentPAX);
 	}
 
-	public org.compiere.model.I_C_BPartner getTimesEnteredB() throws RuntimeException
+	public org.compiere.model.I_C_BPartner getTimesEntere() throws RuntimeException
     {
 		return (org.compiere.model.I_C_BPartner)MTable.get(getCtx(), org.compiere.model.I_C_BPartner.Table_Name)
-			.getPO(getTimesEnteredByID(), get_TrxName());	}
+			.getPO(getTimesEnteredBy(), get_TrxName());	}
 
 	/** Set Times Entered By.
-		@param TimesEnteredByID 
+		@param TimesEnteredBy 
 		The times for this flight were entered by this business partner.
 	  */
-	public void setTimesEnteredByID (int TimesEnteredByID)
+	public void setTimesEnteredBy (int TimesEnteredBy)
 	{
-		set_Value (COLUMNNAME_TimesEnteredByID, Integer.valueOf(TimesEnteredByID));
+		set_Value (COLUMNNAME_TimesEnteredBy, Integer.valueOf(TimesEnteredBy));
 	}
 
 	/** Get Times Entered By.
 		@return The times for this flight were entered by this business partner.
 	  */
-	public int getTimesEnteredByID () 
+	public int getTimesEnteredBy () 
 	{
-		Integer ii = (Integer)get_Value(COLUMNNAME_TimesEnteredByID);
+		Integer ii = (Integer)get_Value(COLUMNNAME_TimesEnteredBy);
 		if (ii == null)
 			 return 0;
 		return ii.intValue();

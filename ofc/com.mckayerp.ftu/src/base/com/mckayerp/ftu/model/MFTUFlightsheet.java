@@ -282,7 +282,7 @@ public class MFTUFlightsheet extends X_FTU_Flightsheet {
 			else {
 				throw new AdempiereException("Business Partner (captianID) is not known: " + value + " for flight ID " + flightIDString);
 			}
-			flight.setCaptainID(C_BPartner_ID);
+			flight.setCaptain_BPartner_ID(C_BPartner_ID);
 			flight.setCaptain_PIC(name);
 			log.fine("    Set captain to: " + value + " " + name);
 		}
@@ -304,7 +304,7 @@ public class MFTUFlightsheet extends X_FTU_Flightsheet {
 							+ flightData.getElementsByTagName("studentID") 
 							+ " for flight ID " + flightIDString);
 			}
-			flight.setStudentID(C_BPartner_ID);
+			flight.setStudent_BPartner_ID(C_BPartner_ID);
 			flight.setStudentPAX(name);
 			log.fine("    Set student to: " + value + " " + name);
 		}
@@ -313,12 +313,12 @@ public class MFTUFlightsheet extends X_FTU_Flightsheet {
 		}
 
 		// Set instructor
-		if (flight.getCaptainID() > 0 
-				&& flight.getCaptainID() != flight.getC_BPartner_ID() 
-				&& (flight.getStudentID() > 0 
+		if (flight.getCaptain_BPartner_ID() > 0 
+				&& flight.getCaptain_BPartner_ID() != flight.getC_BPartner_ID() 
+				&& (flight.getCaptain_BPartner_ID() > 0 
 					|| flight.getCourseType().equals(MFTUFlightsheet.COURSETYPE_Intro)
 					|| flight.getCourseType().equals(MFTUFlightsheet.COURSETYPE_Tour))) {
-			MFTUInstructor inst = MFTUInstructor.getByBPartnerID(ctx, flight.getCaptainID());
+			MFTUInstructor inst = MFTUInstructor.getByBPartnerID(ctx, flight.getCaptain_BPartner_ID());
 			if (inst != null) {
 				flight.setFTU_Instructor_ID(inst.getFTU_Instructor_ID());
 			}
@@ -371,8 +371,8 @@ public class MFTUFlightsheet extends X_FTU_Flightsheet {
 						+ flightData.getElementsByTagName("authorizedByID")
 						+ " for flight ID " + flightIDString);
 			}
-			flight.setAuthorizedByID(C_BPartner_ID);
-			flight.setAuthorizedBy(name);
+			flight.setAuthorizedBy(C_BPartner_ID);
+			flight.setAuthorizedByText(name);
 		}
 
 		// <acknowledgedByID>1542</acknowledgedByID>
@@ -389,8 +389,8 @@ public class MFTUFlightsheet extends X_FTU_Flightsheet {
 							+ flightData.getElementsByTagName("acknowledgedByID")
 							+ " for flight ID " + flightIDString);
 			}
-			flight.setAcknowledgedByID(C_BPartner_ID);
-			flight.setAcknowledgedBy(name);
+			flight.setAcknowledgedBy(C_BPartner_ID);
+			flight.setAcknowledgedByText(name);
 		}
 
 		// For times
@@ -608,7 +608,7 @@ public class MFTUFlightsheet extends X_FTU_Flightsheet {
 			else {
 				throw new AdempiereException("Business Partner (timesEnteredByID) is not known: " + flightData.getElementsByTagName("timesEnteredByID"));
 			}
-			flight.setTimesEnteredByID(C_BPartner_ID);
+			flight.setTimesEnteredBy(C_BPartner_ID);
 		}
 
 		// <flightComments/>

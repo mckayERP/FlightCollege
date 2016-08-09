@@ -41,14 +41,14 @@ public interface I_I_Flightsheet
 
     /** Load Meta Data */
 
-    /** Column name AcknowledgedBy */
-    public static final String COLUMNNAME_AcknowledgedBy = "AcknowledgedBy";
+    /** Column name AcknowledgedByText */
+    public static final String COLUMNNAME_AcknowledgedByText = "AcknowledgedByText";
 
 	/** Set Acknowledged By	  */
-	public void setAcknowledgedBy (String AcknowledgedBy);
+	public void setAcknowledgedByText (String AcknowledgedByText);
 
 	/** Get Acknowledged By	  */
-	public String getAcknowledgedBy();
+	public String getAcknowledgedByText();
 
     /** Column name Activate */
     public static final String COLUMNNAME_Activate = "Activate";
@@ -110,14 +110,14 @@ public interface I_I_Flightsheet
 	  */
 	public String getAuthorize();
 
-    /** Column name AuthorizedBy */
-    public static final String COLUMNNAME_AuthorizedBy = "AuthorizedBy";
+    /** Column name AuthorizedByText */
+    public static final String COLUMNNAME_AuthorizedByText = "AuthorizedByText";
 
 	/** Set Autorized By	  */
-	public void setAuthorizedBy (String AuthorizedBy);
+	public void setAuthorizedByText (String AuthorizedByText);
 
 	/** Get Autorized By	  */
-	public String getAuthorizedBy();
+	public String getAuthorizedByText();
 
     /** Column name Briefing */
     public static final String COLUMNNAME_Briefing = "Briefing";

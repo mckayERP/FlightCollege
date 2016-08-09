@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -20,6 +23,7 @@ import org.compiere.model.Query;
 import org.compiere.process.ProcessInfoParameter;
 import org.compiere.process.SvrProcess;
 import org.compiere.util.CLogger;
+import org.compiere.util.DB;
 import org.compiere.util.Env;
 import org.compiere.util.Trx;
 import org.w3c.dom.Document;
@@ -30,6 +34,8 @@ import org.xml.sax.SAXException;
 import com.mckayerp.ftu.model.MFTUFlightsheet;
 
 public class LoadFlightsheetFromXML extends SvrProcess {
+
+    private static long lockCode = 123567; // a number to use for an advisory lock.  Postgresql specific.
 
 	private static final String SYSCONFIG_MFTU_FLIGHTSHEET_LOGIN_URL = "MFTU_FLIGHTSHEET_LOGIN_URL";
 	private static final String SYSCONFIG_MFTU_FLIGHTSHEET_UPDATE_URL = "MFTU_FLIGHTSHEET_UPDATE_URL";
@@ -99,9 +105,9 @@ public class LoadFlightsheetFromXML extends SvrProcess {
 	protected String doIt() throws Exception {
 
 		// Grab the lock
-		if (!ImportFlightSheets.grabLock(get_TrxName()))
+		if (!grabLock(get_TrxName()))
 		{
-			ImportFlightSheets.releaseLock(get_TrxName());
+			releaseLock(get_TrxName());
 			return "Unable to capture lock.  Try again later.";
 		}
 		// Don't run at night. 11 pm to 7 am.
@@ -158,7 +164,7 @@ public class LoadFlightsheetFromXML extends SvrProcess {
 			e.printStackTrace();
 		}
 		finally {
-			ImportFlightSheets.releaseLock(get_TrxName());
+			releaseLock(get_TrxName());
 		}
 		return "Load Flightsheets completed.";
 	}
@@ -254,4 +260,48 @@ public class LoadFlightsheetFromXML extends SvrProcess {
 
 		return false;
 	}
+	
+	public static boolean grabLock(String txName) {		
+		
+		// Try to grab an advisory lock.  Return immediately with the result.
+		String sqlfunc = "SELECT pg_try_advisory_lock(" + lockCode + ")";
+		PreparedStatement pstmt = DB.prepareStatement(sqlfunc, txName);
+		ResultSet rs = null;
+		try {
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				if (!rs.getBoolean(1))
+					releaseLock(txName);
+				return rs.getBoolean(1);  // True if we have the lock. Otherwise false.
+			}
+		} catch (SQLException e) {
+			releaseLock(txName);
+			e.printStackTrace();
+		}
+		finally {
+			DB.close(rs, pstmt);
+		}
+		return false;
+	}
+
+	public static boolean releaseLock(String txName) {		
+		
+		String sqlfunc = "SELECT pg_advisory_unlock(" + lockCode + ")";
+		//String sqlfunc = "SELECT pg_advisory_unlock_all()";
+		PreparedStatement pstmt = DB.prepareStatement(sqlfunc, txName);
+		ResultSet rs = null;
+		try {
+			rs = pstmt.executeQuery();
+			if (rs.next())
+				return rs.getBoolean(1);  // True if we have released the lock. Otherwise false.
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		finally {
+			DB.close(rs, pstmt);
+		}
+		return false;	
+	}
+
 }

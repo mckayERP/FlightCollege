@@ -29,7 +29,7 @@ public class X_FTU_MaintWorkOrderLine extends PO implements I_FTU_MaintWorkOrder
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160721L;
+	private static final long serialVersionUID = 20160808L;
 
     /** Standard Constructor */
     public X_FTU_MaintWorkOrderLine (Properties ctx, int FTU_MaintWorkOrderLine_ID, String trxName)
