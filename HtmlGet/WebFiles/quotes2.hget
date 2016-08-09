@@ -1,7 +1,0 @@
-# an example using HtmlGet commands to navigate to the stock quote page
-
-get http://quote.yahoo.com
-getforms
-submitform unnamedForm,s=$ARG:1$
-runtess true,true,../WebFiles/quotes.jsc
-resultstocsv

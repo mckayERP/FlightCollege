@@ -1,3 +1,0 @@
-post http://www.flight-sheets.com/servlet/flightbooking?useraction=2&login=551&password=4291b061581b0db2514a7ec371043ac2
-runtess false,false,C:\dev\HtmlGet\WebFiles\flightsheets.jsc,38,551,10,4,2009,10,4,2009,OK
-Resultstocsv c:\temp\flightsheets.csv
