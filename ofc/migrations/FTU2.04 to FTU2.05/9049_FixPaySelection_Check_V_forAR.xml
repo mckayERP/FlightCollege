@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="MFTU" Name="Fix AR Receipt Amount" ReleaseNo="FTU2.05" SeqNo="49">
+    <Step DBType="ALL" Parse="Y" SeqNo="10" StepType="SQL">
+      <SQLStatement>-- View: adempiere.c_payselection_check_v
+
+-- DROP VIEW adempiere.c_payselection_check_v;
+
+CREATE OR REPLACE VIEW adempiere.c_payselection_check_v AS 
+ SELECT psc.ad_client_id,
+    psc.ad_org_id,
+    'en_US'::character varying AS ad_language,
+    psc.c_payselection_id,
+    psc.c_payselectioncheck_id,
+    oi.c_location_id AS org_location_id,
+    oi.taxid,
+    p.c_doctype_id,
+    bp.c_bpartner_id,
+    bp.value AS bpvalue,
+    bp.taxid AS bptaxid,
+    bp.naics,
+    bp.duns,
+    bpg.greeting AS bpgreeting,
+    bp.name,
+    bp.name2,
+    adempiere.bpartnerremitlocation(bp.c_bpartner_id) AS c_location_id,
+    bp.referenceno,
+    bp.poreference,
+    ps.paydate,
+    CASE WHEN psc.IsReceipt = 'Y' THEN -1.0*psc.payamt
+    ELSE psc.payamt
+    END as payamt,
+    CASE WHEN psc.IsReceipt = 'Y' THEN -1.0*psc.payamt
+    ELSE psc.payamt
+    END AS amtinwords,
+    psc.qty,
+    psc.paymentrule,
+    psc.documentno,
+    COALESCE(oi.logo_id, ci.logo_id) AS logo_id,
+    dt.printname AS documenttype,
+    dt.documentnote AS documenttypenote,
+    p.description,
+    0 AS hr_payselection_id,
+    0 AS hr_payselectioncheck_id
+   FROM adempiere.c_payselectioncheck psc
+     JOIN adempiere.c_payselection ps ON psc.c_payselection_id = ps.c_payselection_id
+     LEFT JOIN adempiere.c_payment p ON psc.c_payment_id = p.c_payment_id
+     LEFT JOIN adempiere.c_doctype dt ON p.c_doctype_id = dt.c_doctype_id
+     JOIN adempiere.c_bpartner bp ON psc.c_bpartner_id = bp.c_bpartner_id
+     LEFT JOIN adempiere.c_greeting bpg ON bp.c_greeting_id = bpg.c_greeting_id
+     JOIN adempiere.ad_orginfo oi ON psc.ad_org_id = oi.ad_org_id
+     JOIN adempiere.ad_clientinfo ci ON psc.ad_client_id = ci.ad_client_id
+UNION
+ SELECT psc.ad_client_id,
+    psc.ad_org_id,
+    'en_US'::character varying AS ad_language,
+    0 AS c_payselection_id,
+    0 AS c_payselectioncheck_id,
+    oi.c_location_id AS org_location_id,
+    oi.taxid,
+    0 AS c_doctype_id,
+    bp.c_bpartner_id,
+    bp.value AS bpvalue,
+    bp.taxid AS bptaxid,
+    bp.naics,
+    bp.duns,
+    bpg.greeting AS bpgreeting,
+    bp.name,
+    bp.name2,
+    adempiere.bpartnerremitlocation(bp.c_bpartner_id) AS c_location_id,
+    bp.referenceno,
+    bp.poreference,
+    ps.paydate,
+    psc.payamt,
+    psc.payamt AS amtinwords,
+    psc.qty,
+    psc.paymentrule,
+    psc.documentno,
+    COALESCE(oi.logo_id, ci.logo_id) AS logo_id,
+    dt.printname AS documenttype,
+    dt.documentnote AS documenttypenote,
+    p.description,
+    psc.hr_payselection_id,
+    psc.hr_payselectioncheck_id
+   FROM adempiere.hr_payselectioncheck psc
+     JOIN adempiere.hr_payselection ps ON psc.hr_payselection_id = ps.hr_payselection_id
+     LEFT JOIN adempiere.c_payment p ON psc.c_payment_id = p.c_payment_id
+     LEFT JOIN adempiere.c_doctype dt ON p.c_doctype_id = dt.c_doctype_id
+     JOIN adempiere.c_bpartner bp ON psc.c_bpartner_id = bp.c_bpartner_id
+     LEFT JOIN adempiere.c_greeting bpg ON bp.c_greeting_id = bpg.c_greeting_id
+     JOIN adempiere.ad_orginfo oi ON psc.ad_org_id = oi.ad_org_id
+     JOIN adempiere.ad_clientinfo ci ON psc.ad_client_id = ci.ad_client_id;
+
+ALTER TABLE adempiere.c_payselection_check_v
+  OWNER TO adempiere;
+</SQLStatement>
+      <RollbackStatement>-- View: adempiere.c_payselection_check_v
+
+-- DROP VIEW adempiere.c_payselection_check_v;
+
+CREATE OR REPLACE VIEW adempiere.c_payselection_check_v AS 
+ SELECT psc.ad_client_id,
+    psc.ad_org_id,
+    'en_US'::character varying AS ad_language,
+    psc.c_payselection_id,
+    psc.c_payselectioncheck_id,
+    oi.c_location_id AS org_location_id,
+    oi.taxid,
+    p.c_doctype_id,
+    bp.c_bpartner_id,
+    bp.value AS bpvalue,
+    bp.taxid AS bptaxid,
+    bp.naics,
+    bp.duns,
+    bpg.greeting AS bpgreeting,
+    bp.name,
+    bp.name2,
+    adempiere.bpartnerremitlocation(bp.c_bpartner_id) AS c_location_id,
+    bp.referenceno,
+    bp.poreference,
+    ps.paydate,
+    psc.payamt,
+    psc.payamt AS amtinwords,
+    psc.qty,
+    psc.paymentrule,
+    psc.documentno,
+    COALESCE(oi.logo_id, ci.logo_id) AS logo_id,
+    dt.printname AS documenttype,
+    dt.documentnote AS documenttypenote,
+    p.description,
+    0 AS hr_payselection_id,
+    0 AS hr_payselectioncheck_id
+   FROM adempiere.c_payselectioncheck psc
+     JOIN adempiere.c_payselection ps ON psc.c_payselection_id = ps.c_payselection_id
+     LEFT JOIN adempiere.c_payment p ON psc.c_payment_id = p.c_payment_id
+     LEFT JOIN adempiere.c_doctype dt ON p.c_doctype_id = dt.c_doctype_id
+     JOIN adempiere.c_bpartner bp ON psc.c_bpartner_id = bp.c_bpartner_id
+     LEFT JOIN adempiere.c_greeting bpg ON bp.c_greeting_id = bpg.c_greeting_id
+     JOIN adempiere.ad_orginfo oi ON psc.ad_org_id = oi.ad_org_id
+     JOIN adempiere.ad_clientinfo ci ON psc.ad_client_id = ci.ad_client_id
+UNION
+ SELECT psc.ad_client_id,
+    psc.ad_org_id,
+    'en_US'::character varying AS ad_language,
+    0 AS c_payselection_id,
+    0 AS c_payselectioncheck_id,
+    oi.c_location_id AS org_location_id,
+    oi.taxid,
+    0 AS c_doctype_id,
+    bp.c_bpartner_id,
+    bp.value AS bpvalue,
+    bp.taxid AS bptaxid,
+    bp.naics,
+    bp.duns,
+    bpg.greeting AS bpgreeting,
+    bp.name,
+    bp.name2,
+    adempiere.bpartnerremitlocation(bp.c_bpartner_id) AS c_location_id,
+    bp.referenceno,
+    bp.poreference,
+    ps.paydate,
+    psc.payamt,
+    psc.payamt AS amtinwords,
+    psc.qty,
+    psc.paymentrule,
+    psc.documentno,
+    COALESCE(oi.logo_id, ci.logo_id) AS logo_id,
+    dt.printname AS documenttype,
+    dt.documentnote AS documenttypenote,
+    p.description,
+    psc.hr_payselection_id,
+    psc.hr_payselectioncheck_id
+   FROM adempiere.hr_payselectioncheck psc
+     JOIN adempiere.hr_payselection ps ON psc.hr_payselection_id = ps.hr_payselection_id
+     LEFT JOIN adempiere.c_payment p ON psc.c_payment_id = p.c_payment_id
+     LEFT JOIN adempiere.c_doctype dt ON p.c_doctype_id = dt.c_doctype_id
+     JOIN adempiere.c_bpartner bp ON psc.c_bpartner_id = bp.c_bpartner_id
+     LEFT JOIN adempiere.c_greeting bpg ON bp.c_greeting_id = bpg.c_greeting_id
+     JOIN adempiere.ad_orginfo oi ON psc.ad_org_id = oi.ad_org_id
+     JOIN adempiere.ad_clientinfo ci ON psc.ad_client_id = ci.ad_client_id;
+
+ALTER TABLE adempiere.c_payselection_check_v
+  OWNER TO adempiere;
+</RollbackStatement>
+    </Step>
+  </Migration>
+</Migrations>
