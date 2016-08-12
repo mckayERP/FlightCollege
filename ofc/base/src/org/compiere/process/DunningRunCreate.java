@@ -271,13 +271,15 @@ public class DunningRunCreate extends SvrProcess
 							&& DaysAfterLast < DaysBetweenDunning)
 						||  (LastLevel_ID != level.getC_DunningLevel_ID()
 							&& LastDaysAfterDue > DaysAfterDue.intValue()))
-					&& !level.isShowAllDue () && !level.isShowNotDue ())
+					&& !level.isShowAllDue () && !level.isShowNotDue ()) {
+					log.fine("** Invoice has been dunned " + DaysAfterLast + " days ago and is too new or won't be dunned again.");
 					continue;
-				
+				}				
 				// We don't want to show non due documents
-				if (DaysDue<0 && !level.isShowNotDue ())
+				if (DaysDue<0 && !level.isShowNotDue ()) {
+					log.fine("** Invoice is not yet due.");
 					continue;
-							
+				}
 				// NTS: Not sure what the point of this is.
 				// We will minus the timesDunned if this is the DaysBetweenDunning is not fulfilled.
 				// Remember in checkup later we must reset them!
