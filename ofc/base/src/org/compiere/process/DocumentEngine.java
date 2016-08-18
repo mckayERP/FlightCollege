@@ -644,7 +644,9 @@ public class DocumentEngine implements DocAction
 	public String[] getActionOptions()
 	{
 		if (m_document instanceof DocOptions) {
-			return ((DocOptions) m_document).getCustomizedActionOptions();
+			String [] customOptions = ((DocOptions) m_document).getCustomizedActionOptions();
+			if (customOptions != null && customOptions.length >0 )
+				return customOptions;
 		}
 		
 		if (isInvalid())
@@ -905,11 +907,6 @@ public class DocumentEngine implements DocAction
 
 		MTable table = MTable.get(Env.getCtx(), AD_Table_ID);
 		PO po = table.getPO(0, null);
-		if (po instanceof DocOptions) {
-			index = ((DocOptions) po).customizeValidActions(docStatus, processing, orderType, isSOTrx,
-					AD_Table_ID, docAction, options, index);
-		}
-		else {
 		
 //		Locked
 		if (processing != null)
@@ -1182,7 +1179,13 @@ public class DocumentEngine implements DocAction
 					options[index++] = DocumentEngine.ACTION_ReActivate;
 				}
 		}
+
+		// Modify the options if the Document has customizations
+		if (po instanceof DocOptions) {
+			index = ((DocOptions) po).customizeValidActions(docStatus, processing, orderType, isSOTrx,
+					AD_Table_ID, docAction, options, index);
 		}
+
 		return index;
 	}
 	
