@@ -475,6 +475,7 @@ public class MFTUDefectLog extends X_FTU_DefectLog implements DocAction, DocOpti
 			String orderType, String isSOTrx, int AD_Table_ID,
 			String[] docAction, String[] options, int index) {
 
+		// Wipe the options - fully custom
 		index = 0;
 			
 //		Locked
