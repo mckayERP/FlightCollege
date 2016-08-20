@@ -1,0 +1,1869 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="MFTU" Name="Refactor TL11B function" ReleaseNo="FTU2.05" SeqNo="50">
+    <Comments>DROP FUNCTION adempiere.ofc_tl11b(numeric, numeric);</Comments>
+    <Step DBType="ALL" Parse="N" SeqNo="10" StepType="SQL">
+      <Comments>DROP FUNCTION adempiere.ofc_tl11b(numeric, numeric);</Comments>
+      <SQLStatement>DROP FUNCTION adempiere.ofc_tl11b(numeric, numeric);</SQLStatement>
+      <RollbackStatement>-- Function: adempiere.ofc_tl11b(numeric, numeric)
+
+-- DROP FUNCTION adempiere.ofc_tl11b(numeric, numeric);
+
+CREATE OR REPLACE FUNCTION adempiere.ofc_tl11b(
+    c_bpartner_id numeric,
+    reportyear numeric)
+  RETURNS SETOF tl11b_data AS
+$BODY$
+
+
+
+/*******************************************************************
+
+
+
+ *  Determine the data for the TL11B Tax Form
+
+
+
+ *  Author: Michael McKay
+
+
+
+ *  Created: 7 Feb 2011
+
+
+
+ *  Client: Ottawa Flying Club
+
+
+
+ *  
+
+
+
+ *  Find the data to fill in the TL11B tax form.
+
+
+
+ *
+
+
+
+ ********************************************************************/ 
+
+
+
+DECLARE
+
+
+
+	bp_name varchar;
+
+
+
+	start_date timestamp;
+
+
+
+	end_date timestamp;
+
+
+
+BEGIN
+
+
+
+
+
+
+
+select into start_date ReportYear || '-01-01';
+
+
+
+Select into end_date ReportYear || '-12-31';
+
+
+
+
+
+
+
+select into bp_name bp."name" from adempiere.c_bpartner bp where bp.c_bpartner_id = $1;
+
+
+
+
+
+
+
+delete from adempiere.t_ofc_flightsheet;
+
+
+
+
+
+
+
+-- Gather all the flights
+
+
+
+insert into adempiere.t_ofc_flightsheet
+
+
+
+	select fs.*	
+
+
+
+	FROM
+
+
+
+		adempiere.ofc_flightsheet fs,
+
+
+
+		adempiere.OFC_TL11b_Course_Map tm
+
+
+
+	WHERE
+
+
+
+		fs.c_bpartner_id = $1 and
+
+
+
+		fs.OFC_Course_Type = tm.OFC_Flight_Course_Type;
+
+
+
+
+
+
+
+-- Identify the flights that occured while registered as a student during the year.
+
+
+
+Update adempiere.t_ofc_flightsheet tfs
+
+
+
+	Set	
+
+
+
+		ofc_class_id = c.ofc_class_id,
+
+
+
+		startdate = CASE WHEN s.dateenrolled is null 
+
+
+
+				THEN CASE WHEN c.startdate &gt; Start_Date 
+
+
+
+					THEN c.startdate 
+
+
+
+					ELSE Start_Date END
+
+
+
+				ELSE  CASE WHEN s.dateenrolled &gt; Start_Date 
+
+
+
+					THEN s.dateenrolled 
+
+
+
+					ELSE Start_Date 
+
+
+
+					END
+
+
+
+				END,
+
+
+
+		enddate = CASE WHEN s.datedeparted is null 
+
+
+
+				THEN CASE WHEN c.enddate &lt; End_Date 
+
+
+
+					THEN c.enddate 
+
+
+
+					ELSE End_Date END
+
+
+
+				ELSE  CASE WHEN s.datedeparted &lt; End_Date 
+
+
+
+					THEN s.datedeparted 
+
+
+
+					ELSE End_Date 
+
+
+
+					END
+
+
+
+				END,
+
+
+
+		isvocational = s.isvocational,
+
+
+
+		isfulltime = s.isfulltime
+
+
+
+	FROM
+
+
+
+		adempiere.c_bpartner bp,
+
+
+
+		adempiere.OFC_Student s,
+
+
+
+		adempiere.OFC_Class c
+
+
+
+	WHERE
+
+
+
+		bp.c_bpartner_id = tfs.c_bpartner_id and
+
+
+
+		bp.c_bpartner_id = s.c_bpartner_id and
+
+
+
+		s.ofc_class_id = c.ofc_class_id and
+
+
+
+		tfs.OFC_flight_date between 
+
+
+
+			CASE WHEN s.dateenrolled is null 
+
+
+
+				THEN CASE WHEN c.startdate &gt; Start_Date 
+
+
+
+					THEN c.startdate 
+
+
+
+					ELSE Start_Date END
+
+
+
+				ELSE  CASE WHEN s.dateenrolled &gt; Start_Date 
+
+
+
+					THEN s.dateenrolled 
+
+
+
+					ELSE Start_Date 
+
+
+
+					END
+
+
+
+				END
+
+
+
+			AND CASE WHEN s.datedeparted is null 
+
+
+
+				THEN CASE WHEN c.enddate &lt; End_Date 
+
+
+
+					THEN c.enddate 
+
+
+
+					ELSE End_Date END
+
+
+
+				ELSE  CASE WHEN s.datedeparted &lt; End_Date 
+
+
+
+					THEN s.datedeparted 
+
+
+
+					ELSE End_Date 
+
+
+
+					END
+
+
+
+				END;
+
+
+
+
+
+
+
+-- Add the total times to each flight
+
+
+
+Update adempiere.t_ofc_flightsheet tfs
+
+
+
+Set	
+
+
+
+	total_time = (select sum(sfs.ofc_flight_time_dual+sfs.ofc_flight_time_solo)
+
+
+
+	 from adempiere.t_OFC_FlightSheet sfs
+
+
+
+	 WHERE sfs.OFC_Flight_ID &lt; tfs.OFC_Flight_ID and
+
+
+
+		sfs.OFC_Course_type = tfs.OFC_Course_Type),
+
+
+
+	total_dual = (select sum(sfs.ofc_flight_time_dual)
+
+
+
+	 from adempiere.t_OFC_FlightSheet sfs
+
+
+
+	 WHERE sfs.OFC_Flight_ID &lt; tfs.OFC_Flight_ID and
+
+
+
+		sfs.OFC_Course_type = tfs.OFC_Course_Type),
+
+
+
+	total_solo = (select sum(sfs.ofc_flight_time_solo)
+
+
+
+	 from adempiere.t_OFC_FlightSheet sfs
+
+
+
+	 WHERE sfs.OFC_Flight_ID &lt; tfs.OFC_Flight_ID and
+
+
+
+		sfs.OFC_Course_type = tfs.OFC_Course_Type),
+
+
+
+	total_sim = (select sum(sfs.ofc_simulator)
+
+
+
+	 from adempiere.t_OFC_FlightSheet sfs
+
+
+
+	 WHERE sfs.OFC_Flight_ID &lt; tfs.OFC_Flight_ID and
+
+
+
+		sfs.OFC_Course_type = tfs.OFC_Course_Type);
+
+
+
+
+
+
+
+return query Select $1::numeric(10,0), bp_name, td.cra_course_type::varchar, other_course::varchar, te.date_from::timestamp, te.date_to::timestamp, te.tuition::numeric, te.part_time_months, te.full_time_months
+
+
+
+from
+
+
+
+	adempiere.OFC_TL11b_Course_Map td left outer join
+
+
+
+	(Select tc.cra_course_type::varchar, tb.date_from::timestamp, tb.date_to::timestamp, tuition::numeric,
+
+
+
+		case 
+
+
+
+			when tb.isfulltime = 'Y' 
+
+
+
+			then 0::numeric 
+
+
+
+			else (date_part('Year',age(tb.date_to, tb.date_from))*12 + date_part('Month',age(tb.date_to, tb.date_from)))::numeric + 1
+
+
+
+		end as part_time_months, 
+
+
+
+		case 
+
+
+
+			when tb.isfulltime = 'Y' 
+
+
+
+			then (date_part('Year',age(tb.date_to, tb.date_from))*12 + date_part('Month',age(tb.date_to, tb.date_from)))::numeric + 1
+
+
+
+			else 0::numeric
+
+
+
+		end as full_time_months,
+
+
+
+		other_course
+
+
+
+	from
+
+
+
+		adempiere.OFC_TL11b_Course_Map tc join
+
+
+
+	(Select d.cust_name, d.isfulltime, ta.cra_course_type, min(d.startdate) as date_from, max(d.enddate) as date_to, sum(d.tuition) as tuition,
+
+
+
+		case when ta.cra_course_type = '5-Other'
+
+
+
+			then d.OFC_Course_type
+
+
+
+			else null
+
+
+
+		end as Other_Course
+
+
+
+	from  
+
+
+
+		adempiere.OFC_TL11b_Course_Map ta join
+
+
+
+		( -- select invoices and group to avoid duplicates
+
+
+
+		select gt.cust_name, gt.isvocational, gt.isfulltime, gt.c_invoice_id, 
+
+
+
+			gt.documentno, gt.dateinvoiced, gt.line, gt.description, 
+
+
+
+			gt.category, gt.product, gt.qtyinvoiced, gt.priceactual, 
+
+
+
+			gt.linenetamt, gt.tuition, gt.ofc_course_type, gt.startdate, gt.enddate
+
+
+
+		From 
+
+
+
+		(select 
+
+
+
+			bp."name" as cust_name, s.isvocational, s.isfulltime,
+
+
+
+			i.*, il.line, pc."name" as category, p."name" as product, il.qtyinvoiced, il.priceactual, il.linenetamt, 
+
+
+
+			t."name", t.rate, il.linenetamt*(1+t.rate/100) as tuition, 
+
+
+
+			fs.ofc_flightsheet_id, fs.ofc_flight_id, fs.ofc_flight_date, fs.OFC_Course_type, 
+
+
+
+			fs.ofc_flight_time_dual, fs.ofc_flight_time_solo, fs.ofc_simulator, fs.total_time, 
+
+
+
+			fs.total_dual, fs.total_solo, fs.total_sim, fs.startdate, fs.enddate
+
+
+
+		from 
+
+
+
+			adempiere.OFC_TL11b_Course_Map tm,
+
+
+
+			adempiere.t_OFC_FLightSheet fs,
+
+
+
+			adempiere.C_BPartner bp,
+
+
+
+			adempiere.OFC_Student s,
+
+
+			adempiere.c_invoice i,
+
+
+
+			adempiere.c_invoiceline il,
+
+
+
+			adempiere.m_product p,
+
+
+
+			adempiere.m_product_category pc,
+
+
+
+			adempiere.c_tax t
+
+
+
+		where
+
+
+
+			s.isvocational = 'Y' and
+
+
+
+			s.C_Bpartner_ID = bp.c_bpartner_id and
+
+
+
+			bp.c_bpartner_id = fs.c_bpartner_id and
+
+
+
+			fs.OFC_Course_Type = tm.OFC_Flight_Course_Type and
+
+
+
+			fs.OFC_Class_ID &gt; 0 and
+
+
+			(i.c_order_id = fs.c_order_id) and 
+
+
+
+			(
+
+
+
+				((il.description is null and pc."name" != 'Fuel Surcharge') OR 
+
+
+
+				(il.description like '%' || fs.ofc_flight_id::text || '%' and pc."name" in ('Instructor','Aircraft'))) 
+
+
+
+			OR 
+
+
+
+				(pc."name" = 'Fuel Surcharge' and 
+
+
+
+				(il.qtyinvoiced = fs.ofc_flight_time_dual OR il.qtyinvoiced = fs.ofc_flight_time_solo))) 
+
+
+
+			and
+
+
+
+			il.c_invoice_id = i.c_invoice_id AND
+
+
+
+			p.m_product_id = il.m_product_id AND
+
+
+
+			p.m_product_category_id = pc.m_product_category_id AND
+
+
+
+			t.c_tax_id = il.c_tax_id AND
+
+
+
+			p.istuitionfee = 'Y' AND
+
+
+
+			i.ispaid = 'Y' AND
+
+
+
+			i.issotrx = 'Y' AND
+
+
+
+			i.docstatus in ('CO', 'CL') AND
+
+
+
+			pc."name" in ('Instructor', 'Fuel Surcharge', 'Aircraft')  AND -- Covers invoice line items for flights.  Need Ground School and Service for the rest.
+
+
+
+			(
+
+
+
+				((tm.maxTotalTimeAllowed = 0.0 
+
+
+
+					OR fs.total_time &lt;= tm.maxTotalTimeAllowed) 
+
+
+
+				and (
+
+
+
+					(fs.ofc_flight_time_dual &gt; 0 
+
+
+
+						AND fs.ofc_flight_time_solo = 0 
+
+
+
+						AND (
+
+
+
+							tm.maxDualTimeAllowed = 0.0 
+
+
+
+							OR fs.total_dual &lt;= tm.maxDualTimeAllowed)) 
+
+
+
+					OR
+
+
+
+					(fs.ofc_flight_time_dual = 0 
+
+
+
+						AND fs.ofc_flight_time_solo &gt; 0 
+
+
+
+						and (
+
+
+
+							tm.maxSoloTimeAllowed = 0.0 
+
+
+
+							OR fs.total_solo &lt;= tm.maxSoloTimeAllowed)))) 
+
+
+
+				OR
+
+
+
+					(fs.ofc_simulator &gt; 0 
+
+
+
+					and 
+
+
+
+						(tm.maxSimTimeAllowed = 0.0 
+
+
+
+						OR fs.total_sim &lt;= tm.maxSimTimeAllowed))
+
+
+
+				OR
+
+
+
+					(fs.ofc_Air_Time = 0 and fs.ofc_briefing &gt; 0))
+
+
+
+UNION
+
+
+
+	select 
+
+
+
+		bp."name" as cust_name, s.isvocational, s.isfulltime, 
+
+
+
+		i.*, il.line, pc."name", p."name", il.qtyinvoiced, il.priceactual, il.linenetamt, 
+
+
+
+		t."name", t.rate, il.linenetamt*(1+t.rate/100) as tuition, 
+
+
+
+		fs.ofc_flightsheet_id, fs.ofc_flight_id, fs.ofc_flight_date, 
+
+
+
+		CASE WHEN fs.ofc_flightsheet_id is not null then fs.OFC_Course_type
+
+
+
+		ELSE
+
+
+
+			CASE WHEN p.classification = 'PPL' THEN 'PPL' ELSE
+
+
+
+				CASE WHEN p.classification = 'CPL' THEN 'CPL' ELSE
+
+
+
+				'Other Tuition'
+
+
+
+				END
+
+
+
+			End
+
+
+
+		End as ofc_course_type,
+
+
+
+		fs.ofc_flight_time_dual, fs.ofc_flight_time_solo, fs.ofc_simulator, 
+
+
+
+		fs.total_time, fs.total_dual, fs.total_solo, fs.total_sim, 
+
+
+
+		i.dateinvoiced as startdate, i.dateinvoiced as enddate
+
+
+
+		from 
+
+
+
+			adempiere.C_BPartner bp,
+
+
+
+			adempiere.OFC_Student s,
+
+
+
+			adempiere.OFC_Class c,
+
+
+
+			adempiere.c_invoice i left outer join
+
+
+
+			adempiere.t_OFC_FLightSheet fs on (i.c_order_id = fs.c_order_id),
+
+
+
+			adempiere.c_invoiceline il,
+
+
+
+			adempiere.m_product p,
+
+
+
+			adempiere.m_product_category pc,
+
+
+
+			adempiere.c_tax t
+
+
+
+		where
+
+
+
+			c.ofc_class_id = s.ofc_class_id and
+
+
+
+			s.isvocational = 'Y' and
+
+
+
+			s.C_Bpartner_ID = bp.c_bpartner_id and
+
+
+
+			bp.c_bpartner_id = $1 and
+
+
+
+			i.c_bpartner_id = bp.c_bpartner_id and
+
+
+
+			i.dateinvoiced between 
+
+
+
+			CASE WHEN s.dateenrolled is null 
+
+
+
+				THEN CASE WHEN c.startdate &gt; Start_Date 
+
+
+
+					THEN c.startdate 
+
+
+
+					ELSE Start_Date END
+
+
+
+				ELSE  CASE WHEN s.dateenrolled &gt; Start_Date 
+
+
+
+					THEN s.dateenrolled 
+
+
+
+					ELSE Start_Date 
+
+
+
+					END
+
+
+
+				END
+
+
+
+			AND CASE WHEN s.datedeparted is null 
+
+
+
+				THEN CASE WHEN c.enddate &lt; End_Date 
+
+
+
+					THEN c.enddate 
+
+
+
+					ELSE End_Date END
+
+
+
+				ELSE  CASE WHEN s.datedeparted &lt; End_Date 
+
+
+
+					THEN s.datedeparted 
+
+
+
+					ELSE End_Date 
+
+
+
+					END
+
+
+
+				END
+
+
+
+			and
+
+
+
+			il.c_invoice_id = i.c_invoice_id AND
+
+
+
+			p.m_product_id = il.m_product_id AND
+
+
+
+			p.m_product_category_id = pc.m_product_category_id AND
+
+
+
+			t.c_tax_id = il.c_tax_id AND
+
+
+
+			p.istuitionfee = 'Y' AND
+
+
+
+			i.ispaid = 'Y' AND
+
+
+
+			i.issotrx = 'Y' AND
+
+
+
+			i.docstatus in ('CO', 'CL') AND
+
+
+
+			pc."name" in ('Ground School', 'Membership', 'Service') -- Covers Ground School and Service.
+
+
+
+UNION
+
+
+
+	select -- Find fuel
+
+
+
+		bp."name" as cust_name, s.isvocational, s.isfulltime, 
+
+
+
+		i.*, il.line, pc."name", p."name", il.qtyinvoiced, il.priceactual, il.linenetamt, 
+
+
+
+		t."name", t.rate, il.linenetamt*(1+t.rate/100) as tuition, 
+
+
+
+		null as ofc_flightsheet_id, null as ofc_flight_id, null as ofc_flight_date, 
+
+
+
+		'Other Tuition' as ofc_course_type,
+
+
+
+		null as ofc_flight_time_dual, null as ofc_flight_time_solo, null as ofc_simulator, 
+
+
+
+		null as total_time, null as total_dual, null as total_solo, null as total_sim, 
+
+
+
+		i.dateinvoiced as startdate, i.dateinvoiced as enddate
+
+
+
+		from 
+
+
+
+			adempiere.C_BPartner bp,
+
+
+
+			adempiere.OFC_Student s,
+
+
+
+			adempiere.OFC_Class c,
+
+
+
+			adempiere.c_invoice i,
+
+
+
+			adempiere.c_invoiceline il,
+
+
+
+			adempiere.m_product p,
+
+
+
+			adempiere.m_product_category pc,
+
+
+
+			adempiere.c_tax t
+
+
+
+		where
+
+
+
+			c.ofc_class_id = s.ofc_class_id and
+
+
+
+			s.isvocational = 'Y' and
+
+
+
+			s.C_Bpartner_ID = bp.c_bpartner_id and
+
+
+
+			bp.c_bpartner_id = $1 and
+
+
+
+			i.c_bpartner_id = bp.c_bpartner_id and
+
+
+
+			i.dateinvoiced between 
+
+
+
+			CASE WHEN s.dateenrolled is null 
+
+
+
+				THEN CASE WHEN c.startdate &gt; Start_Date 
+
+
+
+					THEN c.startdate 
+
+
+
+					ELSE Start_Date END
+
+
+
+				ELSE  CASE WHEN s.dateenrolled &gt; Start_Date 
+
+
+
+					THEN s.dateenrolled 
+
+
+
+					ELSE Start_Date 
+
+
+
+					END
+
+
+
+				END
+
+
+
+			AND CASE WHEN s.datedeparted is null 
+
+
+
+				THEN CASE WHEN c.enddate &lt; End_Date 
+
+
+
+					THEN c.enddate 
+
+
+
+					ELSE End_Date END
+
+
+
+				ELSE  CASE WHEN s.datedeparted &lt; End_Date 
+
+
+
+					THEN s.datedeparted 
+
+
+
+					ELSE End_Date 
+
+
+
+					END
+
+
+
+				END
+
+
+
+			and
+
+
+
+			il.c_invoice_id = i.c_invoice_id AND
+
+
+
+			p.m_product_id = il.m_product_id AND
+
+
+
+			p.m_product_category_id = pc.m_product_category_id AND
+
+
+
+			t.c_tax_id = il.c_tax_id AND
+
+
+
+			p.istuitionfee = 'Y' AND
+
+
+
+			i.ispaid = 'Y' AND
+
+
+
+			i.issotrx = 'Y' AND
+
+
+
+			i.docstatus in ('CO', 'CL') AND
+
+
+
+			pc."name" = 'Fuel' and
+
+
+
+			il.qtyinvoiced &gt; 0 -- No reimbursements.
+
+
+
+	) gt
+
+
+
+	GROUP BY gt.cust_name, gt.isvocational, gt.isfulltime, gt.dateinvoiced, gt.c_invoice_id, 
+
+
+
+		gt.documentno, gt.line, gt.description, gt.category, gt.product, gt.qtyinvoiced, 
+
+
+
+		gt.priceactual, gt.linenetamt, gt.tuition, gt.ofc_course_type, gt.rate, gt.startdate, gt.enddate
+
+
+
+	ORDER BY
+
+
+
+		gt.ofc_course_type,
+
+
+
+		gt.dateinvoiced,
+
+
+
+		gt.documentno,
+
+
+
+		gt.line
+
+
+
+) d on d.OFC_Course_Type = ta.OFC_Flight_Course_Type
+
+
+
+	Group By 
+
+
+
+		d.cust_name, d.isfulltime, d.ofc_course_type, ta.cra_course_type
+
+
+
+	Order by
+
+
+
+		ta.CRA_Course_Type) tb on tb.cra_course_type = tc.cra_course_type
+
+
+
+Order by tc.cra_course_type) te on te.cra_course_type = td.cra_course_type
+
+
+
+Group by bp_name, td.cra_course_type::varchar, te.other_course, te.date_from::timestamp, te.date_to::timestamp, te.tuition::numeric, te.part_time_months, te.full_time_months
+
+
+
+Order by td.cra_course_type;
+
+
+
+
+
+
+
+END;
+
+
+
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100
+  ROWS 1000;
+ALTER FUNCTION adempiere.ofc_tl11b(numeric, numeric)
+  OWNER TO adempiere;
+</RollbackStatement>
+    </Step>
+    <Step DBType="ALL" Parse="Y" SeqNo="20" StepType="SQL">
+      <Comments>DROP TABLE adempiere.t_ofc_flightsheet;</Comments>
+      <SQLStatement>DROP TABLE adempiere.t_ofc_flightsheet;</SQLStatement>
+      <RollbackStatement>-- Table: adempiere.t_ofc_flightsheet
+
+-- DROP TABLE adempiere.t_ofc_flightsheet;
+
+CREATE TABLE adempiere.t_ofc_flightsheet
+(
+  ad_client_id numeric(10,0) NOT NULL,
+  ad_org_id numeric(10,0) NOT NULL,
+  created timestamp without time zone NOT NULL,
+  createdby numeric(10,0) NOT NULL,
+  description character varying(255),
+  isactive character(1) NOT NULL DEFAULT 'Y'::bpchar,
+  updated timestamp without time zone,
+  updatedby numeric(10,0),
+  value character varying(40),
+  ofc_flightsheet_id numeric(10,0) NOT NULL,
+  ofc_flight_id numeric(10,0),
+  ofc_num_legs numeric(10,0),
+  ofc_flight_date timestamp without time zone,
+  ofc_client_id character varying(20),
+  ofc_course_type character varying(60),
+  ofc_ac_resource_id numeric(10,0),
+  ofc_inst_resource_id numeric(10,0),
+  ofc_captain_pic character varying(100),
+  ofc_student_pax character varying(100),
+  ofc_intended_flight character varying(250),
+  ofc_returning_at timestamp without time zone,
+  ofc_authorized_by character varying(40),
+  ofc_acknowledged_by character varying(60),
+  ofc_engine_start timestamp without time zone,
+  ofc_engine_stop timestamp without time zone,
+  ofc_wheels_up timestamp without time zone,
+  ofc_wheels_down timestamp without time zone,
+  ofc_flight_time_dual numeric,
+  ofc_flight_time_solo numeric,
+  ofc_flight_time_rental numeric,
+  ofc_flight_time_intro numeric,
+  ofc_flight_time_charter numeric,
+  ofc_flight_time_nonrev numeric,
+  ofc_air_time numeric,
+  ofc_simulator numeric,
+  ofc_briefing numeric,
+  ofc_fuel numeric,
+  ofc_invoice_id numeric(10,0),
+  c_bpartner_id numeric(10,0) DEFAULT NULL::numeric,
+  ofc_flightsheet_line_status character varying(20) DEFAULT NULL::character varying,
+  c_order_id numeric(10,0) DEFAULT NULL::numeric,
+  ofc_syllabus_details_id numeric(10,0) DEFAULT NULL::numeric,
+  ofc_lesson_plan_status character varying(14) DEFAULT NULL::character varying,
+  total_dual numeric,
+  total_solo numeric,
+  total_sim numeric,
+  total_time numeric,
+  ofc_class_id numeric(10,0),
+  isvocational character(1) NOT NULL DEFAULT 'N'::bpchar,
+  isfulltime character(1) NOT NULL DEFAULT 'N'::bpchar,
+  startdate timestamp without time zone,
+  enddate timestamp without time zone,
+  CONSTRAINT t_ofc_flightsheet_pk PRIMARY KEY (ofc_flightsheet_id),
+  CONSTRAINT t_ofc_flightsheet_isactive_check CHECK (isactive = ANY (ARRAY['Y'::bpchar, 'N'::bpchar]))
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE adempiere.t_ofc_flightsheet
+  OWNER TO adempiere;
+</RollbackStatement>
+    </Step>
+    <Step DBType="ALL" Parse="Y" SeqNo="30" StepType="SQL">
+      <Comments>Create TABLE adempiere.t_ftu_flightsheet;</Comments>
+      <SQLStatement>-- Table: adempiere.t_ftu_flightsheet
+
+DROP TABLE adempiere.t_ftu_flightsheet;
+
+CREATE TABLE adempiere.t_ftu_flightsheet
+(
+  ad_client_id numeric(10,0) NOT NULL,
+  ad_org_id numeric(10,0) NOT NULL,
+  created timestamp without time zone NOT NULL,
+  createdby numeric(10,0) NOT NULL,
+  description character varying(255),
+  isactive character(1) NOT NULL DEFAULT 'Y'::bpchar,
+  updated timestamp without time zone,
+  updatedby numeric(10,0),
+  value character varying(40),
+  ftu_flightsheet_id numeric(10,0) NOT NULL,
+  flightid numeric(10,0),
+  numlegs numeric(10,0),
+  flightdate timestamp without time zone,
+  flightsheet_clientid character varying(10),
+  coursetype character varying(60),
+  ftu_aircraft_id numeric(10,0),
+  captain_pic character varying(100),
+  studentpax character varying(100),
+  intendedflight character varying(250),
+  returingat timestamp without time zone,
+  authorizedbytext character varying(40),
+  acknowledgedbytext character varying(40),
+  enginestart timestamp without time zone,
+  enginestop timestamp without time zone,
+  wheelsup timestamp without time zone,
+  wheelsdown timestamp without time zone,
+  flighttime_dual numeric,
+  flighttime_solo numeric,
+  flighttime_rental numeric,
+  flighttime_intro numeric,
+  flighttime_charter numeric,
+  flighttime_nonrev numeric,
+  simulator numeric,
+  briefing numeric,
+  fuel numeric,
+  flightsheet_invoiceno character varying(10),
+  c_bpartner_id numeric(10,0) DEFAULT NULL::numeric,
+  line_status character varying(20),
+  c_order_id numeric(10,0) DEFAULT NULL::numeric,
+  ftu_syllabus_details_id numeric(10,0),
+  lesson_plan_status character varying(14),
+  airtime numeric,
+  inst_resource_id numeric(10,0),
+  ftu_instructor_id numeric(10,0),
+  m_inventory_id numeric(10,0) DEFAULT NULL::numeric,
+  ftu_acjourneylog_id numeric(10,0) DEFAULT NULL::numeric,
+  otherpax character varying(60) DEFAULT NULL::character varying,
+  contactphone character varying(60) DEFAULT NULL::character varying,
+  exercises character varying(60) DEFAULT NULL::character varying,
+  xcdeparture character varying(20) DEFAULT NULL::character varying,
+  xcdestination character varying(20) DEFAULT NULL::character varying,
+  flighttime_dry numeric,
+  isnoshow character(1) DEFAULT NULL::bpchar,
+  isdnco character(1) DEFAULT NULL::bpchar,
+  captain_bpartner_id numeric(10,0),
+  student_bpartner_id numeric(10,0),
+  authorizedby numeric(10,0),
+  acknowledgedby numeric(10,0),
+  timesenteredby numeric(10,0),
+  total_dual numeric,
+  total_solo numeric,
+  total_sim numeric,
+  total_time numeric,
+  ftu_class_id numeric(10,0),
+  isvocational character(1) NOT NULL DEFAULT 'N'::bpchar,
+  isfulltime character(1) NOT NULL DEFAULT 'N'::bpchar,
+  startdate timestamp without time zone,
+  enddate timestamp without time zone,
+  CONSTRAINT t_ftu_flightsheet_key PRIMARY KEY (ftu_flightsheet_id),
+  CONSTRAINT t_ftu_flightsheet_isdnco_check CHECK (isdnco = ANY (ARRAY['Y'::bpchar, 'N'::bpchar])),
+  CONSTRAINT t_ftu_flightsheet_isnoshow_check CHECK (isnoshow = ANY (ARRAY['Y'::bpchar, 'N'::bpchar])),
+  CONSTRAINT t_ftu_flightsheet_isactive_check CHECK (isactive = ANY (ARRAY['Y'::bpchar, 'N'::bpchar]))
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE adempiere.t_ftu_flightsheet
+  OWNER TO adempiere;
+</SQLStatement>
+      <RollbackStatement>DROP TABLE adempiere.t_ftu_flightsheet;</RollbackStatement>
+    </Step>
+    <Step DBType="ALL" Parse="N" SeqNo="40" StepType="SQL">
+      <Comments>Create FUNCTION adempiere.ftu_tl11b(numeric, numeric);</Comments>
+      <SQLStatement>-- Function: adempiere.ftu_tl11b(numeric, numeric)
+
+-- DROP FUNCTION adempiere.ftu_tl11b(numeric, numeric);
+
+CREATE OR REPLACE FUNCTION adempiere.ftu_tl11b(
+    c_bpartner_id numeric,
+    reportyear numeric)
+  RETURNS SETOF tl11b_data AS
+$BODY$
+
+
+/*******************************************************************
+ *  Determine the data for the TL11B Tax Form
+ *  Author: Michael McKay
+ *  Created: 7 Feb 2011
+ *  Updated: 18 Aug 2016
+ *  Client: Ottawa Flying Club
+ *  
+ *  Find the data to fill in the TL11B tax form.
+ *
+ ********************************************************************/ 
+DECLARE
+	bp_name varchar;
+	start_date timestamp;
+	end_date timestamp;
+BEGIN
+
+select into start_date ReportYear || '-01-01';
+Select into end_date ReportYear || '-12-31';
+select into bp_name bp."name" from adempiere.c_bpartner bp where bp.c_bpartner_id = $1;
+
+delete from adempiere.t_ftu_flightsheet;
+
+-- Gather all the flights
+insert into adempiere.t_ftu_flightsheet
+	select fs.*	
+	FROM
+		adempiere.ftu_flightsheet fs,
+		adempiere.FTU_TL11b_Course_Map tm
+	WHERE
+		fs.c_bpartner_id = $1 and
+		fs.CourseType = tm.FlightCourseType;
+
+-- Identify the flights that occured while registered as a student during the year.
+Update adempiere.t_ftu_flightsheet tfs
+	Set	
+		ftu_class_id = c.ftu_class_id,
+		startdate = CASE WHEN s.dateenrolled is null 
+				THEN CASE WHEN c.startdate &gt; Start_Date 
+					THEN c.startdate 
+					ELSE Start_Date END
+				ELSE  CASE WHEN s.dateenrolled &gt; Start_Date 
+					THEN s.dateenrolled 
+					ELSE Start_Date 
+					END
+				END,
+		enddate = CASE WHEN s.datedeparted is null 
+				THEN CASE WHEN c.enddate &lt; End_Date 
+					THEN c.enddate 
+					ELSE End_Date END
+				ELSE  CASE WHEN s.datedeparted &lt; End_Date 
+					THEN s.datedeparted 
+					ELSE End_Date 
+					END
+				END,
+		isvocational = s.isvocational,
+		isfulltime = s.isfulltime
+	FROM
+		adempiere.c_bpartner bp,
+		adempiere.FTU_Student s,
+		adempiere.FTU_Class c
+	WHERE
+		bp.c_bpartner_id = tfs.c_bpartner_id and
+		bp.c_bpartner_id = s.c_bpartner_id and
+		s.ftu_class_id = c.ftu_class_id and
+		tfs.flightdate between 
+			CASE WHEN s.dateenrolled is null 
+				THEN CASE WHEN c.startdate &gt; Start_Date 
+					THEN c.startdate 
+					ELSE Start_Date END
+				ELSE  CASE WHEN s.dateenrolled &gt; Start_Date 
+					THEN s.dateenrolled 
+					ELSE Start_Date 
+					END
+				END
+			AND CASE WHEN s.datedeparted is null 
+				THEN CASE WHEN c.enddate &lt; End_Date 
+					THEN c.enddate 
+					ELSE End_Date END
+				ELSE  CASE WHEN s.datedeparted &lt; End_Date 
+					THEN s.datedeparted 
+					ELSE End_Date 
+					END
+				END;
+
+-- Add the total times to each flight
+Update adempiere.t_ftu_flightsheet tfs
+Set	
+	total_time = (select sum(sfs.flighttime_dual+sfs.flighttime_solo)
+	 from adempiere.t_ftu_FlightSheet sfs
+	 WHERE sfs.FlightID &lt; tfs.FlightID and
+		sfs.CourseType = tfs.CourseType),
+	total_dual = (select sum(sfs.flighttime_dual)
+	 from adempiere.t_ftu_FlightSheet sfs
+	 WHERE sfs.FlightID &lt; tfs.FlightID and
+		sfs.CourseType = tfs.CourseType),
+	total_solo = (select sum(sfs.flighttime_solo)
+	 from adempiere.t_FTU_FlightSheet sfs
+	 WHERE sfs.FlightID &lt; tfs.FlightID and
+		sfs.CourseType = tfs.CourseType),
+	total_sim = (select sum(sfs.simulator)
+	 from adempiere.t_FTU_FlightSheet sfs
+	 WHERE sfs.FlightID &lt; tfs.FlightID and
+		sfs.CourseType = tfs.CourseType);
+
+return query Select $1::numeric(10,0), bp_name, td.cra_course_type::varchar, other_course::varchar, te.date_from::timestamp, te.date_to::timestamp, te.tuition::numeric, te.part_time_months, te.full_time_months
+from
+	adempiere.FTU_TL11b_Course_Map td left outer join
+	(Select tc.cra_course_type::varchar, tb.date_from::timestamp, tb.date_to::timestamp, tuition::numeric,
+		case 
+			when tb.isfulltime = 'Y' 
+			then 0::numeric 
+			else (date_part('Year',age(tb.date_to, tb.date_from))*12 + date_part('Month',age(tb.date_to, tb.date_from)))::numeric + 1
+		end as part_time_months, 
+		case 
+			when tb.isfulltime = 'Y' 
+			then (date_part('Year',age(tb.date_to, tb.date_from))*12 + date_part('Month',age(tb.date_to, tb.date_from)))::numeric + 1
+			else 0::numeric
+		end as full_time_months,
+		other_course
+	from
+		adempiere.FTU_TL11b_Course_Map tc join
+	(Select d.cust_name, d.isfulltime, ta.cra_course_type, min(d.startdate) as date_from, max(d.enddate) as date_to, sum(d.tuition) as tuition,
+		case when ta.cra_course_type = '5-Other'
+			then d.CourseType
+			else null
+		end as Other_Course
+	from  
+		adempiere.FTU_TL11b_Course_Map ta join
+		( -- select invoices and group to avoid duplicates
+		select gt.cust_name, gt.isvocational, gt.isfulltime, gt.c_invoice_id, 
+			gt.documentno, gt.dateinvoiced, gt.line, gt.description, 
+			gt.category, gt.product, gt.qtyinvoiced, gt.priceactual, 
+			gt.linenetamt, gt.tuition, gt.coursetype, gt.startdate, gt.enddate
+		From 
+		(select 
+			bp."name" as cust_name, s.isvocational, s.isfulltime,
+			i.*, il.line, pc."name" as category, p."name" as product, il.qtyinvoiced, il.priceactual, il.linenetamt, 
+			t."name", t.rate, il.linenetamt*(1+t.rate/100) as tuition, 
+			fs.ftu_flightsheet_id, fs.flightid, fs.flightdate, fs.CourseType, 
+			fs.flighttime_dual, fs.flighttime_solo, fs.simulator, fs.total_time, 
+			fs.total_dual, fs.total_solo, fs.total_sim, fs.startdate, fs.enddate
+		from 
+			adempiere.FTU_TL11b_Course_Map tm,
+			adempiere.t_FTU_FLightSheet fs,
+			adempiere.C_BPartner bp,
+			adempiere.FTU_Student s,
+			adempiere.c_invoice i,
+			adempiere.c_invoiceline il,
+			adempiere.m_product p,
+			adempiere.m_product_category pc,
+			adempiere.c_tax t
+		where
+			s.isvocational = 'Y' and
+			s.C_Bpartner_ID = bp.c_bpartner_id and
+			bp.c_bpartner_id = fs.c_bpartner_id and
+			fs.CourseType = tm.FlightCourseType and
+			fs.FTU_Class_ID &gt; 0 and
+			(i.c_order_id = fs.c_order_id) and 
+			(
+				((il.description is null and pc."name" != 'Fuel Surcharge') OR 
+				(il.description like '%' || fs.flightid::text || '%' and pc."name" in ('Instructor','Aircraft'))) 
+			OR 
+				(pc."name" = 'Fuel Surcharge' and 
+				(il.qtyinvoiced = fs.flighttime_dual OR il.qtyinvoiced = fs.flighttime_solo))) 
+			and
+			il.c_invoice_id = i.c_invoice_id AND
+			p.m_product_id = il.m_product_id AND
+			p.m_product_category_id = pc.m_product_category_id AND
+			t.c_tax_id = il.c_tax_id AND
+			p.istuitionfee = 'Y' AND
+			i.ispaid = 'Y' AND
+			i.issotrx = 'Y' AND
+			i.docstatus in ('CO', 'CL') AND
+			pc."name" in ('Instructor', 'Fuel Surcharge', 'Aircraft')  AND -- Covers invoice line items for flights.  Need Ground School and Service for the rest.
+			(
+				((tm.maxTotalTimeAllowed = 0.0 
+					OR fs.total_time &lt;= tm.maxTotalTimeAllowed) 
+				and (
+					(fs.flighttime_dual &gt; 0 
+						AND fs.flighttime_solo = 0 
+						AND (
+							tm.maxDualTimeAllowed = 0.0 
+							OR fs.total_dual &lt;= tm.maxDualTimeAllowed)) 
+					OR
+					(fs.flighttime_dual = 0 
+						AND fs.flighttime_solo &gt; 0 
+						and (
+							tm.maxSoloTimeAllowed = 0.0 
+							OR fs.total_solo &lt;= tm.maxSoloTimeAllowed)))) 
+				OR
+					(fs.simulator &gt; 0 
+					and 
+						(tm.maxSimTimeAllowed = 0.0 
+						OR fs.total_sim &lt;= tm.maxSimTimeAllowed))
+				OR
+					(fs.AirTime = 0 and fs.briefing &gt; 0))
+UNION
+	select 
+		bp."name" as cust_name, s.isvocational, s.isfulltime, 
+		i.*, il.line, pc."name", p."name", il.qtyinvoiced, il.priceactual, il.linenetamt, 
+		t."name", t.rate, il.linenetamt*(1+t.rate/100) as tuition, 
+		fs.ftu_flightsheet_id, fs.flightid, fs.flightdate, 
+		CASE WHEN fs.ftu_flightsheet_id is not null then fs.Coursetype
+		ELSE
+			CASE WHEN p.classification = 'PPL' THEN 'PPL' ELSE
+				CASE WHEN p.classification = 'CPL' THEN 'CPL' ELSE
+				'Other Tuition'
+				END
+			End
+		End as CourseType,
+		fs.flighttime_dual, fs.flighttime_solo, fs.simulator, 
+		fs.total_time, fs.total_dual, fs.total_solo, fs.total_sim, 
+		i.dateinvoiced as startdate, i.dateinvoiced as enddate
+		from 
+			adempiere.C_BPartner bp,
+			adempiere.FTU_Student s,
+			adempiere.FTU_Class c,
+			adempiere.c_invoice i left outer join
+			adempiere.t_FTU_FLightSheet fs on (i.c_order_id = fs.c_order_id),
+			adempiere.c_invoiceline il,
+			adempiere.m_product p,
+			adempiere.m_product_category pc,
+			adempiere.c_tax t
+		where
+			c.FTU_class_id = s.FTU_class_id and
+			s.isvocational = 'Y' and
+			s.C_Bpartner_ID = bp.c_bpartner_id and
+			bp.c_bpartner_id = $1 and
+			i.c_bpartner_id = bp.c_bpartner_id and
+			i.dateinvoiced between 
+			CASE WHEN s.dateenrolled is null 
+				THEN CASE WHEN c.startdate &gt; Start_Date 
+					THEN c.startdate 
+					ELSE Start_Date END
+				ELSE  CASE WHEN s.dateenrolled &gt; Start_Date 
+					THEN s.dateenrolled 
+					ELSE Start_Date 
+					END
+				END
+			AND CASE WHEN s.datedeparted is null 
+				THEN CASE WHEN c.enddate &lt; End_Date 
+					THEN c.enddate 
+					ELSE End_Date END
+				ELSE  CASE WHEN s.datedeparted &lt; End_Date 
+					THEN s.datedeparted 
+					ELSE End_Date 
+					END
+				END
+			and
+			il.c_invoice_id = i.c_invoice_id AND
+			p.m_product_id = il.m_product_id AND
+			p.m_product_category_id = pc.m_product_category_id AND
+			t.c_tax_id = il.c_tax_id AND
+			p.istuitionfee = 'Y' AND
+			i.ispaid = 'Y' AND
+			i.issotrx = 'Y' AND
+			i.docstatus in ('CO', 'CL') AND
+			pc."name" in ('Ground School', 'Membership', 'Service') -- Covers Ground School and Service.
+UNION
+	select -- Find fuel
+		bp."name" as cust_name, s.isvocational, s.isfulltime, 
+		i.*, il.line, pc."name", p."name", il.qtyinvoiced, il.priceactual, il.linenetamt, 
+		t."name", t.rate, il.linenetamt*(1+t.rate/100) as tuition, 
+		null as FTU_flightsheet_id, null as flightid, null as flightdate, 
+		'Other Tuition' as coursetype,
+		null as flighttime_dual, null as flighttime_solo, null as simulator, 
+		null as total_time, null as total_dual, null as total_solo, null as total_sim, 
+		i.dateinvoiced as startdate, i.dateinvoiced as enddate
+		from 
+			adempiere.C_BPartner bp,
+			adempiere.FTU_Student s,
+			adempiere.FTU_Class c,
+			adempiere.c_invoice i,
+			adempiere.c_invoiceline il,
+			adempiere.m_product p,
+			adempiere.m_product_category pc,
+			adempiere.c_tax t
+		where
+			c.FTU_class_id = s.FTU_class_id and
+			s.isvocational = 'Y' and
+			s.C_Bpartner_ID = bp.c_bpartner_id and
+			bp.c_bpartner_id = $1 and
+			i.c_bpartner_id = bp.c_bpartner_id and
+			i.dateinvoiced between 
+			CASE WHEN s.dateenrolled is null 
+				THEN CASE WHEN c.startdate &gt; Start_Date 
+					THEN c.startdate 
+					ELSE Start_Date END
+				ELSE  CASE WHEN s.dateenrolled &gt; Start_Date 
+					THEN s.dateenrolled 
+					ELSE Start_Date 
+					END
+				END
+			AND CASE WHEN s.datedeparted is null 
+				THEN CASE WHEN c.enddate &lt; End_Date 
+					THEN c.enddate 
+					ELSE End_Date END
+				ELSE  CASE WHEN s.datedeparted &lt; End_Date 
+					THEN s.datedeparted 
+					ELSE End_Date 
+					END
+				END
+			and
+			il.c_invoice_id = i.c_invoice_id AND
+			p.m_product_id = il.m_product_id AND
+			p.m_product_category_id = pc.m_product_category_id AND
+			t.c_tax_id = il.c_tax_id AND
+			p.istuitionfee = 'Y' AND
+			i.ispaid = 'Y' AND
+			i.issotrx = 'Y' AND
+			i.docstatus in ('CO', 'CL') AND
+			pc."name" = 'Fuel' and
+			il.qtyinvoiced &gt; 0 -- No reimbursements.
+	) gt
+	GROUP BY gt.cust_name, gt.isvocational, gt.isfulltime, gt.dateinvoiced, gt.c_invoice_id, 
+		gt.documentno, gt.line, gt.description, gt.category, gt.product, gt.qtyinvoiced, 
+		gt.priceactual, gt.linenetamt, gt.tuition, gt.coursetype, gt.rate, gt.startdate, gt.enddate
+	ORDER BY
+		gt.coursetype,
+		gt.dateinvoiced,
+		gt.documentno,
+		gt.line
+) d on d.CourseType = ta.FlightCourseType
+	Group By 
+		d.cust_name, d.isfulltime, d.coursetype, ta.cra_course_type
+	Order by
+		ta.CRA_Course_Type) tb on tb.cra_course_type = tc.cra_course_type
+	Order by tc.cra_course_type) te on te.cra_course_type = td.cra_course_type
+Group by bp_name, td.cra_course_type::varchar, te.other_course, te.date_from::timestamp, te.date_to::timestamp, te.tuition::numeric, te.part_time_months, te.full_time_months
+Order by td.cra_course_type;
+END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100
+  ROWS 1000;
+ALTER FUNCTION adempiere.FTU_tl11b(numeric, numeric)
+  OWNER TO adempiere;
+</SQLStatement>
+      <RollbackStatement>DROP FUNCTION adempiere.ftu_tl11b(numeric, numeric);
+</RollbackStatement>
+    </Step>
+  </Migration>
+</Migrations>

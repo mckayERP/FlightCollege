@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="MFTU" Name="Fix the TL11B Tax Report" ReleaseNo="FTU2.05" SeqNo="51">
+    <Step SeqNo="10" StepType="AD">
+      <PO AD_Table_ID="254" Action="D" Record_ID="1000013" Table="AD_Attachment">
+        <Data AD_Column_ID="2090" Column="IsActive" isNewNull="true" oldValue="true"/>
+        <Data AD_Column_ID="2087" Column="AD_Attachment_ID" isNewNull="true" oldValue="1000013"/>
+        <Data AD_Column_ID="2088" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="2091" Column="Created" isNewNull="true" oldValue="2011-02-12 16:48:47.0"/>
+        <Data AD_Column_ID="2089" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="2096" Column="AD_Table_ID" isNewNull="true" oldValue="284"/>
+        <Data AD_Column_ID="2097" Column="Record_ID" isNewNull="true" oldValue="1000017"/>
+        <Data AD_Column_ID="2092" Column="CreatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="2093" Column="Updated" isNewNull="true" oldValue="2016-04-28 12:14:40.0"/>
+        <Data AD_Column_ID="2094" Column="UpdatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="4822" Column="Title" isNewNull="true" oldValue="zip"/>
+        <Data AD_Column_ID="11530" Column="TextMsg" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="2099" Column="BinaryData" isNewNull="true" oldValue="[B@6d2a6f06"/>
+      </PO>
+    </Step>
+    <Step SeqNo="20" StepType="AD">
+      <PO AD_Table_ID="254" Action="I" Record_ID="1000083" Table="AD_Attachment">
+        <Data AD_Column_ID="2089" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="2090" Column="IsActive">true</Data>
+        <Data AD_Column_ID="2087" Column="AD_Attachment_ID">1000083</Data>
+        <Data AD_Column_ID="2088" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="2091" Column="Created">2016-08-20 09:37:10.432</Data>
+        <Data AD_Column_ID="2096" Column="AD_Table_ID">284</Data>
+        <Data AD_Column_ID="2097" Column="Record_ID">1000017</Data>
+        <Data AD_Column_ID="2092" Column="CreatedBy">0</Data>
+        <Data AD_Column_ID="2093" Column="Updated">2016-08-20 09:37:10.432</Data>
+        <Data AD_Column_ID="2094" Column="UpdatedBy">0</Data>
+        <Data AD_Column_ID="4822" Column="Title">zip</Data>
+        <Data AD_Column_ID="11530" Column="TextMsg" isNewNull="true"/>
+        <Data AD_Column_ID="2099" Column="BinaryData">[B@5baaed90</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="50" StepType="AD">
+      <PO AD_Table_ID="285" Action="U" Record_ID="1000279" Table="AD_Process_Para">
+        <Data AD_Column_ID="3739" Column="DefaultValue" oldValue="2010">@SQL=SELECT (date_part('year',now())-1)::numeric</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="60" StepType="AD">
+      <PO AD_Table_ID="285" Action="U" Record_ID="1000279" Table="AD_Process_Para">
+        <Data AD_Column_ID="3742" Column="ValueMax" oldValue="2025">9999</Data>
+        <Data AD_Column_ID="3740" Column="VFormat" isOldNull="true">0000</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="90" StepType="AD">
+      <PO AD_Table_ID="285" Action="U" Record_ID="1000279" Table="AD_Process_Para">
+        <Data AD_Column_ID="2828" Column="AD_Reference_Value_ID" isNewNull="true" oldValue="173"/>
+      </PO>
+    </Step>
+  </Migration>
+</Migrations>

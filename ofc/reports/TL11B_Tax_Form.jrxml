@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TL11B Tax Form" pageWidth="612" pageHeight="792" whenNoDataType="BlankPage" columnWidth="612" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="5b3c932f-5ab2-46e8-9490-496f78da8529">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="1645"/>
+	<parameter name="C_BPartner_ID" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[new BigDecimal(1001151)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Report_Year" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[2010]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TL11B_Tax_Form_Detail" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["./TL11B_Tax_Form_Detail.jasper"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT bp.ad_client_id, bp.ad_org_id, bp.c_bpartner_id, bp.name, bp.value, ((((bp.name::text || '  (ID:'::text) || bp.value::text) || ', Class:'::text) || array_to_string(ARRAY( SELECT c.value
+           FROM adempiere.FTU_Class c, adempiere.FTU_Student s
+          WHERE c.ftu_class_id = s.ftu_class_id AND s.c_bpartner_id = bp.c_bpartner_id), ', '::text)) || ')'::text AS info, $P{Report_Year} as report_year
+   FROM adempiere.c_bpartner bp
+WHERE 	bp.c_bpartner_id = $P{C_BPartner_ID}]]>
+	</queryString>
+	<field name="ad_client_id" class="java.math.BigDecimal"/>
+	<field name="ad_org_id" class="java.math.BigDecimal"/>
+	<field name="c_bpartner_id" class="java.math.BigDecimal"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="value" class="java.lang.String"/>
+	<field name="info" class="java.lang.String"/>
+	<field name="report_year" class="java.math.BigDecimal"/>
+	<background>
+		<band height="792" splitType="Prevent">
+			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle" onErrorType="Blank">
+				<reportElement mode="Transparent" x="1" y="1" width="611" height="791" forecolor="#000000" backcolor="#FFFFFF" uuid="7e8dfd3f-c424-44fd-a84e-13e8647ff382">
+					<printWhenExpression><![CDATA[Boolean.valueOf($V{PAGE_NUMBER} > 0)]]></printWhenExpression>
+				</reportElement>
+				<graphicElement fill="Solid"/>
+				<imageExpression><![CDATA["http://main1:8088/CustomReports/TL11B_Background.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</background>
+	<pageHeader>
+		<band height="234" splitType="Prevent"/>
+	</pageHeader>
+	<detail>
+		<band height="158">
+			<textField>
+				<reportElement x="131" y="0" width="418" height="15" uuid="61d57035-34cc-49f2-be97-403c8409cf88"/>
+				<textFieldExpression><![CDATA[$F{info}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="1" y="72" width="611" height="86" uuid="7002bb1d-ea3d-47f3-8069-7e238a2cde92"/>
+				<subreportParameter name="Report_Year">
+					<subreportParameterExpression><![CDATA[$P{Report_Year}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="C_BPartner_ID">
+					<subreportParameterExpression><![CDATA[$P{C_BPartner_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{TL11B_Tax_Form_Detail}]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="400">
+			<staticText>
+				<reportElement x="199" y="5" width="350" height="15" uuid="5a125966-4847-4e8e-b516-9a114bc66a4b"/>
+				<text><![CDATA[Ottawa Flying Club]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="199" y="22" width="350" height="15" uuid="05bd8c63-7686-48d3-b240-c6853101113a"/>
+				<text><![CDATA[20 Lindbergh Private, Ottawa, Ontario, K1V 1H7]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="791">
+			<image onErrorType="Blank">
+				<reportElement x="15" y="1" width="580" height="790" uuid="007128d6-9b0a-4a67-83a3-3c9541b024ee"/>
+				<imageExpression><![CDATA["http://main1:8088/CustomReports/TL11B_Background_page2.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</summary>
+</jasperReport>

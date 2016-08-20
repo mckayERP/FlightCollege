@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TL11B_Tax_Form_Detail" pageWidth="611" pageHeight="752" columnWidth="611" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a9b1ccef-989b-46cf-b249-216128041972">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="C_BPartner_ID" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[new BigDecimal(1000844)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Report_Year" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[2010]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT td.ad_client_id, td.ad_org_id,
+	1000000 AS c_bpartner_id,
+	te.student_name, td.cra_course_type, te.X,
+	te.other_course,
+	te.date_from, te.date_to,
+	date_part('Year'::text, te.date_from) AS year_from,
+	date_part('Month'::text, te.date_from) AS mnth_from,
+	date_part('Year'::text, te.date_to) AS year_to,
+	date_part('Month'::text, te.date_to) AS mnth_to,
+	te.tuition, te.parttime_months, te.fulltime_months
+   FROM adempiere.ftu_tl11b_course_map td
+   LEFT JOIN (select C_BPartner_ID, student_name,
+		CASE when sum(tuition) > 0 then 'X'::text
+		Else null
+		End as X,
+		course_type,
+		other_course, min(date_from) as date_from, max(date_to) as date_to, sum(tuition) as tuition, max(parttime_months) as parttime_months, max(fulltime_months) as fulltime_months
+		from adempiere.ftu_TL11B($P{C_BPartner_ID}, $P{Report_Year})
+		group by C_BPartner_ID, Student_Name, course_type, other_course
+		)  te ON te.course_type::text = td.cra_course_type::text
+  WHERE td.cra_course_type != '5-Other'
+UNION
+SELECT tf.ad_client_id, tf.ad_org_id,
+	$P{C_BPartner_ID} AS c_bpartner_id,
+	tg.student_name, tf.cra_course_type, tg.X,
+	ARRAY_TO_STRING(ARRAY(
+				select other_course
+				from adempiere.ftu_TL11B($P{C_BPartner_ID}, $P{Report_Year}) aq
+				where aq.course_type = tf.cra_course_type),', '
+			     ) as other_course,
+	tg.date_from, tg.date_to,
+	date_part('Year'::text, tg.date_from) AS year_from,
+	date_part('Month'::text, tg.date_from) AS mnth_from,
+	date_part('Year'::text, tg.date_to) AS year_to,
+	date_part('Month'::text, tg.date_to) AS mnth_to,
+	tg.tuition, tg.parttime_months, tg.fulltime_months
+   FROM adempiere.ftu_tl11b_course_map tf
+   LEFT JOIN (select C_BPartner_ID, student_name,
+		CASE when sum(tuition) > 0 then 'X'::text
+		Else null
+		End as X,
+		course_type, min(date_from) as date_from, max(date_to) as date_to, sum(tuition) as tuition, max(parttime_months) as parttime_months, max(fulltime_months) as fulltime_months
+		from adempiere.ftu_TL11B($P{C_BPartner_ID}, $P{Report_Year})
+		group by C_BPartner_ID, Student_Name, course_type
+		)  tg ON tg.course_type::text = tf.cra_course_type::text
+  WHERE tf.cra_course_type = '5-Other'
+  ORDER BY cra_course_type;]]>
+	</queryString>
+	<field name="ad_client_id" class="java.math.BigDecimal"/>
+	<field name="ad_org_id" class="java.math.BigDecimal"/>
+	<field name="c_bpartner_id" class="java.lang.Integer"/>
+	<field name="student_name" class="java.lang.String"/>
+	<field name="cra_course_type" class="java.lang.String"/>
+	<field name="x" class="java.lang.String"/>
+	<field name="other_course" class="java.lang.String"/>
+	<field name="date_from" class="java.sql.Timestamp"/>
+	<field name="date_to" class="java.sql.Timestamp"/>
+	<field name="year_from" class="java.lang.Double"/>
+	<field name="mnth_from" class="java.lang.Double"/>
+	<field name="year_to" class="java.lang.Double"/>
+	<field name="mnth_to" class="java.lang.Double"/>
+	<field name="tuition" class="java.math.BigDecimal"/>
+	<field name="parttime_months" class="java.math.BigDecimal"/>
+	<field name="fulltime_months" class="java.math.BigDecimal"/>
+	<variable name="TOTAL_TUITION" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{tuition}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="MAX_PT" class="java.math.BigDecimal" calculation="Highest">
+		<variableExpression><![CDATA[$F{parttime_months}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="MAX_FT" class="java.math.BigDecimal" calculation="Highest">
+		<variableExpression><![CDATA[$F{fulltime_months}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="38" y="0" width="13" height="11" backcolor="#FFFFFF" uuid="fe00e8fa-3297-4298-8c39-794391adcf63"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{x}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="115" y="0" width="169" height="11" backcolor="#FFFFFF" uuid="21f3f614-9ee3-4af8-8250-beec0bdc010c"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{other_course}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="345" y="0" width="34" height="11" backcolor="#FFFFFF" uuid="30b1c546-cd79-4e59-835c-ee9523d5c300"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{year_from}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="417" y="0" width="34" height="11" backcolor="#FFFFFF" uuid="f6b4a1a1-a21b-4969-a9d1-2ddefd7278b6"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{year_to}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="287" y="0" width="55" height="11" backcolor="#FFFFFF" uuid="3aa5ef24-8fc1-4b62-b8be-dc05e0ce1229"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tuition}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="381" y="0" width="34" height="11" backcolor="#FFFFFF" uuid="9decb790-4227-41bc-9963-14db8bfd1f2b"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mnth_from}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="453" y="0" width="34" height="11" backcolor="#FFFFFF" uuid="20bcdae8-66ea-403a-bc27-0e3278d5b96d"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mnth_to}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="490" y="0" width="45" height="11" backcolor="#FFFFFF" uuid="8902877e-b826-45a9-800b-4961fc96a6c6"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{parttime_months}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="538" y="0" width="45" height="11" backcolor="#FFFFFF" uuid="2196d603-2c0c-4661-a4c7-b74d802f725e"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fulltime_months}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="13">
+			<textField isStretchWithOverflow="true" pattern="¤ #,##0.00">
+				<reportElement mode="Transparent" x="287" y="0" width="55" height="11" uuid="71537a3e-3b53-41a0-b0db-9e193f55e722"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTAL_TUITION}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0">
+				<reportElement mode="Transparent" x="490" y="0" width="45" height="13" uuid="6869553e-c16b-4827-86db-a740c04c6543"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{MAX_PT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0">
+				<reportElement mode="Transparent" x="538" y="0" width="45" height="13" uuid="0864ec09-2464-4f3b-a172-2b2f264bf7d8"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{MAX_FT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>
