@@ -57,7 +57,7 @@ import org.compiere.util.Msg;
  *		@see https://github.com/adempiere/adempiere/issues/114
  */
 
-public class VCreateFromDepositUI extends CreateFromStatement 
+public class VCreateFromDepositUI extends CreateFromDeposit 
 implements FormPanel, ICreateFrom, ActionListener {
 	
 	/**
@@ -70,12 +70,10 @@ implements FormPanel, ICreateFrom, ActionListener {
 	//	Yamel Senih FR [ 114 ], 2015-11-26
 	//	Change to form
 	private FormFrame	v_Container = null;
+	/** Window No               	*/
+	private int p_WindowNo;
 	/**	Main Panel for Create From	*/
 	private VCreateFromPanel v_CreateFromPanel;
-
-	/** Window No               */
-	private int p_WindowNo;
-
 	/**	Logger			*/
 	private CLogger log = CLogger.getCLogger(getClass());
 	
@@ -126,7 +124,7 @@ implements FormPanel, ICreateFrom, ActionListener {
 		refreshButton.setDefaultCapable(true);
 		refreshButton.addActionListener(this);
 		v_CreateFromPanel.getConfirmPanel().addButton(refreshButton);
-		v_CreateFromPanel.getRootPane().setDefaultButton(refreshButton);
+//		v_CreateFromPanel.getRootPane().setDefaultButton(refreshButton);
 		//	Add to Main Form
 		v_Container.getContentPane().add(v_CreateFromPanel);
 				
