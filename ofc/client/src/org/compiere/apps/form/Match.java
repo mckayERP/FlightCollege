@@ -466,13 +466,14 @@ public class Match
 				else
 				{
 					success = true;
-					//	Correct Ordered Qty for Stocked Products (see MOrder.reserveStock / MInOut.processIt)
-					if (sLine.getProduct() != null && sLine.getProduct().isStocked())
-						success = MStorage.add (Env.getCtx(), sLine.getM_Warehouse_ID(), 
-							sLine.getM_Locator_ID(), 
-							sLine.getM_Product_ID(), 
-							sLine.getM_AttributeSetInstance_ID(), oLine.getM_AttributeSetInstance_ID(), 
-							null, null, qty.negate(), trxName);
+//					//	Correct Ordered Qty for Stocked Products (see MOrder.reserveStock / MInOut.processIt)
+//					if (sLine.getProduct() != null && sLine.getProduct().isStocked())
+//						success = MStorage.add (Env.getCtx(), sLine.getM_Warehouse_ID(), 
+//							sLine.getM_Locator_ID(), 
+//							sLine.getM_Product_ID(), 
+//							sLine.getM_AttributeSetInstance_ID(), oLine.getM_AttributeSetInstance_ID(), 
+//							0,
+//							null, null, qty.negate(), trxName);
 				}
 			}
 			else
