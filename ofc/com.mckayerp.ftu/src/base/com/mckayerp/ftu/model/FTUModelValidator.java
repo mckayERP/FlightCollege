@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Level;
 
 import org.adempiere.exceptions.AdempiereException;
@@ -43,6 +44,7 @@ import org.compiere.process.DocAction;
 import org.compiere.util.CLogger;
 import org.compiere.util.DB;
 import org.compiere.util.Env;
+import org.eevolution.model.MPPMRP;
 
 public class FTUModelValidator implements ModelValidator {
 	
@@ -432,34 +434,18 @@ public class FTUModelValidator implements ModelValidator {
 				// Delete the reference to the order lines from the invoice lines
 				MOrder order = (MOrder) po;
 				MOrderLine[] orderLines = order.getLines();
-				String where = MInvoiceLine.COLUMNNAME_C_OrderLine_ID + "= ?";
-				Query invoiceLineQuery = new Query(po.getCtx(), MInvoiceLine.Table_Name, where, po.get_TrxName())
-													 .setClient_ID();
-				where = MInOutLine.COLUMNNAME_C_OrderLine_ID + "= ?";
-				Query inOutLineQuery = new Query(po.getCtx(), MInOutLine.Table_Name, where, po.get_TrxName())
-													 .setClient_ID();
-				for (MOrderLine orderLine : orderLines) {
-					List<MInvoiceLine> invoiceLines = invoiceLineQuery
-														.setParameters(orderLine.getC_OrderLine_ID())
-														.list();
-					for (MInvoiceLine line : invoiceLines) {
-						line.setC_OrderLine_ID(-1);
-						line.saveEx();
-					}
+				for (MOrderLine orderLine : orderLines) 
+				{
 					
-					List<MInOutLine> inOutLines = inOutLineQuery
-							.setParameters(orderLine.getC_OrderLine_ID())
-							.list();
-					for (MInOutLine line : inOutLines) {
-						line.setC_OrderLine_ID(-1);
-						line.saveEx();
-					}
-					
+					clearOrderLineReferences(po.getCtx(), orderLine, po.get_TrxName());
 					MProduct product = (MProduct) orderLine.getM_Product();
-					if (!product.isStocked()) {
+					if (!product.isStocked()) 
+					{
+						
 						orderLine.setQtyDelivered(Env.ZERO);
 						orderLine.setQtyReserved(Env.ZERO);
 						orderLine.saveEx();
+						
 					}
 				}
 								
@@ -591,7 +577,9 @@ public class FTUModelValidator implements ModelValidator {
 
 			I_M_Product_Category productCategory = product.getM_Product_Category();
 			if (productCategory != null && productCategory.getName().equals("Block Booking")) {
+				
 				if (orderLine.getQtyEntered().compareTo(Env.ZERO) <= 0)
+					clearOrderLineReferences(po.getCtx(), orderLine, po.get_TrxName());
 					orderLine.setQtyReserved(Env.ZERO);
 					orderLine.delete(false);
 				continue;
@@ -1284,7 +1272,52 @@ public class FTUModelValidator implements ModelValidator {
 		return success;
 	}
 	
+	private void clearOrderLineReferences(Properties ctx, MOrderLine orderLine, String trxName) 
+	{
+	
+		String where = MInvoiceLine.COLUMNNAME_C_OrderLine_ID + "= ?";
+		Query invoiceLineQuery = new Query(ctx, MInvoiceLine.Table_Name, where, trxName)
+											 .setClient_ID();
+		
+		List<MInvoiceLine> invoiceLines = invoiceLineQuery
+											.setParameters(orderLine.getC_OrderLine_ID())
+											.list();
+		for (MInvoiceLine line : invoiceLines) 
+		{
+		
+			line.setC_OrderLine_ID(-1);
+			line.saveEx();
 
+		}
+
+		where = MInOutLine.COLUMNNAME_C_OrderLine_ID + "= ?";
+		Query inOutLineQuery = new Query(ctx, MInOutLine.Table_Name, where, trxName)
+											 .setClient_ID();
+		List<MInOutLine> inOutLines = inOutLineQuery
+											.setParameters(orderLine.getC_OrderLine_ID())
+											.list();
+		for (MInOutLine line : inOutLines) 
+		{
+		
+			line.setC_OrderLine_ID(-1);
+			line.saveEx();
+		
+		}
+
+		where = MPPMRP.COLUMNNAME_C_OrderLine_ID + "= ?";
+		Query mppmrpQuery = new Query(ctx, MPPMRP.Table_Name, where, trxName)
+		 .setClient_ID();
+		List<MPPMRP> mppmrps = mppmrpQuery
+				.setParameters(orderLine.getC_OrderLine_ID())
+				.list();
+		for (MPPMRP mppmrp : mppmrps) 
+		{
+		
+			mppmrp.setC_OrderLine_ID(-1);
+			mppmrp.saveEx();
+		
+		}
+	}
 
 
 }
