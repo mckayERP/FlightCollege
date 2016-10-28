@@ -297,6 +297,32 @@ public interface I_FTU_Aircraft
 	  */
 	public int getCreatedBy();
 
+    /** Column name DateExpiryLease */
+    public static final String COLUMNNAME_DateExpiryLease = "DateExpiryLease";
+
+	/** Set Lease Expiry Date.
+	  * The date the lease expires.
+	  */
+	public void setDateExpiryLease (Timestamp DateExpiryLease);
+
+	/** Get Lease Expiry Date.
+	  * The date the lease expires.
+	  */
+	public Timestamp getDateExpiryLease();
+
+    /** Column name DateStartLease */
+    public static final String COLUMNNAME_DateStartLease = "DateStartLease";
+
+	/** Set Start Date.
+	  * The start date of the lease
+	  */
+	public void setDateStartLease (Timestamp DateStartLease);
+
+	/** Get Start Date.
+	  * The start date of the lease
+	  */
+	public Timestamp getDateStartLease();
+
     /** Column name DaysToInspection */
     public static final String COLUMNNAME_DaysToInspection = "DaysToInspection";
 
@@ -570,31 +596,167 @@ public interface I_FTU_Aircraft
 	  */
 	public String getLease_QtyType();
 
-    /** Column name LeaseExpiryDate */
-    public static final String COLUMNNAME_LeaseExpiryDate = "LeaseExpiryDate";
+    /** Column name LeaseMaxHours */
+    public static final String COLUMNNAME_LeaseMaxHours = "LeaseMaxHours";
 
-	/** Set Lease Expiry Date.
-	  * The date the lease expires.
+	/** Set Max Hours.
+	  * The total hours which, when billed, will conclude the lease agreement.
 	  */
-	public void setLeaseExpiryDate (Timestamp LeaseExpiryDate);
+	public void setLeaseMaxHours (BigDecimal LeaseMaxHours);
 
-	/** Get Lease Expiry Date.
-	  * The date the lease expires.
+	/** Get Max Hours.
+	  * The total hours which, when billed, will conclude the lease agreement.
 	  */
-	public Timestamp getLeaseExpiryDate();
+	public BigDecimal getLeaseMaxHours();
 
-    /** Column name LeaseRate */
-    public static final String COLUMNNAME_LeaseRate = "LeaseRate";
+    /** Column name LeaseMinMonthlyHours */
+    public static final String COLUMNNAME_LeaseMinMonthlyHours = "LeaseMinMonthlyHours";
+
+	/** Set Min Monthly Hours.
+	  * The minimum hours in the period that must be billed regardless of the hours that were actually flown.
+	  */
+	public void setLeaseMinMonthlyHours (BigDecimal LeaseMinMonthlyHours);
+
+	/** Get Min Monthly Hours.
+	  * The minimum hours in the period that must be billed regardless of the hours that were actually flown.
+	  */
+	public BigDecimal getLeaseMinMonthlyHours();
+
+    /** Column name LeaseRateFixed */
+    public static final String COLUMNNAME_LeaseRateFixed = "LeaseRateFixed";
 
 	/** Set Lease Rate.
 	  * The $ lease rate to use.
 	  */
-	public void setLeaseRate (BigDecimal LeaseRate);
+	public void setLeaseRateFixed (BigDecimal LeaseRateFixed);
 
 	/** Get Lease Rate.
 	  * The $ lease rate to use.
 	  */
-	public BigDecimal getLeaseRate();
+	public BigDecimal getLeaseRateFixed();
+
+    /** Column name LeaseRateTier1 */
+    public static final String COLUMNNAME_LeaseRateTier1 = "LeaseRateTier1";
+
+	/** Set Tier-1 Rate.
+	  * For multi-tier lease rates
+	  */
+	public void setLeaseRateTier1 (BigDecimal LeaseRateTier1);
+
+	/** Get Tier-1 Rate.
+	  * For multi-tier lease rates
+	  */
+	public BigDecimal getLeaseRateTier1();
+
+    /** Column name LeaseRateTier1_MaxHours */
+    public static final String COLUMNNAME_LeaseRateTier1_MaxHours = "LeaseRateTier1_MaxHours";
+
+	/** Set Tier-1 Max Hours.
+	  * The maximum hours in a period where the Tier 1 rate applies.
+	  */
+	public void setLeaseRateTier1_MaxHours (BigDecimal LeaseRateTier1_MaxHours);
+
+	/** Get Tier-1 Max Hours.
+	  * The maximum hours in a period where the Tier 1 rate applies.
+	  */
+	public BigDecimal getLeaseRateTier1_MaxHours();
+
+    /** Column name LeaseRateTier2 */
+    public static final String COLUMNNAME_LeaseRateTier2 = "LeaseRateTier2";
+
+	/** Set Tier-2 Rate.
+	  * For multi-tier lease rates
+	  */
+	public void setLeaseRateTier2 (BigDecimal LeaseRateTier2);
+
+	/** Get Tier-2 Rate.
+	  * For multi-tier lease rates
+	  */
+	public BigDecimal getLeaseRateTier2();
+
+    /** Column name LeaseRateTier2_MaxHours */
+    public static final String COLUMNNAME_LeaseRateTier2_MaxHours = "LeaseRateTier2_MaxHours";
+
+	/** Set Tier-2 Max Hours.
+	  * The maximum hours in a period where the Tier 2 rate applies.
+	  */
+	public void setLeaseRateTier2_MaxHours (BigDecimal LeaseRateTier2_MaxHours);
+
+	/** Get Tier-2 Max Hours.
+	  * The maximum hours in a period where the Tier 2 rate applies.
+	  */
+	public BigDecimal getLeaseRateTier2_MaxHours();
+
+    /** Column name LeaseRateTier3 */
+    public static final String COLUMNNAME_LeaseRateTier3 = "LeaseRateTier3";
+
+	/** Set Tier-3 Rate.
+	  * For multi-tier lease rates
+	  */
+	public void setLeaseRateTier3 (BigDecimal LeaseRateTier3);
+
+	/** Get Tier-3 Rate.
+	  * For multi-tier lease rates
+	  */
+	public BigDecimal getLeaseRateTier3();
+
+    /** Column name LeaseRollOverHours */
+    public static final String COLUMNNAME_LeaseRollOverHours = "LeaseRollOverHours";
+
+	/** Set Roll Over Hours.
+	  * The limit of hours that must be paid each month.
+	  */
+	public void setLeaseRollOverHours (BigDecimal LeaseRollOverHours);
+
+	/** Get Roll Over Hours.
+	  * The limit of hours that must be paid each month.
+	  */
+	public BigDecimal getLeaseRollOverHours();
+
+    /** Column name LeaseTier1ProductID */
+    public static final String COLUMNNAME_LeaseTier1ProductID = "LeaseTier1ProductID";
+
+	/** Set Tier 1 Product.
+	  * The product to be used when generating the invoice for lease payments.
+	  */
+	public void setLeaseTier1ProductID (int LeaseTier1ProductID);
+
+	/** Get Tier 1 Product.
+	  * The product to be used when generating the invoice for lease payments.
+	  */
+	public int getLeaseTier1ProductID();
+
+	public org.compiere.model.I_M_Product getLeaseTier1Produc() throws RuntimeException;
+
+    /** Column name LeaseTier2ProductID */
+    public static final String COLUMNNAME_LeaseTier2ProductID = "LeaseTier2ProductID";
+
+	/** Set Tier 2 Product.
+	  * The product to be used when generating the invoice for lease payments.
+	  */
+	public void setLeaseTier2ProductID (int LeaseTier2ProductID);
+
+	/** Get Tier 2 Product.
+	  * The product to be used when generating the invoice for lease payments.
+	  */
+	public int getLeaseTier2ProductID();
+
+	public org.compiere.model.I_M_Product getLeaseTier2Produc() throws RuntimeException;
+
+    /** Column name LeaseTier3ProductID */
+    public static final String COLUMNNAME_LeaseTier3ProductID = "LeaseTier3ProductID";
+
+	/** Set Tier 3 Product.
+	  * The product to be used when generating the invoice for lease payments.
+	  */
+	public void setLeaseTier3ProductID (int LeaseTier3ProductID);
+
+	/** Get Tier 3 Product.
+	  * The product to be used when generating the invoice for lease payments.
+	  */
+	public int getLeaseTier3ProductID();
+
+	public org.compiere.model.I_M_Product getLeaseTier3Produc() throws RuntimeException;
 
     /** Column name Name */
     public static final String COLUMNNAME_Name = "Name";

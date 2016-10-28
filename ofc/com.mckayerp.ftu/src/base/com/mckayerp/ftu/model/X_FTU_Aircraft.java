@@ -32,7 +32,7 @@ public class X_FTU_Aircraft extends PO implements I_FTU_Aircraft, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160808L;
+	private static final long serialVersionUID = 20161023L;
 
     /** Standard Constructor */
     public X_FTU_Aircraft (Properties ctx, int FTU_Aircraft_ID, String trxName)
@@ -79,6 +79,8 @@ public class X_FTU_Aircraft extends PO implements I_FTU_Aircraft, I_Persistent
 
 	/** ACMaintQtyType AD_Reference_ID=1000045 */
 	public static final int ACMAINTQTYTYPE_AD_Reference_ID=1000045;
+	/** FMFL 3-Tiere Lease Terms = FMFL-3TierLease */
+	public static final String ACMAINTQTYTYPE_FMFL3_TiereLeaseTerms = "FMFL-3TierLease";
 	/** Monthly Fixed = Monthly */
 	public static final String ACMAINTQTYTYPE_MonthlyFixed = "Monthly";
 	/** Airtime in period = Airtime */
@@ -422,6 +424,40 @@ public class X_FTU_Aircraft extends PO implements I_FTU_Aircraft, I_Persistent
 	public String getCallSign () 
 	{
 		return (String)get_Value(COLUMNNAME_CallSign);
+	}
+
+	/** Set Lease Expiry Date.
+		@param DateExpiryLease 
+		The date the lease expires.
+	  */
+	public void setDateExpiryLease (Timestamp DateExpiryLease)
+	{
+		set_Value (COLUMNNAME_DateExpiryLease, DateExpiryLease);
+	}
+
+	/** Get Lease Expiry Date.
+		@return The date the lease expires.
+	  */
+	public Timestamp getDateExpiryLease () 
+	{
+		return (Timestamp)get_Value(COLUMNNAME_DateExpiryLease);
+	}
+
+	/** Set Start Date.
+		@param DateStartLease 
+		The start date of the lease
+	  */
+	public void setDateStartLease (Timestamp DateStartLease)
+	{
+		set_Value (COLUMNNAME_DateStartLease, DateStartLease);
+	}
+
+	/** Get Start Date.
+		@return The start date of the lease
+	  */
+	public Timestamp getDateStartLease () 
+	{
+		return (Timestamp)get_Value(COLUMNNAME_DateStartLease);
 	}
 
 	/** Set Days to Inspection.
@@ -818,6 +854,8 @@ public class X_FTU_Aircraft extends PO implements I_FTU_Aircraft, I_Persistent
 
 	/** Lease_QtyType AD_Reference_ID=1000045 */
 	public static final int LEASE_QTYTYPE_AD_Reference_ID=1000045;
+	/** FMFL 3-Tiere Lease Terms = FMFL-3TierLease */
+	public static final String LEASE_QTYTYPE_FMFL3_TiereLeaseTerms = "FMFL-3TierLease";
 	/** Monthly Fixed = Monthly */
 	public static final String LEASE_QTYTYPE_MonthlyFixed = "Monthly";
 	/** Airtime in period = Airtime */
@@ -842,41 +880,259 @@ public class X_FTU_Aircraft extends PO implements I_FTU_Aircraft, I_Persistent
 		return (String)get_Value(COLUMNNAME_Lease_QtyType);
 	}
 
-	/** Set Lease Expiry Date.
-		@param LeaseExpiryDate 
-		The date the lease expires.
+	/** Set Max Hours.
+		@param LeaseMaxHours 
+		The total hours which, when billed, will conclude the lease agreement.
 	  */
-	public void setLeaseExpiryDate (Timestamp LeaseExpiryDate)
+	public void setLeaseMaxHours (BigDecimal LeaseMaxHours)
 	{
-		set_Value (COLUMNNAME_LeaseExpiryDate, LeaseExpiryDate);
+		set_Value (COLUMNNAME_LeaseMaxHours, LeaseMaxHours);
 	}
 
-	/** Get Lease Expiry Date.
-		@return The date the lease expires.
+	/** Get Max Hours.
+		@return The total hours which, when billed, will conclude the lease agreement.
 	  */
-	public Timestamp getLeaseExpiryDate () 
+	public BigDecimal getLeaseMaxHours () 
 	{
-		return (Timestamp)get_Value(COLUMNNAME_LeaseExpiryDate);
+		BigDecimal bd = (BigDecimal)get_Value(COLUMNNAME_LeaseMaxHours);
+		if (bd == null)
+			 return Env.ZERO;
+		return bd;
+	}
+
+	/** Set Min Monthly Hours.
+		@param LeaseMinMonthlyHours 
+		The minimum hours in the period that must be billed regardless of the hours that were actually flown.
+	  */
+	public void setLeaseMinMonthlyHours (BigDecimal LeaseMinMonthlyHours)
+	{
+		set_Value (COLUMNNAME_LeaseMinMonthlyHours, LeaseMinMonthlyHours);
+	}
+
+	/** Get Min Monthly Hours.
+		@return The minimum hours in the period that must be billed regardless of the hours that were actually flown.
+	  */
+	public BigDecimal getLeaseMinMonthlyHours () 
+	{
+		BigDecimal bd = (BigDecimal)get_Value(COLUMNNAME_LeaseMinMonthlyHours);
+		if (bd == null)
+			 return Env.ZERO;
+		return bd;
 	}
 
 	/** Set Lease Rate.
-		@param LeaseRate 
+		@param LeaseRateFixed 
 		The $ lease rate to use.
 	  */
-	public void setLeaseRate (BigDecimal LeaseRate)
+	public void setLeaseRateFixed (BigDecimal LeaseRateFixed)
 	{
-		set_Value (COLUMNNAME_LeaseRate, LeaseRate);
+		set_Value (COLUMNNAME_LeaseRateFixed, LeaseRateFixed);
 	}
 
 	/** Get Lease Rate.
 		@return The $ lease rate to use.
 	  */
-	public BigDecimal getLeaseRate () 
+	public BigDecimal getLeaseRateFixed () 
 	{
-		BigDecimal bd = (BigDecimal)get_Value(COLUMNNAME_LeaseRate);
+		BigDecimal bd = (BigDecimal)get_Value(COLUMNNAME_LeaseRateFixed);
 		if (bd == null)
 			 return Env.ZERO;
 		return bd;
+	}
+
+	/** Set Tier-1 Rate.
+		@param LeaseRateTier1 
+		For multi-tier lease rates
+	  */
+	public void setLeaseRateTier1 (BigDecimal LeaseRateTier1)
+	{
+		set_Value (COLUMNNAME_LeaseRateTier1, LeaseRateTier1);
+	}
+
+	/** Get Tier-1 Rate.
+		@return For multi-tier lease rates
+	  */
+	public BigDecimal getLeaseRateTier1 () 
+	{
+		BigDecimal bd = (BigDecimal)get_Value(COLUMNNAME_LeaseRateTier1);
+		if (bd == null)
+			 return Env.ZERO;
+		return bd;
+	}
+
+	/** Set Tier-1 Max Hours.
+		@param LeaseRateTier1_MaxHours 
+		The maximum hours in a period where the Tier 1 rate applies.
+	  */
+	public void setLeaseRateTier1_MaxHours (BigDecimal LeaseRateTier1_MaxHours)
+	{
+		set_Value (COLUMNNAME_LeaseRateTier1_MaxHours, LeaseRateTier1_MaxHours);
+	}
+
+	/** Get Tier-1 Max Hours.
+		@return The maximum hours in a period where the Tier 1 rate applies.
+	  */
+	public BigDecimal getLeaseRateTier1_MaxHours () 
+	{
+		BigDecimal bd = (BigDecimal)get_Value(COLUMNNAME_LeaseRateTier1_MaxHours);
+		if (bd == null)
+			 return Env.ZERO;
+		return bd;
+	}
+
+	/** Set Tier-2 Rate.
+		@param LeaseRateTier2 
+		For multi-tier lease rates
+	  */
+	public void setLeaseRateTier2 (BigDecimal LeaseRateTier2)
+	{
+		set_Value (COLUMNNAME_LeaseRateTier2, LeaseRateTier2);
+	}
+
+	/** Get Tier-2 Rate.
+		@return For multi-tier lease rates
+	  */
+	public BigDecimal getLeaseRateTier2 () 
+	{
+		BigDecimal bd = (BigDecimal)get_Value(COLUMNNAME_LeaseRateTier2);
+		if (bd == null)
+			 return Env.ZERO;
+		return bd;
+	}
+
+	/** Set Tier-2 Max Hours.
+		@param LeaseRateTier2_MaxHours 
+		The maximum hours in a period where the Tier 2 rate applies.
+	  */
+	public void setLeaseRateTier2_MaxHours (BigDecimal LeaseRateTier2_MaxHours)
+	{
+		set_Value (COLUMNNAME_LeaseRateTier2_MaxHours, LeaseRateTier2_MaxHours);
+	}
+
+	/** Get Tier-2 Max Hours.
+		@return The maximum hours in a period where the Tier 2 rate applies.
+	  */
+	public BigDecimal getLeaseRateTier2_MaxHours () 
+	{
+		BigDecimal bd = (BigDecimal)get_Value(COLUMNNAME_LeaseRateTier2_MaxHours);
+		if (bd == null)
+			 return Env.ZERO;
+		return bd;
+	}
+
+	/** Set Tier-3 Rate.
+		@param LeaseRateTier3 
+		For multi-tier lease rates
+	  */
+	public void setLeaseRateTier3 (BigDecimal LeaseRateTier3)
+	{
+		set_Value (COLUMNNAME_LeaseRateTier3, LeaseRateTier3);
+	}
+
+	/** Get Tier-3 Rate.
+		@return For multi-tier lease rates
+	  */
+	public BigDecimal getLeaseRateTier3 () 
+	{
+		BigDecimal bd = (BigDecimal)get_Value(COLUMNNAME_LeaseRateTier3);
+		if (bd == null)
+			 return Env.ZERO;
+		return bd;
+	}
+
+	/** Set Roll Over Hours.
+		@param LeaseRollOverHours 
+		The limit of hours that must be paid each month.
+	  */
+	public void setLeaseRollOverHours (BigDecimal LeaseRollOverHours)
+	{
+		set_Value (COLUMNNAME_LeaseRollOverHours, LeaseRollOverHours);
+	}
+
+	/** Get Roll Over Hours.
+		@return The limit of hours that must be paid each month.
+	  */
+	public BigDecimal getLeaseRollOverHours () 
+	{
+		BigDecimal bd = (BigDecimal)get_Value(COLUMNNAME_LeaseRollOverHours);
+		if (bd == null)
+			 return Env.ZERO;
+		return bd;
+	}
+
+	public org.compiere.model.I_M_Product getLeaseTier1Produc() throws RuntimeException
+    {
+		return (org.compiere.model.I_M_Product)MTable.get(getCtx(), org.compiere.model.I_M_Product.Table_Name)
+			.getPO(getLeaseTier1ProductID(), get_TrxName());	}
+
+	/** Set Tier 1 Product.
+		@param LeaseTier1ProductID 
+		The product to be used when generating the invoice for lease payments.
+	  */
+	public void setLeaseTier1ProductID (int LeaseTier1ProductID)
+	{
+		set_Value (COLUMNNAME_LeaseTier1ProductID, Integer.valueOf(LeaseTier1ProductID));
+	}
+
+	/** Get Tier 1 Product.
+		@return The product to be used when generating the invoice for lease payments.
+	  */
+	public int getLeaseTier1ProductID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_LeaseTier1ProductID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
+	public org.compiere.model.I_M_Product getLeaseTier2Produc() throws RuntimeException
+    {
+		return (org.compiere.model.I_M_Product)MTable.get(getCtx(), org.compiere.model.I_M_Product.Table_Name)
+			.getPO(getLeaseTier2ProductID(), get_TrxName());	}
+
+	/** Set Tier 2 Product.
+		@param LeaseTier2ProductID 
+		The product to be used when generating the invoice for lease payments.
+	  */
+	public void setLeaseTier2ProductID (int LeaseTier2ProductID)
+	{
+		set_Value (COLUMNNAME_LeaseTier2ProductID, Integer.valueOf(LeaseTier2ProductID));
+	}
+
+	/** Get Tier 2 Product.
+		@return The product to be used when generating the invoice for lease payments.
+	  */
+	public int getLeaseTier2ProductID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_LeaseTier2ProductID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
+	public org.compiere.model.I_M_Product getLeaseTier3Produc() throws RuntimeException
+    {
+		return (org.compiere.model.I_M_Product)MTable.get(getCtx(), org.compiere.model.I_M_Product.Table_Name)
+			.getPO(getLeaseTier3ProductID(), get_TrxName());	}
+
+	/** Set Tier 3 Product.
+		@param LeaseTier3ProductID 
+		The product to be used when generating the invoice for lease payments.
+	  */
+	public void setLeaseTier3ProductID (int LeaseTier3ProductID)
+	{
+		set_Value (COLUMNNAME_LeaseTier3ProductID, Integer.valueOf(LeaseTier3ProductID));
+	}
+
+	/** Get Tier 3 Product.
+		@return The product to be used when generating the invoice for lease payments.
+	  */
+	public int getLeaseTier3ProductID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_LeaseTier3ProductID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
 	}
 
 	/** Set Name.

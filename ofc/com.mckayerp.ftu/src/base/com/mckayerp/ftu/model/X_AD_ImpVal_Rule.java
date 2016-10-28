@@ -30,7 +30,7 @@ public class X_AD_ImpVal_Rule extends PO implements I_AD_ImpVal_Rule, I_Persiste
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160808L;
+	private static final long serialVersionUID = 20161023L;
 
     /** Standard Constructor */
     public X_AD_ImpVal_Rule (Properties ctx, int AD_ImpVal_Rule_ID, String trxName)

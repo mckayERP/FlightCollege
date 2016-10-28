@@ -30,7 +30,7 @@ public class X_FTU_Training_Session extends PO implements I_FTU_Training_Session
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160808L;
+	private static final long serialVersionUID = 20161023L;
 
     /** Standard Constructor */
     public X_FTU_Training_Session (Properties ctx, int FTU_Training_Session_ID, String trxName)

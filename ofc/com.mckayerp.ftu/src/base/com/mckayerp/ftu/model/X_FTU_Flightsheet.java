@@ -32,7 +32,7 @@ public class X_FTU_Flightsheet extends PO implements I_FTU_Flightsheet, I_Persis
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160808L;
+	private static final long serialVersionUID = 20161023L;
 
     /** Standard Constructor */
     public X_FTU_Flightsheet (Properties ctx, int FTU_Flightsheet_ID, String trxName)

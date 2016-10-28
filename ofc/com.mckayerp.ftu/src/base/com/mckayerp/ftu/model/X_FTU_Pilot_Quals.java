@@ -31,7 +31,7 @@ public class X_FTU_Pilot_Quals extends PO implements I_FTU_Pilot_Quals, I_Persis
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160808L;
+	private static final long serialVersionUID = 20161023L;
 
     /** Standard Constructor */
     public X_FTU_Pilot_Quals (Properties ctx, int FTU_Pilot_Quals_ID, String trxName)

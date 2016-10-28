@@ -32,7 +32,7 @@ public class X_FTU_Booking_Audit_Trail extends PO implements I_FTU_Booking_Audit
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160808L;
+	private static final long serialVersionUID = 20161023L;
 
     /** Standard Constructor */
     public X_FTU_Booking_Audit_Trail (Properties ctx, int FTU_Booking_Audit_Trail_ID, String trxName)

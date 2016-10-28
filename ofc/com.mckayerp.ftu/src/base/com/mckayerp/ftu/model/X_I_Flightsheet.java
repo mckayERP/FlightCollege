@@ -32,7 +32,7 @@ public class X_I_Flightsheet extends PO implements I_I_Flightsheet, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160808L;
+	private static final long serialVersionUID = 20161023L;
 
     /** Standard Constructor */
     public X_I_Flightsheet (Properties ctx, int I_Flightsheet_ID, String trxName)

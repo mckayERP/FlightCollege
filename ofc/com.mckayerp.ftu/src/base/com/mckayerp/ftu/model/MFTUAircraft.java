@@ -62,5 +62,10 @@ public class MFTUAircraft extends X_FTU_Aircraft {
 		
 		return success;
 	}
+	
+	public String toString()
+	{
+		return this.getACRegistration();
+	}
 
 }

@@ -31,7 +31,7 @@ public class X_FTU_TL11b_Course_Map extends PO implements I_FTU_TL11b_Course_Map
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20160808L;
+	private static final long serialVersionUID = 20161023L;
 
     /** Standard Constructor */
     public X_FTU_TL11b_Course_Map (Properties ctx, int FTU_TL11b_Course_Map_ID, String trxName)
