@@ -1,0 +1,35 @@
+host=www.flight-sheets.com
+url=/servlet/flightbooking
+method=post
+arguments=useraction,memberid,startmonth,startday,startyear,endmonth,endday,endyear,submit
+default1=38
+default2=551
+default3=10
+default4=4
+default5=2009
+default6=10
+default7=4
+default8=2009
+default9=OK
+columns=reference,action,client,description,performedby,performedat,
+prefix=<th>Performed At</th>
+rowprefix=<tr class="hiliterow_
+rowterm=</tr>
+reference_prefix=<font face="Arial,Helvetica" size="-2">
+reference_term=</font></td>
+action_prefix=<font face="Arial,Helvetica" size="-2">
+action_term=</font></td>
+client_prefix=<font face="Arial,Helvetica" size="-2">
+client_term=</font></td>
+description_prefix=<font face="Arial,Helvetica" size="-2">
+description_term=</font></td>
+performedby_prefix=<font face="Arial,Helvetica" size="-2">
+performedby_term=</font></td>
+performedat_prefix=<font face="Arial,Helvetica" size="-2">
+performedat_term=</font></td>
+description_nullifmissing
+client_nullifmissing
+performedby_nullifmissing
+nodatatext=(None)
+termination=</table>
+end

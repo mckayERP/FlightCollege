@@ -1,0 +1,18 @@
+host=quote.yahoo.com	
+url=/q
+method=get
+arguments=s
+columns=symbol,last,price,
+prefix=class="yfnc_leftnav1"
+rowprefix=<tr[^>]*>
+rowterm=</table
+symbol_prefix=[(]
+symbol_term=[)]
+last_prefix=(At)|(On)
+last_term=:
+price_prefix=[0-9.]
+price_includeprefix
+price_term=[^0-9.]
+termination=<td class="yfnc_systitle1" height="18"><small>&nbsp;<b>MORE ON
+end
+

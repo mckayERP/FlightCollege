@@ -1,0 +1,18 @@
+host=www.google.ca
+url=/search?q=telegraph
+method=get
+arguments=q,
+default1=telegraph
+columns=name,description,url,
+prefix=<div id=res class=med>
+rowprefix=<h3 class=r>
+rowterm=Similar
+name_prefix=<A HREF=[^>]*>
+name_term=</A>
+description_prefix=<div class="s">
+description_term=<br>
+url_prefix=<cite>
+url_term= - </cite>
+description_nullifmissing
+termination=Searches related
+end
