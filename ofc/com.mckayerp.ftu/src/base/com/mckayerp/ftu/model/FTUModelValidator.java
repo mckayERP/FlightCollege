@@ -25,7 +25,6 @@ import org.compiere.model.MInventoryLine;
 import org.compiere.model.MInvoiceLine;
 import org.compiere.model.MOrder;
 import org.compiere.model.MOrderLine;
-import org.compiere.model.MOrg;
 import org.compiere.model.MPriceList;
 import org.compiere.model.MPriceListVersion;
 import org.compiere.model.MProduct;
@@ -50,11 +49,12 @@ public class FTUModelValidator implements ModelValidator {
 	
 	public FTUModelValidator() {
 		super();
-		String where = MTax.COLUMNNAME_Name + "= 'Exempt'";
+		String where = MTax.COLUMNNAME_Name + "= 'Exempt'";  // TODO Hardcoded string
 		m_exempt_c_tax_id = new Query(Env.getCtx(), MTax.Table_Name, where, null)
 		 					.setClient_ID()
 		 					.setOnlyActiveRecords(true)
 		 					.firstIdOnly();
+
 	}
 
 	private class CustomerBlockBookings {
@@ -180,7 +180,7 @@ public class FTUModelValidator implements ModelValidator {
 					int C_BPartner_ID = order.getC_BPartner_ID();
 					boolean IsSOTrx = order.isSOTrx();
 					BigDecimal qty = BigDecimal.valueOf(blockBooking.bb_toApply);
-					MProductPricing pp = new MProductPricing (blockBooking.bb_Product_ID, C_BPartner_ID, qty, IsSOTrx, null);
+					MProductPricing pp = new MProductPricing (blockBooking.bb_Product_ID, C_BPartner_ID, qty, IsSOTrx, order.get_TrxName());
 					//
 					int M_PriceList_ID = order.getM_PriceList_ID();
 					pp.setM_PriceList_ID(M_PriceList_ID);
@@ -193,15 +193,13 @@ public class FTUModelValidator implements ModelValidator {
 					MOrderLine orderLine = new MOrderLine(order);
 					orderLine.setM_Product_ID(blockBooking.bb_Product_ID);
 					orderLine.setC_UOM_ID(pp.getC_UOM_ID());
-					orderLine.setQtyEntered(BigDecimal.valueOf(blockBooking.bb_toApply).negate());					
+					orderLine.setQty(BigDecimal.valueOf(blockBooking.bb_toApply).negate());					
 					orderLine.setPriceLimit(pp.getPriceLimit());
 					orderLine.setPriceActual(pp.getPriceStd());
 					orderLine.setPriceEntered(pp.getPriceStd());
 					orderLine.setC_Currency_ID(pp.getC_Currency_ID());
 					orderLine.setDiscount(pp.getDiscount());
-					orderLine.setQtyOrdered(orderLine.getQtyEntered());
-					if(m_hasAdvancedInstruction && m_exempt_c_tax_id > 0 )
-						orderLine.setC_Tax_ID(m_exempt_c_tax_id);
+					orderLine.setTax();
 					orderLine.saveEx();
 				}
 			}
@@ -494,10 +492,14 @@ public class FTUModelValidator implements ModelValidator {
 		// that also includes the Advanced Instruction item are tax exempt
 		
 		MOrder order = (MOrder) po;
-		MOrderLine[] orderLines = order.getLines();
+		MOrderLine[] orderLines = order.getLines(true,""); // have to requery
 		
-		if (m_hasAdvancedInstruction) {
-			for (MOrderLine orderLine : orderLines) {
+		if (m_hasAdvancedInstruction && MFTUStudent.isVocationalStudent(po.getCtx(), order.getC_BPartner_ID(), order.getDateOrdered(), po.get_TrxName())) 
+		{
+			
+			for (MOrderLine orderLine : orderLines) 
+			{
+				
 				if (orderLine == null)
 					continue;
 				
