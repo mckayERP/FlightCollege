@@ -83,6 +83,7 @@ public class UpdateJourneyLogs extends SvrProcess {
 				jlog = new MFTUACJourneyLog(getCtx(), 0, get_TrxName());
 				jlog.setFTU_Aircraft_ID(ac.getFTU_Aircraft_ID());
 				jlog.setFlightDate(openDate);
+				jlog.setEntryDate(openDate);
 				jlog.setTotalAirframeTime(openTime);
 				jlog.setIntendedFlight("Opening Balance");
 				jlog.setAirTime(openTime);
