@@ -42,12 +42,12 @@
   	
 	<echo message="=========== Installing customizations locally"/>
     <!-- Unzip Install File         -->
-       <unzip src="${ofc.installDir}/${ofc.distDir}/${ofc.installZipFile}" 
+       <unzip src="${ofc.installDir}/${ofc.distDir}/${ftu.installZipFile}" 
            dest="c:\" 
            overwrite="yes"/>
 
     <echo message="=========== Copying the distribution package to deploy site"/>
-    <copy todir="${ofc.install}" file="${ofc.installDir}/${ofc.distDir}/${ofc.installZipFile}" verbose="true"/>
+    <copy todir="${ofc.install}" file="${ofc.installDir}/${ofc.distDir}/${ftu.installZipFile}" verbose="true"/>
   </target>
 
 </project>

@@ -138,7 +138,7 @@
         </copy>
 		
 	    <!-- Create Install ZIP     -->
-	    <zip zipfile="${install.dir}/${ofc.installZipFile}"
+	    <zip zipfile="${install.dir}/${ftu.installZipFile}"
 	        basedir="${install.dir}"
 	        includes="${adempiere.dir}/**" />
 		
