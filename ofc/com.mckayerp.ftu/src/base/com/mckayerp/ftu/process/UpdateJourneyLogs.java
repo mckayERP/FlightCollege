@@ -17,40 +17,46 @@ import com.mckayerp.ftu.model.MFTUFlightsheet;
 
 public class UpdateJourneyLogs extends SvrProcess {
 	
+	private int ftu_aircraft_id = 0;
+	
 	@Override
 	protected void prepare() {
-		ProcessInfoParameter[] para = getParameter();
-		for (int i = 0; i < para.length; i++)
-		{
-			String name = para[i].getParameterName();
-			if (para[i].getParameter() == null)
-				;
-			else
-				log.log(Level.SEVERE, "Unknown Parameter: " + name);
-		}
+		ftu_aircraft_id = getParameterAsInt("FTU_Aircraft_ID");
 	} // Prepare
 
 	@Override
 	protected String doIt() throws Exception {
 		
+		String where = "";
+		if (ftu_aircraft_id > 0)
+		{
+			where = MFTUFlightsheet.COLUMNNAME_FTU_Aircraft_ID + "=" + ftu_aircraft_id;
+		}
+		
 		String sql = "UPDATE " + MFTUFlightsheet.Table_Name 
 			+ " SET " + MFTUFlightsheet.COLUMNNAME_FTU_ACJourneyLog_ID + " = NULL";
+		
+		if (ftu_aircraft_id > 0)
+			sql += " WHERE " + where;
 		
 		int no = DB.executeUpdate(sql, get_TrxName());
 		log.fine("Reset journey log link on flightsheet lines: " + no);
 		
 		sql = "DELETE FROM " + MFTUACJourneyLog.Table_Name + " WHERE COALESCE(" + MFTUACJourneyLog.COLUMNNAME_FTU_DefectLog_ID + ",0) = 0";
+		if (ftu_aircraft_id > 0)
+			sql += " AND " + where;
+		
 		no = DB.executeUpdate(sql, get_TrxName());
 		log.fine("Deleted journey logs: " + no);
 		
-		List<MFTUAircraft> fleet = new Query(getCtx(), MFTUAircraft.Table_Name, "", get_TrxName())
+		List<MFTUAircraft> fleet = new Query(getCtx(), MFTUAircraft.Table_Name, where, get_TrxName())
 									.setClient_ID()
 									.setOnlyActiveRecords(true)
 									.list();
 		
 		for (MFTUAircraft ac : fleet) {
 			
-			if (ac.isSim() || ac.isGeneric())
+			if (ac.isGeneric())
 				// TODO log the sim activity as well.
 				continue;
 			
@@ -65,7 +71,7 @@ public class UpdateJourneyLogs extends SvrProcess {
 			log.info("Generating flight logs for " + ac.getACRegistration() 
 					+ " from " + openDate.toString() + " starting airframe time: " + openTime.toString());
 						
-			String where = MFTUACJourneyLog.COLUMNNAME_FTU_Aircraft_ID 
+			where = MFTUACJourneyLog.COLUMNNAME_FTU_Aircraft_ID 
 					+ "=" + ac.getFTU_Aircraft_ID();
 
 			MFTUACJourneyLog jlog = new Query(getCtx(), MFTUACJourneyLog.Table_Name, where, get_TrxName())
@@ -95,7 +101,8 @@ public class UpdateJourneyLogs extends SvrProcess {
 					+ "=" + ac.getFTU_Aircraft_ID() + " AND "
 					+ MFTUFlightsheet.COLUMNNAME_FlightDate 
 					+ ">=" + DB.TO_STRING(openDate.toString())
-					+ " AND " + MFTUFlightsheet.COLUMNNAME_AirTime + " > 0"
+					+ " AND (" + MFTUFlightsheet.COLUMNNAME_AirTime + " > 0"
+					+ "      OR " + MFTUFlightsheet.COLUMNNAME_Simulator + " > 0)"
 					+ " AND " + MFTUFlightsheet.COLUMNNAME_CourseType + "!=" + DB.TO_STRING("Cancelled");
 
 			String orderBy = MFTUFlightsheet.COLUMNNAME_FlightDate + ", "

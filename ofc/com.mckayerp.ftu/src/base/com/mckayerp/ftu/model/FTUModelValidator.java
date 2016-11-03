@@ -861,6 +861,8 @@ public class FTUModelValidator implements ModelValidator {
     	 
  			Timestamp engStart = null;
  			Timestamp engStop = null;
+ 			Timestamp wheelsUp = null;
+ 			Timestamp wheelsDown = null;
  			long timeDiff;
  			BigDecimal hours = Env.ZERO;
  			BigDecimal millisecPerHour = new BigDecimal(60*60*1000);
@@ -898,17 +900,52 @@ public class FTUModelValidator implements ModelValidator {
         		 // flight time.  Use the flight date & sim + brief time;
         		 engStart = fs.getFlightDate();
         		 engStop = new Timestamp(engStart.getTime() + sim.add(brief).multiply(millisecPerHour).intValue());
-        		 log.fine("Engine start invalid. Flight Time = " + flightTime.toString());
+        		 log.fine("Engine start invalid. Flight Time = " + sim.add(brief).intValue());
+        	 }
+
+        	 // Check to see if the wheelsup/down times are valid
+        	 if (fs.getWheelsUp() != null)
+        	 {
+        		 wheelsUp = fs.getWheelsUp();
+        		// if it is, check if the engine stop time is valid
+        	 	if (fs.getWheelsDown() != null)
+        	 	{
+        	 		// it is valid, now calculate the time difference and check 
+        	 		// with the airTime
+        	 		wheelsDown = fs.getWheelsDown();
+        	 		timeDiff = wheelsDown.getTime() - wheelsUp.getTime();
+	        	 	hours = new BigDecimal(timeDiff).divide(millisecPerHour, 1, BigDecimal.ROUND_HALF_UP);
+	        	 	
+	        	 	if (!(hours.compareTo(fs.getAirTime())==0)){
+	        	 		log.fine("Mismatch of air time and wheels up/down. Air time = " + fs.getAirTime().toString() +
+	        	 				 " wheels up - wheels down = " + hours.toString());
+	        	 	}
+        	 	}
+        	 	else
+        	 	{
+        	 		// The wheels up is valid but the down time isn't valid.
+        	 		// Use the air time.  Convert from hours to milliseconds
+        	 		wheelsDown = new Timestamp(wheelsUp.getTime() + 
+        	 				fs.getAirTime().multiply(millisecPerHour).intValue());
+        	 	}
+        	 }
+        	 else 
+        	 {
+        		 // The wheelsUp time is invalid. Assume there is no
+        		 // air time.  Use the Engine start & sim + brief time;
+        		 wheelsUp = engStart;
+        		 wheelsDown = new Timestamp(wheelsUp.getTime() + sim.add(brief).multiply(millisecPerHour).intValue());
+        		 log.fine("wheels up invalid. air time = " + sim.add(brief).intValue());
         	 }
 
         	 // AC resource assignment
-        	 if (ac != null && !(flightTime.equals(Env.ZERO)))
+        	 if (ac != null && !(flightTime.add(sim).equals(Env.ZERO)))
         	 {
  	    		 log.finest("Creating orders - AC: " + ac.getACRegistration());
 	        	 String engStartTime = new SimpleDateFormat("HH:mm").format(engStart);
 	        	 String engStopTime = new SimpleDateFormat("HH:mm").format(engStop);
-	        	 String wheelsUpTime = new SimpleDateFormat("HH:mm").format(fs.getWheelsUp());
-	        	 String wheelsDownTime = new SimpleDateFormat("HH:mm").format(fs.getWheelsDown());
+	        	 String wheelsUpTime = new SimpleDateFormat("HH:mm").format(wheelsUp);
+	        	 String wheelsDownTime = new SimpleDateFormat("HH:mm").format(wheelsDown);
 
         		 StringBuilder name = new StringBuilder("Flt ID: ")
 	        	 	.append(fs.getFlightID())
@@ -955,7 +992,11 @@ public class FTUModelValidator implements ModelValidator {
 	        		.append(" Down: ")
 	        		.append(wheelsDownTime)
 	        		.append(" Air Time: ")
-	        		.append(fs.getAirTime().setScale(1).toPlainString());
+	        		.append(fs.getAirTime().setScale(1).toPlainString())
+	        		.append(" Sim Time: ")
+	        		.append(fs.getSimulator().setScale(1).toPlainString())
+	        		.append(" Brief Time: ")
+	        		.append(fs.getBriefing().setScale(1).toPlainString());
  
 	        	 MResourceAssignment ra = new MResourceAssignment(fs.getCtx(),0,fs.get_TrxName());
 	        	 ra.setS_Resource_ID(ac.getS_Resource_ID());
@@ -977,7 +1018,7 @@ public class FTUModelValidator implements ModelValidator {
 		     		line.setM_Product_ID(acProduct.getM_Product_ID());
 	     			line.setC_UOM_ID(acProduct.getC_UOM_ID());
 		     		line.setDescription(description.toString());
-		     		line.setQty(flightTime);
+		     		line.setQty(flightTime.add(sim));  // One or the other
 		     		line.saveEx();
 	        	 
 		     		// Fuel surcharge product Value is defined as 'FSC' + product classification string
@@ -1184,6 +1225,13 @@ public class FTUModelValidator implements ModelValidator {
  		if (order != null && order.getC_Order_ID() > 0) {
  			fs.setC_Order_ID(order.getC_Order_ID());
  			fs.saveEx();
+ 		}
+ 		
+ 		if (order.getLines().length == 0) {
+ 			order.setDescription("Note to Dispatch: the flightsheet entry has no chargeable items. "
+ 					+ "Please check the flightsheet entry. To complete this order, add a zero cost charge to the order line.  "
+ 					+ "To correct it after the flightsheet has been updated, void this order.");
+ 			order.saveEx();
  		}
 
  		return success;

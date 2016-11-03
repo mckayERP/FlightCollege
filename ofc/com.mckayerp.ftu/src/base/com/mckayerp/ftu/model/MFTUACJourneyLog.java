@@ -19,6 +19,8 @@ public class MFTUACJourneyLog extends X_FTU_ACJourneyLog {
 	 * 
 	 */
 	private static final long serialVersionUID = 3533063629727808022L;
+
+	private static long oneDayinMilliseconds = 24*60*60*1000;  // One day in timestamp long
 	
 	/**	Logger							*/
 	protected transient CLogger			log = CLogger.getCLogger (getClass());
@@ -81,18 +83,93 @@ public class MFTUACJourneyLog extends X_FTU_ACJourneyLog {
 		/**	Logger							*/
 		final CLogger			log = CLogger.getCLogger (MFTUACJourneyLog.class);
 
-		if (flight.getFTU_Aircraft_ID() == 0 || flight.getAirTime().equals(Env.ZERO) )
+		if (flight.getFTU_Aircraft_ID() == 0 || (flight.getAirTime().equals(Env.ZERO) && flight.getSimulator().equals(Env.ZERO)))
 			return 0; // nothing to log
 		
 		if (flight.getFTU_ACJourneyLog_ID() > 0)
 			return flight.getFTU_ACJourneyLog_ID(); // already logged
 		
 		log.info("Logging " + flight.toString());
-		
-		// Find the current totalAirframeTime from the journey log
-		BigDecimal totalAirframeTime = getTotalAirframeTime(ctx,flight.getFTU_Aircraft_ID(), flight.getWheelsDown(), trxName);
+
+		BigDecimal flightTime = flight.getFlightTime();
+    	BigDecimal brief = flight.getBriefing();
+    	BigDecimal sim = flight.getSimulator();
+
+		Timestamp engStart = null;
+		Timestamp engStop = null;
+		Timestamp wheelsUp = null;
+		Timestamp wheelsDown = null;
+		long timeDiff;
+		BigDecimal hours = Env.ZERO;
+		BigDecimal millisecPerHour = new BigDecimal(60*60*1000);
+			
+    	 // Figure out the times of use
+    	 // First check to see if the engine start time is valid
+    	 if (flight.getEngineStart() != null)
+    	 {
+    		 engStart = flight.getEngineStart();
+    		// if it is, check if the engine stop time is valid
+    	 	if (flight.getEngineStop() != null)
+    	 	{
+    	 		// it is valid, now calculate the time difference and check 
+    	 		// with the flightTime calculated above
+    	 		engStop = flight.getEngineStop();
+    	 	}
+    	 	else
+    	 	{
+    	 		// The engine start is valid but the stop time isn't valid.
+    	 		// Use the flight time.  Convert from hours to milliseconds
+    	 		engStop = new Timestamp(engStart.getTime() + 
+    	 				flightTime.multiply(millisecPerHour).intValue());
+    	 	}
+    	 }
+    	 else 
+    	 {
+    		 // The engine start is invalid. Assume there is no
+    		 // flight time.  Use the flight date & sim + brief time;
+    		 engStart = flight.getFlightDate();
+    		 engStop = new Timestamp(engStart.getTime() + sim.add(brief).multiply(millisecPerHour).intValue());
+    		 log.fine("Engine start invalid. Flight Time = " + sim.add(brief).intValue());
+    	 }
+
+    	 // Check to see if the wheelsup/down times are valid
+    	 if (flight.getWheelsUp() != null)
+    	 {
+    		 wheelsUp = flight.getWheelsUp();
+    		// if it is, check if the engine stop time is valid
+    	 	if (flight.getWheelsDown() != null)
+    	 	{
+    	 		// it is valid, now calculate the time difference and check 
+    	 		// with the airTime
+    	 		wheelsDown = flight.getWheelsDown();
+    	 	}
+    	 	else
+    	 	{
+    	 		// The wheels up is valid but the down time isn't valid.
+    	 		// Use the air time.  Convert from hours to milliseconds
+    	 		wheelsDown = new Timestamp(wheelsUp.getTime() + 
+    	 				flight.getAirTime().multiply(millisecPerHour).intValue());
+    	 	}
+    	 }
+    	 else 
+    	 {
+    		 // The wheelsUp time is invalid. Assume there is no
+    		 // air time.  Use the Engine start & sim + brief time;
+    		 wheelsUp = engStart;
+    		 wheelsDown = new Timestamp(wheelsUp.getTime() + sim.add(brief).multiply(millisecPerHour).intValue());
+    		 log.fine("wheels up invalid. air time = " + sim.add(brief).intValue());
+    	 }
+
+		// Find the current totalAirframeTime from the journey log.  This flight will be added to it, so 
+    	// find the total at or before the wheels down time.
+		BigDecimal totalAirframeTime;
+		if (flight.getWheelsDown() != null)
+			totalAirframeTime = getTotalAirframeTime(ctx,flight.getFTU_Aircraft_ID(), flight.getWheelsDown(), trxName);
+		else
+			totalAirframeTime = getTotalAirframeTime(ctx,flight.getFTU_Aircraft_ID(), new Timestamp(wheelsDown.getTime() + oneDayinMilliseconds ), trxName);
+
 		// Add the current flight to it to get the new total.
-		totalAirframeTime = totalAirframeTime.add(flight.getAirTime());
+		totalAirframeTime = totalAirframeTime.add(flight.getAirTime()).add(flight.getSimulator());
 		
 		MFTUACJourneyLog jlog = null;
 				
@@ -105,10 +182,10 @@ public class MFTUACJourneyLog extends X_FTU_ACJourneyLog {
 			jlog.setNumOps(1); 
 			jlog.setIntendedFlight(flight.getIntendedFlight());
 			jlog.setNumberLegs(flight.getNumLegs());
-			jlog.setWheelsUp(flight.getWheelsUp());
-			jlog.setWheelsDown(flight.getWheelsDown());
-			jlog.setAirTime(flight.getAirTime());
-			jlog.setFlightTime(flight.getFlightTime());
+			jlog.setWheelsUp(wheelsUp);
+			jlog.setWheelsDown(wheelsDown);
+			jlog.setAirTime(flight.getAirTime().add(flight.getSimulator()));
+			jlog.setFlightTime(flight.getFlightTime().add(flight.getSimulator()));
 			jlog.setTotalAirframeTime(totalAirframeTime);					
 			jlog.saveEx();
 			log.info("  Added new log entry for multiple legs. TotalAirframeTime=" + totalAirframeTime);
@@ -120,15 +197,15 @@ public class MFTUACJourneyLog extends X_FTU_ACJourneyLog {
 				jlog = new MFTUACJourneyLog(ctx, 0, trxName);
 				jlog.setFTU_Aircraft_ID(flight.getFTU_Aircraft_ID());
 				jlog.setFlightDate(flight.getFlightDate());
-				jlog.setEntryDate(flight.getWheelsDown());
+				jlog.setEntryDate(wheelsDown);
 				jlog.setSeqNo(20);
 				jlog.setNumOps(1);
-				jlog.setIntendedFlight("CYOW Local");  // TODO get this from database
+				jlog.setIntendedFlight("CYOW Local");  // TODO get this from database based on organization
 				jlog.setNumberLegs(1);
-				jlog.setWheelsUp(flight.getWheelsUp());
-				jlog.setWheelsDown(flight.getWheelsDown());
-				jlog.setAirTime(flight.getAirTime());
-				jlog.setFlightTime(flight.getFlightTime());
+				jlog.setWheelsUp(wheelsUp);
+				jlog.setWheelsDown(wheelsDown);
+				jlog.setAirTime(flight.getAirTime().add(flight.getSimulator()));
+				jlog.setFlightTime(flight.getFlightTime().add(flight.getSimulator()));
 				jlog.setTotalAirframeTime(totalAirframeTime);					
 				jlog.saveEx();					
 				log.info("  Added new summary log entry. TotalAirframeTime=" + totalAirframeTime);
@@ -137,14 +214,14 @@ public class MFTUACJourneyLog extends X_FTU_ACJourneyLog {
 				jlog.setNumOps(jlog.getNumOps() + 1);
 				//jlog.setIntendedFlight("CYOW Local");  // TODO get this from database
 				//jlog.setNumberLegs(1);
-				if (flight.getWheelsUp().before(jlog.getWheelsUp()))
-					jlog.setWheelsUp(flight.getWheelsUp());
-				if (flight.getWheelsDown().after(jlog.getWheelsDown()))
-					jlog.setWheelsDown(flight.getWheelsDown());
-				if (flight.getWheelsDown().after(jlog.getEntryDate()))
-					jlog.setEntryDate(flight.getWheelsDown());
-				jlog.setAirTime(jlog.getAirTime().add(flight.getAirTime()));
-				jlog.setFlightTime(jlog.getFlightTime().add(flight.getFlightTime()));
+				if (jlog.getWheelsUp() == null || wheelsUp.before(jlog.getWheelsUp()))
+					jlog.setWheelsUp(wheelsUp);
+				if (jlog.getWheelsDown() == null || wheelsDown.after(jlog.getWheelsDown()))
+					jlog.setWheelsDown(wheelsDown);
+				if (jlog.getEntryDate() == null || wheelsDown.after(jlog.getEntryDate()))
+					jlog.setEntryDate(wheelsDown);
+				jlog.setAirTime(jlog.getAirTime().add(flight.getAirTime()).add(flight.getSimulator()));
+				jlog.setFlightTime(jlog.getFlightTime().add(flight.getFlightTime()).add(flight.getSimulator()));
 				jlog.setTotalAirframeTime(totalAirframeTime);					
 				jlog.saveEx();
 				log.info("  Added flight to summary log entry. TotalAirframeTime=" + totalAirframeTime);
