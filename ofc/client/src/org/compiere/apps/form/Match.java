@@ -158,7 +158,7 @@ public class Match
 		KeyNamePair lineMatched = (KeyNamePair)xMatchedTable.getValueAt(matchedRow, I_Line);
 		KeyNamePair Product = (KeyNamePair)xMatchedTable.getValueAt(matchedRow, I_Product);
 
-		double totalQty = m_xMatched.doubleValue();
+		BigDecimal totalQty = m_xMatched;
 
 		//  Matched To
 		for (int row = 0; row < xMatchedToTable.getRowCount(); row++)
@@ -174,14 +174,29 @@ public class Match
 				KeyNamePair lineMatchedTo = (KeyNamePair)xMatchedToTable.getValueAt(row, I_Line);
 
 				//	Qty
-				double qty = 0.0;
+				BigDecimal qty = Env.ZERO;
 				if (matchMode == MODE_NOTMATCHED)
-					qty = ((Double)xMatchedToTable.getValueAt(row, I_QTY)).doubleValue();	//  doc
-				qty -= ((Double)xMatchedToTable.getValueAt(row, I_MATCHED)).doubleValue();  //  matched
-				if (qty > totalQty)
-					qty = totalQty;
-				totalQty -= qty;
-
+					qty = ((BigDecimal) xMatchedToTable.getValueAt(row, I_QTY));	//  doc
+				qty = qty.subtract(((BigDecimal) xMatchedToTable.getValueAt(row, I_MATCHED)));  //  matched
+				
+				// 
+				if (totalQty.signum() >= 0) 
+				{
+					
+					if (qty.compareTo(totalQty) > 0) // Use the qty as the maximum.
+						qty = totalQty;
+					totalQty = totalQty.subtract(qty);
+					
+				}
+				else
+				{
+					// We are dealing with a negative total - possibly a correction
+					if (qty.compareTo(totalQty) < 0) // Use the qty as the maximum.
+						qty = totalQty;
+					totalQty = totalQty.subtract(qty);
+					
+				}
+				
 				//  Invoice or PO
 				boolean invoice = true;
 				if (matchFrom == MATCH_ORDER ||
@@ -204,7 +219,7 @@ public class Match
 				//  Create it
 				String innerTrxName = Trx.createTrxName("Match");
 				Trx innerTrx = Trx.get(innerTrxName, true);
-				if (createMatchRecord(invoice, M_InOutLine_ID, Line_ID, BigDecimal.valueOf(qty), innerTrxName)) // Preferred method of converting double to BigDecimal
+				if (createMatchRecord(invoice, M_InOutLine_ID, Line_ID, qty, innerTrxName)) 
 					innerTrx.commit();
 				else
 					innerTrx.rollback();
@@ -246,7 +261,7 @@ public class Match
 			m_sql.append(" AND lin.M_Product_ID=").append(Product.getKey());
 
 		//  calculate qty
-		double docQty = ((Double)xMatchedTable.getValueAt(row, I_QTY)).doubleValue();
+		BigDecimal docQty = ((BigDecimal)xMatchedTable.getValueAt(row, I_QTY));
 		if (sameQty)
 			m_sql.append(" AND ").append(m_qtyColumn).append("=").append(docQty);
 		//  ** Load Table **
@@ -411,13 +426,25 @@ public class Match
 			//	Update Invoice Line
 			MInvoiceLine iLine = new MInvoiceLine (Env.getCtx(), Line_ID, trxName);
 			iLine.setM_InOutLine_ID(M_InOutLine_ID);
-			if (sLine.getC_OrderLine_ID() != 0)
-				iLine.setC_OrderLine_ID(sLine.getC_OrderLine_ID());
 			iLine.saveEx();
+			
+			// Set the date
+			Timestamp acctDate = iLine.getC_Invoice().getDateAcct();
+			if (acctDate.before(sLine.getM_InOut().getDateAcct()))
+			{
+				acctDate = sLine.getM_InOut().getDateAcct();
+			}
+
+			if (sLine.getC_OrderLine_ID() != 0)
+			{
+				iLine.setC_OrderLine_ID(sLine.getC_OrderLine_ID());
+			}
+
 			//	Create Shipment - Invoice Link
 			if (iLine.getM_Product_ID() != 0)
 			{
-				MMatchInv match = new MMatchInv (iLine, null, qty);
+				// Set the date to the latest of the invoice/order line
+				MMatchInv match = new MMatchInv (iLine, acctDate, qty);
 				match.setM_InOutLine_ID(M_InOutLine_ID);
 				if (match.save()) {
 					success = true;
