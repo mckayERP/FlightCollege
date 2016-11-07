@@ -119,6 +119,7 @@ public class AircraftGenerateLeaseInvoices extends SvrProcess {
 		BigDecimal rollOverLimitToStartOfPeriod;
 		
 		BigDecimal rollOverHoursToApplyInThisPeriod = Env.ZERO;
+		BigDecimal rollOverApplied = Env.ZERO;
 		
 		// Pro rate limits on first month
 		MPeriod firstPeriod = MPeriod.get(getCtx(), ac.getDateStartLease(), ac.getAD_Org_ID());
@@ -228,7 +229,6 @@ public class AircraftGenerateLeaseInvoices extends SvrProcess {
 			flightHoursBilled = Env.ZERO;
 			
 		}
-		BigDecimal flightHoursToReport = flightHoursBilled.setScale(2, RoundingMode.HALF_UP);
 		
 		BigDecimal tier1hours = Env.ZERO;
 		BigDecimal tier2hours = Env.ZERO;
@@ -236,23 +236,30 @@ public class AircraftGenerateLeaseInvoices extends SvrProcess {
 
 		String invoiceDesc = "FMFL Lease for " + ac.getACRegistration() + " from "
 				+ formatter.format(startDate) + " to " + formatter.format(endDate) + ". Total billable flight hours in period: "
-				+ flightHoursToReport.toString() + ".";
+				+ flightHoursBilled.setScale(1, RoundingMode.HALF_UP).toString() + ".";
 
 		// Tier1 hours - minimum, between minimum and tier 1 limit plus any roll over.
 		if (flightHoursBilled.compareTo(monthlyMinimum) <= 0) 
 		{
 			tier1hours = monthlyMinimum;
-			invoiceDesc += " Tier-1: Minimum Monthly Hours " + tier1hours.setScale(2, RoundingMode.HALF_UP) + ".";
+			invoiceDesc += "\nTier-1: Minimum Monthly Hours " + tier1hours.setScale(1, RoundingMode.HALF_UP) + ".";
 		}
-		else if (flightHoursBilled.compareTo(ac.getLeaseRateTier1_MaxHours().add(rollOverHoursToApplyInThisPeriod)) <= 0)
+		else if (flightHoursBilled.compareTo(ac.getLeaseRateTier1_MaxHours()) <= 0)
 		{
 			tier1hours = flightHoursBilled;
-			invoiceDesc += " Tier-1: Flight hours (no roll over): " + tier1hours.setScale(2, RoundingMode.HALF_UP) + ".";
+			invoiceDesc += "\nTier-1: Flight hours (no roll over): " + tier1hours.setScale(1, RoundingMode.HALF_UP) + ".";
+		}
+		else if (rollOverHoursToApplyInThisPeriod.signum()>0 && 
+				flightHoursBilled.compareTo(ac.getLeaseRateTier1_MaxHours().add(rollOverHoursToApplyInThisPeriod)) <= 0)
+		{
+			tier1hours = flightHoursBilled;
+			rollOverApplied = rollOverHoursToApplyInThisPeriod.subtract(flightHoursBilled.subtract(ac.getLeaseRateTier1_MaxHours()));
+			invoiceDesc += "\nTier-1: Flight hours: " + tier1hours.setScale(1, RoundingMode.HALF_UP) + " plus rollover of " + rollOverApplied.setScale(1, RoundingMode.HALF_UP) + ".";
 		}
 		else
 		{
 			tier1hours = ac.getLeaseRateTier1_MaxHours().add(rollOverHoursToApplyInThisPeriod);
-			invoiceDesc += " Tier-1: Max of " + ac.getLeaseRateTier1_MaxHours().setScale(2, RoundingMode.HALF_UP) + " hours plus roll over of " + rollOverHoursToApplyInThisPeriod.setScale(2, RoundingMode.HALF_UP) + ".";
+			invoiceDesc += "\nTier-1: Max of " + ac.getLeaseRateTier1_MaxHours().setScale(1, RoundingMode.HALF_UP) + " hours plus roll over of " + rollOverHoursToApplyInThisPeriod.setScale(1, RoundingMode.HALF_UP) + ".";
 		}
 		
 		flightHoursBilled = flightHoursBilled.subtract(tier1hours);
@@ -278,7 +285,7 @@ public class AircraftGenerateLeaseInvoices extends SvrProcess {
 		
 		if (tier2hours.signum() > 0)
 		{
-			invoiceDesc += " Tier-2: " + tier2hours.setScale(2, RoundingMode.HALF_UP) + " hours.";
+			invoiceDesc += " Tier-2: " + tier2hours.setScale(1, RoundingMode.HALF_UP) + " hours.";
 		}
 
 		flightHoursBilled = flightHoursBilled.subtract(tier1hours);
@@ -293,12 +300,17 @@ public class AircraftGenerateLeaseInvoices extends SvrProcess {
 		
 		if (tier3hours.signum() > 0)
 		{
-			invoiceDesc += " Tier-3: " + tier3hours.setScale(2, RoundingMode.HALF_UP) + " hours. ";
+			invoiceDesc += " Tier-3: " + tier3hours.setScale(1, RoundingMode.HALF_UP) + " hours. ";
 		}
-
+		BigDecimal rollOverFuture = rollOverHoursToApplyInThisPeriod.subtract(rollOverApplied).setScale(1, RoundingMode.HALF_UP);
+		if (tier1hours.compareTo(ac.getLeaseRateTier1_MaxHours()) < 0)
+		{
+			rollOverFuture = rollOverFuture.add(ac.getLeaseRateTier1_MaxHours().subtract(tier1hours));
+		}
 		BigDecimal totalCharged = totalHoursBilled.add(tier1hours).add(tier2hours).add(tier3hours);
-		invoiceDesc += " Total hours charged on lease to date: " + totalCharged.setScale(2, RoundingMode.HALF_UP) + ".";
-		invoiceDesc += " Hours remainin on lease: " + ac.getLeaseMaxHours().subtract(totalCharged).setScale(2, RoundingMode.HALF_UP)  + ".";
+		invoiceDesc += "\nRollover hours remaining: " + rollOverFuture.setScale(1, RoundingMode.HALF_UP) + ".";
+		invoiceDesc += "\nTotal hours charged on lease to date: " + totalCharged.setScale(1, RoundingMode.HALF_UP) + ".";
+		invoiceDesc += " Hours remaining on lease: " + ac.getLeaseMaxHours().subtract(totalCharged).setScale(1, RoundingMode.HALF_UP)  + ".";
 		// Build the lease invoice
 		MBPartner bp = (MBPartner) ac.getC_BPartner();
 		MInvoice invoice = new MInvoice(getCtx(),0,get_TrxName());
@@ -308,11 +320,13 @@ public class AircraftGenerateLeaseInvoices extends SvrProcess {
 		invoice.setDescription(invoiceDesc);
 		invoice.saveEx();
 		
+		MProduct leaseProduct = (MProduct) ac.getLeaseTier1Produc();
 		MInvoiceLine line = new MInvoiceLine(invoice);
-		line.setM_Product_ID(ac.getLeaseTier1ProductID());
+		line.setM_Product_ID(leaseProduct.getM_Product_ID());
+		line.setC_UOM_ID(leaseProduct.getC_UOM_ID());
 		line.setQty(tier1hours);
 		line.setPrice(ac.getLeaseRateTier1());
-		line.setDescription("Tier-1 rate applied to first " + ac.getLeaseRateTier1_MaxHours().setScale(2, RoundingMode.HALF_UP) 
+		line.setDescription("Tier-1 rate applied to first " + ac.getLeaseRateTier1_MaxHours().setScale(1, RoundingMode.HALF_UP) 
 				+ " billable flight hours plus rollover hours from previous months.");
 		if (!ac.isLease_IsTaxApplied())
 		{
@@ -326,11 +340,13 @@ public class AircraftGenerateLeaseInvoices extends SvrProcess {
 		if (tier2hours.signum() > 0)
 		{
 			
+			leaseProduct = (MProduct) ac.getLeaseTier2Produc();
 			line = new MInvoiceLine(invoice);
-			line.setM_Product_ID(ac.getLeaseTier2ProductID());
+			line.setM_Product_ID(leaseProduct.getM_Product_ID());
+			line.setC_UOM_ID(leaseProduct.getC_UOM_ID());
 			line.setQty(tier2hours);
 			line.setPriceEntered(ac.getLeaseRateTier2());
-			line.setDescription("Tier 2 rate applied to next " + ac.getLeaseRateTier2_MaxHours().setScale(2, RoundingMode.HALF_UP) 
+			line.setDescription("Tier 2 rate applied to next " + ac.getLeaseRateTier2_MaxHours().setScale(1, RoundingMode.HALF_UP) 
 					+ " billable flight hours above the tier 1 hours plus any roll over amounts applied.");
 			if (!ac.isLease_IsTaxApplied())
 			{
@@ -346,8 +362,10 @@ public class AircraftGenerateLeaseInvoices extends SvrProcess {
 		if (tier3hours.signum() > 0)
 		{
 			
+			leaseProduct = (MProduct) ac.getLeaseTier3Produc();
 			line = new MInvoiceLine(invoice);
-			line.setM_Product_ID(ac.getLeaseTier3ProductID());
+			line.setM_Product_ID(leaseProduct.getM_Product_ID());
+			line.setC_UOM_ID(leaseProduct.getC_UOM_ID());
 			line.setQty(tier3hours);
 			line.setPriceEntered(ac.getLeaseRateTier3());
 			line.setDescription("Tier 3 rate applied to any remaining " 
@@ -393,7 +411,7 @@ public class AircraftGenerateLeaseInvoices extends SvrProcess {
 		invoice.setIsSOTrx(false);
 		invoice.setC_BPartner_ID(ac.getC_BPartner_ID());
 		invoice.setDateInvoiced(MPeriod.get(getCtx(), c_period_id).getEndDate());
-		invoice.setDescription("Aircraft lease for " + ac.getACRegistration() + " flight time in month " + flightTime);
+		invoice.setDescription("Aircraft lease for " + ac.getACRegistration() + " flight time in month " + flightTime.setScale(1, RoundingMode.HALF_UP));
 		invoice.saveEx();
 		
 		MInvoiceLine line = new MInvoiceLine(invoice);
@@ -432,8 +450,8 @@ public class AircraftGenerateLeaseInvoices extends SvrProcess {
 		invoice.setIsSOTrx(false);
 		invoice.setC_BPartner_ID(ac.getC_BPartner_ID());
 		invoice.setDateInvoiced(MPeriod.get(getCtx(), c_period_id).getEndDate());
-		invoice.setDescription("Aircraft lease for " + ac.getACRegistration() + " air time from " + startTime + ""
-				+ " to " + endTime);
+		invoice.setDescription("Aircraft lease for " + ac.getACRegistration() + " air time from " + startTime.setScale(1, RoundingMode.HALF_UP) + ""
+				+ " to " + endTime.setScale(1, RoundingMode.HALF_UP));
 		invoice.saveEx();
 		
 		MInvoiceLine line = new MInvoiceLine(invoice);
