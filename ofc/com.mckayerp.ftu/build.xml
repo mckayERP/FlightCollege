@@ -34,9 +34,11 @@
     <pathelement path="${adempiere.trunk}/tools/lib/jnlp.jar"/>
     <pathelement path="${adempiere.trunk}/tools/lib/servlet-api.jar" />  	
   	<pathelement path="${adempiere.trunk}/tools/lib/cron4j-2.2.1.jar" />
+    <pathelement path="${adempiere.trunk}/tools/lib/xml-apis-1.4.01.jar" />
     <pathelement path="${adempiere.trunk}/base/build/Base.jar" />
     <pathelement path="${adempiere.trunk}/packages/liberoMFG.jar" />
     <pathelement path="${adempiere.trunk}/packages/*.jar" />
+    <pathelement path="../packages/mckayerp_ftu.jar" />
   	
     <pathelement path="${htmlget.home}/bin" />
   </path>

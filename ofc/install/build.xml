@@ -18,6 +18,7 @@
 	<property name="dist.dir" value="${install.dir}/${adempiere.dir}"/>
 	<property name="jar.path" value="${adempiere.trunk}/lib"/>
 	<property name="migration.dir" value="../migrations"/>
+    <property name="packages.dir" value="../packages"/>
     <property name="report.dir" value="../reports"/>
     <property name="jboss.dir" value="../jboss"/>
     <property name="utils.dir" value="../utils"/>
@@ -136,7 +137,15 @@
                 <include name="**/*.*"/>
             </fileset>
         </copy>
-		
+
+        <!-- Packages Directory            -->
+        <mkdir dir="${dist.dir}/packages"/>
+        <copy todir="${dist.dir}/packages">
+            <fileset dir="${packages.dir}">
+                <include name="mckayerp_ftu.jar"/>
+            </fileset>
+        </copy>
+
 	    <!-- Create Install ZIP     -->
 	    <zip zipfile="${install.dir}/${ftu.installZipFile}"
 	        basedir="${install.dir}"

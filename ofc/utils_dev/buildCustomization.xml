@@ -15,6 +15,8 @@
 	</target>
 
 	<target name="jar" depends="clean">
+        <ant inheritAll="false" dir="${htmlget.home}"/>     
+        <ant inheritAll="false" dir="tools"/>
 		<ant inheritAll="false" dir="base"/>
 		<ant inheritAll="false" dir="client"/>
 		<ant inheritAll="false" dir="install"/>
@@ -28,8 +30,10 @@
 		<ant inheritAll="false" dir="client" target="clean"/>
 		<ant inheritAll="false" dir="install" target="clean"/>
 		<ant inheritAll="false" dir="zkwebui" target="clean"/>
+		<ant inheritAll="false" dir="${htmlget.home}" target="clean"/>		
         <ant inheritAll="false" dir="com.mckayerp.ftu" target="clean"/>
         <ant inheritAll="false" dir="serverRoot" target="clean"/>
+        <ant inheritAll="false" dir="tools" target="clean"/>		
 		<delete file="lib/${adempiere.customJarFile}"/>
 		<delete file="lib/${adempiere.zkCustomJarFile}"/>
 	    <delete file="lib/${adempiere.serverCustomJarFile}"/>

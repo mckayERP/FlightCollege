@@ -452,7 +452,7 @@ public class HtmlGet
 		}
 		if(htmlPage != null)
 		{
-		
+			mCurrentPage = new StringBuffer(htmlPage);
 			scan = new URLScan(urlconfig, new StringBufferInputStream(mCurrentPage.toString()));
 		}
 		else

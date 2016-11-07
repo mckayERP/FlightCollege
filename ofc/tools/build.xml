@@ -1,0 +1,126 @@
+<!-- ============================================= -->
+<!-- Tools                                         -->
+<!-- ============================================= -->
+
+<project name="tools" default="toolsDistribution" basedir=".">
+
+	<description>
+	Creates a single mckayerp_ftu.jar which 
+	repackages all third party libraries
+	in a single jar for simplified start and version control
+  </description>
+
+	<!-- set global properties for this build -->
+	<property name="src" value="src" />
+	<property name="dist.dir" value="../packages" />
+    <!-- set global properties for this build -->
+    <property file="../utils_dev/buildCustomization.properties"/>
+
+	<patternset id="manifest.exclude">
+		<exclude name="META-INF/*.DSA" />
+		<exclude name="META-INF/*.RSA" />
+		<exclude name="META-INF/*.SF" />
+		<exclude name="META-INF/MANIFEST.MF" />
+		<exclude name="META-INF/INDEX.LIST" />
+	</patternset>
+
+	<taskdef resource="net/sf/antcontrib/antlib.xml">
+		<classpath>
+			<fileset file="lib/ant-contrib-1.0b1.jar"></fileset>
+		</classpath>
+	</taskdef>
+
+	<!-- ============================================= -->
+	<!-- Init                                          -->
+	<!-- ============================================= -->
+	<target name="toolsInit" description="initialization target">
+		<echo message="=========== Build Tools  ${ftu.FTU_VERSION}" />
+		<!-- create the time stamp -->
+		<tstamp />
+		<!-- check for the distribution directory -->
+		<mkdir dir="${dist.dir}" />
+	</target>
+
+
+	<!-- ============================================= -->
+	<!-- Build mckayerp_ftu.jar                        -->
+	<!-- ============================================= -->
+	<target name="buildPackage" depends="toolsInit" description="Create mckayerp_ftu.jar">
+
+		<!-- Create mckayerp_ftu jar		-->
+		<jar jarfile="${dist.dir}/mckayerp_ftu.jar" duplicate="preserve">
+
+			<!-- htmlunit & dependencies	-->
+			<zipfileset src="lib/commons-lang3-3.4.jar">
+				<patternset refid="manifest.exclude" />
+			</zipfileset>
+			<zipfileset src="lib/cssparser-0.9.20.jar">
+				<patternset refid="manifest.exclude" />
+			</zipfileset>
+			<zipfileset src="lib/htmlunit-2.23.jar">
+				<patternset refid="manifest.exclude" />
+			</zipfileset>
+			<zipfileset src="lib/htmlunit-core-js-2.23.jar">
+				<patternset refid="manifest.exclude" />
+			</zipfileset>
+			<zipfileset src="lib/httpclient-4.5.2.jar">
+				<patternset refid="manifest.exclude" />
+			</zipfileset>
+			<zipfileset src="lib/httpcore-4.4.4.jar">
+				<patternset refid="manifest.exclude" />
+			</zipfileset>
+			<zipfileset src="lib/httpmime-4.5.2.jar">
+				<patternset refid="manifest.exclude" />
+			</zipfileset>
+			<zipfileset src="lib/jetty-io-9.2.18.v20160721.jar">
+				<patternset refid="manifest.exclude" />
+			</zipfileset>
+			<zipfileset src="lib/jetty-util-9.2.18.v20160721.jar">
+				<patternset refid="manifest.exclude" />
+			</zipfileset>
+			<zipfileset src="lib/neko-htmlunit-2.23.jar">
+				<patternset refid="manifest.exclude" />
+			</zipfileset>
+			<zipfileset src="lib/sac-1.3.jar">
+				<patternset refid="manifest.exclude" />
+			</zipfileset>
+			<zipfileset src="lib/serializer-2.7.2.jar">
+					<patternset refid="manifest.exclude" />
+			</zipfileset>
+			<zipfileset src="lib/websocket-api-9.2.18.v20160721.jar">
+				<patternset refid="manifest.exclude" />
+			</zipfileset>
+			<zipfileset src="lib/websocket-client-9.2.18.v20160721.jar">
+				<patternset refid="manifest.exclude" />
+			</zipfileset>
+			<zipfileset src="lib/websocket-common-9.2.18.v20160721.jar">
+				<patternset refid="manifest.exclude" />
+			</zipfileset>
+			<manifest>
+				<attribute name="Specification-Title" value="MckayERP FTU Package" />
+				<attribute name="Specification-Version" value="${ftu.FTU_VERSION}" />
+				<attribute name="Specification-Vendor" value="mckayERP" />
+				<attribute name="Implementation-Title" value="mckayerp_ftu ${ftu.FTU_VERSION}" />
+				<attribute name="Implementation-Version" value="${ftu.FTU_VERSION} ${DSTAMP}-${TSTAMP}" />
+				<attribute name="Implementation-Vendor" value="mckayERP.com" />
+				<attribute name="Implementation-URL" value="mckayERP.com" />
+			</manifest>
+		</jar>
+	</target>
+
+	<!-- ============================================= -->
+	<!-- Buld Jars                                     -->
+	<!-- ============================================= -->
+	<target name="toolsDistribution" depends="buildPackage" description="Create jars">
+	</target>
+
+
+	<!-- ============================================= -->
+	<!-- Clean up                                      -->
+	<!-- ============================================= -->
+	<target name="clean">
+		<!-- Delete the ${build.dir} directory trees -->
+		<delete file="${dist.dir}/mckayerp_ftu.jar" failonerror="false" />
+	</target>
+
+</project>
