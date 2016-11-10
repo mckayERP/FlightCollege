@@ -32,7 +32,7 @@ public class X_FTU_Flightsheet extends PO implements I_FTU_Flightsheet, I_Persis
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20161023L;
+	private static final long serialVersionUID = 20161110L;
 
     /** Standard Constructor */
     public X_FTU_Flightsheet (Properties ctx, int FTU_Flightsheet_ID, String trxName)
@@ -907,6 +907,8 @@ public class X_FTU_Flightsheet extends PO implements I_FTU_Flightsheet, I_Persis
 	public static final String LINE_STATUS_Completed = "Completed";
 	/** Closed = Closed */
 	public static final String LINE_STATUS_Closed = "Closed";
+	/** Cancelled = Cancelled */
+	public static final String LINE_STATUS_Cancelled = "Cancelled";
 	/** Set Status.
 		@param Line_Status 
 		The status of the flight sheet line item.

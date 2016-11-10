@@ -281,15 +281,16 @@ public class FTUModelValidator implements ModelValidator {
 			log.fine(I_FTU_Flightsheet.Table_Name + " Flightsheet ID: " + fs.getFTU_Flightsheet_ID() + " Type: "+type);
 
 			// Ignore pending flightsheet entries
-			if (isNew && fs.getCourseType().matches("\\(pending\\)")) {
+			if (isNew && fs.getCourseType().equals(MFTUFlightsheet.COURSETYPE_Pending)) {
 				return null;
 			}
 
 			fs.setBeingModelValidated(true);
 			
 			// Ignore inactive flights - void the associated entries
-			if (isChange && (po.is_ValueChanged("isActive") && !fs.isActive())
-					|| po.is_ValueChanged(MFTUFlightsheet.COLUMNNAME_IsNoShow) && !fs.isNoShow()) {
+			if (isChange && (fs.is_ValueChanged(MFTUFlightsheet.COLUMNNAME_IsActive) && !fs.isActive())
+					|| fs.is_ValueChanged(MFTUFlightsheet.COLUMNNAME_IsNoShow) && !fs.isNoShow()
+					|| fs.is_ValueChanged(MFTUFlightsheet.COLUMNNAME_Line_Status) && fs.getLine_Status().equals(MFTUFlightsheet.LINE_STATUS_Cancelled)) {
 				MOrder order = (MOrder) fs.getC_Order();
 				if (order != null && order.getC_Order_ID() > 0) {
 					if (order.getDocStatus().equals(MOrder.STATUS_Drafted)) {
@@ -314,9 +315,12 @@ public class FTUModelValidator implements ModelValidator {
 			if (!fs.isActive())
 				return null;
 
-			if (fs.getCourseType().matches("Cancelled")) {
-				if (fs.getLine_Status() == null || !fs.getLine_Status().equals("Closed")) { 
-	    			fs.setLine_Status("Closed");
+			if (fs.getCourseType().matches(MFTUFlightsheet.COURSETYPE_Cancelled)) {
+				if (fs.getLine_Status() == null 
+						|| (!fs.getLine_Status().equals(MFTUFlightsheet.LINE_STATUS_Closed)
+							&& !fs.getLine_Status().equals(MFTUFlightsheet.LINE_STATUS_Cancelled)) ) 
+				{ 
+	    			fs.setLine_Status(MFTUFlightsheet.LINE_STATUS_Cancelled);
 	    			fs.saveEx();
 				}
 			}
@@ -461,7 +465,7 @@ public class FTUModelValidator implements ModelValidator {
 													 .setClient_ID()
 													 .list();
 				for (MFTUFlightsheet flight : flights) {
-					flight.setLine_Status("Closed");
+					flight.setLine_Status(MFTUFlightsheet.LINE_STATUS_Closed);
 					flight.saveEx();
 				}				
 			}
@@ -708,7 +712,10 @@ public class FTUModelValidator implements ModelValidator {
 		}
 		
 		// Ignore lines that are closed
-		if (fs.getLine_Status() == "Closed") {
+		if (fs.getLine_Status() != null 
+				&& ( MFTUFlightsheet.LINE_STATUS_Closed.equals(fs.getLine_Status())
+				||   MFTUFlightsheet.LINE_STATUS_Cancelled.equals(fs.getLine_Status()))) 
+		{
 			return success;
 		}
 		
@@ -721,9 +728,9 @@ public class FTUModelValidator implements ModelValidator {
 		// If there is no time or no-show, then the line is not ready for billing 
 		// yet.
 		if (!(flightTime.add(brief).add(sim).add(fuel).doubleValue()>0.0 || 
-				fs.getCourseType().matches("No-Show"))) {
+				fs.getCourseType().matches(MFTUFlightsheet.COURSETYPE_No_Show))) {
 			fs.setC_Order_ID(0);
-			fs.setLine_Status("Closed");
+			fs.setLine_Status(MFTUFlightsheet.LINE_STATUS_Waiting);
 			fs.saveEx();
 			return success;
 		}
