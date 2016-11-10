@@ -302,7 +302,7 @@ public class Match
 				+ " INNER JOIN AD_Org org ON (hdr.AD_Org_ID=org.AD_Org_ID)" //JAVIER
 				+ " INNER JOIN C_BPartner bp ON (hdr.C_BPartner_ID=bp.C_BPartner_ID)"
 				+ " INNER JOIN C_InvoiceLine lin ON (hdr.C_Invoice_ID=lin.C_Invoice_ID)"
-				+ " INNER JOIN M_Product p ON (lin.M_Product_ID=p.M_Product_ID)"
+				+ " INNER JOIN M_Product p ON (lin.M_Product_ID=p.M_Product_ID AND p.IsStocked='Y')"
 				+ " INNER JOIN C_UOM uom ON (p.C_UOM_ID = uom.C_UOM_ID)"
 				+ " INNER JOIN C_DocType dt ON (hdr.C_DocType_ID=dt.C_DocType_ID AND dt.DocBaseType IN ('API','APC'))"
 				+ " FULL JOIN M_MatchInv mi ON (lin.C_InvoiceLine_ID=mi.C_InvoiceLine_ID) "
@@ -324,7 +324,7 @@ public class Match
 				+ " INNER JOIN AD_Org org ON (hdr.AD_Org_ID=org.AD_Org_ID)" //JAVIER
 				+ " INNER JOIN C_BPartner bp ON (hdr.C_BPartner_ID=bp.C_BPartner_ID)"
 				+ " INNER JOIN C_OrderLine lin ON (hdr.C_Order_ID=lin.C_Order_ID)"
-				+ " INNER JOIN M_Product p ON (lin.M_Product_ID=p.M_Product_ID)"
+				+ " INNER JOIN M_Product p ON (lin.M_Product_ID=p.M_Product_ID AND p.IsStocked='Y')"
 				+ " INNER JOIN C_UOM uom ON (p.C_UOM_ID = uom.C_UOM_ID)"
 				+ " INNER JOIN C_DocType dt ON (hdr.C_DocType_ID=dt.C_DocType_ID AND dt.DocBaseType='POO')"
 				+ " FULL JOIN M_MatchPO mo ON (lin.C_OrderLine_ID=mo.C_OrderLine_ID) "
