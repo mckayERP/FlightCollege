@@ -428,6 +428,7 @@ public class FTUModelValidator implements ModelValidator {
 													 .list();
 				for (MFTUFlightsheet flight : flights) {
 					flight.setC_Order_ID(0);
+					flight.setLine_Status("");  // null = pending/waiting.
 					flight.saveEx();
 				}
 			} // isVoided
@@ -449,6 +450,16 @@ public class FTUModelValidator implements ModelValidator {
 						orderLine.saveEx();
 						
 					}
+				}
+				
+				// reset the flightsheet entry to not closed
+				String where =  MOrder.COLUMNNAME_C_Order_ID + "=" + ((MOrder) po).getC_Order_ID();
+				List<MFTUFlightsheet> flights = new Query(po.getCtx(), MFTUFlightsheet.Table_Name, where, po.get_TrxName() )
+													 .setClient_ID()
+													 .list();
+				for (MFTUFlightsheet flight : flights) {
+					flight.setLine_Status("");  // null = pending/waiting.
+					flight.saveEx();
 				}
 								
 			} // isReactivated
