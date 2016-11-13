@@ -8,20 +8,18 @@ import java.time.Duration;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.logging.Level;
 
-import org.adempiere.exceptions.AdempiereException;
 import org.compiere.model.MBPartner;
 import org.compiere.model.MInvoice;
 import org.compiere.model.MInvoiceLine;
 import org.compiere.model.MPeriod;
 import org.compiere.model.MProduct;
-import org.compiere.model.MTax;
 import org.compiere.model.Query;
-import org.compiere.process.ProcessInfoParameter;
+import org.compiere.process.ProcessInfo;
 import org.compiere.process.SvrProcess;
 import org.compiere.util.DB;
 import org.compiere.util.Env;
+import org.eevolution.service.dsl.ProcessBuilder;
 
 import com.mckayerp.ftu.model.MFTUACJourneyLog;
 import com.mckayerp.ftu.model.MFTUAircraft;
@@ -37,6 +35,7 @@ public class AircraftGenerateLeaseInvoices extends SvrProcess {
 	private long oneDay = 24*60*60*1000;  // One day in milliseconds
 	
 	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+	private MPeriod period;
 
 	@Override
 	protected void prepare() {
@@ -55,8 +54,18 @@ public class AircraftGenerateLeaseInvoices extends SvrProcess {
 			
 			return ("@Error@ @FillMandatory@ @C_Period_ID@");
 		}
-		startDate = MPeriod.get(getCtx(), c_period_id).getStartDate();
-		endDate = MPeriod.get(getCtx(), c_period_id).getEndDate();
+		period =  MPeriod.get(getCtx(), c_period_id);
+		startDate = period.getStartDate();
+		endDate = period.getEndDate();
+		
+		// Scrape the flight sheets over the period and sync the flight log
+		// Updates the journey log flight hours as well.
+		ProcessBuilder.create(getCtx())
+		.process(com.mckayerp.ftu.process.LoadFlightsheetFromXML.class)
+		.withTitle("Update flightsheets")
+		.withParameterRange("FlightDate", startDate, endDate)
+		.execute();
+
 
 		StringBuffer where = new StringBuffer("IsACLeased='Y'");
 		if (ftu_aircraft_id > 0)
@@ -78,7 +87,7 @@ public class AircraftGenerateLeaseInvoices extends SvrProcess {
 				continue;
 			}
 			
-			if (ac.getDateExpiryLease().before(MPeriod.get(getCtx(), c_period_id).getStartDate()))
+			if (ac.getDateExpiryLease().before(startDate))
 			{
 				
 				addLog(ac.getACRegistration() + " Lease expired on " + ac.getDateExpiryLease());
@@ -234,8 +243,7 @@ public class AircraftGenerateLeaseInvoices extends SvrProcess {
 		BigDecimal tier2hours = Env.ZERO;
 		BigDecimal tier3hours = Env.ZERO;
 
-		String invoiceDesc = "FMFL Lease for " + ac.getACRegistration() + " from "
-				+ formatter.format(startDate) + " to " + formatter.format(endDate) + ". Total billable flight hours in period: "
+		String invoiceDesc = "Aircraft Lease for " + ac.getACRegistration() + " for " + period.getName() + ". Total billable flight hours in period: "
 				+ flightHoursBilled.setScale(1, RoundingMode.HALF_UP).toString() + ".";
 
 		// Tier1 hours - minimum, between minimum and tier 1 limit plus any roll over.
@@ -316,7 +324,8 @@ public class AircraftGenerateLeaseInvoices extends SvrProcess {
 		MInvoice invoice = new MInvoice(getCtx(),0,get_TrxName());
 		invoice.setIsSOTrx(false);
 		invoice.setC_BPartner_ID(ac.getC_BPartner_ID());
-		invoice.setDateInvoiced(MPeriod.get(getCtx(), c_period_id).getEndDate());
+		invoice.setDateInvoiced(endDate);
+		invoice.setDateAcct(endDate);
 		invoice.setDescription(invoiceDesc);
 		invoice.saveEx();
 		
@@ -335,7 +344,7 @@ public class AircraftGenerateLeaseInvoices extends SvrProcess {
 		line.setLineNetAmt();
 		line.saveEx();
 		
-		invoice.setGrandTotal(line.getLineNetAmt());
+		invoice.setGrandTotal(line.getLineTotalAmt());
 		
 		if (tier2hours.signum() > 0)
 		{
@@ -355,7 +364,7 @@ public class AircraftGenerateLeaseInvoices extends SvrProcess {
 			line.setLineNetAmt();
 			line.saveEx();
 
-			invoice.setGrandTotal(invoice.getGrandTotal().add(line.getLineNetAmt()));
+			invoice.setGrandTotal(invoice.getGrandTotal().add(line.getLineTotalAmt()));
 
 		}
 
@@ -377,7 +386,7 @@ public class AircraftGenerateLeaseInvoices extends SvrProcess {
 			line.setLineNetAmt();
 			line.saveEx();
 
-			invoice.setGrandTotal(invoice.getGrandTotal().add(line.getLineNetAmt()));
+			invoice.setGrandTotal(invoice.getGrandTotal().add(line.getLineTotalAmt()));
 
 		}
 		
@@ -410,8 +419,9 @@ public class AircraftGenerateLeaseInvoices extends SvrProcess {
 		MInvoice invoice = new MInvoice(getCtx(),0,get_TrxName());
 		invoice.setIsSOTrx(false);
 		invoice.setC_BPartner_ID(ac.getC_BPartner_ID());
-		invoice.setDateInvoiced(MPeriod.get(getCtx(), c_period_id).getEndDate());
-		invoice.setDescription("Aircraft lease for " + ac.getACRegistration() + " flight time in month " + flightTime.setScale(1, RoundingMode.HALF_UP));
+		invoice.setDateInvoiced(endDate);
+		invoice.setDateAcct(endDate);
+		invoice.setDescription("Aircraft lease for " + ac.getACRegistration() + ", " + period.getName() + ", flight time in month " + flightTime.setScale(1, RoundingMode.HALF_UP));
 		invoice.saveEx();
 		
 		MInvoiceLine line = new MInvoiceLine(invoice);
@@ -419,7 +429,7 @@ public class AircraftGenerateLeaseInvoices extends SvrProcess {
 		line.setC_UOM_ID(ac.getC_UOM_ID());
 		line.setQty(flightTime);
 		line.setPrice(ac.getLeaseRateFixed());
-		line.setDescription("Aircraft lease, flight time per month.");
+		line.setDescription("Aircraft lease, flight time per month "+ period.getName() + ",");
 		if (!ac.isLease_IsTaxApplied())
 		{
 			line.setC_Tax_ID(1000012);	// TODO - Hard coded "No Tax Charged"
@@ -427,7 +437,7 @@ public class AircraftGenerateLeaseInvoices extends SvrProcess {
 		line.setLineNetAmt();
 		line.saveEx();
 		
-		invoice.setGrandTotal(line.getLineNetAmt());
+		invoice.setGrandTotal(line.getLineTotalAmt());
 		invoice.saveEx();
 		
 		addLog(ac.getACRegistration() + " Lease Invoice " + invoice.getDocumentNo() + " - flight time, total: " + invoice.getGrandTotal());
@@ -437,7 +447,8 @@ public class AircraftGenerateLeaseInvoices extends SvrProcess {
 	private void generateAirTimeInPeriodLease(MFTUAircraft ac) {
 		
 		BigDecimal startTime = MFTUACJourneyLog.getTotalAirframeTime(getCtx(), ac.getFTU_Aircraft_ID(), startDate,	get_TrxName());
-		BigDecimal endTime = MFTUACJourneyLog.getTotalAirframeTime(getCtx(), ac.getFTU_Aircraft_ID(), endDate,	get_TrxName());
+		BigDecimal endTime = MFTUACJourneyLog.getTotalAirframeTime(getCtx(), ac.getFTU_Aircraft_ID(), 
+					new Timestamp(endDate.getTime() + oneDay),	get_TrxName());
 		
 		if (endTime.subtract(startTime).signum() <= 0)
 		{
@@ -450,7 +461,8 @@ public class AircraftGenerateLeaseInvoices extends SvrProcess {
 		invoice.setIsSOTrx(false);
 		invoice.setC_BPartner_ID(ac.getC_BPartner_ID());
 		invoice.setDateInvoiced(MPeriod.get(getCtx(), c_period_id).getEndDate());
-		invoice.setDescription("Aircraft lease for " + ac.getACRegistration() + " air time from " + startTime.setScale(1, RoundingMode.HALF_UP) + ""
+		invoice.setDateAcct(MPeriod.get(getCtx(), c_period_id).getEndDate());
+		invoice.setDescription("Aircraft lease for " + ac.getACRegistration() + ", " + period.getName() + ", air time from " + startTime.setScale(1, RoundingMode.HALF_UP) + ""
 				+ " to " + endTime.setScale(1, RoundingMode.HALF_UP));
 		invoice.saveEx();
 		
@@ -459,7 +471,7 @@ public class AircraftGenerateLeaseInvoices extends SvrProcess {
 		line.setC_UOM_ID(ac.getC_UOM_ID());
 		line.setQty(endTime.subtract(startTime));
 		line.setPrice(ac.getLeaseRateFixed());
-		line.setDescription("Aircraft lease, air time per month.");
+		line.setDescription("Aircraft lease, air time per month " + period.getName());
 		if (!ac.isLease_IsTaxApplied())
 		{
 			line.setC_Tax_ID(1000012);	// TODO - Hard coded "No Tax Charged"
@@ -467,7 +479,7 @@ public class AircraftGenerateLeaseInvoices extends SvrProcess {
 		line.setLineNetAmt();
 		line.saveEx();
 		
-		invoice.setGrandTotal(line.getLineNetAmt());
+		invoice.setGrandTotal(line.getLineTotalAmt());
 		invoice.saveEx();
 		
 		addLog(ac.getACRegistration() + " Lease Invoice " + invoice.getDocumentNo() + " - air time, total: " + invoice.getGrandTotal());
@@ -481,14 +493,15 @@ public class AircraftGenerateLeaseInvoices extends SvrProcess {
 		invoice.setIsSOTrx(false);
 		invoice.setC_BPartner_ID(ac.getC_BPartner_ID());
 		invoice.setDateInvoiced(MPeriod.get(getCtx(), c_period_id).getEndDate());
-		invoice.setDescription("Aircraft lease for " + ac.getACRegistration());
+		invoice.setDateAcct(MPeriod.get(getCtx(), c_period_id).getEndDate());
+		invoice.setDescription("Aircraft lease for " + ac.getACRegistration() + ", " + period.getName() + ".");
 		invoice.saveEx();
 		
 		MInvoiceLine line = new MInvoiceLine(invoice);
 		line.setC_Charge_ID(ac.getC_Charge_ID());
 		line.setPrice(ac.getLeaseRateFixed());
 		line.setQty(Env.ONE);
-		line.setDescription("Aircraft lease, fixed rate per month.");
+		line.setDescription("Aircraft lease, fixed rate per monthmm, " + period.getName() + ".");
 		if (!ac.isLease_IsTaxApplied())
 		{
 			line.setC_Tax_ID(1000012);	// TODO - Hard coded "No Tax Charged"
@@ -496,7 +509,7 @@ public class AircraftGenerateLeaseInvoices extends SvrProcess {
 		line.setLineNetAmt();
 		line.saveEx();
 
-		invoice.setGrandTotal(line.getLineNetAmt());
+		invoice.setGrandTotal(line.getLineTotalAmt());
 		invoice.saveEx();
 
 		addLog(ac.getACRegistration() + " Lease Invoice " + invoice.getDocumentNo() + " - fixed rate, total: " + invoice.getGrandTotal());
