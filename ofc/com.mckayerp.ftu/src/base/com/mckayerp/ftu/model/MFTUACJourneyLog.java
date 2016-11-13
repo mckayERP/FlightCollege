@@ -1,10 +1,15 @@
 package com.mckayerp.ftu.model;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.temporal.ChronoField;
+import java.time.temporal.TemporalField;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
@@ -86,8 +91,8 @@ public class MFTUACJourneyLog extends X_FTU_ACJourneyLog {
 		if (flight.getFTU_Aircraft_ID() == 0 || (flight.getAirTime().equals(Env.ZERO) && flight.getSimulator().equals(Env.ZERO)))
 			return 0; // nothing to log
 		
-		if (flight.getFTU_ACJourneyLog_ID() > 0)
-			return flight.getFTU_ACJourneyLog_ID(); // already logged
+//		if (flight.getFTU_ACJourneyLog_ID() > 0)
+//			return flight.getFTU_ACJourneyLog_ID(); // already logged
 		
 		log.info("Logging " + flight.toString());
 
@@ -161,12 +166,12 @@ public class MFTUACJourneyLog extends X_FTU_ACJourneyLog {
     	 }
 
 		// Find the current totalAirframeTime from the journey log.  This flight will be added to it, so 
-    	// find the total at or before the wheels down time.
+    	// find the total at or before the wheels down time.  
 		BigDecimal totalAirframeTime;
 		if (flight.getWheelsDown() != null)
 			totalAirframeTime = getTotalAirframeTime(ctx,flight.getFTU_Aircraft_ID(), flight.getWheelsDown(), trxName);
 		else
-			totalAirframeTime = getTotalAirframeTime(ctx,flight.getFTU_Aircraft_ID(), new Timestamp(wheelsDown.getTime() + oneDayinMilliseconds ), trxName);
+			totalAirframeTime = getTotalAirframeTime(ctx,flight.getFTU_Aircraft_ID(), new Timestamp(wheelsDown.getTime()), trxName);
 
 		// Add the current flight to it to get the new total.
 		totalAirframeTime = totalAirframeTime.add(flight.getAirTime()).add(flight.getSimulator());
@@ -174,7 +179,7 @@ public class MFTUACJourneyLog extends X_FTU_ACJourneyLog {
 		MFTUACJourneyLog jlog = null;
 				
 		if (flight.getNumLegs() > 1) {
-			jlog = new MFTUACJourneyLog(ctx, 0, trxName);
+			jlog = new MFTUACJourneyLog(ctx, flight.getFTU_ACJourneyLog_ID(), trxName);
 			jlog.setFTU_Aircraft_ID(flight.getFTU_Aircraft_ID());
 			jlog.setFlightDate(flight.getFlightDate());
 			jlog.setEntryDate(flight.getWheelsDown());
@@ -188,7 +193,7 @@ public class MFTUACJourneyLog extends X_FTU_ACJourneyLog {
 			jlog.setFlightTime(flight.getFlightTime().add(flight.getSimulator()));
 			jlog.setTotalAirframeTime(totalAirframeTime);					
 			jlog.saveEx();
-			log.info("  Added new log entry for multiple legs. TotalAirframeTime=" + totalAirframeTime);
+			log.info("  Added/updated new log entry for multiple legs. TotalAirframeTime=" + totalAirframeTime);
 		}
 		else {
 			jlog = MFTUACJourneyLog.getSummaryByAircraftID(ctx,flight.getFTU_Aircraft_ID(), flight.getFlightDate(), trxName);
@@ -227,43 +232,105 @@ public class MFTUACJourneyLog extends X_FTU_ACJourneyLog {
 				log.info("  Added flight to summary log entry. TotalAirframeTime=" + totalAirframeTime);
 			}
 		}
+		
+		recalculateLog(ctx, flight.getFTU_Aircraft_ID(), flight.getFlightDate(), trxName);
 
 		return jlog.getFTU_ACJourneyLog_ID();
 	}
 	
+
 	/**
 	 * Recalculates the total Airframe time based on the current log entries
 	 * @param ctx
 	 * @param trxName
 	 */
-	public static void recalculateLog(Properties ctx, int ftu_Aircraft_ID, String trxName) {
+	public static String recalculateLog(Properties ctx, int ftu_aircraft_id, Timestamp fromDate, String trxName) {
 		
 		String orderBy = MFTUACJourneyLog.COLUMNNAME_FTU_Aircraft_ID + ", "
-				+ MFTUACJourneyLog.COLUMNNAME_WheelsUp;
+				+ MFTUACJourneyLog.COLUMNNAME_EntryDate;
 		
 		String where = "";
-		if (ftu_Aircraft_ID > 0)
-			where = MFTUACJourneyLog.COLUMNNAME_FTU_Aircraft_ID + "=" + ftu_Aircraft_ID;
+		
+		if (fromDate != null)
+			where = MFTUACJourneyLog.COLUMNNAME_EntryDate + " >= " + DB.TO_DATE(fromDate);
+		
+		if (ftu_aircraft_id > 0)
+		{
+			if (where.length() > 0)
+				where += " AND ";
+			where += MFTUACJourneyLog.COLUMNNAME_FTU_Aircraft_ID + "=" + ftu_aircraft_id;
+		}
 		
 		List<MFTUACJourneyLog> jlogs = new Query(ctx, MFTUACJourneyLog.Table_Name, where, trxName)
 									.setClient_ID()
 									.setOrderBy(orderBy)
 									.list();
+		
 		BigDecimal totalAirframeTime = Env.ZERO;
-		for (MFTUACJourneyLog jlog : jlogs) {
-			BigDecimal logAirTime = Env.ZERO;
-			for (MFTUFlightsheet flight : jlog.getFlights(ctx, trxName)) {
-				logAirTime = logAirTime.add(flight.getAirTime());
-				totalAirframeTime = totalAirframeTime.add(flight.getAirTime());
+		ftu_aircraft_id = 0;
+		
+		String retMsg = "Updating journey logs:";
+		
+		for (MFTUACJourneyLog jlog : jlogs) 
+		{
+			if (ftu_aircraft_id != jlog.getFTU_Aircraft_ID())
+			{
+				if (ftu_aircraft_id > 0)
+				{
+					MFTUAircraft ac = MFTUAircraft.get(ctx, ftu_aircraft_id, trxName);
+					if (totalAirframeTime.compareTo(ac.getAirframeTime()) != 0)
+					{
+						retMsg += "\n" + ac + " airframe time updated to " + totalAirframeTime.setScale(1,RoundingMode.HALF_UP);
+						ac.setIsDirectLoad(true);
+						ac.setAirframeTime(totalAirframeTime);
+						ac.saveEx();
+					}
+					else
+					{
+						retMsg += "\n" + ac + " no changes required.";
+					}
+				}
+				ftu_aircraft_id = jlog.getFTU_Aircraft_ID();
+				totalAirframeTime = getTotalAirframeTime(ctx, ftu_aircraft_id, fromDate, trxName);
 			}
-			jlog.setIsDirectLoad(true);
-			jlog.setAirTime(logAirTime);
-			jlog.setTotalAirframeTime(totalAirframeTime);
-			jlog.saveEx();
+			BigDecimal logAirTime = Env.ZERO;
+			
+			for (MFTUFlightsheet flight : jlog.getFlights(ctx, trxName)) 
+			{
+				
+				logAirTime = logAirTime.add(flight.getAirTime()).add(flight.getSimulator());
+				totalAirframeTime = totalAirframeTime.add(flight.getAirTime()).add(flight.getSimulator());
+				
+			}
+			
+			if (jlog.getAirTime().compareTo(logAirTime) != 0 || jlog.getTotalAirframeTime().compareTo(totalAirframeTime) != 0)
+			{
+				
+				jlog.setIsDirectLoad(true);
+				jlog.setAirTime(logAirTime);
+				jlog.setTotalAirframeTime(totalAirframeTime);
+				jlog.saveEx();
+				
+			}			
 		}
-		MFTUAircraft ac = MFTUAircraft.get(ctx, ftu_Aircraft_ID, trxName);
-		ac.setAirframeTime(totalAirframeTime);
-		ac.saveEx();
+
+		// Update the last aircraft
+		if (ftu_aircraft_id > 0)
+		{
+			MFTUAircraft ac = MFTUAircraft.get(ctx, ftu_aircraft_id, trxName);
+			if (totalAirframeTime.compareTo(ac.getAirframeTime()) != 0)
+			{
+				retMsg += "\n" + ac + " airframe time updated to " + totalAirframeTime.setScale(1,RoundingMode.HALF_UP);
+				ac.setAirframeTime(totalAirframeTime);
+				ac.saveEx();
+			}
+			else
+			{
+				retMsg += "\n" + ac + " no changes required.";
+			}
+		}
+		
+		return retMsg;
 	}
 
 	
@@ -313,14 +380,14 @@ public class MFTUACJourneyLog extends X_FTU_ACJourneyLog {
 		final CLogger			log = CLogger.getCLogger (MFTUACJourneyLog.class);
 		
 		BigDecimal totalAirframeTime = Env.ZERO;
-		
+			
 		String sql = "SELECT MAX(" + MFTUACJourneyLog.COLUMNNAME_TotalAirframeTime + ")"
 				+ " FROM " + MFTUACJourneyLog.Table_Name 
 				+ " WHERE " + MFTUACJourneyLog.COLUMNNAME_FTU_Aircraft_ID 
 				+ "=" + ftu_Aircraft_ID;
 		
 		if (asAtDate != null) {
-			sql = sql  + " AND " + MFTUACJourneyLog.COLUMNNAME_EntryDate + "<=" + DB.TO_STRING(asAtDate.toString()); 
+			sql = sql  + " AND " + MFTUACJourneyLog.COLUMNNAME_EntryDate + "<" + DB.TO_DATE(asAtDate); 
 		}
 			
 		PreparedStatement pstmt = null;
