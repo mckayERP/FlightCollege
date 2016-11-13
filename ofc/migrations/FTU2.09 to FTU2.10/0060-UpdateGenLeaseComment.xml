@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="MFTU" Name="Add detail to Generate Ac Lease process comment" ReleaseNo="FTU2.10" SeqNo="60">
+    <Step SeqNo="10" StepType="AD">
+      <PO AD_Table_ID="284" Action="U" Record_ID="53897" Table="AD_Process">
+        <Data AD_Column_ID="2811" Column="Help" oldValue="Use this process to generate leases for aircraft based on the information in the Ownership &amp; Leases secion of the Aircraft tab in the Fleet Maintenance window.  The lease invoices will be created but not completed.  It is necessary to find the new leases, reveiw each and complete them manually.">Use this process to generate leases for aircraft based on the information in the Ownership &amp; Leases secion of the Aircraft tab in the Fleet Maintenance window.  The lease invoices will be created but not completed.  It is necessary to find the new leases, reveiw each and complete them manually.  The process will first update the flightsheet entries over the selected period and this will take a few minutes.  Please be patient.</Data>
+      </PO>
+    </Step>
+  </Migration>
+</Migrations>
