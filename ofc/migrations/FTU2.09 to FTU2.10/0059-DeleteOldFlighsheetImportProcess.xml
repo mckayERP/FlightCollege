@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="MFTU" Name="Remove Flight sheet import process" ReleaseNo="FTU2.10" SeqNo="59">
+    <Step SeqNo="10" StepType="AD">
+      <PO AD_Table_ID="285" Action="U" Record_ID="1000316" Table="AD_Process_Para">
+        <Data AD_Column_ID="3738" Column="IsMandatory" oldValue="true">false</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="20" StepType="AD">
+      <PO AD_Table_ID="120" Action="D" Record_ID="1000028" Table="AD_Menu_Trl">
+        <Data AD_Column_ID="636" Column="IsActive" isNewNull="true" oldValue="true"/>
+        <Data AD_Column_ID="638" Column="CreatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="637" Column="Created" isNewNull="true" oldValue="2010-01-01 10:35:15.0"/>
+        <Data AD_Column_ID="640" Column="UpdatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="1194" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="639" Column="Updated" isNewNull="true" oldValue="2010-01-01 10:35:15.0"/>
+        <Data AD_Column_ID="1195" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="249" Column="IsTranslated" isNewNull="true" oldValue="false"/>
+        <Data AD_Column_ID="245" Column="AD_Menu_ID" oldValue="1000028">1000028</Data>
+        <Data AD_Column_ID="246" Column="AD_Language" oldValue="es_MX">es_MX</Data>
+        <Data AD_Column_ID="248" Column="Description" isNewNull="true" oldValue="Import OFC Flightsheets"/>
+        <Data AD_Column_ID="247" Column="Name" isNewNull="true" oldValue="Import Flightsheet Data"/>
+      </PO>
+    </Step>
+    <Step SeqNo="30" StepType="AD">
+      <PO AD_Table_ID="116" Action="D" Record_ID="1000028" Table="AD_Menu">
+        <Data AD_Column_ID="598" Column="IsActive" isNewNull="true" oldValue="true"/>
+        <Data AD_Column_ID="233" Column="AD_Window_ID" isNewNull="true" oldValue="1000014"/>
+        <Data AD_Column_ID="234" Column="AD_Workflow_ID" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="235" Column="AD_Task_ID" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="228" Column="AD_Menu_ID" isNewNull="true" oldValue="1000028"/>
+        <Data AD_Column_ID="599" Column="Created" isNewNull="true" oldValue="2010-01-01 10:35:15.0"/>
+        <Data AD_Column_ID="1169" Column="IsSummary" isNewNull="true" oldValue="false"/>
+        <Data AD_Column_ID="602" Column="UpdatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="399" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="232" Column="Action" isNewNull="true" oldValue="W"/>
+        <Data AD_Column_ID="600" Column="CreatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="601" Column="Updated" isNewNull="true" oldValue="2010-01-01 10:36:25.0"/>
+        <Data AD_Column_ID="6297" Column="AD_Workbench_ID" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="400" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="4426" Column="IsSOTrx" isNewNull="true" oldValue="false"/>
+        <Data AD_Column_ID="6651" Column="IsReadOnly" isNewNull="true" oldValue="false"/>
+        <Data AD_Column_ID="3375" Column="AD_Process_ID" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="4621" Column="AD_Form_ID" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="7721" Column="EntityType" isNewNull="true" oldValue="MFTU"/>
+        <Data AD_Column_ID="57960" Column="AD_Browse_ID" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="59134" Column="IsCentrallyMaintained" isNewNull="true" oldValue="true"/>
+        <Data AD_Column_ID="229" Column="Name" isNewNull="true" oldValue="Import Flightsheet Data"/>
+        <Data AD_Column_ID="230" Column="Description" isNewNull="true" oldValue="Import OFC Flightsheets"/>
+      </PO>
+    </Step>
+    <Step SeqNo="40" StepType="AD">
+      <PO AD_Table_ID="452" Action="D" Record_ID="10" Table="AD_TreeNodeMM">
+        <Data AD_Column_ID="6150" Column="IsActive" isNewNull="true" oldValue="true"/>
+        <Data AD_Column_ID="6162" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="6160" Column="AD_Tree_ID" oldValue="10">10</Data>
+        <Data AD_Column_ID="6152" Column="CreatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="6149" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="6154" Column="UpdatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="6151" Column="Created" isNewNull="true" oldValue="2010-01-01 10:36:29.375"/>
+        <Data AD_Column_ID="6155" Column="Parent_ID" isNewNull="true" oldValue="163"/>
+        <Data AD_Column_ID="6153" Column="Updated" isNewNull="true" oldValue="2014-02-21 06:25:20.343"/>
+        <Data AD_Column_ID="6157" Column="SeqNo" isNewNull="true" oldValue="4"/>
+        <Data AD_Column_ID="6161" Column="Node_ID" oldValue="1000028">1000028</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="50" StepType="AD">
+      <PO AD_Table_ID="120" Action="D" Record_ID="53434" Table="AD_Menu_Trl">
+        <Data AD_Column_ID="636" Column="IsActive" isNewNull="true" oldValue="true"/>
+        <Data AD_Column_ID="638" Column="CreatedBy" isNewNull="true" oldValue="100"/>
+        <Data AD_Column_ID="637" Column="Created" isNewNull="true" oldValue="2012-08-07 09:53:15.0"/>
+        <Data AD_Column_ID="640" Column="UpdatedBy" isNewNull="true" oldValue="100"/>
+        <Data AD_Column_ID="1194" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="639" Column="Updated" isNewNull="true" oldValue="2012-08-07 09:53:15.0"/>
+        <Data AD_Column_ID="1195" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="249" Column="IsTranslated" isNewNull="true" oldValue="false"/>
+        <Data AD_Column_ID="245" Column="AD_Menu_ID" oldValue="53434">53434</Data>
+        <Data AD_Column_ID="246" Column="AD_Language" oldValue="es_MX">es_MX</Data>
+        <Data AD_Column_ID="248" Column="Description" isNewNull="true" oldValue="This process allows to import the forecast by using a predefined import format,  inside the application."/>
+        <Data AD_Column_ID="247" Column="Name" isNewNull="true" oldValue="Import Forecast"/>
+      </PO>
+    </Step>
+    <Step SeqNo="60" StepType="AD">
+      <PO AD_Table_ID="116" Action="D" Record_ID="53434" Table="AD_Menu">
+        <Data AD_Column_ID="598" Column="IsActive" isNewNull="true" oldValue="true"/>
+        <Data AD_Column_ID="233" Column="AD_Window_ID" isNewNull="true" oldValue="53190"/>
+        <Data AD_Column_ID="234" Column="AD_Workflow_ID" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="235" Column="AD_Task_ID" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="228" Column="AD_Menu_ID" isNewNull="true" oldValue="53434"/>
+        <Data AD_Column_ID="599" Column="Created" isNewNull="true" oldValue="2012-08-07 09:53:15.0"/>
+        <Data AD_Column_ID="1169" Column="IsSummary" isNewNull="true" oldValue="false"/>
+        <Data AD_Column_ID="602" Column="UpdatedBy" isNewNull="true" oldValue="100"/>
+        <Data AD_Column_ID="399" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="232" Column="Action" isNewNull="true" oldValue="W"/>
+        <Data AD_Column_ID="600" Column="CreatedBy" isNewNull="true" oldValue="100"/>
+        <Data AD_Column_ID="601" Column="Updated" isNewNull="true" oldValue="2012-08-07 09:53:15.0"/>
+        <Data AD_Column_ID="6297" Column="AD_Workbench_ID" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="400" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="4426" Column="IsSOTrx" isNewNull="true" oldValue="false"/>
+        <Data AD_Column_ID="6651" Column="IsReadOnly" isNewNull="true" oldValue="false"/>
+        <Data AD_Column_ID="3375" Column="AD_Process_ID" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="4621" Column="AD_Form_ID" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="7721" Column="EntityType" isNewNull="true" oldValue="EE01"/>
+        <Data AD_Column_ID="57960" Column="AD_Browse_ID" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="59134" Column="IsCentrallyMaintained" isNewNull="true" oldValue="true"/>
+        <Data AD_Column_ID="229" Column="Name" isNewNull="true" oldValue="Import Forecast"/>
+        <Data AD_Column_ID="230" Column="Description" isNewNull="true" oldValue="This process allows to import the forecast by using a predefined import format,  inside the application."/>
+      </PO>
+    </Step>
+    <Step SeqNo="70" StepType="AD">
+      <PO AD_Table_ID="452" Action="D" Record_ID="10" Table="AD_TreeNodeMM">
+        <Data AD_Column_ID="6150" Column="IsActive" isNewNull="true" oldValue="true"/>
+        <Data AD_Column_ID="6162" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="6160" Column="AD_Tree_ID" oldValue="10">10</Data>
+        <Data AD_Column_ID="6152" Column="CreatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="6149" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="6154" Column="UpdatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="6151" Column="Created" isNewNull="true" oldValue="2016-06-07 23:37:11.859"/>
+        <Data AD_Column_ID="6155" Column="Parent_ID" isNewNull="true" oldValue="163"/>
+        <Data AD_Column_ID="6153" Column="Updated" isNewNull="true" oldValue="2016-06-07 23:37:11.859"/>
+        <Data AD_Column_ID="6157" Column="SeqNo" isNewNull="true" oldValue="8"/>
+        <Data AD_Column_ID="6161" Column="Node_ID" oldValue="53434">53434</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="80" StepType="AD">
+      <PO AD_Table_ID="120" Action="D" Record_ID="1000020" Table="AD_Menu_Trl">
+        <Data AD_Column_ID="636" Column="IsActive" isNewNull="true" oldValue="true"/>
+        <Data AD_Column_ID="638" Column="CreatedBy" isNewNull="true" oldValue="100"/>
+        <Data AD_Column_ID="637" Column="Created" isNewNull="true" oldValue="2009-11-19 15:05:52.0"/>
+        <Data AD_Column_ID="640" Column="UpdatedBy" isNewNull="true" oldValue="100"/>
+        <Data AD_Column_ID="1194" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="639" Column="Updated" isNewNull="true" oldValue="2009-11-19 15:05:52.0"/>
+        <Data AD_Column_ID="1195" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="249" Column="IsTranslated" isNewNull="true" oldValue="false"/>
+        <Data AD_Column_ID="245" Column="AD_Menu_ID" oldValue="1000020">1000020</Data>
+        <Data AD_Column_ID="246" Column="AD_Language" oldValue="es_MX">es_MX</Data>
+        <Data AD_Column_ID="248" Column="Description" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="247" Column="Name" isNewNull="true" oldValue="OFC_Import_Flightsheet_Data"/>
+      </PO>
+    </Step>
+    <Step SeqNo="90" StepType="AD">
+      <PO AD_Table_ID="116" Action="D" Record_ID="1000020" Table="AD_Menu">
+        <Data AD_Column_ID="598" Column="IsActive" isNewNull="true" oldValue="true"/>
+        <Data AD_Column_ID="233" Column="AD_Window_ID" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="234" Column="AD_Workflow_ID" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="235" Column="AD_Task_ID" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="228" Column="AD_Menu_ID" isNewNull="true" oldValue="1000020"/>
+        <Data AD_Column_ID="599" Column="Created" isNewNull="true" oldValue="2009-11-19 15:05:52.0"/>
+        <Data AD_Column_ID="1169" Column="IsSummary" isNewNull="true" oldValue="false"/>
+        <Data AD_Column_ID="602" Column="UpdatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="399" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="232" Column="Action" isNewNull="true" oldValue="P"/>
+        <Data AD_Column_ID="600" Column="CreatedBy" isNewNull="true" oldValue="100"/>
+        <Data AD_Column_ID="601" Column="Updated" isNewNull="true" oldValue="2016-06-08 03:00:39.0"/>
+        <Data AD_Column_ID="6297" Column="AD_Workbench_ID" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="400" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="4426" Column="IsSOTrx" isNewNull="true" oldValue="false"/>
+        <Data AD_Column_ID="6651" Column="IsReadOnly" isNewNull="true" oldValue="false"/>
+        <Data AD_Column_ID="3375" Column="AD_Process_ID" isNewNull="true" oldValue="1000005"/>
+        <Data AD_Column_ID="4621" Column="AD_Form_ID" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="7721" Column="EntityType" isNewNull="true" oldValue="MFTU"/>
+        <Data AD_Column_ID="57960" Column="AD_Browse_ID" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="59134" Column="IsCentrallyMaintained" isNewNull="true" oldValue="true"/>
+        <Data AD_Column_ID="229" Column="Name" isNewNull="true" oldValue="Import Flightsheet Data"/>
+        <Data AD_Column_ID="230" Column="Description" isNewNull="true" oldValue="Imports the flightsheet data"/>
+      </PO>
+    </Step>
+    <Step SeqNo="100" StepType="AD">
+      <PO AD_Table_ID="452" Action="D" Record_ID="10" Table="AD_TreeNodeMM">
+        <Data AD_Column_ID="6150" Column="IsActive" isNewNull="true" oldValue="true"/>
+        <Data AD_Column_ID="6162" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="6160" Column="AD_Tree_ID" oldValue="10">10</Data>
+        <Data AD_Column_ID="6152" Column="CreatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="6149" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="6154" Column="UpdatedBy" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="6151" Column="Created" isNewNull="true" oldValue="2009-11-19 15:07:22.656"/>
+        <Data AD_Column_ID="6155" Column="Parent_ID" isNewNull="true" oldValue="163"/>
+        <Data AD_Column_ID="6153" Column="Updated" isNewNull="true" oldValue="2014-02-21 06:25:20.39"/>
+        <Data AD_Column_ID="6157" Column="SeqNo" isNewNull="true" oldValue="6"/>
+        <Data AD_Column_ID="6161" Column="Node_ID" oldValue="1000020">1000020</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="110" StepType="AD">
+      <PO AD_Table_ID="287" Action="D" Record_ID="0" Table="AD_Process_Trl">
+        <Data AD_Column_ID="2847" Column="IsActive" isNewNull="true" oldValue="true"/>
+        <Data AD_Column_ID="2849" Column="CreatedBy" isNewNull="true" oldValue="100"/>
+        <Data AD_Column_ID="2844" Column="AD_Language" oldValue="es_MX">es_MX</Data>
+        <Data AD_Column_ID="2854" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="2846" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="2850" Column="Updated" isNewNull="true" oldValue="2009-11-19 16:41:21.0"/>
+        <Data AD_Column_ID="2848" Column="Created" isNewNull="true" oldValue="2009-11-19 16:41:21.0"/>
+        <Data AD_Column_ID="2851" Column="UpdatedBy" isNewNull="true" oldValue="100"/>
+        <Data AD_Column_ID="2843" Column="AD_Process_ID" oldValue="1000005">1000005</Data>
+        <Data AD_Column_ID="2855" Column="IsTranslated" isNewNull="true" oldValue="false"/>
+        <Data AD_Column_ID="2845" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="2852" Column="Name" isNewNull="true" oldValue="OFC_Import_Flightsheet_Data"/>
+        <Data AD_Column_ID="2853" Column="Description" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+    <Step SeqNo="120" StepType="AD">
+      <PO AD_Table_ID="284" Action="D" Record_ID="1000005" Table="AD_Process">
+        <Data AD_Column_ID="78843" Column="GenerateClass" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="12458" Column="IsBetaFunctionality" isNewNull="true" oldValue="false"/>
+        <Data AD_Column_ID="14084" Column="IsServerProcess" isNewNull="true" oldValue="false"/>
+        <Data AD_Column_ID="57920" Column="CopyFromProcess" isNewNull="true" oldValue="N"/>
+        <Data AD_Column_ID="2804" Column="IsActive" isNewNull="true" oldValue="true"/>
+        <Data AD_Column_ID="11563" Column="WorkflowValue" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="4023" Column="Value" isNewNull="true" oldValue="Import_Flightsheet_Data"/>
+        <Data AD_Column_ID="2803" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="2802" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="11834" Column="AD_Workflow_ID" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="2811" Column="Help" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="2801" Column="AD_Process_ID" isNewNull="true" oldValue="1000005"/>
+        <Data AD_Column_ID="2806" Column="CreatedBy" isNewNull="true" oldValue="100"/>
+        <Data AD_Column_ID="2807" Column="Updated" isNewNull="true" oldValue="2016-11-13 11:50:16.0"/>
+        <Data AD_Column_ID="2808" Column="UpdatedBy" isNewNull="true" oldValue="1000893"/>
+        <Data AD_Column_ID="2805" Column="Created" isNewNull="true" oldValue="2009-11-19 16:41:21.0"/>
+        <Data AD_Column_ID="4214" Column="IsDirectPrint" isNewNull="true" oldValue="false"/>
+        <Data AD_Column_ID="3371" Column="IsReport" isNewNull="true" oldValue="false"/>
+        <Data AD_Column_ID="4374" Column="AD_ReportView_ID" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="5790" Column="AccessLevel" isNewNull="true" oldValue="7"/>
+        <Data AD_Column_ID="50181" Column="ShowHelp" isNewNull="true" oldValue="Y"/>
+        <Data AD_Column_ID="6485" Column="EntityType" isNewNull="true" oldValue="MFTU"/>
+        <Data AD_Column_ID="6653" Column="Statistic_Seconds" isNewNull="true" oldValue="533285"/>
+        <Data AD_Column_ID="6652" Column="Statistic_Count" isNewNull="true" oldValue="50562"/>
+        <Data AD_Column_ID="4656" Column="Classname" isNewNull="true" oldValue="com.mckayerp.ftu.process.LoadFlightsheetFromXML"/>
+        <Data AD_Column_ID="50182" Column="JasperReport" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="56515" Column="AD_Form_ID" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="7752" Column="AD_PrintFormat_ID" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="2813" Column="ProcedureName" isNewNull="true" isOldNull="true"/>
+        <Data AD_Column_ID="2810" Column="Description" isNewNull="true" oldValue="Imports the flightsheet data"/>
+        <Data AD_Column_ID="2809" Column="Name" isNewNull="true" oldValue="Import Flightsheet Data"/>
+        <Data AD_Column_ID="63488" Column="AD_Browse_ID" isNewNull="true" isOldNull="true"/>
+      </PO>
+    </Step>
+  </Migration>
+</Migrations>
