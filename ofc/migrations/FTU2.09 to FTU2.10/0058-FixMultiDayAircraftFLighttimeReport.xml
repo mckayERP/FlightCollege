@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="MFTU" Name="Fix AC Multiday flightime report" ReleaseNo="FTU2.10" SeqNo="58">
+    <Step DBType="ALL" Parse="Y" SeqNo="10" StepType="SQL">
+      <Comments>Remove date limit on the report where clause</Comments>
+      <SQLStatement>-- View: adempiere.ftu_ac_multiday_flighttimes_v
+
+DROP VIEW adempiere.ftu_ac_multiday_flighttimes_v;
+
+CREATE OR REPLACE VIEW adempiere.ftu_ac_multiday_flighttimes_v AS 
+ SELECT fs.ad_client_id,
+    fs.ad_org_id,
+    to_char(fs.flightdate, 'yy-MM'::text) AS flightmonth,
+    fs.flightdate AS fltdate,
+    fs.flightdate,
+    ac.callsign,
+    fs.flighttime_dual AS dual,
+    fs.flighttime_solo,
+    fs.flighttime_rental,
+    fs.flighttime_intro,
+    fs.flighttime_charter,
+    fs.flighttime_nonrev,
+    fs.flighttime_dual + fs.flighttime_solo + fs.flighttime_rental + fs.flighttime_intro + fs.flighttime_charter + fs.flighttime_nonrev AS flighttime,
+    fs.airtime,
+    (fs.airtime * ac.avgfuelconsumption + COALESCE(ac.taxifuelconsumption, 0::numeric)) * ff.dividerate AS fuelused,
+        CASE
+            WHEN ac.acmaintqtytype::text = 'Airtime'::text THEN ac.acmaintrate * fs.airtime
+            WHEN ac.acmaintqtytype::text = 'Flighttime'::text THEN ac.acmaintrate * (fs.flighttime_dual + fs.flighttime_solo + fs.flighttime_rental + fs.flighttime_intro + fs.flighttime_charter + fs.flighttime_nonrev)
+            ELSE 0::numeric
+        END AS maintexpenses
+   FROM adempiere.ftu_flightsheet fs
+     JOIN adempiere.ftu_aircraft ac ON ac.ftu_aircraft_id = fs.ftu_aircraft_id
+     JOIN adempiere.m_product p ON p.m_product_id = ac.fuelproductid
+     JOIN adempiere.c_uom_conversion ff ON ff.c_uom_id = p.c_uom_id AND ff.c_uom_to_id = ac.c_uom_id
+  WHERE (fs.airtime &gt; 0::numeric OR (fs.flighttime_dual + fs.flighttime_solo + fs.flighttime_rental + fs.flighttime_intro + fs.flighttime_charter + fs.flighttime_nonrev) &gt; 0::numeric) AND fs.isactive = 'Y'::bpchar
+  ORDER BY to_char(fs.flightdate, 'yy-MM'::text), fs.flightdate, ac.name;
+
+ALTER TABLE adempiere.ftu_ac_multiday_flighttimes_v
+  OWNER TO adempiere;
+</SQLStatement>
+      <RollbackStatement>-- View: adempiere.ftu_ac_multiday_flighttimes_v
+
+DROP VIEW adempiere.ftu_ac_multiday_flighttimes_v;
+
+CREATE OR REPLACE VIEW adempiere.ftu_ac_multiday_flighttimes_v AS 
+ SELECT fs.ad_client_id,
+    fs.ad_org_id,
+    to_char(fs.flightdate, 'yy-MM'::text) AS flightmonth,
+    fs.flightdate AS fltdate,
+    fs.flightdate,
+    ac.callsign,
+    fs.flighttime_dual AS dual,
+    fs.flighttime_solo,
+    fs.flighttime_rental,
+    fs.flighttime_intro,
+    fs.flighttime_charter,
+    fs.flighttime_nonrev,
+    fs.flighttime_dual + fs.flighttime_solo + fs.flighttime_rental + fs.flighttime_intro + fs.flighttime_charter + fs.flighttime_nonrev AS flighttime,
+    fs.airtime,
+    (fs.airtime * ac.avgfuelconsumption + COALESCE(ac.taxifuelconsumption, 0::numeric)) * ff.dividerate AS fuelused,
+        CASE
+            WHEN ac.acmaintqtytype::text = 'Airtime'::text THEN ac.acmaintrate * fs.airtime
+            WHEN ac.acmaintqtytype::text = 'Flighttime'::text THEN ac.acmaintrate * (fs.flighttime_dual + fs.flighttime_solo + fs.flighttime_rental + fs.flighttime_intro + fs.flighttime_charter + fs.flighttime_nonrev)
+            ELSE 0::numeric
+        END AS maintexpenses
+   FROM adempiere.ftu_flightsheet fs
+     JOIN adempiere.ftu_aircraft ac ON ac.ftu_aircraft_id = fs.ftu_aircraft_id
+     JOIN adempiere.m_product p ON p.m_product_id = ac.fuelproductid
+     JOIN adempiere.c_uom_conversion ff ON ff.c_uom_id = p.c_uom_id AND ff.c_uom_to_id = ac.c_uom_id
+  WHERE (fs.airtime &gt; 0::numeric OR (fs.flighttime_dual + fs.flighttime_solo + fs.flighttime_rental + fs.flighttime_intro + fs.flighttime_charter + fs.flighttime_nonrev) &gt; 0::numeric) AND fs.isactive = 'Y'::bpchar AND fs.flightdate &gt; '2016-04-01 00:00:00'::timestamp without time zone
+  ORDER BY to_char(fs.flightdate, 'yy-MM'::text), fs.flightdate, ac.name;
+
+ALTER TABLE adempiere.ftu_ac_multiday_flighttimes_v
+  OWNER TO adempiere;
+</RollbackStatement>
+    </Step>
+  </Migration>
+</Migrations>
