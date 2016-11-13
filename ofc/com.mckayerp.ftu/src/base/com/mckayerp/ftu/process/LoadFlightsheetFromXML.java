@@ -31,6 +31,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import com.mckayerp.ftu.model.MFTUACJourneyLog;
 import com.mckayerp.ftu.model.MFTUFlightsheet;
 
 public class LoadFlightsheetFromXML extends SvrProcess {
@@ -77,7 +78,7 @@ public class LoadFlightsheetFromXML extends SvrProcess {
 				}
 			}
 			else if (name.equals("LoginURL")) {
-				if (para[i].getParameter().toString().isEmpty())
+				if (para[i].getParameter().toString().isEmpty() && (loginURL == null || loginURL.length() == 0))
 					log.severe("LoginURL is mandatory");
 				else {
 					loginURL = para[i].getParameter().toString();
@@ -110,7 +111,7 @@ public class LoadFlightsheetFromXML extends SvrProcess {
 			releaseLock(get_TrxName());
 			return "Unable to capture lock.  Try again later.";
 		}
-		// Don't run at night. 11 pm to 7 am.
+		// Don't run at night. 11 pm to 7 am. - added to scheduler
 //		Calendar currentTime = Calendar.getInstance(); // gets the current time
 //		if (onlyOpenFlights && currentTime.get(Calendar.HOUR_OF_DAY) < 1) // Don't run at night.
 //		{
@@ -123,8 +124,11 @@ public class LoadFlightsheetFromXML extends SvrProcess {
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		
-		try {
-			while (!startDate.after(stopDate)) {
+		try 
+		{
+			
+			while (!startDate.after(stopDate)) 
+			{
 
 				String url = loginURL + "&useraction=26&bookingDate=" + dateFormat.format(startDate.getTime());
 				log.fine("Loading flights on " + dateFormat.format(startDate.getTime()) + " from " + url);
@@ -155,7 +159,9 @@ public class LoadFlightsheetFromXML extends SvrProcess {
 				}
 				startDate.add(Calendar.DATE, 1);
 			}
-
+			
+			String jlogUpdate = MFTUACJourneyLog.recalculateLog(getCtx(), 0, startTime, get_TrxName());
+			log.fine(jlogUpdate);
 		}
 		catch ( ParserConfigurationException
 				| SAXException 
