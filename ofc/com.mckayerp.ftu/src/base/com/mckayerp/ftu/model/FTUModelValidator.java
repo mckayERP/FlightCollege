@@ -309,11 +309,15 @@ public class FTUModelValidator implements ModelValidator {
 					inv.saveEx();
 					fs.setM_Inventory_ID(0);
 				}
+				fs.setBeingModelValidated(false);
 				return null;
 			}
 			
 			if (!fs.isActive())
+			{
+				fs.setBeingModelValidated(false);
 				return null;
+			}
 
 			if (fs.getCourseType().matches(MFTUFlightsheet.COURSETYPE_Cancelled)) {
 				if (fs.getLine_Status() == null 
@@ -428,7 +432,7 @@ public class FTUModelValidator implements ModelValidator {
 													 .list();
 				for (MFTUFlightsheet flight : flights) {
 					flight.setC_Order_ID(0);
-					flight.setLine_Status("");  // null = pending/waiting.
+					flight.setLine_Status(MFTUFlightsheet.LINE_STATUS_Waiting);  // pending/waiting.
 					flight.saveEx();
 				}
 			} // isVoided
@@ -458,7 +462,7 @@ public class FTUModelValidator implements ModelValidator {
 													 .setClient_ID()
 													 .list();
 				for (MFTUFlightsheet flight : flights) {
-					flight.setLine_Status("");  // null = pending/waiting.
+					flight.setLine_Status(MFTUFlightsheet.LINE_STATUS_Waiting);  // pending/waiting.
 					flight.saveEx();
 				}
 								
