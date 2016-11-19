@@ -166,9 +166,9 @@ public class MFTUDefectLog extends X_FTU_DefectLog implements DocAction, DocOpti
 	@Override
 	public String getSummary() {
 		
-		MRefList docStatus = new MRefList(getCtx(), 135, getDocStatus());
+		MRefList docStatus = MRefList.get(getCtx(), MFTUDefectLog.DOCSTATUS_AD_Reference_ID, getDocStatus(), get_TrxName());
 		StringBuffer sb = new StringBuffer();
-		sb.append(getDocumentNo()).append(" ").append(docStatus.getName())
+		sb.append(getDocumentNo()).append(" ").append(docStatus.getName()).append(" ")
 			.append(this.getDefectDate()).append("\n")
 			.append(Msg.translate(getCtx(),"Defect")).append("=").append(getDefect());
 		//   Related Info
