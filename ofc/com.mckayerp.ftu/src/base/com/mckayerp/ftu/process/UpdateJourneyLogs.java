@@ -33,21 +33,21 @@ public class UpdateJourneyLogs extends SvrProcess {
 			where = MFTUFlightsheet.COLUMNNAME_FTU_Aircraft_ID + "=" + ftu_aircraft_id;
 		}
 
-//		String sql = "UPDATE " + MFTUFlightsheet.Table_Name 
-//			+ " SET " + MFTUFlightsheet.COLUMNNAME_FTU_ACJourneyLog_ID + " = NULL";
+		String sql = "UPDATE " + MFTUFlightsheet.Table_Name 
+			+ " SET " + MFTUFlightsheet.COLUMNNAME_FTU_ACJourneyLog_ID + " = NULL";
 		
-//		if (ftu_aircraft_id > 0)
-//			sql += " WHERE " + where;
+		if (ftu_aircraft_id > 0)
+			sql += " WHERE " + where;
 		
-//		int no = DB.executeUpdate(sql, get_TrxName());
-//		log.fine("Reset journey log link on flightsheet lines: " + no);
+		int no = DB.executeUpdate(sql, get_TrxName());
+		log.fine("Reset journey log link on flightsheet lines: " + no);
 		
-//		sql = "DELETE FROM " + MFTUACJourneyLog.Table_Name + " WHERE COALESCE(" + MFTUACJourneyLog.COLUMNNAME_FTU_DefectLog_ID + ",0) = 0";
-//		if (ftu_aircraft_id > 0)
-//			sql += " AND " + where;
+		sql = "DELETE FROM " + MFTUACJourneyLog.Table_Name + " WHERE COALESCE(" + MFTUACJourneyLog.COLUMNNAME_FTU_DefectLog_ID + ",0) = 0";
+		if (ftu_aircraft_id > 0)
+			sql += " AND " + where;
 		
-//		no = DB.executeUpdate(sql, get_TrxName());
-//		log.fine("Deleted journey logs: " + no);
+		no = DB.executeUpdate(sql, get_TrxName());
+		log.fine("Deleted journey logs: " + no);
 		
 		List<MFTUAircraft> fleet = new Query(getCtx(), MFTUAircraft.Table_Name, where, get_TrxName())
 									.setClient_ID()
@@ -72,8 +72,8 @@ public class UpdateJourneyLogs extends SvrProcess {
 					+ " from " + openDate.toString() + " starting airframe time: " + openTime.toString());
 						
 			where = MFTUACJourneyLog.COLUMNNAME_FTU_Aircraft_ID + "=" + ac.getFTU_Aircraft_ID()
-					+ " AND " + MFTUACJourneyLog.COLUMNNAME_EntryDate + "=" + openDate
-					+ " AND " + MFTUACJourneyLog.COLUMNNAME_IntendedFlight + "=" + "Opening Balance";
+					+ " AND " + MFTUACJourneyLog.COLUMNNAME_EntryDate + "=" + DB.TO_DATE(openDate)
+					+ " AND " + MFTUACJourneyLog.COLUMNNAME_IntendedFlight + "=" + DB.TO_STRING("Opening Balance");
 
 			MFTUACJourneyLog jlog = new Query(getCtx(), MFTUACJourneyLog.Table_Name, where, get_TrxName())
 										.setClient_ID()
@@ -86,18 +86,20 @@ public class UpdateJourneyLogs extends SvrProcess {
 				log.fine("Journey log opening balance entry exists.");
 			}
 			else {
-				log.fine("Creating new opening balance entry");
+				log.fine("Creating new opening balance entry.");
 				jlog = new MFTUACJourneyLog(getCtx(), 0, get_TrxName());
 			}
 			// Update the entry
 			jlog.setFTU_Aircraft_ID(ac.getFTU_Aircraft_ID());
 			jlog.setFlightDate(openDate);
 			jlog.setEntryDate(openDate);
+			jlog.setAirTime(openTime);
 			jlog.setTotalAirframeTime(openTime);
 			jlog.setIntendedFlight("Opening Balance");
-			jlog.setAirTime(openTime);
 			jlog.setSeqNo(10);
 			jlog.saveEx();
+			
+			log.fine(jlog.toString());
 			
 			where = MFTUFlightsheet.COLUMNNAME_FTU_Aircraft_ID 
 					+ "=" + ac.getFTU_Aircraft_ID() + " AND "
