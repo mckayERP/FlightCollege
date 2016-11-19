@@ -980,9 +980,18 @@ public class FTUModelValidator implements ModelValidator {
 	        	 StringBuilder description = new StringBuilder("Flt ID: ")
 	        	 	.append(fs.getFlightID())
 	        	 	.append(" Date: ")
-	        	 	.append(fltDate)
-	        	 	.append(" A/C: ")
-	        	 	.append(ac.getCallSign())
+	        	 	.append(fltDate);
+	        	 
+	        	 if (ac.isSim())
+	        	 {
+	        		 description.append(" Sim: ");
+	        	 }
+	        	 else
+	        	 {
+	        		 description.append(" A/C: ");
+	        	 }
+	        	 
+	        	 description.append(ac.getCallSign())
 	        	 	.append(" Type: ")
 	        	 	.append(fs.getCourseType())
 	        	 	.append("\n")
@@ -1190,17 +1199,19 @@ public class FTUModelValidator implements ModelValidator {
 			        	 	.append(" Student/Pax: ")
 			        	 	.append(fs.getStudentPAX());
 		        		
-			     		MOrderLine line = new MOrderLine(order);
-			     		line.setM_Product_ID(acProduct.getM_Product_ID());
-			     		line.setC_UOM_ID(acProduct.getC_UOM_ID());
-			     		line.setDescription(simDesc.toString());
-			     		line.setQty(sim);
-			     		line.saveEx(); 
+		        		// No need to add a line for the sim as it has been added as an aircraft rental
+//			     		MOrderLine line = new MOrderLine(order);
+//			     		line.setM_Product_ID(acProduct.getM_Product_ID());
+//			     		line.setC_UOM_ID(acProduct.getC_UOM_ID());
+//			     		line.setDescription(simDesc.toString());
+//			     		line.setQty(sim);
+//			     		line.saveEx(); 
 
 		        		simDesc = new StringBuilder("Sim Instruction for ");
 		        		simDesc.append("Flt ID: ")
 		        			.append(fs.getFlightID());
-			     		line = new MOrderLine(order);
+
+		        		MOrderLine line = new MOrderLine(order);
 			     		line.setS_ResourceAssignment_ID(ra.getS_ResourceAssignment_ID());
 			     		line.setM_Product_ID(instProduct.getM_Product_ID());
 			     		line.setC_UOM_ID(instProduct.getC_UOM_ID());
