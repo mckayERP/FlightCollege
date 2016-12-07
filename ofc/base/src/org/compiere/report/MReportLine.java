@@ -294,7 +294,11 @@ public class MReportLine extends X_PA_ReportLine
 					if (i > 0)
 						sb.append (" OR ");
 					sb.append (m_sources[i].getWhereClause(PA_Hierarchy_ID));
-				}
+					if (m_sources[i].getAD_Table_ID() > 0)
+					{
+						sb.append(" AND AD_Table_ID=" + m_sources[i].getAD_Table_ID());
+					}
+		}
 				sb.append (")");
 				m_whereClause = sb.toString ();
 			}

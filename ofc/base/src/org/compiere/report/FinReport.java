@@ -95,7 +95,7 @@ public class FinReport extends SvrProcess
 	private MReportColumn[] 	m_columns;
 	/** The Report Lines				*/
 	private MReportLine[] 		m_lines;
-	private Timestamp p_ReportDate;
+	private Timestamp p_ReportDate = null;
 
 
 	/**
@@ -203,6 +203,10 @@ public class FinReport extends SvrProcess
 		ProcessInfoParameter[] pi = getProcessInfo().getParameter();
 		pi[0].setParameter(new Integer(p_C_Period_ID));
 		getProcessInfo().setParameter(pi);
+		
+		if (p_ReportDate != null) {
+			p_PA_ReportCube_ID = 0; // Can use a report date with the report cube
+		}
 		
 		if ( p_PA_ReportCube_ID > 0)
 			m_parameterWhere.append(" AND PA_ReportCube_ID=").append(p_PA_ReportCube_ID);
@@ -1435,30 +1439,30 @@ public class FinReport extends SvrProcess
 					pfi.setSortNo(0);
 			}
 			
-			else if (ColumnName.equals("AccountType"))
-			{
-
-				if (pfi.getSeqNo() != 30)
-					pfi.setSeqNo(30);
-				if (!pfi.isPrinted())
-					pfi.setIsPrinted(true);
-				if (pfi.isOrderBy())
-					pfi.setIsOrderBy(false);
-				if (pfi.getSortNo() != 0)
-					pfi.setSortNo(0);
-			}
-			else if (ColumnName.equalsIgnoreCase("Ax_Case"))
-			{
-				
-				if (pfi.getSeqNo() != 40)
-					pfi.setSeqNo(40);
-				if (!pfi.isPrinted())
-					pfi.setIsPrinted(true);
-				if (pfi.isOrderBy())
-					pfi.setIsOrderBy(false);
-				if (pfi.getSortNo() != 0)
-					pfi.setSortNo(0);
-			}
+//			else if (ColumnName.equals("AccountType"))
+//			{
+//
+//				if (pfi.getSeqNo() != 30)
+//					pfi.setSeqNo(30);
+//				if (!pfi.isPrinted())
+//					pfi.setIsPrinted(true);
+//				if (pfi.isOrderBy())
+//					pfi.setIsOrderBy(false);
+//				if (pfi.getSortNo() != 0)
+//					pfi.setSortNo(0);
+//			}
+//			else if (ColumnName.equalsIgnoreCase("Ax_Case"))
+//			{
+//				
+//				if (pfi.getSeqNo() != 40)
+//					pfi.setSeqNo(40);
+//				if (!pfi.isPrinted())
+//					pfi.setIsPrinted(true);
+//				if (pfi.isOrderBy())
+//					pfi.setIsOrderBy(false);
+//				if (pfi.getSortNo() != 0)
+//					pfi.setSortNo(0);
+//			}
 			else	//	Not Printed, No Sort
 			{
 				if (pfi.isPrinted())

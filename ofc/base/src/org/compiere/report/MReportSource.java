@@ -73,6 +73,8 @@ public class MReportSource extends X_PA_ReportSource
 		//	ID for Tree Leaf Value
 		int ID = 0;
 		//
+		StringBuffer sb = new StringBuffer("");
+		//
 		if (MReportSource.ELEMENTTYPE_Account.equals(et))
 			ID = getC_ElementValue_ID();
 		else if (MReportSource.ELEMENTTYPE_Activity.equals(et))
@@ -100,15 +102,26 @@ public class MReportSource extends X_PA_ReportSource
 		else if (MReportSource.ELEMENTTYPE_UserList2.equals(et))
 			ID = getC_ElementValue_ID();
 		else if (MReportSource.ELEMENTTYPE_UserElement1.equals(et))
-			return "UserElement1_ID="+getUserElement1_ID(); // Not Tree
+			sb.append("UserElement1_ID="+getUserElement1_ID()); // Not Tree
 		else if (MReportSource.ELEMENTTYPE_UserElement2.equals(et))
-			return "UserElement2_ID="+getUserElement2_ID(); // Not Tree
+			sb.append("UserElement2_ID="+getUserElement2_ID()); // Not Tree
 		// Financial Report Source with Type Combination
 		else if (MReportSource.ELEMENTTYPE_Combination.equals(et))
-			return getWhereCombination(PA_Hierarchy_ID);
+			sb.append(getWhereCombination(PA_Hierarchy_ID));
 
 		//
-		return MReportTree.getWhereClause (getCtx(), PA_Hierarchy_ID, et, ID);
+		if (sb.length() == 0)
+		{
+			sb.append(MReportTree.getWhereClause (getCtx(), PA_Hierarchy_ID, et, ID));
+		}
+		
+		if (sb.length() > 0 && getAD_Table_ID() > 0)
+		{
+			sb.append(" AND AD_Table_ID="+getAD_Table_ID());
+			sb = new StringBuffer("(").append(sb).append(")");
+		}
+		
+		return  sb.toString();
 	}	//	getWhereClause
 
 	/**

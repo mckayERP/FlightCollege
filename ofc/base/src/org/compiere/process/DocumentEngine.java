@@ -955,8 +955,12 @@ public class DocumentEngine implements DocAction
 		else if (docStatus.equals(DocumentEngine.STATUS_Closed) 
 			|| docStatus.equals(DocumentEngine.STATUS_Voided) 
 			|| docStatus.equals(DocumentEngine.STATUS_Reversed))
-			return 0;
+		{
+			// Want to provide options for custom docs
+			// return 0;
+			index = 0;
 
+		}
 		/********************
 		 *  Order
 		 */
