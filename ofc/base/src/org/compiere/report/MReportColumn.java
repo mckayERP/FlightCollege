@@ -77,8 +77,12 @@ public class MReportColumn extends X_PA_ReportColumn
 		if (PAAMOUNTTYPE_BalanceExpectedSign.equals(amountType))
 		//	sb.append("AmtAcctDr-AmtAcctCr");
 			sb.append("acctBalance(Account_ID,AmtAcctDr,AmtAcctCr)");
+		else if (PAAMOUNTTYPE_BalanceNegativeExpectedSign.equals(amountType))
+			sb.append("acctBalance(Account_ID,AmtAcctDr,AmtAcctCr)*(-1.0)");
 		else if ( PAAMOUNTTYPE_BalanceAccountedSign.equals(amountType) )
 			sb.append("AmtAcctDr-AmtAcctCr");
+		else if ( PAAMOUNTTYPE_BalanceNegativeAccountedSign.equals(amountType) )
+			sb.append("AmtAcctCr-AmtAcctDr");
 		else if (PAAMOUNTTYPE_CreditOnly.equals(amountType))
 			sb.append("AmtAcctCr");
 		else if (PAAMOUNTTYPE_DebitOnly.equals(amountType))

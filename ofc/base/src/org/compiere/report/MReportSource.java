@@ -69,60 +69,32 @@ public class MReportSource extends X_PA_ReportSource
 	 */
 	public String getWhereClause(int PA_Hierarchy_ID)
 	{
-		String et = getElementType();
-		//	ID for Tree Leaf Value
-		int ID = 0;
-		//
-		StringBuffer sb = new StringBuffer("");
-		//
-		if (MReportSource.ELEMENTTYPE_Account.equals(et))
-			ID = getC_ElementValue_ID();
-		else if (MReportSource.ELEMENTTYPE_Activity.equals(et))
-			ID = getC_Activity_ID();
-		else if (MReportSource.ELEMENTTYPE_BPartner.equals(et))
-			ID = getC_BPartner_ID();
-		else if (MReportSource.ELEMENTTYPE_Campaign.equals(et))
-			ID = getC_Campaign_ID();
-		else if (MReportSource.ELEMENTTYPE_LocationFrom.equals(et))
-			ID = getC_Location_ID();
-		else if (MReportSource.ELEMENTTYPE_LocationTo.equals(et))
-			ID = getC_Location_ID();
-		else if (MReportSource.ELEMENTTYPE_Organization.equals(et))
-			ID = getOrg_ID();
-		else if (MReportSource.ELEMENTTYPE_Product.equals(et))
-			ID = getM_Product_ID();
-		else if (MReportSource.ELEMENTTYPE_Project.equals(et))
-			ID = getC_Project_ID();
-		else if (MReportSource.ELEMENTTYPE_SalesRegion.equals(et))
-			ID = getC_SalesRegion_ID();
-		else if (MReportSource.ELEMENTTYPE_OrgTrx.equals(et))
-			ID = getOrg_ID();	//	(re)uses Org_ID
-		else if (MReportSource.ELEMENTTYPE_UserList1.equals(et))
-			ID = getC_ElementValue_ID();
-		else if (MReportSource.ELEMENTTYPE_UserList2.equals(et))
-			ID = getC_ElementValue_ID();
-		else if (MReportSource.ELEMENTTYPE_UserElement1.equals(et))
-			sb.append("UserElement1_ID="+getUserElement1_ID()); // Not Tree
-		else if (MReportSource.ELEMENTTYPE_UserElement2.equals(et))
-			sb.append("UserElement2_ID="+getUserElement2_ID()); // Not Tree
-		// Financial Report Source with Type Combination
-		else if (MReportSource.ELEMENTTYPE_Combination.equals(et))
-			sb.append(getWhereCombination(PA_Hierarchy_ID));
-
-		//
-		if (sb.length() == 0)
-		{
-			sb.append(MReportTree.getWhereClause (getCtx(), PA_Hierarchy_ID, et, ID));
-		}
-		
-		if (sb.length() > 0 && getAD_Table_ID() > 0)
-		{
-			sb.append(" AND AD_Table_ID="+getAD_Table_ID());
-			sb = new StringBuffer("(").append(sb).append(")");
-		}
-		
-		return  sb.toString();
+		return getWhereClause(PA_Hierarchy_ID, false);
 	}	//	getWhereClause
+
+	public StringBuffer getSourceWhereClauseFilter(StringBuffer sb) {
+		
+		if (sb == null)
+			sb = new StringBuffer("");
+		
+		if (getAD_Table_ID() > 0)
+		{
+			if(sb.length() > 0)
+				sb.append(" AND ");
+			
+			sb.append("AD_Table_ID="+getAD_Table_ID());
+		}
+
+		if (getWhereClause() != null && getWhereClause().length() > 0)
+		{
+			if(sb.length() > 0)
+				sb.append(" AND ");
+
+			sb.append(getWhereClause());
+		}
+
+		return sb;
+	}
 
 	/**
 	 * Obtain where clause for the combination type
@@ -311,5 +283,66 @@ public class MReportSource extends X_PA_ReportSource
 		retValue.setPA_ReportLine_ID(PA_ReportLine_ID);
 		return retValue;
 	}	//	copy
+
+	public String getWhereClause(int PA_Hierarchy_ID, boolean includeFilter) {
+		
+		String et = getElementType();
+		//	ID for Tree Leaf Value
+		int ID = 0;
+		//
+		StringBuffer sb = new StringBuffer("");
+		//
+		if (MReportSource.ELEMENTTYPE_Account.equals(et))
+			ID = getC_ElementValue_ID();
+		else if (MReportSource.ELEMENTTYPE_Activity.equals(et))
+			ID = getC_Activity_ID();
+		else if (MReportSource.ELEMENTTYPE_BPartner.equals(et))
+			ID = getC_BPartner_ID();
+		else if (MReportSource.ELEMENTTYPE_Campaign.equals(et))
+			ID = getC_Campaign_ID();
+		else if (MReportSource.ELEMENTTYPE_LocationFrom.equals(et))
+			ID = getC_Location_ID();
+		else if (MReportSource.ELEMENTTYPE_LocationTo.equals(et))
+			ID = getC_Location_ID();
+		else if (MReportSource.ELEMENTTYPE_Organization.equals(et))
+			ID = getOrg_ID();
+		else if (MReportSource.ELEMENTTYPE_Product.equals(et))
+			ID = getM_Product_ID();
+		else if (MReportSource.ELEMENTTYPE_Project.equals(et))
+			ID = getC_Project_ID();
+		else if (MReportSource.ELEMENTTYPE_SalesRegion.equals(et))
+			ID = getC_SalesRegion_ID();
+		else if (MReportSource.ELEMENTTYPE_OrgTrx.equals(et))
+			ID = getOrg_ID();	//	(re)uses Org_ID
+		else if (MReportSource.ELEMENTTYPE_UserList1.equals(et))
+			ID = getC_ElementValue_ID();
+		else if (MReportSource.ELEMENTTYPE_UserList2.equals(et))
+			ID = getC_ElementValue_ID();
+		else if (MReportSource.ELEMENTTYPE_UserElement1.equals(et))
+			sb.append("UserElement1_ID="+getUserElement1_ID()); // Not Tree
+		else if (MReportSource.ELEMENTTYPE_UserElement2.equals(et))
+			sb.append("UserElement2_ID="+getUserElement2_ID()); // Not Tree
+		// Financial Report Source with Type Combination
+		else if (MReportSource.ELEMENTTYPE_Combination.equals(et))
+			sb.append(getWhereCombination(PA_Hierarchy_ID));
+
+		//
+		if (sb.length() == 0)
+		{
+			sb.append(MReportTree.getWhereClause (getCtx(), PA_Hierarchy_ID, et, ID));
+		}
+		
+		if (includeFilter)
+		{
+			sb = getSourceWhereClauseFilter(sb);
+		}
+		
+		if (sb.length() > 0)
+		{
+			sb = new StringBuffer("(").append(sb).append(")");
+		}
+
+		return  sb.toString();
+	}
 
 }	//	MReportSource

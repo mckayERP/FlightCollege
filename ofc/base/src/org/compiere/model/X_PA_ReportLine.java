@@ -31,7 +31,7 @@ public class X_PA_ReportLine extends PO implements I_PA_ReportLine, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20161207L;
+	private static final long serialVersionUID = 20161214L;
 
     /** Standard Constructor */
     public X_PA_ReportLine (Properties ctx, int PA_ReportLine_ID, String trxName)
@@ -354,6 +354,10 @@ public class X_PA_ReportLine extends PO implements I_PA_ReportLine, I_Persistent
 	public static final String PAAMOUNTTYPE_BalanceAccountedSign = "S";
 	/** Quantity (accounted sign) = R */
 	public static final String PAAMOUNTTYPE_QuantityAccountedSign = "R";
+	/** Balance (negative expected sign) = BN */
+	public static final String PAAMOUNTTYPE_BalanceNegativeExpectedSign = "BN";
+	/** Balance (negative accounted sign) = SN */
+	public static final String PAAMOUNTTYPE_BalanceNegativeAccountedSign = "SN";
 	/** Set Amount Type.
 		@param PAAmountType 
 		PA Amount Type for reporting

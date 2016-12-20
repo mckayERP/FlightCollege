@@ -75,6 +75,7 @@ public class MReportLine extends X_PA_ReportLine
 	private MReportSource[]		m_sources = null;
 	/** Cache result					*/
 	private String				m_whereClause = null;
+	private boolean hasFilter;
 
 	/**
 	 * 	Load contained Sources
@@ -179,15 +180,19 @@ public class MReportLine extends X_PA_ReportLine
 	 */
 	public String getSelectClause (boolean withSum)
 	{
-		String at = getPAAmountType().substring(0,1);	//	first letter
+		String at = getPAAmountType();   //.substring(0,1);	//	first letter originally, now two possible.
 		StringBuffer sb = new StringBuffer();
 		if (withSum)
 			sb.append("SUM(");
 		if (PAAMOUNTTYPE_BalanceExpectedSign.equals(at))
 		//	sb.append("AmtAcctDr-AmtAcctCr");
 			sb.append("acctBalance(Account_ID,AmtAcctDr,AmtAcctCr)");
-		else if (PAAMOUNTTYPE_BalanceAccountedSign.equals(at))
+		else if (PAAMOUNTTYPE_BalanceNegativeExpectedSign.equals(at))
+			sb.append("acctBalance(Account_ID,AmtAcctDr,AmtAcctCr)*(-1.0)");
+		else if ( PAAMOUNTTYPE_BalanceAccountedSign.equals(at) )
 			sb.append("AmtAcctDr-AmtAcctCr");
+		else if ( PAAMOUNTTYPE_BalanceNegativeAccountedSign.equals(at) )
+			sb.append("AmtAcctCr-AmtAcctDr");
 		else if (PAAMOUNTTYPE_CreditOnly.equals(at))
 			sb.append("AmtAcctCr");
 		else if (PAAMOUNTTYPE_DebitOnly.equals(at))
@@ -276,49 +281,7 @@ public class MReportLine extends X_PA_ReportLine
 	 */
 	public String getWhereClause(int PA_Hierarchy_ID)
 	{
-		if (m_sources == null)
-			return "";
-		if (m_whereClause == null)
-		{
-			//	Only one
-			if (m_sources.length == 0)
-				m_whereClause = "";
-			else if (m_sources.length == 1)
-				m_whereClause = m_sources[0].getWhereClause(PA_Hierarchy_ID);
-			else
-			{
-				//	Multiple
-				StringBuffer sb = new StringBuffer ("(");
-				for (int i = 0; i < m_sources.length; i++)
-				{
-					if (i > 0)
-						sb.append (" OR ");
-					sb.append (m_sources[i].getWhereClause(PA_Hierarchy_ID));
-					if (m_sources[i].getAD_Table_ID() > 0)
-					{
-						sb.append(" AND AD_Table_ID=" + m_sources[i].getAD_Table_ID());
-					}
-		}
-				sb.append (")");
-				m_whereClause = sb.toString ();
-			}
-			//	Posting Type
-			String PostingType = getPostingType();
-			if (PostingType != null && PostingType.length() > 0)
-			{
-				if (m_whereClause.length() > 0)
-					m_whereClause += " AND ";
-				m_whereClause += "PostingType='" + PostingType + "'";
-				// globalqss - CarlosRuiz
-				if (PostingType.equals(MReportLine.POSTINGTYPE_Budget)) {
-					if (getGL_Budget_ID() > 0)
-						m_whereClause += " AND GL_Budget_ID=" + getGL_Budget_ID();
-				}
-				// end globalqss
-			}
-			log.fine(m_whereClause);
-		}
-		return m_whereClause;
+		return getWhereClause(PA_Hierarchy_ID, true);
 	}	//	getWhereClause
 
 	/**
@@ -445,6 +408,55 @@ public class MReportLine extends X_PA_ReportLine
 		retValue.setOper_2_ID(0);
 		return retValue;
 	}	//	copy
+
+	public String getWhereClause(int PA_Hierarchy_ID, boolean includeFilter) {
+		
+		if (m_sources == null)
+			return "";
+		
+		if (hasFilter && !includeFilter || !hasFilter && includeFilter)
+			m_whereClause = null;
+		
+		if (m_whereClause == null)
+		{
+			hasFilter = includeFilter;
+			//	Only one
+			if (m_sources.length == 0)
+				m_whereClause = "";
+			else if (m_sources.length == 1)
+				m_whereClause = m_sources[0].getWhereClause(PA_Hierarchy_ID, includeFilter);
+			else
+			{
+				//	Multiple
+				StringBuffer sb = new StringBuffer ("(");
+				for (int i = 0; i < m_sources.length; i++)
+				{
+					if (i > 0)
+						sb.append (" OR ");
+					sb.append (m_sources[i].getWhereClause(PA_Hierarchy_ID, includeFilter));
+				}
+				sb.append (")");
+				m_whereClause = sb.toString ();
+			}
+			//	Posting Type
+			String PostingType = getPostingType();
+			if (PostingType != null && PostingType.length() > 0)
+			{
+				if (m_whereClause.length() > 0)
+					m_whereClause += " AND ";
+				m_whereClause += "PostingType='" + PostingType + "'";
+				// globalqss - CarlosRuiz
+				if (PostingType.equals(MReportLine.POSTINGTYPE_Budget)) {
+					if (getGL_Budget_ID() > 0)
+						m_whereClause += " AND GL_Budget_ID=" + getGL_Budget_ID();
+				}
+				// end globalqss
+			}
+			log.fine(m_whereClause);
+		}
+		return m_whereClause;
+
+	}
 
 
 }	//	MReportLine

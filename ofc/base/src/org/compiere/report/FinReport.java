@@ -25,6 +25,8 @@ import java.util.logging.Level;
 
 
 
+
+import org.apache.commons.lang.StringUtils;
 import org.compiere.model.MAcctSchemaElement;
 import org.compiere.model.MReportCube;
 import org.compiere.print.MPrintFormat;
@@ -96,6 +98,7 @@ public class FinReport extends SvrProcess
 	/** The Report Lines				*/
 	private MReportLine[] 		m_lines;
 	private Timestamp p_ReportDate = null;
+	private boolean insertingLineTrx;
 
 
 	/**
@@ -558,7 +561,7 @@ public class FinReport extends SvrProcess
 					.append(" AND PA_ReportLine_ID= ")
 					.append(m_lines[line].getPA_ReportLine_ID());
 			int no = DB.executeUpdate(sql1.toString(), get_TrxName());
-			log.log(Level.SEVERE, "#=" + no + " for " + update);
+			//log.log(Level.SEVERE, "#=" + no + " for " + update);
 		}
 	}	//	insertLine
 
@@ -1108,8 +1111,26 @@ public class FinReport extends SvrProcess
 				else
 					select.append(frp.getTotalWhere());
 			}
+			// Add source filter
+			//  " AND filter " or
+			//  " AND ((filter 1) OR (filter2) OR ...) " 
+			int count = 0;
+			int numberSources = m_lines[line].getSources().length;
+			String whereFilter = m_lines[line].getWhereClause(p_PA_Hierarchy_ID, true);  // include the filter
+				
+			// Could use the java String.replaceAll with regex here but its slow.
+			// Need the "fa." string to not be part of a word like "luffa."
+			// TODO find a better way to replace the alias in the user entered where clause filter
+			whereFilter = StringUtils.replace(whereFilter, " fa.", " fb.");
+			whereFilter = StringUtils.replace(whereFilter, "=fa.", "=fb.");
+			whereFilter = StringUtils.replace(whereFilter, "(fa.", "(fb.");
+
+			if (whereFilter.length() > 0)
+				select.append(" AND (").append(whereFilter).append(")");
+
 			//	Link
-			select.append(" AND fb.").append(variable).append("=x.").append(variable);
+//			select.append(" AND fb.").append(variable).append("=x.").append(variable);
+			select.append(" AND fb.").append(variable).append("=fa.").append(variable);
 			//	PostingType
 			if (!m_lines[line].isPostingType())		//	only if not defined on line
 			{
@@ -1138,7 +1159,7 @@ public class FinReport extends SvrProcess
 			insert.append("(").append(select).append(")");
 		}
 		//	WHERE (sources, posting type)
-		StringBuffer where = new StringBuffer(m_lines[line].getWhereClause(p_PA_Hierarchy_ID));
+		StringBuffer where = new StringBuffer(m_lines[line].getWhereClause(p_PA_Hierarchy_ID, false));
 		String s = m_report.getWhereClause();
 		if (s != null && s.length() > 0)
 		{
@@ -1151,10 +1172,10 @@ public class FinReport extends SvrProcess
 		where.append(variable).append(" IS NOT NULL");
 
 		if (p_PA_ReportCube_ID > 0)
-			insert.append(" FROM Fact_Acct_Summary x WHERE ").append(where);
+			insert.append(" FROM Fact_Acct_Summary fa WHERE ").append(where);
 		else
 			//	FROM .. WHERE
-			insert.append(" FROM Fact_Acct x WHERE ").append(where);	
+			insert.append(" FROM Fact_Acct fa WHERE ").append(where);	
 		//
 		insert.append(m_parameterWhere)
 		.append(" GROUP BY ").append(variable);
@@ -1189,7 +1210,7 @@ public class FinReport extends SvrProcess
 	private void insertLineTrx (int line, String variable)
 	{
 		log.info("Line=" + line + " - Variable=" + variable);
-
+		
 		//	Insert
 		StringBuffer insert = new StringBuffer("INSERT INTO T_Report "
 				+ "(AD_PInstance_ID, PA_ReportLine_ID, Record_ID,Fact_Acct_ID,LevelNo ");
@@ -1228,16 +1249,24 @@ public class FinReport extends SvrProcess
 			}
 		}
 		//
-		insert.append(" FROM Fact_Acct WHERE ")
-		.append(m_lines[line].getWhereClause(p_PA_Hierarchy_ID));	//	(sources, posting type)
+		insert.append(" FROM Fact_Acct fa WHERE ")
+		.append(m_lines[line].getWhereClause(p_PA_Hierarchy_ID, true));	//	(sources, posting type)
 		//	Report Where
 		String s = m_report.getWhereClause();
 		if (s != null && s.length() > 0)
 			insert.append(" AND ").append(s);
 		//	Period restriction
 		FinReportPeriod frp = getPeriod (0);
-		insert.append(" AND TRUNC(DateAcct, 'DD') ")
-		.append(frp.getPeriodWhere());
+		insert.append(" AND TRUNC(DateAcct, 'DD') ");
+		
+		if (m_columns[0].isDay() || m_lines[line].isDay())
+		{
+			insert.append("= ").append(DB.TO_DATE(p_ReportDate));
+		}
+		else
+		{
+			insert.append(frp.getPeriodWhere());  // between start and end dates of period
+		}
 		//	PostingType ??
 		//		if (!m_lines[line].isPostingType())		//	only if not defined on line
 		//		{
