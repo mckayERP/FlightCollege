@@ -139,13 +139,20 @@
         </copy>
 
         <!-- Packages Directory            -->
-        <mkdir dir="${dist.dir}/packages"/>
-        <copy todir="${dist.dir}/packages">
+        <mkdir dir="${dist.dir}/packages/mckayerp_ftu/lib"/>
+        <copy todir="${dist.dir}/packages/mckayerp_ftu/lib">
             <fileset dir="${packages.dir}">
                 <include name="mckayerp_ftu.jar"/>
             </fileset>
         </copy>
-
+		
+        <mkdir dir="${dist.dir}/packages/helcim_semi_integrated/lib"/>
+        <copy todir="${dist.dir}/packages/helcim_semi_integrated/lib">
+            <fileset dir="${packages.dir}">
+                <include name="helcim_semi_integrated.jar"/>
+            </fileset>
+        </copy>
+		
 	    <!-- Create Install ZIP     -->
 	    <zip zipfile="${install.dir}/${ftu.installZipFile}"
 	        basedir="${install.dir}"

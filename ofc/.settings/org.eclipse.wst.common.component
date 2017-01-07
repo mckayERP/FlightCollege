@@ -7,6 +7,7 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/install/src"/>
         <wb-resource deploy-path="/" source-path="/zkwebui" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/com.mckayerp.ftu/src/base"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/com.helcim.helcim_semi_integrated/src"/>
         <dependent-module archiveName="webui.war" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/adempiereTrunk/zkwebui/dist/webui.war">
             <dependency-type>uses</dependency-type>
         </dependent-module>

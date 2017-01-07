@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- ============================================= -->
-<!-- Base                                          -->
+<!-- com.mckayerp.ftu                             -->
 <!-- ============================================= -->
 
-<project name="base" default="dist" basedir=".">
+<project name="com.helcim.helcim_semi_integrated" default="dist" basedir=".">
 
   <description>
-    This buildfile is used to build the base subproject within 
+    This buildfile is used to build the com.helcim.helcim_semi_integrated subproject within 
     the OFC project.
   </description>
 
@@ -15,32 +15,17 @@
   <property name="src" value="src"/>
   <!-- property name="looksSrc" value="../looks/src"/ -->
   <property name="build.dir" value="build"/>
-  <property name="dist.dir" value="../lib"/>
-  <property name="jar.path" value="${adempiere.trunk}/lib"/>
+  <property name="dist.dir" value="../packages"/>
+  <property name="jar.name" value="helcim_semi_integrated.jar"/>
 
   <!-- set path to include the necessary jar files for javac -->
   <path id="lib.class.path">
     <pathelement path="${classpath}"/>
-  	<pathelement path="../tools/lib/commons-lang3-3.4.jar"/>
-    <pathelement path="${adempiere.trunk}/lib/CCTools.jar"/>
-    <pathelement path="${adempiere.trunk}/lib/Adempiere.jar"/>
-    <pathelement path="${adempiere.trunk}/lib/oracle.jar"/>
-    <pathelement path="${adempiere.trunk}/lib/postgresql.jar"/>
-    <pathelement path="${adempiere.trunk}/lib/jboss.jar"/>
-    <pathelement path="${adempiere.trunk}/lib/glassfish.jar"/>
-	<pathelement path="${adempiere.trunk}/tools/lib/mysql-connector-java-5.1.13-bin.jar"/><!--@MySQl-->
-    <pathelement path="${adempiere.trunk}/tools/lib/junit.jar"/>
-    <pathelement path="${adempiere.trunk}/tools/lib/j2ee.jar"/>
-    <pathelement path="${adempiere.trunk}/tools/lib/jnlp.jar"/>
-    <pathelement path="${adempiere.trunk}/tools/lib/servlet-api.jar" />  	
-  	<pathelement path="${adempiere.trunk}/tools/lib/cron4j-2.2.1.jar" />
-    <pathelement path="${adempiere.trunk}/base/build/Base.jar" />
-    <pathelement path="${htmlget.home}/bin" />
   </path>
 	
 
   <target name="init" description="initialization target">
-    <echo message="=========== Build Base"/>
+    <echo message="=========== Build com.helcim.helcim_semi_integrated"/>
     <!-- create the time stamp -->
     <tstamp/>
     <!-- create the build directory structure used by compile -->
@@ -57,7 +42,13 @@
   
   <target name="compile" depends="makedir">
     <!-- compile the java code from ${src} into ${build.dir} -->
-    <javac target="1.8" fork="true" destdir="${build.dir}" deprecation="on" debug="on" memoryinitialsize="512m" memorymaximumsize="512m">
+    <javac target="1.8" fork="true" 
+    	destdir="${build.dir}" 
+    	deprecation="on" 
+    	debug="on" 
+    	memoryinitialsize="512m" 
+    	memorymaximumsize="512m"
+    	includeantruntime="false">
       <src path="${src}"/>
       <classpath refid="lib.class.path"/>
       <compilerarg line="-XDignore.symbol.file" />
@@ -86,23 +77,11 @@
   <target name="dist" depends="compile">
     <!-- put everything from ${build.dir} into the ${jar.name}.jar file -->
 	<jar
-	  jarfile="${dist.dir}/${adempiere.customJarFile}" 
+	  jarfile="${dist.dir}/${jar.name}" 
 	  basedir="${build.dir}"
 	  update="true">
 	</jar>
   </target>
-
-  <path id="class.path.test">
-    <pathelement path="${build.dir}"/>
-    <pathelement path="${classpath}"/>
-    <pathelement path="${jar.path}/CCTools.jar"/>
-    <pathelement path="${adempiere.trunk}/tools/lib/junit.jar"/>
-    <pathelement path="${adempiere.trunk}/adempiere/Adempiere/lib/Adempiere.jar" />
-    <pathelement path="${adempiere.trunk}/adempiere/Adempiere/lib/jboss.jar" />
-    <pathelement path="${adempiere.trunk}/adempiere/Adempiere/lib/oracle.jar" />
-    <pathelement path="${adempiere.trunk}/adempiere/Adempiere/lib/postgresql.jar" />
-	<pathelement path="${adempiere.trunk}/adempiere/Adempiere/lib/mysql-connector-java-5.1.13-bin.jar" /><!--@MySQL-->
-  </path>
 
   <target name="clean">
     <!-- Delete the ${build.dir} directory trees -->
