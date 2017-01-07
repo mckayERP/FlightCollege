@@ -224,7 +224,7 @@ public final class MPayment extends X_C_Payment
 		setTrxType(TrxType);
 		//
 		setCreditCardType (creditCardType);
-		setCreditCardNumber (creditCardNumber);
+		setCreditCardNumber (creditCardNumber, false);  //accept the input format
 		setCreditCardVV (creditCardVV);
 		setCreditCardExpMM (creditCardExpMM);
 		setCreditCardExpYY (creditCardExpYY);
@@ -478,18 +478,19 @@ public final class MPayment extends X_C_Payment
 
 		try
 		{
-			PaymentProcessor pp = PaymentProcessor.create(m_mPaymentProcessor, this);
-			if (pp == null)
+			m_paymentProcessor = PaymentProcessor.create(m_mPaymentProcessor, this);
+			if (m_paymentProcessor == null)
 				setErrorMessage("No Payment Processor");
 			else
 			{
 				// Validate before trying to process
-				String msg = pp.validate();
+				// String msg = pp.validate();
+				String msg = null;
 				if (msg!=null && msg.trim().length()>0) {
 					setErrorMessage(Msg.getMsg(getCtx(), msg));
 				} else {
 					// Process if validation succeeds
-					approved = pp.processCC ();
+					approved = m_paymentProcessor.processCC ();
 					if (approved)
 						setErrorMessage(null);
 					else
@@ -927,9 +928,26 @@ public final class MPayment extends X_C_Payment
 	 */
 	public void setCreditCardNumber (String CreditCardNumber)
 	{
-		super.setCreditCardNumber (MPaymentValidate.checkNumeric(CreditCardNumber));
+		setCreditCardNumber(CreditCardNumber, true);
+//		super.setCreditCardNumber (MPaymentValidate.checkNumeric(CreditCardNumber));
 	}	//	setCreditCardNumber
-	
+
+	/**************************************************************************
+	 *  Credit Card Number
+	 *  @param CreditCardNumber CreditCard Number
+	 */
+	public void setCreditCardNumber (String CreditCardNumber, Boolean validate)
+	{
+		if (validate)
+		{
+			super.setCreditCardNumber (MPaymentValidate.checkNumeric(CreditCardNumber));
+		}
+		else
+		{
+			super.setCreditCardNumber(CreditCardNumber);
+		}
+	}	//	setCreditCardNumber
+
 	/**
 	 *  Verification Code
 	 *  @param newCreditCardVV CC verification
