@@ -24,3 +24,5 @@ ofc/zkwebui/timeout.zul
 ofc/lib/customization.jar
 ofc/lib/
 ofc/serverRoot/build/deploy/
+ofc/packages/helcim_semi_integrated.jar
+ofc/packages/mckayerp_ftu.jar
