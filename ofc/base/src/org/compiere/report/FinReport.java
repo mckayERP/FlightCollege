@@ -26,7 +26,7 @@ import java.util.logging.Level;
 
 
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.compiere.model.MAcctSchemaElement;
 import org.compiere.model.MReportCube;
 import org.compiere.print.MPrintFormat;
