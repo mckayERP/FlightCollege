@@ -1226,6 +1226,7 @@ public class FinReport extends SvrProcess
 		else
 			insert.append("2 ");
 
+		int firstRelativeColumn = -1;
 		//	for all columns create select statement
 		for (int col = 0; col < m_columns.length; col++)
 		{
@@ -1239,13 +1240,22 @@ public class FinReport extends SvrProcess
 			}
 			//	Amount Type ... Qty
 			if (m_lines[line].getPAAmountType() != null)				//	line amount type overwrites column
+			{
 				insert.append (m_lines[line].getSelectClause (false));
+			}
 			else if (m_columns[col].getPAAmountType() != null)
+			{
 				insert.append (m_columns[col].getSelectClause (false));
+			}
 			else
 			{
 				insert.append("NULL");
 				continue;
+			}
+			
+			if (firstRelativeColumn < 0)
+			{
+				firstRelativeColumn = col;
 			}
 		}
 		//
@@ -1255,18 +1265,46 @@ public class FinReport extends SvrProcess
 		String s = m_report.getWhereClause();
 		if (s != null && s.length() > 0)
 			insert.append(" AND ").append(s);
-		//	Period restriction
-		FinReportPeriod frp = getPeriod (0);
 		insert.append(" AND TRUNC(DateAcct, 'DD') ");
-		
-		if (m_columns[0].isDay() || m_lines[line].isDay())
+
+		//	Period restriction
+		//  For transactions, use the first column only
+		FinReportPeriod frp = getPeriod (m_columns[firstRelativeColumn].getRelativePeriod());
+		if (m_lines[line].getPAPeriodType() != null)			//	line amount type overwrites column
 		{
-			insert.append("= ").append(DB.TO_DATE(p_ReportDate));
+			if (m_lines[line].isPeriod())
+				insert.append(frp.getPeriodWhere());
+			else if (m_lines[line].isYear())
+				insert.append(frp.getYearWhere());
+			else if (m_lines[line].isNatural())
+				insert.append(frp.getNaturalWhere("fb"));
+			else if (m_lines[line].isDay())
+				insert.append("= ").append(DB.TO_DATE(p_ReportDate));
+			else
+				insert.append(frp.getTotalWhere());
 		}
-		else
+		else if (m_columns[firstRelativeColumn].getPAPeriodType() != null)
 		{
-			insert.append(frp.getPeriodWhere());  // between start and end dates of period
+			if (m_columns[firstRelativeColumn].isPeriod())
+				insert.append(frp.getPeriodWhere());
+			else if (m_columns[firstRelativeColumn].isYear())
+				insert.append(frp.getYearWhere());
+			else if (m_columns[firstRelativeColumn].isNatural())
+				insert.append(frp.getNaturalWhere("fb"));
+			else if (m_columns[firstRelativeColumn].isDay())
+				insert.append("= ").append(DB.TO_DATE(p_ReportDate));
+			else
+				insert.append(frp.getTotalWhere());
 		}
+
+//		if (m_columns[0].isDay() || m_lines[line].isDay())
+//		{
+//			insert.append("= ").append(DB.TO_DATE(p_ReportDate));
+//		}
+//		else
+//		{
+//			insert.append(frp.getPeriodWhere());  // between start and end dates of period
+//		}
 		//	PostingType ??
 		//		if (!m_lines[line].isPostingType())		//	only if not defined on line
 		//		{
