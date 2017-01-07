@@ -533,6 +533,12 @@ public final class MPayment extends X_C_Payment
 		return retValue;    //  Payment processed
 	}   //  startProcess
 
+	protected boolean beforeDelete()
+	{
+		deAllocate();
+		return true;
+	}
+	
 	
 	/**
 	 * 	Before Save
@@ -2231,10 +2237,18 @@ public final class MPayment extends X_C_Payment
 		for (int i = 0; i < allocations.length; i++)
 		{
 			allocations[i].set_TrxName(get_TrxName());
-			allocations[i].setDocAction(DocAction.ACTION_Reverse_Correct);
-			if (!allocations[i].processIt(DocAction.ACTION_Reverse_Correct))
-				throw new AdempiereException(allocations[i].getProcessMsg());
-			allocations[i].saveEx();
+			if (DocAction.STATUS_Completed.equals(allocations[i].getDocStatus()))
+			{
+				
+				allocations[i].setDocAction(DocAction.ACTION_Reverse_Correct);
+				if (!allocations[i].processIt(DocAction.ACTION_Reverse_Correct))
+					throw new AdempiereException(allocations[i].getProcessMsg());
+				allocations[i].saveEx();
+			}
+			else
+			{
+				allocations[i].deleteEx(true);
+			}
 		}
 		
 		// 	Unlink (in case allocation did not get it)
