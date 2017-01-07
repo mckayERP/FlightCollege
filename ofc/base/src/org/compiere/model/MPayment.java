@@ -169,6 +169,7 @@ public final class MPayment extends X_C_Payment
 	private static CLogger		s_log = CLogger.getCLogger (MPayment.class);
 	/** Error Message						*/
 	private String				m_errorMessage = null;
+	private PaymentProcessor m_paymentProcessor;
 	
 	/** Reversal Indicator			*/
 	public static String	REVERSE_INDICATOR = "^";
@@ -506,6 +507,19 @@ public final class MPayment extends X_C_Payment
 		setIsApproved(approved);
 		return approved;
 	}   //  processOnline
+	
+	public String getProcessOnlineResult()
+	{
+		if (m_paymentProcessor != null)
+			return m_paymentProcessor.getResult();
+		else
+			return "OK";
+	}
+
+	public void stopProcessOnline()
+	{
+		m_paymentProcessor.closeAllThreads();
+	}
 
 	/**
 	 *  Process Online Payment.
@@ -2638,5 +2652,42 @@ public final class MPayment extends X_C_Payment
 			return getWriteOffAmt();
 		return getPayAmt();
 	}	//	getApprovalAmt
+
+
+	public MPaymentProcessor getMPaymentProcessor() {
+
+		return m_mPaymentProcessor;
+		
+	}
 	
+	public boolean voidOnline() {
+		
+		if (m_mPaymentProcessor == null)
+		{
+			log.log(Level.WARNING, "No Payment Processor Model");
+			setErrorMessage("No Payment Processor Model");
+			return false;
+		}
+
+		boolean voided = false;
+
+		if (m_paymentProcessor == null)
+			setErrorMessage("No Payment Processor");
+		else
+		{
+			// Process if validation succeeds
+			m_paymentProcessor.voidTrx ();
+			setErrorMessage(null);
+			voided = true;
+		}
+		return voided;
+		
+	}
+
+
+	public PaymentProcessor getPaymentProcessor() {
+
+		return m_paymentProcessor;
+		
+	}
 }   //  MPayment
