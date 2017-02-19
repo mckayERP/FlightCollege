@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TL11B Tax Form" pageWidth="612" pageHeight="792" whenNoDataType="BlankPage" columnWidth="612" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="5b3c932f-5ab2-46e8-9490-496f78da8529">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1645"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="C_BPartner_ID" class="java.math.BigDecimal">
 		<defaultValueExpression><![CDATA[new BigDecimal(1001151)]]></defaultValueExpression>
 	</parameter>
@@ -66,7 +66,7 @@ WHERE 	bp.c_bpartner_id = $P{C_BPartner_ID}]]>
 		<band height="400">
 			<staticText>
 				<reportElement x="199" y="5" width="350" height="15" uuid="5a125966-4847-4e8e-b516-9a114bc66a4b"/>
-				<text><![CDATA[Ottawa Flying Club]]></text>
+				<text><![CDATA[Ottawa Flight College]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="199" y="22" width="350" height="15" uuid="05bd8c63-7686-48d3-b240-c6853101113a"/>
