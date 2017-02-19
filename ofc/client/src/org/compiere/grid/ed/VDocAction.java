@@ -35,8 +35,6 @@ import org.compiere.apps.AEnv;
 import org.compiere.apps.ConfirmPanel;
 import org.compiere.model.GridTab;
 import org.compiere.model.MTable;
-import org.compiere.model.PO;
-import org.compiere.process.DocOptions;
 import org.compiere.process.DocumentEngine;
 import org.compiere.swing.CComboBox;
 import org.compiere.swing.CDialog;
@@ -262,7 +260,7 @@ public class VDocAction extends CDialog
 			for (int j = 0; j < s_value.length && !added; j++)
 				if (options[i].equals(s_value[j]))
 				{
-					actionCombo.addItem(s_name[j]);
+					actionCombo.addItem((Object) s_name[j]);
 					added = true;
 				}
 		}
