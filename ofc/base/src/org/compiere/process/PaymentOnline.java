@@ -14,69 +14,65 @@
  * ComPiere, Inc., 2620 Augustine Dr. #245, Santa Clara, CA 95054, USA        *
  * or via info@compiere.org or http://www.compiere.org/license.html           *
  *****************************************************************************/
-package org.compiere.model;
+package org.compiere.process;
 
-import java.io.Serializable;
+//import org.compiere.process.*;
+import java.util.logging.Level;
+
+import org.compiere.apps.ADialog;
+import org.compiere.model.MInvoice;
+import org.compiere.model.MPayment;
+import org.compiere.util.Env;
+import org.compiere.util.Msg;
+
 
 /**
- * 	Authorize.net Payment Processor Services Interface
- *	
+ *	Online Payment Process
+ *
  *  @author Jorg Janke
- *  @version $Id: PP_Authorize.java,v 1.2 2006/07/30 00:51:03 jjanke Exp $
+ *  @version $Id: PaymentOnline.java,v 1.2 2006/07/30 00:51:02 jjanke Exp $
  */
-public class PP_Authorize extends PaymentProcessor
-	implements Serializable
+public class PaymentOnline extends SvrProcess
 {
 	/**
-	 * 
+	 *  Prepare - e.g., get Parameters.
 	 */
-	private static final long serialVersionUID = 4010515114494556626L;
-	/**	Status					*/
-	private boolean		m_ok = false;
+	protected void prepare()
+	{
+		ProcessInfoParameter[] para = getParameter();
+		for (int i = 0; i < para.length; i++)
+		{
+			String name = para[i].getParameterName();
+			if (para[i].getParameter() == null)
+				;
+			else
+				log.log(Level.SEVERE, "prepare - Unknown Parameter: " + name);
+		}
+	}	//	prepare
 
 	/**
-	 * 	Process CC
-	 *	@return processed ok
-	 *	@throws IllegalArgumentException
+	 *  Perform process.
+	 *  @return Message
+	 *  @throws Exception
 	 */
-	public boolean processCC ()
-		throws IllegalArgumentException
+	protected String doIt() throws Exception
 	{
-		setEncoded(true);
-		return m_ok;
-	}	//	processCC
-
-	/**
-	 * 	Is Processed OK
-	 *	@return true if OK
-	 */
-	public boolean isProcessedOK ()
-	{
-		return m_ok;
-	}	//	isProcessedOK
-
-	@Override
-	public boolean voidTrx() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void closeAllThreads() {
-		// TODO Auto-generated method stub
+		log.info("Record_ID=" + getRecord_ID());
+		//	get Payment
+		MPayment pp = new MPayment (getCtx(), getRecord_ID(), get_TrxName());
 		
-	}
+		MInvoice invoice = (MInvoice) pp.getC_Invoice();
+		if (invoice != null && invoice.isPaid())
+		{
+				return "@Error@ @C_Invoice_ID@ @IsPaid@";
+		}
 
-	@Override
-	public boolean refundTrx() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+		//  Process it
+		boolean ok = pp.processOnline();
+//		pp.saveEx();
+		if (!ok)
+			throw new Exception(pp.getErrorMessage());
+		return pp.getProcessOnlineResult();
+	}	//	doIt
 
-	@Override
-	public boolean processCC(String action) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
-}	//	PP_Authorize
+}	//	PaymentOnline

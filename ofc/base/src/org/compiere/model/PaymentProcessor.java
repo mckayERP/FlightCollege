@@ -126,9 +126,23 @@ public abstract class PaymentProcessor
 	
 	
 	/**
-	 *  Void or cancel the current transaction
+	 *  Process CreditCard (no date check) using the specific action
+	 *  @return true if processed successfully
+	 *  @throws IllegalArgumentException
+	 */	
+	public abstract boolean processCC(String action) throws IllegalArgumentException;
+	
+	/**
+	 *  Void a transaction.  Used when transaction has not be settled.
+	 *  @return success
 	 */
 	public abstract boolean voidTrx();
+
+	/**
+	 * Refund a transaction. Used instead of Void after a settlement.
+	 * @return success
+	 */
+	public abstract boolean refundTrx();
 
 	/**
 	 *  Close all threads created by the payment processes
@@ -376,4 +390,5 @@ public abstract class PaymentProcessor
 		// TODO Auto-generated method stub
 		return "";
 	}
+
 }   //  PaymentProcessor

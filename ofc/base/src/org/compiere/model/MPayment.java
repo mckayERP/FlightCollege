@@ -39,6 +39,7 @@ import org.compiere.util.Msg;
 import org.compiere.util.Trx;
 import org.compiere.util.ValueNamePair;
 
+
 /**
  *  Payment Model.
  *  - retrieve and create payments for invoice
@@ -2681,6 +2682,30 @@ public final class MPayment extends X_C_Payment
 			voided = true;
 		}
 		return voided;
+		
+	}
+
+	public boolean refundOnline() {
+		
+		if (m_mPaymentProcessor == null)
+		{
+			log.log(Level.WARNING, "No Payment Processor Model");
+			setErrorMessage("No Payment Processor Model");
+			return false;
+		}
+
+		boolean refunded = false;
+
+		if (m_paymentProcessor == null)
+			setErrorMessage("No Payment Processor");
+		else
+		{
+			// Process if validation succeeds
+			m_paymentProcessor.refundTrx ();
+			setErrorMessage(null);
+			refunded = true;
+		}
+		return refunded;
 		
 	}
 

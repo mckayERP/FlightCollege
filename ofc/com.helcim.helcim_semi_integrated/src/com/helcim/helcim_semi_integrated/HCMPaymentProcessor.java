@@ -27,6 +27,7 @@ import java.util.TimerTask;
 import org.adempiere.exceptions.AdempiereException;
 import org.compiere.model.I_C_Currency;
 import org.compiere.model.MPayment;
+import org.compiere.model.MSysConfig;
 import org.compiere.model.PaymentProcessor;
 import org.compiere.model.X_C_Payment;
 import org.compiere.process.DocAction;
@@ -62,7 +63,8 @@ public class HCMPaymentProcessor extends PaymentProcessor {
 	private boolean voidTrx = false; 
 	
 	/** A flag to use the terminal simulator - typically for development only */
-	private final Boolean simulation = true;
+	private final Boolean simulation = MSysConfig.getBooleanValue("Use Helcim Simulator", false, Env.getAD_Client_ID(Env.getCtx()), Env.getAD_Org_ID(Env.getCtx()));
+	
 	
 	/** The simulator thread, only used if simulation == true */
 	private Thread simThread = null;
@@ -89,6 +91,9 @@ public class HCMPaymentProcessor extends PaymentProcessor {
 	
 	/** A thread synchronization object used for wait/notify actions */
 	public static final Object syncObject = new Object();
+	
+    private boolean m_done = false;
+
 
 	CLogger log = CLogger.getCLogger(HCMPaymentProcessor.class);
 	
@@ -99,59 +104,6 @@ public class HCMPaymentProcessor extends PaymentProcessor {
 	 */
 	public HCMPaymentProcessor() 
 	{
-		// Create the terminal API
-		terminal = new hcmTerminal();
-		
-		// If simulating the physical terminal, start the simulation
-		if (simulation) 
-		{
-	
-			log.info("Starting simulator");
-			
-			if (simulator == null)
-				simulator = new HCMTerminalSimulator();
-			
-			if (simThread == null)
-			{
-					simThread  = new Thread(simulator);
-					simThread.start();
-			}
-			
-			try 
-			{
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				simThread.interrupt();
-			}
-			
-			// Use the simulator IP and Port rather than the payment processor definitions
-			terminal.terminalIp = simulator.getIp();
-			terminal.terminalPort = simulator.getPort();
-			
-		}
-		else // No simulation
-		{
-			
-			// Connecting to the terminal through the payment processor host address (IP)
-			// and port
-			log.info("Connecting to terminal.");
-			terminal.terminalIp = this.p_mpp.getHostAddress();
-			terminal.terminalPort = this.p_mpp.getHostPort();
-			
-		}
-		
-        // CREATE THREADs - this is a classic consumer/producer multi-threaded design.
-		// The producer commands the terminal and "produces" the output logs. The consumer
-		// consumes the logs and handles the results of the transaction.
-		log.info("Starting terminal log producer");
-		producer = new HCMTerminalProducer();
-        producerThread = new Thread(producer);
-        producerThread.start();
-
-        consumer = new HCMTerminalConsumer(producer);
-        consumerThread = new Thread(consumer);
-        consumerThread.start();
-        
         //  The constructor does not block.
 	}
 
@@ -184,8 +136,7 @@ public class HCMPaymentProcessor extends PaymentProcessor {
 		public void run() {
 
 			//  Consume the producer output - the terminal log
-	        Boolean done = false;
-	        while ( !done )
+	        while ( !m_done )
 	        {
 	        	log.fine("Getting the terminal log - may block.");
 	        	String terminalLog = m_producer.getTerminalLog();  // Will block until output available or interrupted.
@@ -209,7 +160,7 @@ public class HCMPaymentProcessor extends PaymentProcessor {
 	        		log.fine("Terminal Consumer loop finished. Ended Connection: " + terminalLog.contains("Ended Connection")
 	        				+ ", Error: " + terminalLog.contains("Error") 
 	        				+ ", Interruption: " + Thread.currentThread().isInterrupted());
-	        		done = true;
+	        		m_done = true;
 	        	}
 	        }
 
@@ -258,6 +209,10 @@ public class HCMPaymentProcessor extends PaymentProcessor {
 											p_mp.saveEx();
 											
 											success[0] = p_mp.processIt(DocAction.ACTION_Complete);
+											
+											// Close the payment as it has a credit card transaction associated
+											// with it.  Void not allowed.
+											success[0] = p_mp.processIt(DocAction.ACTION_Close);
 										}
 										
 									}
@@ -271,7 +226,6 @@ public class HCMPaymentProcessor extends PaymentProcessor {
 							success[0] = false;
 							log.severe("Payment Error.  " + e.getMessage());
 							e.printStackTrace();
-							
 						}
 
 					}
@@ -577,9 +531,9 @@ public class HCMPaymentProcessor extends PaymentProcessor {
 				else 
 				{
 					// Add the responseItem directly
-					result += responseItem;
-					if ( !(responseItem.endsWith("\n") || responseItem.endsWith(" ")) )
-						result += " ";
+//					result += responseItem;
+//					if ( !(responseItem.endsWith("\n") || responseItem.endsWith(" ")) )
+//						result += " ";
 				}
 			}
 			
@@ -697,11 +651,12 @@ public class HCMPaymentProcessor extends PaymentProcessor {
 	        // START TIMER AT 500MS
 	        logTimer.scheduleAtFixedRate(new TimerTask() 
 	        {
-	            @Override
+
+				@Override
 	            public void run() 
 	            {
 	            	setTerminalLog(logTimer);
-	            	if (voidTrx)
+	            	if (!m_done && voidTrx)
 	            	{
 	            		terminal.hcmVoid();
 	            		voidTrx = false;
@@ -720,6 +675,22 @@ public class HCMPaymentProcessor extends PaymentProcessor {
 	 */
 	@Override
 	public boolean processCC() throws IllegalArgumentException {
+		return processCC("Purchase");
+	}
+
+	/**
+	 * Process the Credit Card transaction using the Helcim terminals.
+	 */
+	public boolean processCC(String action) throws IllegalArgumentException {
+		
+		// Have the payment processor and payment fields been set?
+		if (p_mpp == null || p_mp == null)
+		{
+
+			closeAllThreads();
+			throw new IllegalArgumentException("Payment Processor and Payment not set.");
+
+		}
 		
 		//  Check for the correct currency.  The Helcim terminals process in CDN
 		if ( p_mpp.getC_Currency_ID() != 0 && p_mpp.getC_Currency_ID() != p_mp.getC_Currency_ID() )
@@ -758,6 +729,60 @@ public class HCMPaymentProcessor extends PaymentProcessor {
 			
 		}
 		
+		// Create the terminal API
+		terminal = new hcmTerminal();
+		
+		// If simulating the physical terminal, start the simulation
+		if (simulation) 
+		{
+	
+			log.info("Starting simulator");
+			
+			if (simulator == null)
+				simulator = new HCMTerminalSimulator();
+			
+			if (simThread == null)
+			{
+					simThread  = new Thread(simulator);
+					simThread.start();
+			}
+			
+			try 
+			{
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				simThread.interrupt();
+			}
+			
+			// Use the simulator IP and Port rather than the payment processor definitions
+			terminal.terminalIp = simulator.getIp();
+			terminal.terminalPort = simulator.getPort();
+			
+		}
+		else // No simulation
+		{
+			
+			// Connecting to the terminal through the payment processor host address (IP)
+			// and port
+			log.info("Connecting to terminal.");
+			terminal.terminalIp = this.p_mpp.getHostAddress();
+			terminal.terminalPort = this.p_mpp.getHostPort();
+			
+		}
+		
+        // CREATE THREADs - this is a classic consumer/producer multi-threaded design.
+		// The producer commands the terminal and "produces" the output logs. The consumer
+		// consumes the logs and handles the results of the transaction.
+		log.info("Starting terminal log producer");
+		producer = new HCMTerminalProducer();
+        producerThread = new Thread(producer);
+        producerThread.start();
+
+        consumer = new HCMTerminalConsumer(producer);
+        consumerThread = new Thread(consumer);
+        consumerThread.start();
+        
+		
 		//  Get the currency precision
 		int precision = 2;  // cents
 		I_C_Currency currency = null;
@@ -793,31 +818,65 @@ public class HCMPaymentProcessor extends PaymentProcessor {
 		}
 		
 		// Set the terminal clerkID to the User ID
-		terminal.clerkId = Env.getAD_User_ID(Env.getCtx());
+		terminal.clerkId = 200;
 
-		
-		//  Purchase or Refund?
-		if (terminal.amount < 0)
+		switch (action)
 		{
+			case "Purchase": 
+			{
+				//  Purchase 
+				if (terminal.amount < 0)
+				{
+					throw new IllegalArgumentException("Payment amount is negative for sale.");
+				}
+				terminal.hcmPurchase();
+			}
+				
+			case "Void":
+			{
+				terminal.hcmVoid();
+			}
 			
-			//  Refund
-			//  Negative payment amounts indicate a refund but the terminal
-			//  accepts refunds as positive numbers
-
-			// TODO Test
-			terminal.amount = terminal.amount * -1;
-			terminal.hcmRefund();
-		}
-		else
-		{
+			case "Refund":
+			{
+				if (terminal.amount > 0)
+				{
+					throw new IllegalArgumentException("Can't refund a positive payment amount.");
+				}
 			
-			//  Purchase
-	        terminal.hcmPurchase();
-	        
-		}
+				//  Refund
+				//  Negative payment amounts indicate a refund but the terminal
+				//  accepts refunds as positive numbers
+	
+				// TODO Test
+				terminal.amount = terminal.amount * -1;
+				terminal.hcmRefund();
+	
+			}
 
+			case "Preauth":
+			{
+				terminal.hcmPreAuth();
+			}
 
-        return true;
+			case "Capture":
+			{
+				terminal.hcmCapture();
+			}
+
+			case "Settle":
+			{
+				terminal.hcmPreAuth();
+			}
+
+			case "Reprint":
+			{
+				terminal.hcmPreAuth();
+			}
+
+		}  // End switch
+
+		return true;
         
 	}
 
@@ -1043,18 +1102,54 @@ public class HCMPaymentProcessor extends PaymentProcessor {
 	} // END FUNCTION
 
 	/**
-	 * Void the current transaction.
+	 * Void a credit card payment.   
 	 */
 	@Override
 	public boolean voidTrx()
 	{
-		
-		log.info("Voiding transaction");
-		terminal.hcmVoid();
-		return true;
-		
+		return processCC("Void");		
 	}
-	
+
+	/**
+	 * Capture an authorized credit card payment.   
+	 */
+	public boolean captureTrx()
+	{
+		return processCC("Capture");		
+	}
+
+	/**
+	 * Refund a settled credit card payment.   
+	 */
+	public boolean refundTrx()
+	{
+		return processCC("Refund");		
+	}
+
+	/**
+	 * Preauthorize a credit card payment.   
+	 */
+	public boolean preAuthTrx()
+	{
+		return processCC("Preauth");		
+	}
+
+	/**
+	 * Settle current payments.   
+	 */
+	public boolean settle()
+	{
+		return processCC("Settle");		
+	}
+
+	/**
+	 * Reprint a payment.   
+	 */
+	public boolean reprint()
+	{
+		return processCC("Reprint");		
+	}
+
 	/**
 	 * Close all the threads created by the payment processor.  The threads are 
 	 * sent an interrupt and have to respond by ending their operation.
@@ -1063,7 +1158,7 @@ public class HCMPaymentProcessor extends PaymentProcessor {
 	{
 		
 		log.info("Closing threads");
-		if (simulation && simThread.isAlive())
+		if (simulation && simThread != null && simThread.isAlive())
 		{
 		
 			log.info("Closing sim thread");
@@ -1073,7 +1168,7 @@ public class HCMPaymentProcessor extends PaymentProcessor {
 			
 		}
 		
-		if (producerThread.isAlive())
+		if (producerThread != null && producerThread.isAlive())
 		{
 			
 			log.info("Closing producer thread");
@@ -1081,7 +1176,7 @@ public class HCMPaymentProcessor extends PaymentProcessor {
 			
 		}
 		
-		if (consumerThread.isAlive())
+		if (consumerThread != null && consumerThread.isAlive())
 		{
 			
 			log.info("Closing consumer thread");

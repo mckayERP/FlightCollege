@@ -72,7 +72,6 @@ public class HCMTerminalSimulator implements Runnable {
             hcmSocket = serverSocket.accept();
 
             // CREATE READER AND WRITER
-            sendingStream = new BufferedWriter(new OutputStreamWriter(hcmSocket.getOutputStream()));
             receivingStream = new BufferedReader(new InputStreamReader(hcmSocket.getInputStream()));
 
             final InputStream input = hcmSocket.getInputStream();
@@ -96,20 +95,20 @@ public class HCMTerminalSimulator implements Runnable {
 	                                              log.info("Received request: " + hexRequest);
 
 	                                              // SEND REQUEST
-	                                              try {
-	                                            	  if (! isConnected)
-	                                            	  {
-	                                            		  isConnected = true;
-		                                            	  sendingStream.write("\nTerminal Connected\n");
-		                                            	  sendingStream.flush();
-		                                            	  Thread.sleep(1000);
-	                                            	  }
-	                                              } catch (IOException | InterruptedException e) {
-														// TODO Auto-generated catch block
-														e.printStackTrace();
-	                                              }
+//	                                              try {
+//	                                            	  if (! isConnected)
+//	                                            	  {
+//	                                            		  isConnected = true;
+//		                                            	  sendingStream.write("\nTerminal Connected\n");
+//		                                            	  sendingStream.flush();
+//		                                            	  Thread.sleep(1000);
+//	                                            	  }
+//	                                              } catch (IOException | InterruptedException e) {
+//														// TODO Auto-generated catch block
+//														e.printStackTrace();
+//	                                              }
 	                                              
-	                                              // TRANSLATE
+	                                              // Translate request
 	                                              translateRequest();
 	                                              
                                               }	                                              
@@ -127,37 +126,22 @@ public class HCMTerminalSimulator implements Runnable {
 													
                                               generateResponse();
                                               
-                                              if (requestType.equals("Void") || hexResponse.contains("Ended Connection"))
-                                              {
-                                            	  
-                                            	  try {
-                                            		Thread.sleep(1000);
-                                            	  } catch (InterruptedException e) {
-													e.printStackTrace();
-                                            	  }
-                                            	  finally
-                                            	  {
-                                            		  try {
-                                            			  serverSocket.close();
-	  													  hcmSocket.close();
-													} catch (IOException e) {
-														// TODO Auto-generated catch block
-														e.printStackTrace();
-													}
-	                                            	  responseTimer.cancel();
-	                                            	  receiptTimer.cancel();
-                                            	  }
+                                              sendResponse();
                                               
-                                              }	                                              
+                                    		  
+                                        	  responseTimer.cancel();
+                                        	  receiptTimer.cancel();
+                                        	  
                                           }
                                       }, 0, 2000
             );
 
-        } catch (Exception e) {
+        } 
+        catch (Exception e) 
+        {
 
             this.simLog += "Error: " + e.getMessage() + "\n";
             log.severe(e.getMessage());
-            
 
         }
 
@@ -279,112 +263,97 @@ public class HCMTerminalSimulator implements Runnable {
 	    	try {
 				wait();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				// Reset the thread interrupt state
+				Thread.currentThread().interrupt();
 			}
         }
         
-        if (this.requestType.equals("Purchase")) {
+        if (this.requestType.equals("Purchase")) 
+        {
         	
-        	if(stateCounter == 0)
-        	{
-	        	this.stringResponse += "601"
-	        			+ this.getTID()
-	                    + " ";
-	
-	        	this.stringResponse += "602"
-	        			+ this.getMID()
-	                    + " ";
-        	}
-        	else if(stateCounter == 1)
-        	{
-	        	this.stringResponse += "300"			// Card Type
-                        + this.getCardType()
-	                    + " ";
-	
-	        	this.stringResponse += "302"
-	                    + this.getCardNumber()
-	                    + " ";
+        	this.stringResponse += "601"
+        			+ this.getTID()
+                    + " ";
+
+        	this.stringResponse += "602"
+        			+ this.getMID()
+                    + " ";
+
+        	this.stringResponse += "300"			// Card Type
+                    + this.getCardType()
+                    + " ";
+
+        	this.stringResponse += "302"
+                    + this.getCardNumber()
+                    + " ";
 
         	this.stringResponse += "306"			// Card Entry
                     + this.getCardEntry()
                     + " ";
-        	}
-        	else if(stateCounter == 2)
-        	{
-	        	
-	        	this.stringResponse += "402"
-	                    + this.getResponseMessage()
-	                    + " ";
-	
-	        	this.stringResponse += "112"
-	                    + this.getReferenceNumber()
-	                    + " ";
-	
-	        	this.stringResponse += "400"
-	                    + this.getAuthorizationNumber()
-	                    + " ";
-	
-	        	this.stringResponse += "401"
-	        			+ this.getResponseCode()
-	                    + " ";
-	
-	        	this.stringResponse += "500"
-	        			+ this.getBatchNumber()
-	                    + " ";
-        	}
-        	stateCounter++;
-        }
-        if (this.requestType.equals("Refund")) {
         	
-        	if(stateCounter == 0)
-        	{
-	        	this.stringResponse += "601"
-	        			+ this.getTID()
-	                    + " ";
-	
-	        	this.stringResponse += "602"
-	        			+ this.getMID()
-	                    + " ";
-        	}
-        	else if(stateCounter == 1)
-        	{
-	        	this.stringResponse += "300"			// Card Type
-                        + this.getCardType()
-	                    + " ";
-	
-	        	this.stringResponse += "302"
-	                    + this.getCardNumber()
-	                    + " ";
+        	this.stringResponse += "402"
+                    + this.getResponseMessage()
+                    + " ";
+
+        	this.stringResponse += "112"
+                    + this.getReferenceNumber()
+                    + " ";
+
+        	this.stringResponse += "400"
+                    + this.getAuthorizationNumber()
+                    + " ";
+
+        	this.stringResponse += "401"
+        			+ this.getResponseCode()
+                    + " ";
+
+        	this.stringResponse += "500"
+        			+ this.getBatchNumber()
+                    + " ";
+        	
+        }  
+        else if (this.requestType.equals("Refund")) 
+        {
+        	
+        	this.stringResponse += "601"
+        			+ this.getTID()
+                    + " ";
+
+        	this.stringResponse += "602"
+        			+ this.getMID()
+                    + " ";
+
+        	this.stringResponse += "300"			// Card Type
+                    + this.getCardType()
+                    + " ";
+
+        	this.stringResponse += "302"
+                    + this.getCardNumber()
+                    + " ";
 
         	this.stringResponse += "306"			// Card Entry
-                    + this.getCardEntry()
-                    + " ";
-        	}
-        	else if(stateCounter == 2)
-        	{
+	                + this.getCardEntry()
+	                + " ";
 	        	
-	        	this.stringResponse += "402"
-	                    + this.getResponseMessage()
-	                    + " ";
-	
-	        	this.stringResponse += "112"
-	                    + this.getReferenceNumber()
-	                    + " ";
-	
-	        	this.stringResponse += "400"
-	                    + this.getAuthorizationNumber()
-	                    + " ";
-	
-	        	this.stringResponse += "401"
-	        			+ this.getResponseCode()
-	                    + " ";
-	
-	        	this.stringResponse += "500"
-	        			+ this.getBatchNumber()
-	                    + " ";
-        	}
-        	stateCounter++;
+        	this.stringResponse += "402"
+                    + this.getResponseMessage()
+                    + " ";
+
+        	this.stringResponse += "112"
+                    + this.getReferenceNumber()
+                    + " ";
+
+        	this.stringResponse += "400"
+                    + this.getAuthorizationNumber()
+                    + " ";
+
+        	this.stringResponse += "401"
+        			+ this.getResponseCode()
+                    + " ";
+
+        	this.stringResponse += "500"
+        			+ this.getBatchNumber()
+                    + " ";
         }
         else if (this.requestType.equals("Settle")) 
         {
@@ -433,7 +402,7 @@ public class HCMTerminalSimulator implements Runnable {
         } // End Batch
         else if (this.requestType.equals("Void")) 
         {
-        	this.stringResponse += "Transaction Voided\n";
+        	this.stringResponse += "Transaction Voided";
         }
 
         if (this.stringResponse != null) 
@@ -449,31 +418,42 @@ public class HCMTerminalSimulator implements Runnable {
             this.stringResponse = this.stringResponse.replace((char) 0x20, (char) 0x1d);
         }
         
-//        this.stringResponse += "\n";
+//      this.stringResponse += "\n";
         
-        if (requestType.equals("Void") || stateCounter==3)
-        {
-		    //  Need to add a terminating end of line
-		    this.stringResponse += "Ended Connection\n";
-        }
+//        if (requestType.equals("Void") || stateCounter==3)
+//        {
+//		    //  Need to add a terminating end of line
+//		    this.stringResponse += "Ended Connection\n";
+//        }
 
         this.hexResponse = this.stringResponse;
 
-        sendResponse();
-        
     } // END FUNCTION
 
 	private void sendResponse() {
         // SEND REQUEST
         try {
       	  log.info("Terminal sending response: " + hexResponse);
+          sendingStream = new BufferedWriter(new OutputStreamWriter(hcmSocket.getOutputStream()));
       	  sendingStream.write(hexResponse);
       	  sendingStream.flush();
+      	  
         } catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
         }
-        		
+        finally
+        {
+        	try {
+      		  sendingStream.close();
+    		  receivingStream.close();
+    		  serverSocket.close();
+    		  hcmSocket.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        }
 	}
 
 
@@ -490,7 +470,7 @@ public class HCMTerminalSimulator implements Runnable {
 
 	private String getResponseCode() {
 		// TODO Auto-generated method stub
-		return "00";
+		return "AA";
 	}
 
 	private String getTID() {

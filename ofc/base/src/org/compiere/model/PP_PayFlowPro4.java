@@ -281,4 +281,16 @@ public final class PP_PayFlowPro4 extends PaymentProcessor
 		
 	}
 
+	@Override
+	public boolean refundTrx() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean processCC(String action) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }   //  PP_PayFowPro

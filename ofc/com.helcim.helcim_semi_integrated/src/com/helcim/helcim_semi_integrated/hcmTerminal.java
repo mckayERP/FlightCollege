@@ -186,6 +186,7 @@ public class hcmTerminal {
 
 			// CREATE SOCKET
 			Socket hcmSocket = new Socket(serverAddr, this.terminalPort);
+			hcmSocket.close();
 
 			// LOG
 			this.connectionLog += "Connected\n\n";
@@ -207,67 +208,56 @@ public class hcmTerminal {
 		// CONNECT
 		try {
 
-			if (hcmSocket == null) {
+			// GET SERVER IP
+			InetAddress serverAddr = InetAddress.getByName(this.terminalIp);
 
-				// GET SERVER IP
-				InetAddress serverAddr = InetAddress.getByName(this.terminalIp);
+			// CREATE SOCKET
+			hcmSocket = new Socket(serverAddr, this.terminalPort);
 
-				// CREATE SOCKET
-				hcmSocket = new Socket(serverAddr, this.terminalPort);
+			// CREATE READER AND WRITER
+			sendingStream = new BufferedWriter(new OutputStreamWriter(
+					hcmSocket.getOutputStream()));
+			receivingStream = new BufferedReader(new InputStreamReader(
+					hcmSocket.getInputStream()));
 
-				// CREATE READER AND WRITER
-				sendingStream = new BufferedWriter(new OutputStreamWriter(
-						hcmSocket.getOutputStream()));
-				receivingStream = new BufferedReader(new InputStreamReader(
-						hcmSocket.getInputStream()));
-
-				// CREATE TIMER
-				final Timer timer = new Timer();
-
-				// START TIMER TASK
-				timer.scheduleAtFixedRate(new TimerTask() {
-
-					@Override
-					public void run() {
-
-						// SEND REQUEST
-						try {
-							if (hexRequest != null && hexRequest.length() > 0) {
-								log.info("Sending request:" + stringRequest);
-								sendingStream.write(hexRequest);
-								sendingStream.flush();
-								hexRequest = "";
-							}
-						} catch (IOException e) {
-							timer.cancel();
-							e.printStackTrace();
-						}
-
-						// GET DATA
-						hexResponse = iStreamToString(receivingStream);
-
-						if (hexResponse != null && hexResponse.length() > 0) {
-
-							// LOG
-							connectionLog += hexResponse;
-
-							// TRANSLATE
-							translateResponse();
-
-							if (connectionLog.contains("Ended Connection")
-									|| Thread.currentThread().isInterrupted())
-								timer.cancel();
-
-						}
-
-					}
-				}, 0, 500);
-
+			// Send the request
+			if (hexRequest != null && hexRequest.length() > 0) {
+				log.info("Sending request:" + stringRequest);
+				sendingStream.write(hexRequest);
+				sendingStream.flush();
+				hexRequest = "";
 			}
+			
+			// CREATE TIMER
+			final Timer timer = new Timer();
+
+			// START TIMER TASK
+			timer.scheduleAtFixedRate(new TimerTask() {
+
+				@Override
+				public void run() {
+
+					// GET DATA
+					hexResponse = iStreamToString(receivingStream);
+
+					// LOG
+					connectionLog += hexResponse;
+
+					// TRANSLATE
+					translateResponse();
+					
+					timer.cancel();
+					
+					connectionLog += " Ended Connection\n";
+
+				}
+				
+			}, 0, 500);
 
 		} catch (Exception e) {
 
 			this.connectionLog += "Error: " + e.getMessage() + "\n\n";
+            this.connectionLog += " Ended Connection\n";
 
 		}
 
@@ -275,26 +265,22 @@ public class hcmTerminal {
 
 	public String iStreamToString(BufferedReader rd) {
 
-		String line = "";
-		StringBuilder sb = new StringBuilder();
-		try {
-			while (rd.ready()) {
-				line = rd.readLine();
-				log.info("Read line: " + line);
-				if (line != null && line.length() > 0) {
-					sb.append(line).append("\n");
-					line = "";
-				}
-			}
-			// rd.close();
+        String line;
+        StringBuilder sb = new StringBuilder();
+        try {
+            while ((line = rd.readLine()) != null) {
+                sb.append(line);
+            }
+            rd.close();
 
-		} catch (IOException e) {
+        } catch (IOException e) {
 
-			e.fillInStackTrace();
+            e.fillInStackTrace();
 
-		}
+        }
 
-		return sb.toString();
+        return sb.toString();
+        
 	}
 
 	// public String iStreamToString(InputStream is1) {

@@ -354,5 +354,17 @@ public class PP_Optimal extends PaymentProcessor
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public boolean refundTrx() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean processCC(String action) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 }	//	PP_Optimal
