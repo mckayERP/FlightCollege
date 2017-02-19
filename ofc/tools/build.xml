@@ -24,11 +24,11 @@
 		<exclude name="META-INF/INDEX.LIST" />
 	</patternset>
 
-	<taskdef resource="net/sf/antcontrib/antlib.xml">
+	<!-- taskdef resource="net/sf/antcontrib/antlib.xml">
 		<classpath>
 			<fileset file="lib/ant-contrib-1.0b1.jar"></fileset>
 		</classpath>
-	</taskdef>
+	</taskdef -->
 
 	<!-- ============================================= -->
 	<!-- Init                                          -->

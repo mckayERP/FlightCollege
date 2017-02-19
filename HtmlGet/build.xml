@@ -11,10 +11,10 @@
   </description>
 
   <!-- set global properties for this build -->
-  <property file="../ofc/buildCustomization.properties"/>
+  <property file="../ofc/utils_dev/buildCustomization.properties"/>
   <property name="src" value="src"/>
   <property name="build.dir" value="build"/>
-  <property name="dist.dir" value="${ofc.home}"/>
+  <property name="dist.dir" value="${ofc.home}/lib"/>
   <property name="jar.path" value="${adempiere.trunk}/lib"/>
 
   <!-- set path to include the necessary jar files for javac -->
@@ -35,7 +35,17 @@
 
   <target name="compile" depends="init">
     <!-- compile the java code from ${src} into ${build.dir} -->
-    <javac target="1.6" fork="true" destdir="${build.dir}" deprecation="off" debug="on" memoryinitialsize="512m" memorymaximumsize="512m">
+    <javac 
+    	target="1.8" 
+    	source="1.8" 
+    	fork="true" 
+    	destdir="${build.dir}"
+    	includeantruntime="false"
+    	deprecation="off" 
+    	debug="on" 
+    	memoryinitialsize="512m" 
+    	memorymaximumsize="512m"
+	>
       <src path="${src}"/>
       <classpath refid="lib.class.path"/>
       <compilerarg line="-XDignore.symbol.file" />

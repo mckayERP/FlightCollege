@@ -28,6 +28,7 @@
     <echo message="=========== Build Server Root"/>
   </target>
 
+	
 
   <path id="base.path">
     <pathelement location="${adempiere.trunk}/lib/Adempiere.jar" />
@@ -122,8 +123,8 @@
   <!-- Cleans up the current build                 -->
   <!-- =========================================== -->
   <target name="clean">
-    <delete dir="${build.dir}" failonerror="false"/>
-    <delete file="../serverCustomization.jar"/>
+    <delete dir="${build.dir}"/>
+    <delete file="${build.deploy.dir}/serverCustomization.jar" failonerror="false"/>
   </target>
 
 </project>
