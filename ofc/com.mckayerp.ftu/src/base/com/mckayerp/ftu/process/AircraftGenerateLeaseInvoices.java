@@ -15,7 +15,6 @@ import org.compiere.model.MInvoiceLine;
 import org.compiere.model.MPeriod;
 import org.compiere.model.MProduct;
 import org.compiere.model.Query;
-import org.compiere.process.ProcessInfo;
 import org.compiere.process.SvrProcess;
 import org.compiere.util.DB;
 import org.compiere.util.Env;
@@ -36,11 +35,13 @@ public class AircraftGenerateLeaseInvoices extends SvrProcess {
 	
 	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 	private MPeriod period;
+	private boolean updateFlightsheet;
 
 	@Override
 	protected void prepare() {
 		ftu_aircraft_id = getParameterAsInt("FTU_Aircraft_ID");
 		c_period_id = getParameterAsInt("C_Period_ID");
+		updateFlightsheet = getParameterAsBoolean("UpdateFlightsheet");
 		
 	} // Prepare
 
@@ -60,12 +61,14 @@ public class AircraftGenerateLeaseInvoices extends SvrProcess {
 		
 		// Scrape the flight sheets over the period and sync the flight log
 		// Updates the journey log flight hours as well.
-		ProcessBuilder.create(getCtx())
-		.process(com.mckayerp.ftu.process.LoadFlightsheetFromXML.class)
-		.withTitle("Update flightsheets")
-		.withParameterRange("FlightDate", startDate, endDate)
-		.execute();
-
+		if (updateFlightsheet)
+		{
+			ProcessBuilder.create(getCtx())
+			.process(com.mckayerp.ftu.process.LoadFlightsheetFromXML.class)
+			.withTitle("Update flightsheets")
+			.withParameterRange("FlightDate", startDate, endDate)
+			.execute();
+		}
 
 		StringBuffer where = new StringBuffer("IsACLeased='Y'");
 		if (ftu_aircraft_id > 0)
@@ -83,8 +86,10 @@ public class AircraftGenerateLeaseInvoices extends SvrProcess {
 		{
 			if (ac.getDateExpiryLease() == null)
 			{
-				addLog("@Error@ " + ac.getACRegistration() + " has no lease expiry date." );
-				continue;
+				
+				// Potential problem but not a critical issue in most cases.
+				addLog("@Warning@ " + ac.getACRegistration() + " has no lease expiry date." );
+				
 			}
 			
 			if (ac.getDateExpiryLease().before(startDate))
@@ -92,6 +97,7 @@ public class AircraftGenerateLeaseInvoices extends SvrProcess {
 				
 				addLog(ac.getACRegistration() + " Lease expired on " + ac.getDateExpiryLease());
 				continue;
+				
 			}
 			
 			switch (ac.getLease_QtyType())
@@ -228,8 +234,9 @@ public class AircraftGenerateLeaseInvoices extends SvrProcess {
 				+ " WHERE i.DocStatus IN ('CO','CL') "
 				+ " AND i.isSOTrx = 'Y'"
 				+ " AND il.M_Product_ID =" + acProduct.getM_Product_ID()
+				+ " AND il.LineNetAmt > 0"
 				+ " AND i.dateInvoiced BETWEEN "
-				+ DB.TO_DATE(ac.getDateStartLease()) + " AND " + DB.TO_DATE(new Timestamp(endDate.getTime())); 
+				+ DB.TO_DATE(new Timestamp(startDate.getTime())) + " AND " + DB.TO_DATE(new Timestamp(endDate.getTime())); 
 		
 		BigDecimal flightHoursBilled =  DB.getSQLValueBD(get_TrxName(), sql);
 		if (flightHoursBilled == null) // nothing billed
@@ -332,6 +339,16 @@ public class AircraftGenerateLeaseInvoices extends SvrProcess {
 		MProduct leaseProduct = (MProduct) ac.getLeaseTier1Produc();
 		MInvoiceLine line = new MInvoiceLine(invoice);
 		line.setM_Product_ID(leaseProduct.getM_Product_ID());
+		
+		if (MFTUAircraft.AIRCRAFTLEASETYPE_Capital.equals(ac.getAircraftLeaseType())
+				&& ac.getA_Asset_ID() > 0)
+		{
+			line.setA_CreateUpdateAsset(true);
+			line.setA_CapvsExp(MInvoiceLine.A_CAPVSEXP_Expense);  // Expense implies items included in cost
+			line.setIsCollectiveAsset(false);
+			line.setA_Asset_ID(ac.getA_Asset_ID());
+		}
+		
 		line.setC_UOM_ID(leaseProduct.getC_UOM_ID());
 		line.setQty(tier1hours);
 		line.setPrice(ac.getLeaseRateTier1());
@@ -352,6 +369,14 @@ public class AircraftGenerateLeaseInvoices extends SvrProcess {
 			leaseProduct = (MProduct) ac.getLeaseTier2Produc();
 			line = new MInvoiceLine(invoice);
 			line.setM_Product_ID(leaseProduct.getM_Product_ID());
+			if (MFTUAircraft.AIRCRAFTLEASETYPE_Capital.equals(ac.getAircraftLeaseType())
+					&& ac.getA_Asset_ID() > 0)
+			{
+				line.setA_CreateUpdateAsset(true);
+				line.setA_CapvsExp(MInvoiceLine.A_CAPVSEXP_Expense);  // Expense implies items included in cost
+				line.setIsCollectiveAsset(false);
+				line.setA_Asset_ID(ac.getA_Asset_ID());
+			}
 			line.setC_UOM_ID(leaseProduct.getC_UOM_ID());
 			line.setQty(tier2hours);
 			line.setPriceEntered(ac.getLeaseRateTier2());
@@ -374,6 +399,16 @@ public class AircraftGenerateLeaseInvoices extends SvrProcess {
 			leaseProduct = (MProduct) ac.getLeaseTier3Produc();
 			line = new MInvoiceLine(invoice);
 			line.setM_Product_ID(leaseProduct.getM_Product_ID());
+
+			if (MFTUAircraft.AIRCRAFTLEASETYPE_Capital.equals(ac.getAircraftLeaseType())
+					&& ac.getA_Asset_ID() > 0)
+			{
+				line.setA_CreateUpdateAsset(true);
+				line.setA_CapvsExp(MInvoiceLine.A_CAPVSEXP_Expense);  // Expense implies items included in cost
+				line.setIsCollectiveAsset(false);
+				line.setA_Asset_ID(ac.getA_Asset_ID());
+			}
+			
 			line.setC_UOM_ID(leaseProduct.getC_UOM_ID());
 			line.setQty(tier3hours);
 			line.setPriceEntered(ac.getLeaseRateTier3());

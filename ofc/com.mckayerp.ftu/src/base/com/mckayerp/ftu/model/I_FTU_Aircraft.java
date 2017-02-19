@@ -41,6 +41,21 @@ public interface I_FTU_Aircraft
 
     /** Load Meta Data */
 
+    /** Column name A_Asset_ID */
+    public static final String COLUMNNAME_A_Asset_ID = "A_Asset_ID";
+
+	/** Set Asset.
+	  * Asset used internally or by customers
+	  */
+	public void setA_Asset_ID (int A_Asset_ID);
+
+	/** Get Asset.
+	  * Asset used internally or by customers
+	  */
+	public int getA_Asset_ID();
+
+	public org.compiere.model.I_A_Asset getA_Asset() throws RuntimeException;
+
     /** Column name ACMaintQtyType */
     public static final String COLUMNNAME_ACMaintQtyType = "ACMaintQtyType";
 
@@ -196,6 +211,19 @@ public interface I_FTU_Aircraft
 	  * Organizational entity within client
 	  */
 	public int getAD_Org_ID();
+
+    /** Column name AircraftLeaseType */
+    public static final String COLUMNNAME_AircraftLeaseType = "AircraftLeaseType";
+
+	/** Set Lease Type.
+	  * Capital or Expense
+	  */
+	public void setAircraftLeaseType (String AircraftLeaseType);
+
+	/** Get Lease Type.
+	  * Capital or Expense
+	  */
+	public String getAircraftLeaseType();
 
     /** Column name AirframeTime */
     public static final String COLUMNNAME_AirframeTime = "AirframeTime";

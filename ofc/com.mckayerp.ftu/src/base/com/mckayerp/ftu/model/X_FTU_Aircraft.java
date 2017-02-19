@@ -32,7 +32,7 @@ public class X_FTU_Aircraft extends PO implements I_FTU_Aircraft, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20161023L;
+	private static final long serialVersionUID = 20170116L;
 
     /** Standard Constructor */
     public X_FTU_Aircraft (Properties ctx, int FTU_Aircraft_ID, String trxName)
@@ -76,6 +76,34 @@ public class X_FTU_Aircraft extends PO implements I_FTU_Aircraft, I_Persistent
         .append(get_ID()).append("]");
       return sb.toString();
     }
+
+	public org.compiere.model.I_A_Asset getA_Asset() throws RuntimeException
+    {
+		return (org.compiere.model.I_A_Asset)MTable.get(getCtx(), org.compiere.model.I_A_Asset.Table_Name)
+			.getPO(getA_Asset_ID(), get_TrxName());	}
+
+	/** Set Asset.
+		@param A_Asset_ID 
+		Asset used internally or by customers
+	  */
+	public void setA_Asset_ID (int A_Asset_ID)
+	{
+		if (A_Asset_ID < 1) 
+			set_Value (COLUMNNAME_A_Asset_ID, null);
+		else 
+			set_Value (COLUMNNAME_A_Asset_ID, Integer.valueOf(A_Asset_ID));
+	}
+
+	/** Get Asset.
+		@return Asset used internally or by customers
+	  */
+	public int getA_Asset_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_A_Asset_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
 
 	/** ACMaintQtyType AD_Reference_ID=1000045 */
 	public static final int ACMAINTQTYTYPE_AD_Reference_ID=1000045;
@@ -283,6 +311,30 @@ public class X_FTU_Aircraft extends PO implements I_FTU_Aircraft, I_Persistent
 	public String getACStatus () 
 	{
 		return (String)get_Value(COLUMNNAME_ACStatus);
+	}
+
+	/** AircraftLeaseType AD_Reference_ID=1000079 */
+	public static final int AIRCRAFTLEASETYPE_AD_Reference_ID=1000079;
+	/** Capital = Capital */
+	public static final String AIRCRAFTLEASETYPE_Capital = "Capital";
+	/** Expense = Expense */
+	public static final String AIRCRAFTLEASETYPE_Expense = "Expense";
+	/** Set Lease Type.
+		@param AircraftLeaseType 
+		Capital or Expense
+	  */
+	public void setAircraftLeaseType (String AircraftLeaseType)
+	{
+
+		set_Value (COLUMNNAME_AircraftLeaseType, AircraftLeaseType);
+	}
+
+	/** Get Lease Type.
+		@return Capital or Expense
+	  */
+	public String getAircraftLeaseType () 
+	{
+		return (String)get_Value(COLUMNNAME_AircraftLeaseType);
 	}
 
 	/** Set Airframe Time.
