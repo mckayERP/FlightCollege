@@ -29,9 +29,6 @@ import org.adempiere.webui.component.Rows;
 import org.adempiere.webui.component.Window;
 import org.adempiere.webui.window.FDialog;
 import org.compiere.model.GridTab;
-import org.compiere.model.MTable;
-import org.compiere.model.PO;
-import org.compiere.process.DocOptions;
 import org.compiere.process.DocumentEngine;
 import org.compiere.util.CLogger;
 import org.compiere.util.DB;
@@ -192,14 +189,14 @@ public class WDocActionPanel extends Window implements EventListener
 			}
 		}
 		// look if the current DocAction is within the list and assign it as selected if it exists
-		List<Listitem> lst = (List<Listitem>)lstDocAction.getItems();
-		for(Listitem item: lst)
+		List<?> lst = lstDocAction.getItems();
+		for(Object item: lst)
 		{
-			String value = item.getValue().toString();
+			String value = ((Listitem) item).getValue().toString();
 
 			if(DocAction.equals(value))
 			{
-				lstDocAction.setSelectedItem(item);
+				lstDocAction.setSelectedItem((Listitem) item);
 				label.setValue(s_description[getSelectedIndex()]);
 			}
 		}
