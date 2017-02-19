@@ -98,7 +98,6 @@ public class FinReport extends SvrProcess
 	/** The Report Lines				*/
 	private MReportLine[] 		m_lines;
 	private Timestamp p_ReportDate = null;
-	private boolean insertingLineTrx;
 
 
 	/**
@@ -347,9 +346,6 @@ public class FinReport extends SvrProcess
 		else 
 			getProcessInfo().setSerializableObject(getPrintFormat());
 
-		MPrintFormat pf = getPrintFormat();
-
-
 		log.fine((System.currentTimeMillis() - m_start) + " ms");
 		return "";
 	}	//	doIt
@@ -561,7 +557,7 @@ public class FinReport extends SvrProcess
 					.append(" AND PA_ReportLine_ID= ")
 					.append(m_lines[line].getPA_ReportLine_ID());
 			int no = DB.executeUpdate(sql1.toString(), get_TrxName());
-			//log.log(Level.SEVERE, "#=" + no + " for " + update);
+			log.finest("#=" + no + " for " + update);
 		}
 	}	//	insertLine
 
@@ -1114,8 +1110,6 @@ public class FinReport extends SvrProcess
 			// Add source filter
 			//  " AND filter " or
 			//  " AND ((filter 1) OR (filter2) OR ...) " 
-			int count = 0;
-			int numberSources = m_lines[line].getSources().length;
 			String whereFilter = m_lines[line].getWhereClause(p_PA_Hierarchy_ID, true);  // include the filter
 				
 			// Could use the java String.replaceAll with regex here but its slow.
