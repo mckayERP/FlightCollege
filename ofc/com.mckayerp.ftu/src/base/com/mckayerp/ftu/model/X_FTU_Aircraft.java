@@ -32,7 +32,7 @@ public class X_FTU_Aircraft extends PO implements I_FTU_Aircraft, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20170116L;
+	private static final long serialVersionUID = 20170412L;
 
     /** Standard Constructor */
     public X_FTU_Aircraft (Properties ctx, int FTU_Aircraft_ID, String trxName)
@@ -638,6 +638,34 @@ public class X_FTU_Aircraft extends PO implements I_FTU_Aircraft, I_Persistent
 	public int getFTU_Aircraft_ID () 
 	{
 		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_Aircraft_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
+	public com.mckayerp.ftu.model.I_FTU_Component getFTU_Component() throws RuntimeException
+    {
+		return (com.mckayerp.ftu.model.I_FTU_Component)MTable.get(getCtx(), com.mckayerp.ftu.model.I_FTU_Component.Table_Name)
+			.getPO(getFTU_Component_ID(), get_TrxName());	}
+
+	/** Set Component.
+		@param FTU_Component_ID 
+		A component of an assembly or asset.
+	  */
+	public void setFTU_Component_ID (int FTU_Component_ID)
+	{
+		if (FTU_Component_ID < 1) 
+			set_Value (COLUMNNAME_FTU_Component_ID, null);
+		else 
+			set_Value (COLUMNNAME_FTU_Component_ID, Integer.valueOf(FTU_Component_ID));
+	}
+
+	/** Get Component.
+		@return A component of an assembly or asset.
+	  */
+	public int getFTU_Component_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_Component_ID);
 		if (ii == null)
 			 return 0;
 		return ii.intValue();

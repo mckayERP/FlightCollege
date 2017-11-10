@@ -29,7 +29,7 @@ public class X_FTU_AirworthinessDirective extends PO implements I_FTU_Airworthin
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20161031L;
+	private static final long serialVersionUID = 20170413L;
 
     /** Standard Constructor */
     public X_FTU_AirworthinessDirective (Properties ctx, int FTU_AirworthinessDirective_ID, String trxName)
@@ -78,6 +78,8 @@ public class X_FTU_AirworthinessDirective extends PO implements I_FTU_Airworthin
 	public static final String FTU_ADCOUNTRYCODE_UnitedStates = "US";
 	/** European Union = EU */
 	public static final String FTU_ADCOUNTRYCODE_EuropeanUnion = "EU";
+	/** France = FR */
+	public static final String FTU_ADCOUNTRYCODE_France = "FR";
 	/** Set Country.
 		@param FTU_ADCountryCode 
 		The Country of issue
@@ -128,6 +130,30 @@ public class X_FTU_AirworthinessDirective extends PO implements I_FTU_Airworthin
 	public String getFTU_ADDocumentLinkPDF () 
 	{
 		return (String)get_Value(COLUMNNAME_FTU_ADDocumentLinkPDF);
+	}
+
+	/** Set Is superseded.
+		@param FTU_ADIsSuperseded 
+		Is this AD superseded?
+	  */
+	public void setFTU_ADIsSuperseded (boolean FTU_ADIsSuperseded)
+	{
+		set_Value (COLUMNNAME_FTU_ADIsSuperseded, Boolean.valueOf(FTU_ADIsSuperseded));
+	}
+
+	/** Get Is superseded.
+		@return Is this AD superseded?
+	  */
+	public boolean isFTU_ADIsSuperseded () 
+	{
+		Object oo = get_Value(COLUMNNAME_FTU_ADIsSuperseded);
+		if (oo != null) 
+		{
+			 if (oo instanceof Boolean) 
+				 return ((Boolean)oo).booleanValue(); 
+			return "Y".equals(oo);
+		}
+		return false;
 	}
 
 	/** Set AD Number.
@@ -206,6 +232,8 @@ public class X_FTU_AirworthinessDirective extends PO implements I_FTU_Airworthin
 	public static final String FTU_ADTYPE_Engines = "E";
 	/** Propellers = P */
 	public static final String FTU_ADTYPE_Propellers = "P";
+	/** Miscellaneous Equipment = M */
+	public static final String FTU_ADTYPE_MiscellaneousEquipment = "M";
 	/** Set Product Type.
 		@param FTU_ADType 
 		The type of airworthiness directive and the product/component it pertains to.
@@ -239,6 +267,34 @@ public class X_FTU_AirworthinessDirective extends PO implements I_FTU_Airworthin
 	public int getFTU_AirworthinessDirective_ID () 
 	{
 		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_AirworthinessDirective_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
+	public com.mckayerp.ftu.model.I_FTU_AirworthinessDirective getFTU_SupersedingAD() throws RuntimeException
+    {
+		return (com.mckayerp.ftu.model.I_FTU_AirworthinessDirective)MTable.get(getCtx(), com.mckayerp.ftu.model.I_FTU_AirworthinessDirective.Table_Name)
+			.getPO(getFTU_SupersedingAD_ID(), get_TrxName());	}
+
+	/** Set Superseded by.
+		@param FTU_SupersedingAD_ID 
+		The superseding AD.
+	  */
+	public void setFTU_SupersedingAD_ID (int FTU_SupersedingAD_ID)
+	{
+		if (FTU_SupersedingAD_ID < 1) 
+			set_Value (COLUMNNAME_FTU_SupersedingAD_ID, null);
+		else 
+			set_Value (COLUMNNAME_FTU_SupersedingAD_ID, Integer.valueOf(FTU_SupersedingAD_ID));
+	}
+
+	/** Get Superseded by.
+		@return The superseding AD.
+	  */
+	public int getFTU_SupersedingAD_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_SupersedingAD_ID);
 		if (ii == null)
 			 return 0;
 		return ii.intValue();

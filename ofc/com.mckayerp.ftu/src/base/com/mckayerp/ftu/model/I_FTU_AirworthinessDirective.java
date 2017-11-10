@@ -117,6 +117,19 @@ public interface I_FTU_AirworthinessDirective
 	  */
 	public String getFTU_ADDocumentLinkPDF();
 
+    /** Column name FTU_ADIsSuperseded */
+    public static final String COLUMNNAME_FTU_ADIsSuperseded = "FTU_ADIsSuperseded";
+
+	/** Set Is superseded.
+	  * Is this AD superseded?
+	  */
+	public void setFTU_ADIsSuperseded (boolean FTU_ADIsSuperseded);
+
+	/** Get Is superseded.
+	  * Is this AD superseded?
+	  */
+	public boolean isFTU_ADIsSuperseded();
+
     /** Column name FTU_ADNumber */
     public static final String COLUMNNAME_FTU_ADNumber = "FTU_ADNumber";
 
@@ -190,6 +203,21 @@ public interface I_FTU_AirworthinessDirective
 
 	/** Get Airworthiness Directives ID	  */
 	public int getFTU_AirworthinessDirective_ID();
+
+    /** Column name FTU_SupersedingAD_ID */
+    public static final String COLUMNNAME_FTU_SupersedingAD_ID = "FTU_SupersedingAD_ID";
+
+	/** Set Superseded by.
+	  * The superseding AD.
+	  */
+	public void setFTU_SupersedingAD_ID (int FTU_SupersedingAD_ID);
+
+	/** Get Superseded by.
+	  * The superseding AD.
+	  */
+	public int getFTU_SupersedingAD_ID();
+
+	public com.mckayerp.ftu.model.I_FTU_AirworthinessDirective getFTU_SupersedingAD() throws RuntimeException;
 
     /** Column name IsActive */
     public static final String COLUMNNAME_IsActive = "IsActive";

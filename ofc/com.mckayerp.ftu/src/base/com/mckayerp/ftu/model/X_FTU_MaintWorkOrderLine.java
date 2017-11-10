@@ -29,7 +29,7 @@ public class X_FTU_MaintWorkOrderLine extends PO implements I_FTU_MaintWorkOrder
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20161023L;
+	private static final long serialVersionUID = 20170425L;
 
     /** Standard Constructor */
     public X_FTU_MaintWorkOrderLine (Properties ctx, int FTU_MaintWorkOrderLine_ID, String trxName)
@@ -69,26 +69,99 @@ public class X_FTU_MaintWorkOrderLine extends PO implements I_FTU_MaintWorkOrder
       return sb.toString();
     }
 
-	public com.mckayerp.ftu.model.I_FTU_DefectLog getFTU_DefectLog() throws RuntimeException
-    {
-		return (com.mckayerp.ftu.model.I_FTU_DefectLog)MTable.get(getCtx(), com.mckayerp.ftu.model.I_FTU_DefectLog.Table_Name)
-			.getPO(getFTU_DefectLog_ID(), get_TrxName());	}
-
-	/** Set Defect.
-		@param FTU_DefectLog_ID Defect	  */
-	public void setFTU_DefectLog_ID (int FTU_DefectLog_ID)
+	/** Set Action.
+		@param FTU_Action 
+		The action that must be taken to address the maintenance requirement
+	  */
+	public void setFTU_Action (String FTU_Action)
 	{
-		if (FTU_DefectLog_ID < 1) 
-			set_Value (COLUMNNAME_FTU_DefectLog_ID, null);
-		else 
-			set_Value (COLUMNNAME_FTU_DefectLog_ID, Integer.valueOf(FTU_DefectLog_ID));
+		set_Value (COLUMNNAME_FTU_Action, FTU_Action);
 	}
 
-	/** Get Defect.
-		@return Defect	  */
-	public int getFTU_DefectLog_ID () 
+	/** Get Action.
+		@return The action that must be taken to address the maintenance requirement
+	  */
+	public String getFTU_Action () 
 	{
-		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_DefectLog_ID);
+		return (String)get_Value(COLUMNNAME_FTU_Action);
+	}
+
+	public com.mckayerp.ftu.model.I_FTU_Component getFTU_Component() throws RuntimeException
+    {
+		return (com.mckayerp.ftu.model.I_FTU_Component)MTable.get(getCtx(), com.mckayerp.ftu.model.I_FTU_Component.Table_Name)
+			.getPO(getFTU_Component_ID(), get_TrxName());	}
+
+	/** Set Component.
+		@param FTU_Component_ID 
+		A component of an assembly or asset.
+	  */
+	public void setFTU_Component_ID (int FTU_Component_ID)
+	{
+		if (FTU_Component_ID < 1) 
+			set_Value (COLUMNNAME_FTU_Component_ID, null);
+		else 
+			set_Value (COLUMNNAME_FTU_Component_ID, Integer.valueOf(FTU_Component_ID));
+	}
+
+	/** Get Component.
+		@return A component of an assembly or asset.
+	  */
+	public int getFTU_Component_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_Component_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
+	public com.mckayerp.ftu.model.I_FTU_MaintRequirement getFTU_MaintRequirement() throws RuntimeException
+    {
+		return (com.mckayerp.ftu.model.I_FTU_MaintRequirement)MTable.get(getCtx(), com.mckayerp.ftu.model.I_FTU_MaintRequirement.Table_Name)
+			.getPO(getFTU_MaintRequirement_ID(), get_TrxName());	}
+
+	/** Set Maintenance Requirement.
+		@param FTU_MaintRequirement_ID 
+		A requirement to perform some maintenance action due to a snag, preventive maintenance or other corrective action.
+	  */
+	public void setFTU_MaintRequirement_ID (int FTU_MaintRequirement_ID)
+	{
+		if (FTU_MaintRequirement_ID < 1) 
+			set_Value (COLUMNNAME_FTU_MaintRequirement_ID, null);
+		else 
+			set_Value (COLUMNNAME_FTU_MaintRequirement_ID, Integer.valueOf(FTU_MaintRequirement_ID));
+	}
+
+	/** Get Maintenance Requirement.
+		@return A requirement to perform some maintenance action due to a snag, preventive maintenance or other corrective action.
+	  */
+	public int getFTU_MaintRequirement_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_MaintRequirement_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
+	public com.mckayerp.ftu.model.I_FTU_MaintRequirementLine getFTU_MaintRequirementLine() throws RuntimeException
+    {
+		return (com.mckayerp.ftu.model.I_FTU_MaintRequirementLine)MTable.get(getCtx(), com.mckayerp.ftu.model.I_FTU_MaintRequirementLine.Table_Name)
+			.getPO(getFTU_MaintRequirementLine_ID(), get_TrxName());	}
+
+	/** Set Maintenance Requirement Line ID.
+		@param FTU_MaintRequirementLine_ID Maintenance Requirement Line ID	  */
+	public void setFTU_MaintRequirementLine_ID (int FTU_MaintRequirementLine_ID)
+	{
+		if (FTU_MaintRequirementLine_ID < 1) 
+			set_Value (COLUMNNAME_FTU_MaintRequirementLine_ID, null);
+		else 
+			set_Value (COLUMNNAME_FTU_MaintRequirementLine_ID, Integer.valueOf(FTU_MaintRequirementLine_ID));
+	}
+
+	/** Get Maintenance Requirement Line ID.
+		@return Maintenance Requirement Line ID	  */
+	public int getFTU_MaintRequirementLine_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_MaintRequirementLine_ID);
 		if (ii == null)
 			 return 0;
 		return ii.intValue();
@@ -137,6 +210,23 @@ public class X_FTU_MaintWorkOrderLine extends PO implements I_FTU_MaintWorkOrder
 		if (ii == null)
 			 return 0;
 		return ii.intValue();
+	}
+
+	/** Set Process.
+		@param FTU_Process 
+		A text description of the process to follow.
+	  */
+	public void setFTU_Process (String FTU_Process)
+	{
+		set_Value (COLUMNNAME_FTU_Process, FTU_Process);
+	}
+
+	/** Get Process.
+		@return A text description of the process to follow.
+	  */
+	public String getFTU_Process () 
+	{
+		return (String)get_Value(COLUMNNAME_FTU_Process);
 	}
 
 	/** Set Line No.

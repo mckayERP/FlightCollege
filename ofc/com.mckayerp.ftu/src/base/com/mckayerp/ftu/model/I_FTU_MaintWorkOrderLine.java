@@ -78,16 +78,59 @@ public interface I_FTU_MaintWorkOrderLine
 	  */
 	public int getCreatedBy();
 
-    /** Column name FTU_DefectLog_ID */
-    public static final String COLUMNNAME_FTU_DefectLog_ID = "FTU_DefectLog_ID";
+    /** Column name FTU_Action */
+    public static final String COLUMNNAME_FTU_Action = "FTU_Action";
 
-	/** Set Defect	  */
-	public void setFTU_DefectLog_ID (int FTU_DefectLog_ID);
+	/** Set Action.
+	  * The action that must be taken to address the maintenance requirement
+	  */
+	public void setFTU_Action (String FTU_Action);
 
-	/** Get Defect	  */
-	public int getFTU_DefectLog_ID();
+	/** Get Action.
+	  * The action that must be taken to address the maintenance requirement
+	  */
+	public String getFTU_Action();
 
-	public com.mckayerp.ftu.model.I_FTU_DefectLog getFTU_DefectLog() throws RuntimeException;
+    /** Column name FTU_Component_ID */
+    public static final String COLUMNNAME_FTU_Component_ID = "FTU_Component_ID";
+
+	/** Set Component.
+	  * A component of an assembly or asset.
+	  */
+	public void setFTU_Component_ID (int FTU_Component_ID);
+
+	/** Get Component.
+	  * A component of an assembly or asset.
+	  */
+	public int getFTU_Component_ID();
+
+	public com.mckayerp.ftu.model.I_FTU_Component getFTU_Component() throws RuntimeException;
+
+    /** Column name FTU_MaintRequirement_ID */
+    public static final String COLUMNNAME_FTU_MaintRequirement_ID = "FTU_MaintRequirement_ID";
+
+	/** Set Maintenance Requirement.
+	  * A requirement to perform some maintenance action due to a snag, preventive maintenance or other corrective action.
+	  */
+	public void setFTU_MaintRequirement_ID (int FTU_MaintRequirement_ID);
+
+	/** Get Maintenance Requirement.
+	  * A requirement to perform some maintenance action due to a snag, preventive maintenance or other corrective action.
+	  */
+	public int getFTU_MaintRequirement_ID();
+
+	public com.mckayerp.ftu.model.I_FTU_MaintRequirement getFTU_MaintRequirement() throws RuntimeException;
+
+    /** Column name FTU_MaintRequirementLine_ID */
+    public static final String COLUMNNAME_FTU_MaintRequirementLine_ID = "FTU_MaintRequirementLine_ID";
+
+	/** Set Maintenance Requirement Line ID	  */
+	public void setFTU_MaintRequirementLine_ID (int FTU_MaintRequirementLine_ID);
+
+	/** Get Maintenance Requirement Line ID	  */
+	public int getFTU_MaintRequirementLine_ID();
+
+	public com.mckayerp.ftu.model.I_FTU_MaintRequirementLine getFTU_MaintRequirementLine() throws RuntimeException;
 
     /** Column name FTU_MaintWorkOrder_ID */
     public static final String COLUMNNAME_FTU_MaintWorkOrder_ID = "FTU_MaintWorkOrder_ID";
@@ -108,6 +151,19 @@ public interface I_FTU_MaintWorkOrderLine
 
 	/** Get Maintenance Work Order Line ID	  */
 	public int getFTU_MaintWorkOrderLine_ID();
+
+    /** Column name FTU_Process */
+    public static final String COLUMNNAME_FTU_Process = "FTU_Process";
+
+	/** Set Process.
+	  * A text description of the process to follow.
+	  */
+	public void setFTU_Process (String FTU_Process);
+
+	/** Get Process.
+	  * A text description of the process to follow.
+	  */
+	public String getFTU_Process();
 
     /** Column name IsActive */
     public static final String COLUMNNAME_IsActive = "IsActive";
