@@ -13,6 +13,7 @@ import org.compiere.model.MQuery;
 import org.compiere.model.MRefList;
 import org.compiere.model.MRole;
 import org.compiere.model.MTable;
+import org.compiere.model.MUOM;
 import org.compiere.model.MUser;
 import org.compiere.model.PrintInfo;
 import org.compiere.model.Query;
@@ -93,6 +94,16 @@ public class MFTUDefectLog extends X_FTU_DefectLog implements DocAction, DocOpti
 	public boolean invalidateIt() {
 		log.info(toString());
 		setDocAction(DOCACTION_Enter);
+		
+		// May not be necessary
+		List<MFTUMaintRequirement> maintCARs 
+			= MFTUMaintRequirement.getByFTU_DefectLog(getCtx(), this.getFTU_DefectLog_ID(), get_TrxName());
+		
+		for (MFTUMaintRequirement maintCAR : maintCARs)
+		{
+			maintCAR.deleteEx(false);
+		}
+		
 		return true;
 	}
 
@@ -113,6 +124,16 @@ public class MFTUDefectLog extends X_FTU_DefectLog implements DocAction, DocOpti
 	public boolean rejectIt() {
 		log.info(toString());
 		setIsApproved(false);
+
+		// May not be necessary
+		List<MFTUMaintRequirement> maintCARs 
+		= MFTUMaintRequirement.getByFTU_DefectLog(getCtx(), this.getFTU_DefectLog_ID(), get_TrxName());
+	
+		for (MFTUMaintRequirement maintCAR : maintCARs)
+		{
+			maintCAR.deleteEx(false);
+		}
+
 		return true;
 	}
 
@@ -402,8 +423,45 @@ public class MFTUDefectLog extends X_FTU_DefectLog implements DocAction, DocOpti
 		jl.setTotalAirframeTime(MFTUACJourneyLog.getTotalAirframeTime(getCtx(), getFTU_Aircraft_ID(), this.getDeferredDate(), get_TrxName()));
 		jl.saveEx();
 		
-		// Set the aircraft status - remove it from service.
+		// Set the aircraft status.
 		setACStatus(getFTU_Aircraft_ID());
+		
+		// Set any maintenance requirements to a 30 day time interval from the date of the snag
+		List<MFTUMaintRequirement> maintCARs = MFTUMaintRequirement.getByFTU_DefectLog(getCtx(), this.getFTU_DefectLog_ID(), get_TrxName());
+		
+		if (maintCARs == null || maintCARs.size() == 0)
+		{
+			MFTUMaintRequirement maintCAR = new MFTUMaintRequirement(getCtx(), 0, get_TrxName());
+			maintCAR.setFTU_Action("Repair Snag " + this.getDocumentNo() + ": " + this.getDefect());
+			maintCAR.setFTU_DefectLog_ID(getFTU_DefectLog_ID());
+			if (this.isDeferred())
+			{
+				maintCAR.setFTU_ComplianceType(MFTUMaintRequirement.FTU_COMPLIANCETYPE_OnceWithinNext);
+				maintCAR.setFTU_TimeInterval(new BigDecimal(30));
+				maintCAR.setFTU_TimeIntervalUOM_ID(MUOM.get(getCtx(), "Day", get_TrxName()).getC_UOM_ID());
+				maintCAR.setFTU_DateAfter(this.getDefectDate());
+			}
+			else
+			{
+				maintCAR.setFTU_ComplianceType(MFTUMaintRequirement.FTU_COMPLIANCETYPE_BeforeFurtherFlightOrUse);
+			}
+			maintCAR.saveEx();
+		}
+		else
+		{
+			for (MFTUMaintRequirement maintCAR : maintCARs)
+			{
+				if (this.isDeferred())
+				{
+					maintCAR.setFTU_ComplianceType(MFTUMaintRequirement.FTU_COMPLIANCETYPE_OnceWithinNext);
+					maintCAR.setFTU_TimeInterval(new BigDecimal(30));
+					maintCAR.setFTU_TimeIntervalUOM_ID(MUOM.get(getCtx(), "Day", get_TrxName()).getC_UOM_ID());
+					maintCAR.setFTU_DateAfter(this.getDefectDate());
+					maintCAR.saveEx();
+				}
+				
+			}
+		}
 
 		return true;
 	}
@@ -441,6 +499,24 @@ public class MFTUDefectLog extends X_FTU_DefectLog implements DocAction, DocOpti
 				
 		// Set the aircraft status - remove it from service.
 		setACStatus(getFTU_Aircraft_ID());
+		
+		// Create a corrective action
+		MFTUMaintRequirement maintCAR = new MFTUMaintRequirement(getCtx(), 0, get_TrxName());
+		maintCAR.setFTU_Action("Repair Snag " + this.getDocumentNo() + ": " + this.getDefect());
+		maintCAR.setFTU_Process("In accordance with the MCM and AMO approved processes.");
+		maintCAR.setFTU_DefectLog_ID(getFTU_DefectLog_ID());
+		if (this.isDeferred())
+		{
+			maintCAR.setFTU_ComplianceType(MFTUMaintRequirement.FTU_COMPLIANCETYPE_OnceWithinNext);
+			maintCAR.setFTU_TimeInterval(new BigDecimal(30));
+			maintCAR.setFTU_TimeIntervalUOM_ID(MUOM.get(getCtx(), "Day", get_TrxName()).getC_UOM_ID());
+			maintCAR.setFTU_DateAfter(this.getDefectDate());
+		}
+		else
+		{
+			maintCAR.setFTU_ComplianceType(MFTUMaintRequirement.FTU_COMPLIANCETYPE_BeforeFurtherFlightOrUse);
+		}
+		maintCAR.saveEx();
 
 		return true;
 	}
