@@ -1,18 +1,16 @@
 @Title Copy Database after backup
 @Rem $Id: myDBcopyTemplate.bat,v 1.4 2003/12/04 04:38:27 jjanke Exp $
 
-@Echo Backing-up the ADempiere installation to Amazon and the NAS (T:/)
+@Echo Modify the script myDBcopy to copy the database backup
 
-@Rem	The backup process creates the following files:
-@Rem		%ADEMPIERE_HOME%\data\ExpDat.dmp
-@Rem		%ADEMPIERE_HOME%\data\ExpDat.log
-@Rem		%ADEMPIERE_HOME%\data\ExpDat.jar (containing the above)
-@Rem    
-@Rem    This batch file adds a datestamp and copies the file to offsite storage.
-
-@ECHO OFF
-REM Sets the proper date and time stamp with 24Hr Time for log file naming
-REM convention
+@Rem    This example creates one unique file per day in a month
+@Rem    You may want to copy it to another disk first
+@Rem    Note that the %DATE% parameter is local specific.
+@Rem    In Germany, it is %DATE:~3,2%
+@Rem    When called, the following files were created:
+@Rem        %ADEMPIERE_HOME%\data\ExpDat.dmp
+@Rem        %ADEMPIERE_HOME%\data\ExpDat.log
+@Rem        %ADEMPIERE_HOME%\data\ExpDat.jar (containing the above)
 
 @SET HOUR=%time:~0,2%
 @SET dtStamp9=%date:~6,4%%date:~3,2%%date:~0,2%_0%time:~1,1%%time:~3,2%%time:~6,2%
@@ -22,27 +20,30 @@ REM convention
 
 @Echo Creating ExpDat_%DATETIME%.jar
 
-@Echo Copy backup to Amazon S3
-@REM Using Amazon s3 storage with versioning so no need to include the datestamp.  
-@REM Older copies are maintained according to the lifecycle rules set in the S3 account.
-@REM See the s3 documentation on Amazon for information on setting the credentials
-
-@aws s3 cp %ADEMPIERE_HOME%\data\ExpDat.jar s3://OFCBackup/ADempiere/ExpDat/
-
 @Echo Make local copy
 @REM Comment this line to prevent local storage of the backup.
+@copy ExpDat.jar "ExpDat%DATETIME%.jar"
 
-@copy %ADEMPIERE_HOME%\data\ExpDat.jar "%ADEMPIERE_HOME%\data\ExpDat_%DATETIME%.jar"
+@Echo copy %ADEMPIERE_HOME%\data\ExpDat%DATETIME%.jar to backup media
+@copy %ADEMPIERE_HOME%\data\ExpDat.jar "T:\6 - IT\Adempiere\Backups\ExpDat%DATETIME%.jar"
+@REM @copy /Y %ADEMPIERE_HOME%\data\ExpDat.jar "%ADEMPIERE_HOME%\data\amazon\ExpDat.jar"
 
-@Echo Copy %ADEMPIERE_HOME%\data\ExpDat_%DATETIME%.jar to NAS (T:\)
-@copy %ADEMPIERE_HOME%\data\ExpDat.jar "T:\6 - IT\Adempiere\Backups\ExpDat_%DATETIME%.jar"
+@REM "C:\Program Files\SprightlySoft\S3 Sync\S3Sync.exe" -AWSAccessKeyId AKIAI6LL33JEFAEWYRDQ -AWSSecretAccessKey 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 -BucketName OFCBackup -S3FolderKeyName ADempiere/ -SyncDirection Upload -LocalFolderPath C:\ADempiere\data\amazon -DeleteS3ItemsWhereNotInLocalList false -LogOnlyMode false -OutputLevel 2 -CompareFilesBy ETag -LogFilePath "C:\Documents and Settings\Administrator\Local Settings\Temp\1\S3SyncLog.txt"
+@REM Using Amazon s3 storage with versioning.  Older copies maintained according to lifecycle rules set in the S3 account.
+@REM @aws s3 cp ExpDat.jar s3://OFCBackup/ADempiere/ExpDat/
+
+@REM Using Google Drive
+@copy /Y %ADEMPIERE_HOME%\data\ExpDat.jar "C:\Users\admin\Google Drive\backup\adempiere\data\ExpDat%DATETIME%.jar"
+
+@REM @Echo Delete old off-site backups
+@REM cd "C:\My Dropbox\ADempiere Backups\"
+cd "C:\Users\admin\Google Drive\backup\adempiere\data\"
+wscript "C:\Scripts\DeletesOlderThan.js" 60
 
 @Echo Delete old on-site backups
-pushd %ADEMPIERE_HOME%\data\
+cd %ADEMPIERE_HOME%\data\
 wscript "C:\Scripts\DeletesOlderThan.js" 20
-popd
 
-@Echo Delete old off-site backups
-pushd "T:\6 - IT\Adempiere\Backups\"
+@Echo Delete old T:\ drive backups
+cd "T:\6 - IT\Adempiere\Backups\"
 wscript "C:\Scripts\DeletesOlderThan.js" 30
-popd
