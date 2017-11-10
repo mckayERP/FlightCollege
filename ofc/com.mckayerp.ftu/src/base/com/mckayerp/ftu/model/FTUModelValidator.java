@@ -59,7 +59,7 @@ public class FTUModelValidator implements ModelValidator {
 
 	private class CustomerBlockBookings {
 		
-		public final BigDecimal DISCOUNT_PERCENT = new BigDecimal(4.0);
+		public final BigDecimal DISCOUNT_PERCENT = new BigDecimal(0.0);  // TODO - make this configurable
 
 		private class BlockBooking {
 			public int bb_Product_ID = 0;
