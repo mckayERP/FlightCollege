@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="MFTU" Name="Correct FTUMaintWOResultLine ID name" ReleaseNo="FTU2.16" SeqNo="66">
+    <Comments>Correct the name of FTUMaintWOResultLine - previous ID name was too long and was not corrected.</Comments>
+    <Step DBType="ALL" Parse="Y" SeqNo="10" StepType="SQL">
+      <SQLStatement>ALTER TABLE adempiere.ftu_maintworesultline DROP CONSTRAINT ftu_maintworesultline_key;
+
+ALTER TABLE adempiere.ftu_maintworesultline DROP COLUMN ftu_maintworkorderresultline_i;
+
+ALTER TABLE adempiere.ftu_maintworesultline ADD COLUMN ftu_maintworesultline_id numeric(10,0);
+ALTER TABLE adempiere.ftu_maintworesultline ALTER COLUMN ftu_maintworesultline_id SET NOT NULL;
+ALTER TABLE adempiere.ftu_maintworesultline ALTER COLUMN ftu_maintworesultline_id SET DEFAULT NULL::numeric;
+
+ALTER TABLE adempiere.ftu_maintworesultline
+  ADD CONSTRAINT ftu_maintworesultline_key PRIMARY KEY(ftu_maintworesultline_id);</SQLStatement>
+      <RollbackStatement>ALTER TABLE adempiere.ftu_maintworesultline DROP CONSTRAINT ftu_maintworesultline_key;
+
+ALTER TABLE adempiere.ftu_maintworesultline DROP COLUMN ftu_maintworesultline_id;
+
+ALTER TABLE adempiere.ftu_maintworesultline ADD COLUMN ftu_maintworkorderresultline_i character varying(22);
+ALTER TABLE adempiere.ftu_maintworesultline ALTER COLUMN ftu_maintworkorderresultline_i SET NOT NULL;
+ALTER TABLE adempiere.ftu_maintworesultline ALTER COLUMN ftu_maintworkorderresultline_i SET DEFAULT NULL::character varying;
+
+ALTER TABLE adempiere.ftu_maintworesultline
+  ADD CONSTRAINT ftu_maintworesultline_key PRIMARY KEY(ftu_maintworkorderresultline_i);
+</RollbackStatement>
+    </Step>
+  </Migration>
+</Migrations>
