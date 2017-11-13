@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="MFTU" Name="Add Zoom Across Snag&lt;-&gt;JourneyLog" ReleaseNo="FTU2.16" SeqNo="69">
+    <Step SeqNo="10" StepType="AD">
+      <PO AD_Table_ID="53246" Action="I" Record_ID="1000002" Table="AD_RelationType">
+        <Data AD_Column_ID="58578" Column="IsActive">true</Data>
+        <Data AD_Column_ID="58581" Column="UpdatedBy">0</Data>
+        <Data AD_Column_ID="58571" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="58572" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="58574" Column="AD_RelationType_ID">1000002</Data>
+        <Data AD_Column_ID="58575" Column="Created">2017-11-12 20:58:46.43</Data>
+        <Data AD_Column_ID="58576" Column="CreatedBy">0</Data>
+        <Data AD_Column_ID="58580" Column="Updated">2017-11-12 20:58:46.43</Data>
+        <Data AD_Column_ID="58583" Column="AD_Reference_Target_ID" isNewNull="true"/>
+        <Data AD_Column_ID="58582" Column="AD_Reference_Source_ID" isNewNull="true"/>
+        <Data AD_Column_ID="58587" Column="Type">I</Data>
+        <Data AD_Column_ID="58585" Column="Role_Source" isNewNull="true"/>
+        <Data AD_Column_ID="58584" Column="IsDirected">false</Data>
+        <Data AD_Column_ID="58586" Column="Role_Target" isNewNull="true"/>
+        <Data AD_Column_ID="58577" Column="Description">Zoom between Defect Log and Journry Log</Data>
+        <Data AD_Column_ID="58579" Column="Name">MFTU DefectLog &lt;-&gt; AC Journey Log</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="20" StepType="AD">
+      <PO AD_Table_ID="102" Action="I" Record_ID="1000080" Table="AD_Reference">
+        <Data AD_Column_ID="553" Column="IsActive">true</Data>
+        <Data AD_Column_ID="129" Column="AD_Reference_ID">1000080</Data>
+        <Data AD_Column_ID="363" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="139" Column="ValidationType">T</Data>
+        <Data AD_Column_ID="1180" Column="VFormat" isNewNull="true"/>
+        <Data AD_Column_ID="132" Column="Help" isNewNull="true"/>
+        <Data AD_Column_ID="364" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="556" Column="Updated">2017-11-12 21:10:28.869</Data>
+        <Data AD_Column_ID="555" Column="CreatedBy">0</Data>
+        <Data AD_Column_ID="554" Column="Created">2017-11-12 21:10:28.869</Data>
+        <Data AD_Column_ID="557" Column="UpdatedBy">0</Data>
+        <Data AD_Column_ID="6486" Column="EntityType">MFTU</Data>
+        <Data AD_Column_ID="54355" Column="IsOrderByValue">false</Data>
+        <Data AD_Column_ID="131" Column="Description">Finds the AC Journey Log entry related to a Defect Log entry</Data>
+        <Data AD_Column_ID="130" Column="Name">RelType FTU_ACJourneyLog &lt;= Defect log</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="30" StepType="AD">
+      <PO AD_Table_ID="126" Action="I" Record_ID="0" Table="AD_Reference_Trl">
+        <Data AD_Column_ID="666" Column="IsActive">true</Data>
+        <Data AD_Column_ID="279" Column="AD_Language">es_MX</Data>
+        <Data AD_Column_ID="283" Column="IsTranslated">false</Data>
+        <Data AD_Column_ID="668" Column="CreatedBy">0</Data>
+        <Data AD_Column_ID="670" Column="UpdatedBy">0</Data>
+        <Data AD_Column_ID="1202" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="278" Column="AD_Reference_ID">1000080</Data>
+        <Data AD_Column_ID="667" Column="Created">2017-11-12 21:10:30.49</Data>
+        <Data AD_Column_ID="282" Column="Help" isNewNull="true"/>
+        <Data AD_Column_ID="1203" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="669" Column="Updated">2017-11-12 21:10:30.49</Data>
+        <Data AD_Column_ID="280" Column="Name">RelType FTU_ACJourneyLog &lt;= Defect log</Data>
+        <Data AD_Column_ID="281" Column="Description">Finds the AC Journey Log entry related to a Defect Log entry</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="40" StepType="AD">
+      <PO AD_Table_ID="103" Action="I" Record_ID="1000080" Table="AD_Ref_Table">
+        <Data AD_Column_ID="62120" Column="IsAlert">false</Data>
+        <Data AD_Column_ID="62121" Column="DisplaySQL" isNewNull="true"/>
+        <Data AD_Column_ID="62122" Column="IsDisplayIdentifier">true</Data>
+        <Data AD_Column_ID="558" Column="IsActive">true</Data>
+        <Data AD_Column_ID="560" Column="CreatedBy">0</Data>
+        <Data AD_Column_ID="2377" Column="IsValueDisplayed">false</Data>
+        <Data AD_Column_ID="561" Column="Updated">2017-11-12 21:11:52.637</Data>
+        <Data AD_Column_ID="146" Column="WhereClause">FTU_DefectLog_ID = @FTU_DefectLog_ID@</Data>
+        <Data AD_Column_ID="147" Column="OrderByClause" isNewNull="true"/>
+        <Data AD_Column_ID="559" Column="Created">2017-11-12 21:11:52.637</Data>
+        <Data AD_Column_ID="562" Column="UpdatedBy">0</Data>
+        <Data AD_Column_ID="367" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="143" Column="AD_Table_ID">1000035</Data>
+        <Data AD_Column_ID="142" Column="AD_Reference_ID">1000080</Data>
+        <Data AD_Column_ID="368" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="144" Column="AD_Key">1000786</Data>
+        <Data AD_Column_ID="145" Column="AD_Display">1000779</Data>
+        <Data AD_Column_ID="7711" Column="EntityType">MFTU</Data>
+        <Data AD_Column_ID="57270" Column="AD_Window_ID">1000027</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="50" StepType="AD">
+      <PO AD_Table_ID="102" Action="I" Record_ID="1000081" Table="AD_Reference">
+        <Data AD_Column_ID="554" Column="Created">2017-11-12 21:13:01.318</Data>
+        <Data AD_Column_ID="557" Column="UpdatedBy">0</Data>
+        <Data AD_Column_ID="553" Column="IsActive">true</Data>
+        <Data AD_Column_ID="129" Column="AD_Reference_ID">1000081</Data>
+        <Data AD_Column_ID="363" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="139" Column="ValidationType">T</Data>
+        <Data AD_Column_ID="1180" Column="VFormat" isNewNull="true"/>
+        <Data AD_Column_ID="132" Column="Help" isNewNull="true"/>
+        <Data AD_Column_ID="364" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="556" Column="Updated">2017-11-12 21:13:01.318</Data>
+        <Data AD_Column_ID="555" Column="CreatedBy">0</Data>
+        <Data AD_Column_ID="6486" Column="EntityType">MFTU</Data>
+        <Data AD_Column_ID="54355" Column="IsOrderByValue">false</Data>
+        <Data AD_Column_ID="131" Column="Description">Finds the Defect Log entry from the associated AC Journey Log entry</Data>
+        <Data AD_Column_ID="130" Column="Name">RelType FTU_Defect log &lt;= FTU_ACJourneyLog</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="60" StepType="AD">
+      <PO AD_Table_ID="126" Action="I" Record_ID="0" Table="AD_Reference_Trl">
+        <Data AD_Column_ID="666" Column="IsActive">true</Data>
+        <Data AD_Column_ID="279" Column="AD_Language">es_MX</Data>
+        <Data AD_Column_ID="283" Column="IsTranslated">false</Data>
+        <Data AD_Column_ID="668" Column="CreatedBy">0</Data>
+        <Data AD_Column_ID="670" Column="UpdatedBy">0</Data>
+        <Data AD_Column_ID="1202" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="278" Column="AD_Reference_ID">1000081</Data>
+        <Data AD_Column_ID="667" Column="Created">2017-11-12 21:13:02.099</Data>
+        <Data AD_Column_ID="282" Column="Help" isNewNull="true"/>
+        <Data AD_Column_ID="1203" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="669" Column="Updated">2017-11-12 21:13:02.099</Data>
+        <Data AD_Column_ID="280" Column="Name">RelType FTU_Defect log &lt;= FTU_ACJourneyLog</Data>
+        <Data AD_Column_ID="281" Column="Description">Finds the Defect Log entry from the associated AC Journey Log entry</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="70" StepType="AD">
+      <PO AD_Table_ID="103" Action="I" Record_ID="1000081" Table="AD_Ref_Table">
+        <Data AD_Column_ID="62120" Column="IsAlert">false</Data>
+        <Data AD_Column_ID="62121" Column="DisplaySQL" isNewNull="true"/>
+        <Data AD_Column_ID="62122" Column="IsDisplayIdentifier">false</Data>
+        <Data AD_Column_ID="558" Column="IsActive">true</Data>
+        <Data AD_Column_ID="560" Column="CreatedBy">0</Data>
+        <Data AD_Column_ID="2377" Column="IsValueDisplayed">false</Data>
+        <Data AD_Column_ID="561" Column="Updated">2017-11-12 21:15:28.779</Data>
+        <Data AD_Column_ID="146" Column="WhereClause">FTU_DefectLog_ID = @FTU_DefectLog_ID@</Data>
+        <Data AD_Column_ID="147" Column="OrderByClause" isNewNull="true"/>
+        <Data AD_Column_ID="559" Column="Created">2017-11-12 21:15:28.779</Data>
+        <Data AD_Column_ID="562" Column="UpdatedBy">0</Data>
+        <Data AD_Column_ID="367" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="143" Column="AD_Table_ID">1000036</Data>
+        <Data AD_Column_ID="142" Column="AD_Reference_ID">1000081</Data>
+        <Data AD_Column_ID="368" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="144" Column="AD_Key">1000799</Data>
+        <Data AD_Column_ID="145" Column="AD_Display">1000799</Data>
+        <Data AD_Column_ID="7711" Column="EntityType">MFTU</Data>
+        <Data AD_Column_ID="57270" Column="AD_Window_ID">1000026</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="80" StepType="AD">
+      <PO AD_Table_ID="103" Action="U" Record_ID="1000081" Table="AD_Ref_Table">
+        <Data AD_Column_ID="62122" Column="IsDisplayIdentifier" oldValue="false">true</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="90" StepType="AD">
+      <PO AD_Table_ID="53246" Action="U" Record_ID="1000002" Table="AD_RelationType">
+        <Data AD_Column_ID="58583" Column="AD_Reference_Target_ID" isOldNull="true">1000081</Data>
+        <Data AD_Column_ID="58582" Column="AD_Reference_Source_ID" isOldNull="true">1000080</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="100" StepType="AD">
+      <PO AD_Table_ID="103" Action="U" Record_ID="1000080" Table="AD_Ref_Table">
+        <Data AD_Column_ID="57270" Column="AD_Window_ID" oldValue="1000027">1000026</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="110" StepType="AD">
+      <PO AD_Table_ID="103" Action="U" Record_ID="1000081" Table="AD_Ref_Table">
+        <Data AD_Column_ID="57270" Column="AD_Window_ID" oldValue="1000026">1000027</Data>
+      </PO>
+    </Step>
+  </Migration>
+</Migrations>
