@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Migrations>
+<Migration EntityType="MFTU" Name="FTU #13 Missing From Clause for table &quot;FTU_Component&quot;" ReleaseNo="FTU2.17" SeqNo="72">
+<Step SeqNo="10" StepType="AD">
+<PO AD_Table_ID="276" Action="U" Record_ID="59215" Table="AD_Element">
+<Data AD_Column_ID="2602" Column="ColumnName" oldValue="FTU_Component_ID">M_Component_ID</Data>
+</PO>
+</Step>
+<Step SeqNo="20" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82338" Table="AD_Column">
+<Data AD_Column_ID="116" Column="ColumnName" oldValue="FTU_Component_ID">M_Component_ID</Data>
+</PO>
+</Step>
+<Step SeqNo="30" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="83230" Table="AD_Column">
+<Data AD_Column_ID="116" Column="ColumnName" oldValue="FTU_Component_ID">M_Component_ID</Data>
+</PO>
+</Step>
+<Step SeqNo="40" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82416" Table="AD_Column">
+<Data AD_Column_ID="116" Column="ColumnName" oldValue="FTU_Component_ID">M_Component_ID</Data>
+</PO>
+</Step>
+<Step SeqNo="50" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82476" Table="AD_Column">
+<Data AD_Column_ID="116" Column="ColumnName" oldValue="FTU_Component_ID">M_Component_ID</Data>
+</PO>
+</Step>
+<Step SeqNo="60" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82350" Table="AD_Column">
+<Data AD_Column_ID="116" Column="ColumnName" oldValue="FTU_Component_ID">M_Component_ID</Data>
+</PO>
+</Step>
+<Step SeqNo="70" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82699" Table="AD_Column">
+<Data AD_Column_ID="116" Column="ColumnName" oldValue="FTU_Component_ID">M_Component_ID</Data>
+</PO>
+</Step>
+<Step SeqNo="80" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="83228" Table="AD_Column">
+<Data AD_Column_ID="116" Column="ColumnName" oldValue="FTU_Component_ID">M_Component_ID</Data>
+</PO>
+</Step>
+<Step SeqNo="90" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="83231" Table="AD_Column">
+<Data AD_Column_ID="116" Column="ColumnName" oldValue="FTU_Component_ID">M_Component_ID</Data>
+</PO>
+</Step>
+<Step SeqNo="100" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="1001686" Table="AD_Column">
+<Data AD_Column_ID="116" Column="ColumnName" oldValue="FTU_Component_ID">M_Component_ID</Data>
+</PO>
+</Step>
+<Step SeqNo="110" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82403" Table="AD_Column">
+<Data AD_Column_ID="116" Column="ColumnName" oldValue="FTU_Component_ID">M_Component_ID</Data>
+</PO>
+</Step>
+<Step SeqNo="120" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="1001747" Table="AD_Column">
+<Data AD_Column_ID="116" Column="ColumnName" oldValue="FTU_Component_ID">M_Component_ID</Data>
+</PO>
+</Step>
+<Step SeqNo="130" StepType="AD">
+<PO AD_Table_ID="102" Action="U" Record_ID="53873" Table="AD_Reference">
+<Data AD_Column_ID="130" Column="Name" oldValue="FTU_Component_ID">M_Component_ID</Data>
+</PO>
+</Step>
+<Step SeqNo="140" StepType="AD">
+<PO AD_Table_ID="103" Action="U" Record_ID="53873" Table="AD_Ref_Table">
+<Data AD_Column_ID="62121" Column="DisplaySQL" oldValue="(SELECT M_Product.value || ' ' || M_AttributeSetInstance.Description FROM M_Product, M_AttributeSetInstance WHERE M_Product.M_Product_ID = FTU_Component.M_Product_ID AND M_AttributeSetInstance.M_AttributeSetInstance_ID = FTU_Component.M_AttributeSetInstance_ID)">(SELECT M_Product.value || ' ' || M_AttributeSetInstance.Description FROM M_Product, M_AttributeSetInstance WHERE M_Product.M_Product_ID = M_Component.M_Product_ID AND M_AttributeSetInstance.M_AttributeSetInstance_ID = M_Component.M_AttributeSetInstance_ID)</Data>
+</PO>
+</Step>
+<Step SeqNo="150" StepType="AD">
+<PO AD_Table_ID="108" Action="U" Record_ID="52508" Table="AD_Val_Rule">
+<Data AD_Column_ID="193" Column="Code" oldValue="NOT EXISTS (SELECT FTU_ComponentBOMLine.FTU_Component_ID  FROM FTU_ComponentBOMLine WHERE FTU_ComponentBOMLine.FTU_Component_ID=FTU_Component.FTU_Component_ID)">NOT EXISTS (SELECT M_ComponentBOMLine.M_Component_ID  FROM M_ComponentBOMLine WHERE M_ComponentBOMLine.M_Component_ID=M_Component.M_Component_ID)</Data>
+<Data AD_Column_ID="188" Column="Name" oldValue="FTU_Component (Not Subcomponent)">M_Component (Not Subcomponent)</Data>
+</PO>
+</Step>
+</Migration>
+</Migrations>

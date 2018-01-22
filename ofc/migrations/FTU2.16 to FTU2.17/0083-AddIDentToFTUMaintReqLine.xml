@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Migrations>
+<Migration EntityType="MFTU" Name="Add ID Columns to FTU_MaintRequirementLine" ReleaseNo="FTU2.17" SeqNo="83">
+<Step SeqNo="10" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="83204" Table="AD_Column">
+<Data AD_Column_ID="126" Column="IsIdentifier" oldValue="false">true</Data>
+</PO>
+</Step>
+<Step SeqNo="20" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="83199" Table="AD_Column">
+<Data AD_Column_ID="126" Column="IsIdentifier" oldValue="false">true</Data>
+</PO>
+</Step>
+</Migration>
+</Migrations>

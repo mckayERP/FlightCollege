@@ -2,6 +2,7 @@ package com.mckayerp.ftu.model;
 
 import java.math.BigDecimal;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -10,7 +11,11 @@ import org.compiere.model.MUOMConversion;
 import org.compiere.model.Query;
 import org.compiere.util.Env;
 
+import com.mckayerp.model.MCTComponent;
+
 public class MFTUMaintRequirement extends X_FTU_MaintRequirement {
+	
+	List<MFTUMaintRequirementLine> m_lines;
 
 	public MFTUMaintRequirement(Properties ctx, int FTU_MaintRequirement_ID,
 			String trxName) {
@@ -160,5 +165,74 @@ public class MFTUMaintRequirement extends X_FTU_MaintRequirement {
 
 		return true;
 	}	//	beforeSave
+
+	/**
+	 * 	Called after Save for Post-Save Operation
+	 * 	@param newRecord new record
+	 *	@param success true if save operation was success
+	 *	@return if save was a success
+	 */
+	protected boolean afterSave (boolean newRecord, boolean success)
+	{
+		
+		//  Create the maintenance action for this maintenance requirement.
+		//  The next action will be created for the component or for all
+		//  components that are based on the product.
+		List<MCTComponent> components = new ArrayList<MCTComponent>();
+		
+		if (this.getCT_Component_ID() > 0)
+		{
+			components.add((MCTComponent) this.getCT_Component());
+		}
+		else if (this.getFTU_AppliesToProduct_ID() > 0)
+		{
+			components = MCTComponent.getByProduct(getCtx(), getFTU_AppliesToProduct_ID(), get_TrxName());
+		}
+
+		for (MCTComponent comp : components)
+		{
+			//  Create or update the next maintenance action based on the changed/new maint requirement
+			MFTUMaintNextAction na = MFTUMaintNextAction.getByComponentAndMaintRequirement(getCtx(), comp.getCT_Component_ID(), getFTU_MaintRequirement_ID(), get_TrxName());
+			na.setFTU_DateNextDue(null);
+			na.setFTU_UsageNextDue(null);
+			na.saveEx();  //  Most of the action happens in the before save.
+		}
+
+		return success;
+	}	//	afterSave
+	
+	/**
+	 * Determine if the Maintenance Requirement has detail lines.
+	 * @return true if there are lines.  
+	 */
+	public boolean hasLines() {
+		
+		if (m_lines == null)
+			m_lines = getLines(false);
+		
+		return m_lines.size() > 0;
+	}
+
+	/**
+	 * Get the List of Maintenance Requirement detail lines or an empty list.
+	 * @param requery - true to requery the database. False will use a cached version
+	 * @return the List of detail lines or an empty List. 
+	 */
+	public List<MFTUMaintRequirementLine> getLines(boolean requery) {
+		
+		if (m_lines == null || requery)
+		{
+
+			String where = MFTUMaintRequirementLine.COLUMNNAME_FTU_MaintRequirement_ID + "=?";
+
+			m_lines = new Query(this.getCtx(), MFTUMaintRequirementLine.Table_Name, where, this.get_TrxName())
+							.setClient_ID()
+							.setOnlyActiveRecords(true)
+							.setParameters(this.getFTU_MaintRequirement_ID())
+							.list();
+
+		}
+		return m_lines;
+	}
 
 }

@@ -40,6 +40,7 @@
     <pathelement path="${adempiere.trunk}/packages/*.jar" />
     <pathelement path="../packages/mckayerp_ftu.jar" />
   	
+  	<pathelement path="../com.mckayerp.component_tracking/build/**"/>
     <pathelement path="${htmlget.home}/bin" />
   </path>
 	

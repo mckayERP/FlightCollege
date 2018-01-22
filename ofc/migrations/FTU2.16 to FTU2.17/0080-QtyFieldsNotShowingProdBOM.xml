@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Migrations>
+<Migration EntityType="D" Name="Qty fields do not appear in Product BOM - fix Display Logic" ReleaseNo="FTU2.17" SeqNo="80">
+<Step SeqNo="10" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="58118" Table="AD_Field">
+<Data AD_Column_ID="177" Column="DisplayLogic" oldValue="@IsQtyPercentage@ = Y">@IsQtyPercentage@='Y'</Data>
+</PO>
+</Step>
+<Step SeqNo="20" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="58119" Table="AD_Field">
+<Data AD_Column_ID="177" Column="DisplayLogic" oldValue="@IsQtyPercentage@ = N">@IsQtyPercentage@='N'</Data>
+</PO>
+</Step>
+</Migration>
+</Migrations>

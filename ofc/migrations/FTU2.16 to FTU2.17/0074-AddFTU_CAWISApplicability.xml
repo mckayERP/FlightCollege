@@ -1,0 +1,786 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Migrations>
+<Migration EntityType="MFTU" Name="Add field FTU_CAWIS_Applicability to FTU_ADApplicability tab" ReleaseNo="FTU2.17" SeqNo="74">
+<Step SeqNo="10" StepType="AD">
+<PO AD_Table_ID="276" Action="I" Record_ID="1001180" Table="AD_Element">
+<Data AD_Column_ID="6284" Column="PO_Help" isNewNull="true"/>
+<Data AD_Column_ID="2597" Column="IsActive">true</Data>
+<Data AD_Column_ID="2594" Column="AD_Element_ID">1001180</Data>
+<Data AD_Column_ID="2602" Column="ColumnName">FTU_CAWIS_Applicability</Data>
+<Data AD_Column_ID="2595" Column="AD_Client_ID">0</Data>
+<Data AD_Column_ID="2598" Column="Created">2017-11-15 07:49:27.5</Data>
+<Data AD_Column_ID="2600" Column="Updated">2017-11-15 07:49:27.5</Data>
+<Data AD_Column_ID="2605" Column="Help" isNewNull="true"/>
+<Data AD_Column_ID="6283" Column="PO_Description" isNewNull="true"/>
+<Data AD_Column_ID="6484" Column="EntityType">MFTU</Data>
+<Data AD_Column_ID="2596" Column="AD_Org_ID">0</Data>
+<Data AD_Column_ID="2599" Column="CreatedBy">0</Data>
+<Data AD_Column_ID="2601" Column="UpdatedBy">0</Data>
+<Data AD_Column_ID="2603" Column="Name">CAWIS Applicability</Data>
+<Data AD_Column_ID="2604" Column="Description">The applicability statement on the CAWIS website</Data>
+<Data AD_Column_ID="4299" Column="PrintName">CAWIS Applicability</Data>
+<Data AD_Column_ID="6286" Column="PO_PrintName" isNewNull="true"/>
+<Data AD_Column_ID="6285" Column="PO_Name" isNewNull="true"/>
+<Data AD_Column_ID="58588" Column="AD_Reference_ID">10</Data>
+<Data AD_Column_ID="58589" Column="FieldLength">255</Data>
+<Data AD_Column_ID="58590" Column="AD_Reference_Value_ID" isNewNull="true"/>
+</PO>
+</Step>
+<Step SeqNo="20" StepType="AD">
+<PO AD_Table_ID="277" Action="I" Record_ID="0" Table="AD_Element_Trl">
+<Data AD_Column_ID="6448" Column="PO_Description" isNewNull="true"/>
+<Data AD_Column_ID="2641" Column="IsActive">true</Data>
+<Data AD_Column_ID="2644" Column="Updated">2017-11-15 07:50:02.692</Data>
+<Data AD_Column_ID="2642" Column="Created">2017-11-15 07:50:02.692</Data>
+<Data AD_Column_ID="2643" Column="CreatedBy">0</Data>
+<Data AD_Column_ID="2645" Column="UpdatedBy">0</Data>
+<Data AD_Column_ID="2638" Column="AD_Language">es_MX</Data>
+<Data AD_Column_ID="2637" Column="AD_Element_ID">1001180</Data>
+<Data AD_Column_ID="2648" Column="Help" isNewNull="true"/>
+<Data AD_Column_ID="2640" Column="AD_Org_ID">0</Data>
+<Data AD_Column_ID="6450" Column="PO_Name" isNewNull="true"/>
+<Data AD_Column_ID="2649" Column="IsTranslated">false</Data>
+<Data AD_Column_ID="6449" Column="PO_Help" isNewNull="true"/>
+<Data AD_Column_ID="2639" Column="AD_Client_ID">0</Data>
+<Data AD_Column_ID="2647" Column="Description">The applicability statement on the CAWIS website</Data>
+<Data AD_Column_ID="2646" Column="Name">CAWIS Applicability</Data>
+<Data AD_Column_ID="4300" Column="PrintName">CAWIS Applicability</Data>
+<Data AD_Column_ID="6451" Column="PO_PrintName" isNewNull="true"/>
+</PO>
+</Step>
+<Step SeqNo="30" StepType="AD">
+<PO AD_Table_ID="100" Action="U" Record_ID="54205" Table="AD_Table">
+<Data AD_Column_ID="102" Column="Name" oldValue="AD Application ID">AD Application</Data>
+</PO>
+</Step>
+<Step SeqNo="40" StepType="AD">
+<PO AD_Table_ID="101" Action="I" Record_ID="1001751" Table="AD_Column">
+<Data AD_Column_ID="3369" Column="AD_Process_ID" isNewNull="true"/>
+<Data AD_Column_ID="552" Column="UpdatedBy">0</Data>
+<Data AD_Column_ID="6245" Column="ReadOnlyLogic" isNewNull="true"/>
+<Data AD_Column_ID="54358" Column="InfoFactoryClass" isNewNull="true"/>
+<Data AD_Column_ID="50218" Column="MandatoryLogic" isNewNull="true"/>
+<Data AD_Column_ID="56149" Column="IsAutocomplete">false</Data>
+<Data AD_Column_ID="56187" Column="IsAllowLogging">true</Data>
+<Data AD_Column_ID="56352" Column="FormatPattern" isNewNull="true"/>
+<Data AD_Column_ID="128" Column="IsEncrypted">N</Data>
+<Data AD_Column_ID="112" Column="Description">The applicability statement on the CAWIS website</Data>
+<Data AD_Column_ID="111" Column="Name">CAWIS Applicability</Data>
+<Data AD_Column_ID="116" Column="ColumnName">FTU_CAWIS_Applicability</Data>
+<Data AD_Column_ID="59702" Column="AD_Chart_ID" isNewNull="true"/>
+<Data AD_Column_ID="2608" Column="AD_Element_ID">1001180</Data>
+<Data AD_Column_ID="68024" Column="IsRange">false</Data>
+<Data AD_Column_ID="548" Column="IsActive">true</Data>
+<Data AD_Column_ID="3360" Column="IsUpdateable">true</Data>
+<Data AD_Column_ID="1692" Column="Callout" isNewNull="true"/>
+<Data AD_Column_ID="11617" Column="IsAlwaysUpdateable">false</Data>
+<Data AD_Column_ID="13448" Column="ColumnSQL" isNewNull="true"/>
+<Data AD_Column_ID="117" Column="DefaultValue" isNewNull="true"/>
+<Data AD_Column_ID="109" Column="AD_Column_ID">1001751</Data>
+<Data AD_Column_ID="114" Column="AD_Table_ID">54205</Data>
+<Data AD_Column_ID="3389" Column="ValueMax" isNewNull="true"/>
+<Data AD_Column_ID="6482" Column="EntityType">MFTU</Data>
+<Data AD_Column_ID="110" Column="Version">0</Data>
+<Data AD_Column_ID="227" Column="AD_Reference_Value_ID" isNewNull="true"/>
+<Data AD_Column_ID="124" Column="IsMandatory">false</Data>
+<Data AD_Column_ID="125" Column="IsTranslated">false</Data>
+<Data AD_Column_ID="550" Column="CreatedBy">0</Data>
+<Data AD_Column_ID="551" Column="Updated">2017-11-15 08:35:09.821</Data>
+<Data AD_Column_ID="126" Column="IsIdentifier">false</Data>
+<Data AD_Column_ID="127" Column="SeqNo">0</Data>
+<Data AD_Column_ID="113" Column="Help" isNewNull="true"/>
+<Data AD_Column_ID="3388" Column="ValueMin" isNewNull="true"/>
+<Data AD_Column_ID="120" Column="IsParent">false</Data>
+<Data AD_Column_ID="359" Column="AD_Client_ID">0</Data>
+<Data AD_Column_ID="360" Column="AD_Org_ID">0</Data>
+<Data AD_Column_ID="118" Column="FieldLength">255</Data>
+<Data AD_Column_ID="6244" Column="IsSelectionColumn">false</Data>
+<Data AD_Column_ID="226" Column="AD_Reference_ID">10</Data>
+<Data AD_Column_ID="6483" Column="IsSyncDatabase">N</Data>
+<Data AD_Column_ID="549" Column="Created">2017-11-15 08:35:09.821</Data>
+<Data AD_Column_ID="115" Column="AD_Val_Rule_ID" isNewNull="true"/>
+<Data AD_Column_ID="1179" Column="VFormat" isNewNull="true"/>
+<Data AD_Column_ID="119" Column="IsKey">false</Data>
+</PO>
+</Step>
+<Step SeqNo="50" StepType="AD">
+<PO AD_Table_ID="752" Action="I" Record_ID="1001751" Table="AD_Column_Trl">
+<Data AD_Column_ID="12959" Column="IsActive">true</Data>
+<Data AD_Column_ID="12955" Column="AD_Column_ID">1001751</Data>
+<Data AD_Column_ID="12956" Column="CreatedBy">0</Data>
+<Data AD_Column_ID="12958" Column="UpdatedBy">0</Data>
+<Data AD_Column_ID="12960" Column="Created">2017-11-15 08:35:26.908</Data>
+<Data AD_Column_ID="12961" Column="AD_Client_ID">0</Data>
+<Data AD_Column_ID="12951" Column="AD_Org_ID">0</Data>
+<Data AD_Column_ID="12952" Column="Updated">2017-11-15 08:35:26.908</Data>
+<Data AD_Column_ID="12953" Column="AD_Language">es_MX</Data>
+<Data AD_Column_ID="12954" Column="IsTranslated">false</Data>
+<Data AD_Column_ID="12957" Column="Name">CAWIS Applicability</Data>
+</PO>
+</Step>
+<Step SeqNo="60" StepType="AD">
+<PO AD_Table_ID="107" Action="I" Record_ID="1001600" Table="AD_Field">
+<Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
+<Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
+<Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
+<Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
+<Data AD_Column_ID="578" Column="IsActive">true</Data>
+<Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
+<Data AD_Column_ID="186" Column="IsEncrypted">false</Data>
+<Data AD_Column_ID="582" Column="UpdatedBy">0</Data>
+<Data AD_Column_ID="384" Column="AD_Org_ID">0</Data>
+<Data AD_Column_ID="579" Column="Created">2017-11-15 08:48:52.193</Data>
+<Data AD_Column_ID="383" Column="AD_Client_ID">0</Data>
+<Data AD_Column_ID="180" Column="DisplayLength">255</Data>
+<Data AD_Column_ID="176" Column="IsDisplayed">true</Data>
+<Data AD_Column_ID="174" Column="AD_Column_ID">1001751</Data>
+<Data AD_Column_ID="183" Column="IsSameLine">false</Data>
+<Data AD_Column_ID="184" Column="IsHeading">false</Data>
+<Data AD_Column_ID="185" Column="IsFieldOnly">false</Data>
+<Data AD_Column_ID="181" Column="SeqNo" isNewNull="true"/>
+<Data AD_Column_ID="2745" Column="IsCentrallyMaintained">true</Data>
+<Data AD_Column_ID="172" Column="AD_Tab_ID">54280</Data>
+<Data AD_Column_ID="167" Column="AD_Field_ID">1001600</Data>
+<Data AD_Column_ID="580" Column="CreatedBy">0</Data>
+<Data AD_Column_ID="581" Column="Updated">2017-11-15 08:48:52.193</Data>
+<Data AD_Column_ID="2007" Column="IsReadOnly">false</Data>
+<Data AD_Column_ID="170" Column="Help" isNewNull="true"/>
+<Data AD_Column_ID="5375" Column="AD_FieldGroup_ID" isNewNull="true"/>
+<Data AD_Column_ID="9969" Column="ObscureType" isNewNull="true"/>
+<Data AD_Column_ID="15011" Column="AD_Reference_ID" isNewNull="true"/>
+<Data AD_Column_ID="177" Column="DisplayLogic" isNewNull="true"/>
+<Data AD_Column_ID="15013" Column="IsMandatory" isNewNull="true"/>
+<Data AD_Column_ID="7714" Column="EntityType">MFTU</Data>
+<Data AD_Column_ID="53265" Column="DefaultValue" isNewNull="true"/>
+<Data AD_Column_ID="54356" Column="AD_Reference_Value_ID" isNewNull="true"/>
+<Data AD_Column_ID="54357" Column="AD_Val_Rule_ID" isNewNull="true"/>
+<Data AD_Column_ID="54359" Column="InfoFactoryClass" isNewNull="true"/>
+<Data AD_Column_ID="57957" Column="Included_Tab_ID" isNewNull="true"/>
+<Data AD_Column_ID="169" Column="Description">The applicability statement on the CAWIS website</Data>
+<Data AD_Column_ID="168" Column="Name">CAWIS Applicability</Data>
+<Data AD_Column_ID="59704" Column="PreferredWidth" isNewNull="true"/>
+</PO>
+</Step>
+<Step SeqNo="70" StepType="AD">
+<PO AD_Table_ID="127" Action="I" Record_ID="1001600" Table="AD_Field_Trl">
+<Data AD_Column_ID="671" Column="IsActive">true</Data>
+<Data AD_Column_ID="284" Column="AD_Field_ID">1001600</Data>
+<Data AD_Column_ID="285" Column="AD_Language">es_MX</Data>
+<Data AD_Column_ID="1204" Column="AD_Client_ID">0</Data>
+<Data AD_Column_ID="674" Column="Updated">2017-11-15 08:48:57.895</Data>
+<Data AD_Column_ID="675" Column="UpdatedBy">0</Data>
+<Data AD_Column_ID="673" Column="CreatedBy">0</Data>
+<Data AD_Column_ID="672" Column="Created">2017-11-15 08:48:57.895</Data>
+<Data AD_Column_ID="288" Column="Help" isNewNull="true"/>
+<Data AD_Column_ID="289" Column="IsTranslated">false</Data>
+<Data AD_Column_ID="1205" Column="AD_Org_ID">0</Data>
+<Data AD_Column_ID="286" Column="Name">CAWIS Applicability</Data>
+<Data AD_Column_ID="287" Column="Description">The applicability statement on the CAWIS website</Data>
+</PO>
+</Step>
+<Step SeqNo="80" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="1001600" Table="AD_Field">
+<Data AD_Column_ID="181" Column="SeqNo" isOldNull="true">50</Data>
+</PO>
+</Step>
+<Step SeqNo="90" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="81101" Table="AD_Field">
+<Data AD_Column_ID="181" Column="SeqNo" oldValue="80">60</Data>
+</PO>
+</Step>
+<Step SeqNo="100" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="81424" Table="AD_Field">
+<Data AD_Column_ID="181" Column="SeqNo" oldValue="90">70</Data>
+</PO>
+</Step>
+<Step SeqNo="110" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="1403" Table="AD_Column">
+<Data AD_Column_ID="226" Column="AD_Reference_ID" oldValue="25">19</Data>
+</PO>
+</Step>
+<Step SeqNo="120" StepType="AD">
+<PO AD_Table_ID="559" Action="I" Record_ID="1007198" Table="M_AttributeSetInstance">
+<Data AD_Column_ID="8476" Column="IsActive">true</Data>
+<Data AD_Column_ID="8478" Column="CreatedBy">100</Data>
+<Data AD_Column_ID="8473" Column="Lot" isNewNull="true"/>
+<Data AD_Column_ID="8480" Column="UpdatedBy">100</Data>
+<Data AD_Column_ID="8471" Column="GuaranteeDate" isNewNull="true"/>
+<Data AD_Column_ID="8474" Column="Updated">2017-11-15 11:19:45.125</Data>
+<Data AD_Column_ID="8475" Column="Created">2017-11-15 11:19:45.125</Data>
+<Data AD_Column_ID="9771" Column="M_Lot_ID" isNewNull="true"/>
+<Data AD_Column_ID="8481" Column="AD_Org_ID">1000000</Data>
+<Data AD_Column_ID="8482" Column="AD_Client_ID">1000000</Data>
+<Data AD_Column_ID="8477" Column="M_AttributeSet_ID">1000014</Data>
+<Data AD_Column_ID="8470" Column="SerNo" isNewNull="true"/>
+<Data AD_Column_ID="8472" Column="M_AttributeSetInstance_ID">1007198</Data>
+<Data AD_Column_ID="8479" Column="Description" isNewNull="true"/>
+</PO>
+</Step>
+<Step SeqNo="130" StepType="AD">
+<PO AD_Table_ID="561" Action="I" Record_ID="1007198" Table="M_AttributeInstance">
+<Data AD_Column_ID="8505" Column="IsActive">true</Data>
+<Data AD_Column_ID="8501" Column="Value">Cessna</Data>
+<Data AD_Column_ID="12661" Column="ValueNumber" isNewNull="true"/>
+<Data AD_Column_ID="8524" Column="UpdatedBy">100</Data>
+<Data AD_Column_ID="8525" Column="Updated">2017-11-15 11:20:09.811</Data>
+<Data AD_Column_ID="8499" Column="M_AttributeSetInstance_ID">1007198</Data>
+<Data AD_Column_ID="8498" Column="Created">2017-11-15 11:20:09.811</Data>
+<Data AD_Column_ID="8502" Column="CreatedBy">100</Data>
+<Data AD_Column_ID="8503" Column="AD_Org_ID">1000000</Data>
+<Data AD_Column_ID="8504" Column="M_AttributeValue_ID">1000072</Data>
+<Data AD_Column_ID="8506" Column="M_Attribute_ID">1000033</Data>
+<Data AD_Column_ID="8500" Column="AD_Client_ID">1000000</Data>
+</PO>
+</Step>
+<Step SeqNo="140" StepType="AD">
+<PO AD_Table_ID="561" Action="I" Record_ID="1007198" Table="M_AttributeInstance">
+<Data AD_Column_ID="8505" Column="IsActive">true</Data>
+<Data AD_Column_ID="8501" Column="Value">150L</Data>
+<Data AD_Column_ID="12661" Column="ValueNumber" isNewNull="true"/>
+<Data AD_Column_ID="8524" Column="UpdatedBy">100</Data>
+<Data AD_Column_ID="8525" Column="Updated">2017-11-15 11:20:10.389</Data>
+<Data AD_Column_ID="8499" Column="M_AttributeSetInstance_ID">1007198</Data>
+<Data AD_Column_ID="8498" Column="Created">2017-11-15 11:20:10.389</Data>
+<Data AD_Column_ID="8502" Column="CreatedBy">100</Data>
+<Data AD_Column_ID="8503" Column="AD_Org_ID">1000000</Data>
+<Data AD_Column_ID="8504" Column="M_AttributeValue_ID">1000074</Data>
+<Data AD_Column_ID="8506" Column="M_Attribute_ID">1000034</Data>
+<Data AD_Column_ID="8500" Column="AD_Client_ID">1000000</Data>
+</PO>
+</Step>
+<Step SeqNo="150" StepType="AD">
+<PO AD_Table_ID="559" Action="U" Record_ID="1007198" Table="M_AttributeSetInstance">
+<Data AD_Column_ID="8479" Column="Description" oldValue="1007198">Cessna_150L</Data>
+</PO>
+</Step>
+<Step SeqNo="160" StepType="AD">
+<PO AD_Table_ID="559" Action="D" Record_ID="1007198" Table="M_AttributeSetInstance">
+<Data AD_Column_ID="8476" Column="IsActive" isNewNull="true" oldValue="true"/>
+<Data AD_Column_ID="8478" Column="CreatedBy" isNewNull="true" oldValue="100"/>
+<Data AD_Column_ID="8473" Column="Lot" isNewNull="true" isOldNull="true"/>
+<Data AD_Column_ID="8480" Column="UpdatedBy" isNewNull="true" oldValue="100"/>
+<Data AD_Column_ID="8471" Column="GuaranteeDate" isNewNull="true" isOldNull="true"/>
+<Data AD_Column_ID="8474" Column="Updated" isNewNull="true" oldValue="2017-11-15 11:20:11.0"/>
+<Data AD_Column_ID="8475" Column="Created" isNewNull="true" oldValue="2017-11-15 11:19:45.0"/>
+<Data AD_Column_ID="9771" Column="M_Lot_ID" isNewNull="true" isOldNull="true"/>
+<Data AD_Column_ID="8481" Column="AD_Org_ID" isNewNull="true" oldValue="1000000"/>
+<Data AD_Column_ID="8482" Column="AD_Client_ID" isNewNull="true" oldValue="1000000"/>
+<Data AD_Column_ID="8477" Column="M_AttributeSet_ID" isNewNull="true" oldValue="1000014"/>
+<Data AD_Column_ID="8470" Column="SerNo" isNewNull="true" isOldNull="true"/>
+<Data AD_Column_ID="8472" Column="M_AttributeSetInstance_ID" isNewNull="true" oldValue="1007198"/>
+<Data AD_Column_ID="8479" Column="Description" isNewNull="true" oldValue="Cessna_150L"/>
+</PO>
+</Step>
+<Step SeqNo="170" StepType="AD">
+<PO AD_Table_ID="208" Action="I" Record_ID="1000546" Table="M_Product">
+<Data AD_Column_ID="68430" Column="DiscontinuedBy" isNewNull="true"/>
+<Data AD_Column_ID="68431" Column="DownloadURL" isNewNull="true"/>
+<Data AD_Column_ID="68432" Column="ISTOFORMULE">false</Data>
+<Data AD_Column_ID="68433" Column="IsPhantom">false</Data>
+<Data AD_Column_ID="61997" Column="IsManufactured">false</Data>
+<Data AD_Column_ID="1001055" Column="IsTuitionFee">false</Data>
+<Data AD_Column_ID="2012" Column="M_Product_Category_ID">1000038</Data>
+<Data AD_Column_ID="10260" Column="IsWebStoreFeatured">false</Data>
+<Data AD_Column_ID="2011" Column="Value">C-150L</Data>
+<Data AD_Column_ID="1405" Column="IsActive">true</Data>
+<Data AD_Column_ID="52062" Column="Group2" isNewNull="true"/>
+<Data AD_Column_ID="6773" Column="S_Resource_ID" isNewNull="true"/>
+<Data AD_Column_ID="52116" Column="UnitsPerPack">0</Data>
+<Data AD_Column_ID="7974" Column="GuaranteeDays">0</Data>
+<Data AD_Column_ID="4711" Column="IsVerified">false</Data>
+<Data AD_Column_ID="9420" Column="M_Locator_ID">1000001</Data>
+<Data AD_Column_ID="10261" Column="IsSelfService">true</Data>
+<Data AD_Column_ID="8417" Column="M_AttributeSet_ID">1000014</Data>
+<Data AD_Column_ID="7973" Column="VersionNo" isNewNull="true"/>
+<Data AD_Column_ID="9329" Column="M_FreightCategory_ID" isNewNull="true"/>
+<Data AD_Column_ID="7962" Column="ImageURL" isNewNull="true"/>
+<Data AD_Column_ID="7795" Column="ProductType">I</Data>
+<Data AD_Column_ID="7972" Column="R_MailText_ID" isNewNull="true"/>
+<Data AD_Column_ID="7963" Column="DescriptionURL" isNewNull="true"/>
+<Data AD_Column_ID="6771" Column="S_ExpenseType_ID" isNewNull="true"/>
+<Data AD_Column_ID="12147" Column="IsDropShip">false</Data>
+<Data AD_Column_ID="1402" Column="M_Product_ID">1000546</Data>
+<Data AD_Column_ID="4712" Column="Processing">false</Data>
+<Data AD_Column_ID="2305" Column="SKU" isNewNull="true"/>
+<Data AD_Column_ID="3391" Column="SalesRep_ID">100</Data>
+<Data AD_Column_ID="2309" Column="ShelfDepth">0</Data>
+<Data AD_Column_ID="2308" Column="ShelfHeight">0</Data>
+<Data AD_Column_ID="2307" Column="ShelfWidth">0</Data>
+<Data AD_Column_ID="2310" Column="UnitsPerPallet">0</Data>
+<Data AD_Column_ID="9889" Column="GuaranteeDaysMin">0</Data>
+<Data AD_Column_ID="8418" Column="M_AttributeSetInstance_ID">0</Data>
+<Data AD_Column_ID="1408" Column="Updated">2017-11-15 11:20:34.418</Data>
+<Data AD_Column_ID="1409" Column="UpdatedBy">100</Data>
+<Data AD_Column_ID="1766" Column="Volume">0</Data>
+<Data AD_Column_ID="1767" Column="Weight">0</Data>
+<Data AD_Column_ID="1404" Column="AD_Org_ID">1000000</Data>
+<Data AD_Column_ID="3909" Column="C_RevenueRecognition_ID" isNewNull="true"/>
+<Data AD_Column_ID="2019" Column="C_TaxCategory_ID">1000006</Data>
+<Data AD_Column_ID="1760" Column="C_UOM_ID">100</Data>
+<Data AD_Column_ID="1406" Column="Created">2017-11-15 11:20:34.418</Data>
+<Data AD_Column_ID="1407" Column="CreatedBy">100</Data>
+<Data AD_Column_ID="2703" Column="Discontinued">false</Data>
+<Data AD_Column_ID="3014" Column="DocumentNote" isNewNull="true"/>
+<Data AD_Column_ID="3015" Column="Help">This is the base product for all C150L aircraft components.</Data>
+<Data AD_Column_ID="14505" Column="IsExcludeAutoDelivery">false</Data>
+<Data AD_Column_ID="4709" Column="IsInvoicePrintDetails">false</Data>
+<Data AD_Column_ID="4710" Column="IsPickListPrintDetails">false</Data>
+<Data AD_Column_ID="1762" Column="IsPurchased">false</Data>
+<Data AD_Column_ID="1763" Column="IsSold">false</Data>
+<Data AD_Column_ID="1761" Column="IsStocked">false</Data>
+<Data AD_Column_ID="1413" Column="IsSummary">false</Data>
+<Data AD_Column_ID="2304" Column="UPC" isNewNull="true"/>
+<Data AD_Column_ID="10919" Column="C_SubscriptionType_ID" isNewNull="true"/>
+<Data AD_Column_ID="2704" Column="DiscontinuedAt" isNewNull="true"/>
+<Data AD_Column_ID="53408" Column="LowLevel">0</Data>
+<Data AD_Column_ID="1410" Column="Name">Cessna 150L</Data>
+<Data AD_Column_ID="1411" Column="Description">Generic Cessna 150L</Data>
+<Data AD_Column_ID="59231" Column="CopyFrom">N</Data>
+<Data AD_Column_ID="61996" Column="IsKanban">false</Data>
+<Data AD_Column_ID="61995" Column="M_PartType_ID" isNewNull="true"/>
+<Data AD_Column_ID="4708" Column="IsBOM">false</Data>
+<Data AD_Column_ID="52061" Column="Group1" isNewNull="true"/>
+<Data AD_Column_ID="67104" Column="M_Product_Class_ID" isNewNull="true"/>
+<Data AD_Column_ID="67105" Column="M_Product_Group_ID" isNewNull="true"/>
+<Data AD_Column_ID="67106" Column="M_Product_Classification_ID" isNewNull="true"/>
+<Data AD_Column_ID="3016" Column="Classification" isNewNull="true"/>
+<Data AD_Column_ID="82341" Column="IsTrackAsComponent">true</Data>
+<Data AD_Column_ID="82778" Column="FTU_CAWIS_Model_ID" isNewNull="true"/>
+<Data AD_Column_ID="1403" Column="AD_Client_ID">1000000</Data>
+<Data AD_Column_ID="82777" Column="FTU_CAWIS_Manufacturer_ID" isNewNull="true"/>
+</PO>
+</Step>
+<Step SeqNo="180" StepType="AD">
+<PO AD_Table_ID="312" Action="I" Record_ID="1000546" Table="M_Product_Trl">
+<Data AD_Column_ID="3325" Column="IsActive">true</Data>
+<Data AD_Column_ID="3324" Column="AD_Org_ID">0</Data>
+<Data AD_Column_ID="3326" Column="Created">2017-11-15 11:20:41.335</Data>
+<Data AD_Column_ID="3327" Column="CreatedBy">100</Data>
+<Data AD_Column_ID="3331" Column="DocumentNote" isNewNull="true"/>
+<Data AD_Column_ID="3332" Column="IsTranslated">false</Data>
+<Data AD_Column_ID="3321" Column="M_Product_ID">1000546</Data>
+<Data AD_Column_ID="3328" Column="Updated">2017-11-15 11:20:41.335</Data>
+<Data AD_Column_ID="3323" Column="AD_Client_ID">0</Data>
+<Data AD_Column_ID="3329" Column="UpdatedBy">100</Data>
+<Data AD_Column_ID="3322" Column="AD_Language">es_MX</Data>
+<Data AD_Column_ID="13008" Column="Description">Generic Cessna 150L</Data>
+<Data AD_Column_ID="3330" Column="Name">Cessna 150L</Data>
+</PO>
+</Step>
+<Step SeqNo="190" StepType="AD">
+<PO AD_Table_ID="453" Action="I" Record_ID="1000009" Table="AD_TreeNodePR">
+<Data AD_Column_ID="6167" Column="IsActive">true</Data>
+<Data AD_Column_ID="6163" Column="AD_Tree_ID">1000009</Data>
+<Data AD_Column_ID="6170" Column="Updated">2017-11-15 11:20:42.867</Data>
+<Data AD_Column_ID="6174" Column="SeqNo">999</Data>
+<Data AD_Column_ID="6165" Column="AD_Client_ID">1000000</Data>
+<Data AD_Column_ID="6172" Column="Parent_ID">0</Data>
+<Data AD_Column_ID="6171" Column="UpdatedBy">100</Data>
+<Data AD_Column_ID="6166" Column="AD_Org_ID">0</Data>
+<Data AD_Column_ID="6169" Column="CreatedBy">100</Data>
+<Data AD_Column_ID="6168" Column="Created">2017-11-15 11:20:42.867</Data>
+<Data AD_Column_ID="6164" Column="Node_ID">1000546</Data>
+</PO>
+</Step>
+<Step SeqNo="200" StepType="AD">
+<PO AD_Table_ID="327" Action="I" Record_ID="1000000" Table="M_Product_Costing">
+<Data AD_Column_ID="3628" Column="IsActive">true</Data>
+<Data AD_Column_ID="6709" Column="PriceLastInv" isNewNull="true"/>
+<Data AD_Column_ID="6710" Column="TotalInvQty" isNewNull="true"/>
+<Data AD_Column_ID="6708" Column="PriceLastPO" isNewNull="true"/>
+<Data AD_Column_ID="3634" Column="CostAverage" isNewNull="true"/>
+<Data AD_Column_ID="3625" Column="C_AcctSchema_ID">1000000</Data>
+<Data AD_Column_ID="3627" Column="AD_Org_ID">1000000</Data>
+<Data AD_Column_ID="3624" Column="M_Product_ID">1000546</Data>
+<Data AD_Column_ID="3630" Column="CreatedBy">100</Data>
+<Data AD_Column_ID="3633" Column="CostStandard" isNewNull="true"/>
+<Data AD_Column_ID="3632" Column="UpdatedBy">100</Data>
+<Data AD_Column_ID="6702" Column="CostStandardPOQty" isNewNull="true"/>
+<Data AD_Column_ID="3629" Column="Created">2017-11-15 11:20:43.679</Data>
+<Data AD_Column_ID="6711" Column="TotalInvAmt" isNewNull="true"/>
+<Data AD_Column_ID="6705" Column="CostStandardCumAmt" isNewNull="true"/>
+<Data AD_Column_ID="5125" Column="CurrentCostPrice" isNewNull="true"/>
+<Data AD_Column_ID="5126" Column="FutureCostPrice" isNewNull="true"/>
+<Data AD_Column_ID="6704" Column="CostStandardCumQty" isNewNull="true"/>
+<Data AD_Column_ID="6706" Column="CostAverageCumQty" isNewNull="true"/>
+<Data AD_Column_ID="3631" Column="Updated">2017-11-15 11:20:43.679</Data>
+<Data AD_Column_ID="6703" Column="CostStandardPOAmt" isNewNull="true"/>
+<Data AD_Column_ID="6707" Column="CostAverageCumAmt" isNewNull="true"/>
+<Data AD_Column_ID="3626" Column="AD_Client_ID">1000000</Data>
+</PO>
+</Step>
+<Step SeqNo="210" StepType="AD">
+<PO AD_Table_ID="771" Action="I" Record_ID="1000003" Table="M_Cost">
+<Data AD_Column_ID="13472" Column="M_CostElement_ID">1000003</Data>
+<Data AD_Column_ID="56076" Column="CurrentCostPriceLL" isNewNull="true"/>
+<Data AD_Column_ID="59899" Column="CumulatedAmtLL" isNewNull="true"/>
+<Data AD_Column_ID="66648" Column="M_Warehouse_ID">0</Data>
+<Data AD_Column_ID="14196" Column="M_AttributeSetInstance_ID">0</Data>
+<Data AD_Column_ID="13473" Column="IsActive">true</Data>
+<Data AD_Column_ID="13477" Column="UpdatedBy">100</Data>
+<Data AD_Column_ID="13479" Column="FutureCostPrice">0</Data>
+<Data AD_Column_ID="13469" Column="M_Product_ID">1000546</Data>
+<Data AD_Column_ID="13470" Column="M_CostType_ID">1000000</Data>
+<Data AD_Column_ID="13471" Column="C_AcctSchema_ID">1000000</Data>
+<Data AD_Column_ID="13474" Column="Created">2017-11-15 11:20:45.258</Data>
+<Data AD_Column_ID="13476" Column="Updated">2017-11-15 11:20:45.258</Data>
+<Data AD_Column_ID="13475" Column="CreatedBy">100</Data>
+<Data AD_Column_ID="14394" Column="Percent" isNewNull="true"/>
+<Data AD_Column_ID="14201" Column="CumulatedAmt">0</Data>
+<Data AD_Column_ID="14202" Column="CumulatedQty">0</Data>
+<Data AD_Column_ID="14401" Column="CurrentQty">0</Data>
+<Data AD_Column_ID="13467" Column="AD_Client_ID">1000000</Data>
+<Data AD_Column_ID="13468" Column="AD_Org_ID">0</Data>
+<Data AD_Column_ID="56683" Column="FutureCostPriceLL" isNewNull="true"/>
+<Data AD_Column_ID="56684" Column="IsCostFrozen">false</Data>
+<Data AD_Column_ID="13480" Column="Description" isNewNull="true"/>
+<Data AD_Column_ID="13478" Column="CurrentCostPrice">0</Data>
+</PO>
+</Step>
+<Step SeqNo="220" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82339" Table="AD_Column">
+<Data AD_Column_ID="1692" Column="Callout" oldValue="com.mckayerp.ftu.model.CalloutComponent.product">com.mckayerp.model.CalloutComponent.product</Data>
+</PO>
+</Step>
+<Step SeqNo="230" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82340" Table="AD_Column">
+<Data AD_Column_ID="6245" Column="ReadOnlyLogic" oldValue="@FTU_Component_ID@&gt;0">@M_Component_ID@&gt;0</Data>
+</PO>
+</Step>
+<Step SeqNo="240" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82339" Table="AD_Column">
+<Data AD_Column_ID="6245" Column="ReadOnlyLogic" oldValue="@FTU_Component_ID@&gt;0">@M_Component_ID@&gt;0</Data>
+</PO>
+</Step>
+<Step SeqNo="250" StepType="AD">
+<PO AD_Table_ID="102" Action="U" Record_ID="53877" Table="AD_Reference">
+<Data AD_Column_ID="130" Column="Name" oldValue="FTU_CompLifeUsageSource">M_CompLifeUsageSource</Data>
+</PO>
+</Step>
+<Step SeqNo="260" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82471" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">C</Data>
+</PO>
+</Step>
+<Step SeqNo="270" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82331" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="280" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82332" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="290" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82334" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="300" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82336" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="310" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82333" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="320" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82483" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="330" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82482" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="340" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82471" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="C">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="350" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82480" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="360" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82477" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="370" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82340" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="380" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82338" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="390" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82339" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="400" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82484" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="410" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82335" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="420" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82337" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="430" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82408" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="440" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82409" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="450" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82487" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="460" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82488" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="470" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82411" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="480" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82413" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="490" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82489" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="500" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82485" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="510" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82417" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="520" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82422" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="530" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82490" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="540" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82410" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="550" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82435" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="560" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82492" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="570" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82416" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="580" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82434" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="590" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82415" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="600" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82491" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="610" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82421" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="620" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82418" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="630" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82486" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="640" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82493" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="650" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82419" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="660" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82425" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="670" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82412" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="680" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82414" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="690" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82420" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="700" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82342" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="710" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82343" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="720" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82357" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="730" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82345" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="740" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82347" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="750" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82352" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="760" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82351" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="770" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82394" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="780" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82344" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="790" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82350" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="800" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82349" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="810" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82358" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="820" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82359" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="830" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82354" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="840" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82361" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="850" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82390" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="860" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82355" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="870" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82356" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="880" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82353" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="890" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82346" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="900" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82348" Table="AD_Column">
+<Data AD_Column_ID="6482" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+</Migration>
+</Migrations>

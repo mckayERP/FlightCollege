@@ -29,7 +29,7 @@ public class X_FTU_MaintWorkOrderLine extends PO implements I_FTU_MaintWorkOrder
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20170425L;
+	private static final long serialVersionUID = 20180107L;
 
     /** Standard Constructor */
     public X_FTU_MaintWorkOrderLine (Properties ctx, int FTU_MaintWorkOrderLine_ID, String trxName)
@@ -69,6 +69,106 @@ public class X_FTU_MaintWorkOrderLine extends PO implements I_FTU_MaintWorkOrder
       return sb.toString();
     }
 
+	public com.mckayerp.model.I_CT_Component getCT_Component() throws RuntimeException
+    {
+		return (com.mckayerp.model.I_CT_Component)MTable.get(getCtx(), com.mckayerp.model.I_CT_Component.Table_Name)
+			.getPO(getCT_Component_ID(), get_TrxName());	}
+
+	/** Set Component.
+		@param CT_Component_ID 
+		A component of an assembly or asset.
+	  */
+	public void setCT_Component_ID (int CT_Component_ID)
+	{
+		if (CT_Component_ID < 1) 
+			set_Value (COLUMNNAME_CT_Component_ID, null);
+		else 
+			set_Value (COLUMNNAME_CT_Component_ID, Integer.valueOf(CT_Component_ID));
+	}
+
+	/** Get Component.
+		@return A component of an assembly or asset.
+	  */
+	public int getCT_Component_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_CT_Component_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
+	/** CT_ComponentActionType AD_Reference_ID=53872 */
+	public static final int CT_COMPONENTACTIONTYPE_AD_Reference_ID=53872;
+	/** Shipped = Shipped */
+	public static final String CT_COMPONENTACTIONTYPE_Shipped = "Shipped";
+	/** Received = Received */
+	public static final String CT_COMPONENTACTIONTYPE_Received = "Received";
+	/** Scrapped = Scrapped */
+	public static final String CT_COMPONENTACTIONTYPE_Scrapped = "Scrapped";
+	/** Added to inventory = Added */
+	public static final String CT_COMPONENTACTIONTYPE_AddedToInventory = "Added";
+	/** Drawn from inentory = Drawn */
+	public static final String CT_COMPONENTACTIONTYPE_DrawnFromInentory = "Drawn";
+	/** Installed = Installed */
+	public static final String CT_COMPONENTACTIONTYPE_Installed = "Installed";
+	/** Uninstalled = Uninstalled */
+	public static final String CT_COMPONENTACTIONTYPE_Uninstalled = "Uninstalled";
+	/** Created = Created */
+	public static final String CT_COMPONENTACTIONTYPE_Created = "Created";
+	/** Set Action Type.
+		@param CT_ComponentActionType 
+		The type of action performed on the component
+	  */
+	public void setCT_ComponentActionType (String CT_ComponentActionType)
+	{
+
+		set_Value (COLUMNNAME_CT_ComponentActionType, CT_ComponentActionType);
+	}
+
+	/** Get Action Type.
+		@return The type of action performed on the component
+	  */
+	public String getCT_ComponentActionType () 
+	{
+		return (String)get_Value(COLUMNNAME_CT_ComponentActionType);
+	}
+
+	/** CT_ComponentResolutionType AD_Reference_ID=53872 */
+	public static final int CT_COMPONENTRESOLUTIONTYPE_AD_Reference_ID=53872;
+	/** Shipped = Shipped */
+	public static final String CT_COMPONENTRESOLUTIONTYPE_Shipped = "Shipped";
+	/** Received = Received */
+	public static final String CT_COMPONENTRESOLUTIONTYPE_Received = "Received";
+	/** Scrapped = Scrapped */
+	public static final String CT_COMPONENTRESOLUTIONTYPE_Scrapped = "Scrapped";
+	/** Added to inventory = Added */
+	public static final String CT_COMPONENTRESOLUTIONTYPE_AddedToInventory = "Added";
+	/** Drawn from inentory = Drawn */
+	public static final String CT_COMPONENTRESOLUTIONTYPE_DrawnFromInentory = "Drawn";
+	/** Installed = Installed */
+	public static final String CT_COMPONENTRESOLUTIONTYPE_Installed = "Installed";
+	/** Uninstalled = Uninstalled */
+	public static final String CT_COMPONENTRESOLUTIONTYPE_Uninstalled = "Uninstalled";
+	/** Created = Created */
+	public static final String CT_COMPONENTRESOLUTIONTYPE_Created = "Created";
+	/** Set Resolution Type.
+		@param CT_ComponentResolutionType 
+		The type of action performed on the component to resolve a maintenance requirement
+	  */
+	public void setCT_ComponentResolutionType (String CT_ComponentResolutionType)
+	{
+
+		set_Value (COLUMNNAME_CT_ComponentResolutionType, CT_ComponentResolutionType);
+	}
+
+	/** Get Resolution Type.
+		@return The type of action performed on the component to resolve a maintenance requirement
+	  */
+	public String getCT_ComponentResolutionType () 
+	{
+		return (String)get_Value(COLUMNNAME_CT_ComponentResolutionType);
+	}
+
 	/** Set Action.
 		@param FTU_Action 
 		The action that must be taken to address the maintenance requirement
@@ -84,34 +184,6 @@ public class X_FTU_MaintWorkOrderLine extends PO implements I_FTU_MaintWorkOrder
 	public String getFTU_Action () 
 	{
 		return (String)get_Value(COLUMNNAME_FTU_Action);
-	}
-
-	public com.mckayerp.ftu.model.I_FTU_Component getFTU_Component() throws RuntimeException
-    {
-		return (com.mckayerp.ftu.model.I_FTU_Component)MTable.get(getCtx(), com.mckayerp.ftu.model.I_FTU_Component.Table_Name)
-			.getPO(getFTU_Component_ID(), get_TrxName());	}
-
-	/** Set Component.
-		@param FTU_Component_ID 
-		A component of an assembly or asset.
-	  */
-	public void setFTU_Component_ID (int FTU_Component_ID)
-	{
-		if (FTU_Component_ID < 1) 
-			set_Value (COLUMNNAME_FTU_Component_ID, null);
-		else 
-			set_Value (COLUMNNAME_FTU_Component_ID, Integer.valueOf(FTU_Component_ID));
-	}
-
-	/** Get Component.
-		@return A component of an assembly or asset.
-	  */
-	public int getFTU_Component_ID () 
-	{
-		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_Component_ID);
-		if (ii == null)
-			 return 0;
-		return ii.intValue();
 	}
 
 	public com.mckayerp.ftu.model.I_FTU_MaintRequirement getFTU_MaintRequirement() throws RuntimeException
@@ -172,8 +244,10 @@ public class X_FTU_MaintWorkOrderLine extends PO implements I_FTU_MaintWorkOrder
 		return (com.mckayerp.ftu.model.I_FTU_MaintWorkOrder)MTable.get(getCtx(), com.mckayerp.ftu.model.I_FTU_MaintWorkOrder.Table_Name)
 			.getPO(getFTU_MaintWorkOrder_ID(), get_TrxName());	}
 
-	/** Set Maintenance Work Order ID.
-		@param FTU_MaintWorkOrder_ID Maintenance Work Order ID	  */
+	/** Set Maintenance Work Order.
+		@param FTU_MaintWorkOrder_ID 
+		The Maintenance Work Order
+	  */
 	public void setFTU_MaintWorkOrder_ID (int FTU_MaintWorkOrder_ID)
 	{
 		if (FTU_MaintWorkOrder_ID < 1) 
@@ -182,8 +256,9 @@ public class X_FTU_MaintWorkOrderLine extends PO implements I_FTU_MaintWorkOrder
 			set_ValueNoCheck (COLUMNNAME_FTU_MaintWorkOrder_ID, Integer.valueOf(FTU_MaintWorkOrder_ID));
 	}
 
-	/** Get Maintenance Work Order ID.
-		@return Maintenance Work Order ID	  */
+	/** Get Maintenance Work Order.
+		@return The Maintenance Work Order
+	  */
 	public int getFTU_MaintWorkOrder_ID () 
 	{
 		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_MaintWorkOrder_ID);

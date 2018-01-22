@@ -31,7 +31,7 @@ public class X_FTU_MaintWOResultLine extends PO implements I_FTU_MaintWOResultLi
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20170425L;
+	private static final long serialVersionUID = 20180107L;
 
     /** Standard Constructor */
     public X_FTU_MaintWOResultLine (Properties ctx, int FTU_MaintWOResultLine_ID, String trxName)
@@ -73,6 +73,90 @@ public class X_FTU_MaintWOResultLine extends PO implements I_FTU_MaintWOResultLi
       return sb.toString();
     }
 
+	public com.mckayerp.model.I_CT_Component getCT_Component() throws RuntimeException
+    {
+		return (com.mckayerp.model.I_CT_Component)MTable.get(getCtx(), com.mckayerp.model.I_CT_Component.Table_Name)
+			.getPO(getCT_Component_ID(), get_TrxName());	}
+
+	/** Set Component.
+		@param CT_Component_ID 
+		A component of an assembly or asset.
+	  */
+	public void setCT_Component_ID (int CT_Component_ID)
+	{
+		if (CT_Component_ID < 1) 
+			set_Value (COLUMNNAME_CT_Component_ID, null);
+		else 
+			set_Value (COLUMNNAME_CT_Component_ID, Integer.valueOf(CT_Component_ID));
+	}
+
+	/** Get Component.
+		@return A component of an assembly or asset.
+	  */
+	public int getCT_Component_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_CT_Component_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
+	/** CT_ComponentActionType AD_Reference_ID=53872 */
+	public static final int CT_COMPONENTACTIONTYPE_AD_Reference_ID=53872;
+	/** Shipped = Shipped */
+	public static final String CT_COMPONENTACTIONTYPE_Shipped = "Shipped";
+	/** Received = Received */
+	public static final String CT_COMPONENTACTIONTYPE_Received = "Received";
+	/** Scrapped = Scrapped */
+	public static final String CT_COMPONENTACTIONTYPE_Scrapped = "Scrapped";
+	/** Added to inventory = Added */
+	public static final String CT_COMPONENTACTIONTYPE_AddedToInventory = "Added";
+	/** Drawn from inentory = Drawn */
+	public static final String CT_COMPONENTACTIONTYPE_DrawnFromInentory = "Drawn";
+	/** Installed = Installed */
+	public static final String CT_COMPONENTACTIONTYPE_Installed = "Installed";
+	/** Uninstalled = Uninstalled */
+	public static final String CT_COMPONENTACTIONTYPE_Uninstalled = "Uninstalled";
+	/** Created = Created */
+	public static final String CT_COMPONENTACTIONTYPE_Created = "Created";
+	/** Set Action Type.
+		@param CT_ComponentActionType 
+		The type of action performed on the component
+	  */
+	public void setCT_ComponentActionType (String CT_ComponentActionType)
+	{
+
+		set_Value (COLUMNNAME_CT_ComponentActionType, CT_ComponentActionType);
+	}
+
+	/** Get Action Type.
+		@return The type of action performed on the component
+	  */
+	public String getCT_ComponentActionType () 
+	{
+		return (String)get_Value(COLUMNNAME_CT_ComponentActionType);
+	}
+
+	/** Set Component Life.
+		@param CT_ComponentLifeAtAction 
+		The component life used at the time of the action. For example, the time in service of a replacement part at the time of install.
+	  */
+	public void setCT_ComponentLifeAtAction (BigDecimal CT_ComponentLifeAtAction)
+	{
+		set_Value (COLUMNNAME_CT_ComponentLifeAtAction, CT_ComponentLifeAtAction);
+	}
+
+	/** Get Component Life.
+		@return The component life used at the time of the action. For example, the time in service of a replacement part at the time of install.
+	  */
+	public BigDecimal getCT_ComponentLifeAtAction () 
+	{
+		BigDecimal bd = (BigDecimal)get_Value(COLUMNNAME_CT_ComponentLifeAtAction);
+		if (bd == null)
+			 return Env.ZERO;
+		return bd;
+	}
+
 	/** Set Action.
 		@param FTU_Action 
 		The action that must be taken to address the maintenance requirement
@@ -88,90 +172,6 @@ public class X_FTU_MaintWOResultLine extends PO implements I_FTU_MaintWOResultLi
 	public String getFTU_Action () 
 	{
 		return (String)get_Value(COLUMNNAME_FTU_Action);
-	}
-
-	public com.mckayerp.ftu.model.I_FTU_Component getFTU_Component() throws RuntimeException
-    {
-		return (com.mckayerp.ftu.model.I_FTU_Component)MTable.get(getCtx(), com.mckayerp.ftu.model.I_FTU_Component.Table_Name)
-			.getPO(getFTU_Component_ID(), get_TrxName());	}
-
-	/** Set Component.
-		@param FTU_Component_ID 
-		A component of an assembly or asset.
-	  */
-	public void setFTU_Component_ID (int FTU_Component_ID)
-	{
-		if (FTU_Component_ID < 1) 
-			set_Value (COLUMNNAME_FTU_Component_ID, null);
-		else 
-			set_Value (COLUMNNAME_FTU_Component_ID, Integer.valueOf(FTU_Component_ID));
-	}
-
-	/** Get Component.
-		@return A component of an assembly or asset.
-	  */
-	public int getFTU_Component_ID () 
-	{
-		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_Component_ID);
-		if (ii == null)
-			 return 0;
-		return ii.intValue();
-	}
-
-	/** FTU_ComponentActionType AD_Reference_ID=53872 */
-	public static final int FTU_COMPONENTACTIONTYPE_AD_Reference_ID=53872;
-	/** Shipped = Shipped */
-	public static final String FTU_COMPONENTACTIONTYPE_Shipped = "Shipped";
-	/** Received = Received */
-	public static final String FTU_COMPONENTACTIONTYPE_Received = "Received";
-	/** Scrapped = Scrapped */
-	public static final String FTU_COMPONENTACTIONTYPE_Scrapped = "Scrapped";
-	/** Added to inventory = Added */
-	public static final String FTU_COMPONENTACTIONTYPE_AddedToInventory = "Added";
-	/** Drawn from inentory = Drawn */
-	public static final String FTU_COMPONENTACTIONTYPE_DrawnFromInentory = "Drawn";
-	/** Installed = Installed */
-	public static final String FTU_COMPONENTACTIONTYPE_Installed = "Installed";
-	/** Uninstalled = Uninstalled */
-	public static final String FTU_COMPONENTACTIONTYPE_Uninstalled = "Uninstalled";
-	/** Created = Created */
-	public static final String FTU_COMPONENTACTIONTYPE_Created = "Created";
-	/** Set Action Type.
-		@param FTU_ComponentActionType 
-		The type of action performed on the component
-	  */
-	public void setFTU_ComponentActionType (String FTU_ComponentActionType)
-	{
-
-		set_Value (COLUMNNAME_FTU_ComponentActionType, FTU_ComponentActionType);
-	}
-
-	/** Get Action Type.
-		@return The type of action performed on the component
-	  */
-	public String getFTU_ComponentActionType () 
-	{
-		return (String)get_Value(COLUMNNAME_FTU_ComponentActionType);
-	}
-
-	/** Set Component Life.
-		@param FTU_ComponentLifeAtAction 
-		The component life used at the time of the action. For example, the time in service of a replacement part at the time of install.
-	  */
-	public void setFTU_ComponentLifeAtAction (BigDecimal FTU_ComponentLifeAtAction)
-	{
-		set_Value (COLUMNNAME_FTU_ComponentLifeAtAction, FTU_ComponentLifeAtAction);
-	}
-
-	/** Get Component Life.
-		@return The component life used at the time of the action. For example, the time in service of a replacement part at the time of install.
-	  */
-	public BigDecimal getFTU_ComponentLifeAtAction () 
-	{
-		BigDecimal bd = (BigDecimal)get_Value(COLUMNNAME_FTU_ComponentLifeAtAction);
-		if (bd == null)
-			 return Env.ZERO;
-		return bd;
 	}
 
 	/** Set Action Taken.
@@ -336,6 +336,26 @@ public class X_FTU_MaintWOResultLine extends PO implements I_FTU_MaintWOResultLi
 	public int getLifeUsageUOM_ID () 
 	{
 		Integer ii = (Integer)get_Value(COLUMNNAME_LifeUsageUOM_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
+	/** Set Line No.
+		@param Line 
+		Unique line for this document
+	  */
+	public void setLine (int Line)
+	{
+		set_Value (COLUMNNAME_Line, Integer.valueOf(Line));
+	}
+
+	/** Get Line No.
+		@return Unique line for this document
+	  */
+	public int getLine () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_Line);
 		if (ii == null)
 			 return 0;
 		return ii.intValue();

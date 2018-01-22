@@ -101,45 +101,15 @@ public interface I_FTU_ADApplication
     /** Column name FTU_CAWIS_Applicability */
     public static final String COLUMNNAME_FTU_CAWIS_Applicability = "FTU_CAWIS_Applicability";
 
-	/** Set Applicability.
-	  * The Applicability of this Airworthiness Directive
+	/** Set CAWIS Applicability.
+	  * The applicability statement on the CAWIS website
 	  */
 	public void setFTU_CAWIS_Applicability (String FTU_CAWIS_Applicability);
 
-	/** Get Applicability.
-	  * The Applicability of this Airworthiness Directive
+	/** Get CAWIS Applicability.
+	  * The applicability statement on the CAWIS website
 	  */
 	public String getFTU_CAWIS_Applicability();
-
-    /** Column name FTU_CAWIS_Manufacturer_ID */
-    public static final String COLUMNNAME_FTU_CAWIS_Manufacturer_ID = "FTU_CAWIS_Manufacturer_ID";
-
-	/** Set CAWIS Manufacturer.
-	  * The CAWIS manufacturer
-	  */
-	public void setFTU_CAWIS_Manufacturer_ID (int FTU_CAWIS_Manufacturer_ID);
-
-	/** Get CAWIS Manufacturer.
-	  * The CAWIS manufacturer
-	  */
-	public int getFTU_CAWIS_Manufacturer_ID();
-
-	public com.mckayerp.ftu.model.I_FTU_CAWIS_Manufacturer getFTU_CAWIS_Manufacturer() throws RuntimeException;
-
-    /** Column name FTU_CAWIS_Model_ID */
-    public static final String COLUMNNAME_FTU_CAWIS_Model_ID = "FTU_CAWIS_Model_ID";
-
-	/** Set CAWIS Model.
-	  * The CAWIS Model
-	  */
-	public void setFTU_CAWIS_Model_ID (int FTU_CAWIS_Model_ID);
-
-	/** Get CAWIS Model.
-	  * The CAWIS Model
-	  */
-	public int getFTU_CAWIS_Model_ID();
-
-	public com.mckayerp.ftu.model.I_FTU_CAWIS_Model getFTU_CAWIS_Model() throws RuntimeException;
 
     /** Column name FTU_IsADApplies */
     public static final String COLUMNNAME_FTU_IsADApplies = "FTU_IsADApplies";

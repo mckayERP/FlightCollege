@@ -30,7 +30,7 @@ public class X_FTU_MaintSchedule extends PO implements I_FTU_MaintSchedule, I_Pe
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20170425L;
+	private static final long serialVersionUID = 20180107L;
 
     /** Standard Constructor */
     public X_FTU_MaintSchedule (Properties ctx, int FTU_MaintSchedule_ID, String trxName)

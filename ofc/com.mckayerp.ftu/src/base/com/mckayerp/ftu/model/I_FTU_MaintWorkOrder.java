@@ -123,6 +123,21 @@ public interface I_FTU_MaintWorkOrder
 	  */
 	public int getCreatedBy();
 
+    /** Column name CT_Component_ID */
+    public static final String COLUMNNAME_CT_Component_ID = "CT_Component_ID";
+
+	/** Set Component.
+	  * A component of an assembly or asset.
+	  */
+	public void setCT_Component_ID (int CT_Component_ID);
+
+	/** Get Component.
+	  * A component of an assembly or asset.
+	  */
+	public int getCT_Component_ID();
+
+	public com.mckayerp.model.I_CT_Component getCT_Component() throws RuntimeException;
+
     /** Column name DateDoc */
     public static final String COLUMNNAME_DateDoc = "DateDoc";
 
@@ -188,28 +203,17 @@ public interface I_FTU_MaintWorkOrder
 	  */
 	public String getDocumentNo();
 
-    /** Column name FTU_Component_ID */
-    public static final String COLUMNNAME_FTU_Component_ID = "FTU_Component_ID";
-
-	/** Set Component.
-	  * A component of an assembly or asset.
-	  */
-	public void setFTU_Component_ID (int FTU_Component_ID);
-
-	/** Get Component.
-	  * A component of an assembly or asset.
-	  */
-	public int getFTU_Component_ID();
-
-	public com.mckayerp.ftu.model.I_FTU_Component getFTU_Component() throws RuntimeException;
-
     /** Column name FTU_MaintWorkOrder_ID */
     public static final String COLUMNNAME_FTU_MaintWorkOrder_ID = "FTU_MaintWorkOrder_ID";
 
-	/** Set Maintenance Work Order ID	  */
+	/** Set Maintenance Work Order.
+	  * The Maintenance Work Order
+	  */
 	public void setFTU_MaintWorkOrder_ID (int FTU_MaintWorkOrder_ID);
 
-	/** Get Maintenance Work Order ID	  */
+	/** Get Maintenance Work Order.
+	  * The Maintenance Work Order
+	  */
 	public int getFTU_MaintWorkOrder_ID();
 
     /** Column name IsActive */

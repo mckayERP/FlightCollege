@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Migrations>
+<Migration EntityType="D" Name="Create entity type for component tracking" ReleaseNo="FTU2.17" SeqNo="73">
+<Step SeqNo="10" StepType="AD">
+<PO AD_Table_ID="50009" Action="U" Record_ID="50000" Table="AD_SysConfig">
+<Data AD_Column_ID="50196" Column="Value" oldValue="http://62.138.144.6/cgi-bin/get_ID">http://188.40.37.194:7780/cgi-bin/get_ID</Data>
+</PO>
+</Step>
+<Step SeqNo="20" StepType="AD">
+<PO AD_Table_ID="882" Action="I" Record_ID="50039" Table="AD_EntityType">
+<Data AD_Column_ID="15596" Column="IsActive">true</Data>
+<Data AD_Column_ID="15606" Column="Classpath" isNewNull="true"/>
+<Data AD_Column_ID="15599" Column="Updated">2017-11-14 13:04:09.7</Data>
+<Data AD_Column_ID="15600" Column="UpdatedBy">0</Data>
+<Data AD_Column_ID="15594" Column="AD_Org_ID">0</Data>
+<Data AD_Column_ID="15593" Column="AD_Client_ID">0</Data>
+<Data AD_Column_ID="15603" Column="Help" isNewNull="true"/>
+<Data AD_Column_ID="15605" Column="ModelPackage">com.mckayerp.component_tracking.model</Data>
+<Data AD_Column_ID="15607" Column="Processing">false</Data>
+<Data AD_Column_ID="15604" Column="Version">1.0</Data>
+<Data AD_Column_ID="15597" Column="Created">2017-11-14 13:04:09.7</Data>
+<Data AD_Column_ID="15598" Column="CreatedBy">0</Data>
+<Data AD_Column_ID="15595" Column="AD_EntityType_ID">50039</Data>
+<Data AD_Column_ID="15592" Column="EntityType">MECT</Data>
+<Data AD_Column_ID="15601" Column="Name">mckayERP Component Tracking</Data>
+<Data AD_Column_ID="15602" Column="Description">Tracking of product/ASI combinations through their lifecycle.  Used in asset maintenance activities.</Data>
+</PO>
+</Step>
+<Step SeqNo="30" StepType="AD">
+<PO AD_Table_ID="100" Action="U" Record_ID="54197" Table="AD_Table">
+<Data AD_Column_ID="6488" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="40" StepType="AD">
+<PO AD_Table_ID="100" Action="U" Record_ID="54202" Table="AD_Table">
+<Data AD_Column_ID="6488" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="50" StepType="AD">
+<PO AD_Table_ID="100" Action="U" Record_ID="54203" Table="AD_Table">
+<Data AD_Column_ID="6488" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="60" StepType="AD">
+<PO AD_Table_ID="100" Action="U" Record_ID="54198" Table="AD_Table">
+<Data AD_Column_ID="6488" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="70" StepType="AD">
+<PO AD_Table_ID="100" Action="U" Record_ID="54204" Table="AD_Table">
+<Data AD_Column_ID="6488" Column="EntityType" oldValue="MFTU">MECT</Data>
+<Data AD_Column_ID="107" Column="TableName" oldValue="FTU_CompLifeCycleModel">M_CompLifeCycleModel</Data>
+</PO>
+</Step>
+<Step SeqNo="80" StepType="AD">
+<PO AD_Table_ID="115" Action="U" Record_ID="54372" Table="AD_Sequence">
+<Data AD_Column_ID="347" Column="Description" oldValue="Table FTU_CompLifeCycleModel">Table M_CompLifeCycleModel</Data>
+<Data AD_Column_ID="216" Column="Name" oldValue="FTU_CompLifeCycleModel">M_CompLifeCycleModel</Data>
+</PO>
+</Step>
+<Step SeqNo="90" StepType="AD">
+<PO AD_Table_ID="276" Action="U" Record_ID="59240" Table="AD_Element">
+<Data AD_Column_ID="2602" Column="ColumnName" oldValue="FTU_CompLifeCycleModel_ID">M_CompLifeCycleModel_ID</Data>
+<Data AD_Column_ID="6484" Column="EntityType" oldValue="MFTU">MECT</Data>
+<Data AD_Column_ID="2603" Column="Name" oldValue="Component Life Cycle Model">Component Life Cycle Model ID</Data>
+<Data AD_Column_ID="4299" Column="PrintName" oldValue="Component Life Cycle Model">Component Life Cycle Model ID</Data>
+</PO>
+</Step>
+<Step SeqNo="100" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82465" Table="AD_Column">
+<Data AD_Column_ID="111" Column="Name" oldValue="Component Life Cycle Model">Component Life Cycle Model ID</Data>
+<Data AD_Column_ID="116" Column="ColumnName" oldValue="FTU_CompLifeCycleModel_ID">M_CompLifeCycleModel_ID</Data>
+</PO>
+</Step>
+<Step SeqNo="110" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="81053" Table="AD_Field">
+<Data AD_Column_ID="168" Column="Name" oldValue="Component Life Cycle Model">Component Life Cycle Model ID</Data>
+</PO>
+</Step>
+<Step SeqNo="120" StepType="AD">
+<PO AD_Table_ID="882" Action="U" Record_ID="50039" Table="AD_EntityType">
+<Data AD_Column_ID="15605" Column="ModelPackage" oldValue="com.mckayerp.component_tracking.model">com.mckayerp.model</Data>
+</PO>
+</Step>
+</Migration>
+</Migrations>

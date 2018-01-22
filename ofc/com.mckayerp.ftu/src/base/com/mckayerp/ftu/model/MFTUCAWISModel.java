@@ -5,6 +5,8 @@ import java.util.Properties;
 
 import org.compiere.model.Query;
 
+import com.mckayerp.ftu.model.X_FTU_CAWIS_Model;
+
 public class MFTUCAWISModel extends X_FTU_CAWIS_Model {
 
 	public MFTUCAWISModel(Properties ctx, int FTU_CAWIS_Model_ID,

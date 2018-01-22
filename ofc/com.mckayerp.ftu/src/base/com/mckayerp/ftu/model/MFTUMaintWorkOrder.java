@@ -19,6 +19,7 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Properties;
 
 import org.compiere.model.*;
@@ -106,6 +107,7 @@ public class MFTUMaintWorkOrder extends X_FTU_MaintWorkOrder implements DocActio
 	private String		m_processMsg = null;
 	/**	Just Prepared Flag			*/
 	private boolean		m_justPrepared = false;
+	private List<MFTUMaintWorkOrderLine> m_lines;
 
 	/**
 	 * 	Unlock Document.
@@ -362,10 +364,39 @@ public class MFTUMaintWorkOrder extends X_FTU_MaintWorkOrder implements DocActio
         .append(getSummary()).append("]");
       return sb.toString();
     }
-
-	@Override
-	public String getDocAction() {
-		// TODO Auto-generated method stub
-		return null;
+    
+	/**
+	 * Determine if the Maintenance Requirement has detail lines.
+	 * @return true if there are lines.  
+	 */
+	public boolean hasLines() {
+		
+		if (m_lines == null)
+			m_lines = getLines(false);
+		
+		return m_lines.size() > 0;
 	}
+
+	/**
+	 * Get the List of Maintenance Requirement detail lines or an empty list.
+	 * @param requery - true to requery the database. False will use a cached version
+	 * @return the List of detail lines or an empty List. 
+	 */
+	public List<MFTUMaintWorkOrderLine> getLines(boolean requery) {
+		
+		if (m_lines == null || requery)
+		{
+
+			String where = MFTUMaintWorkOrderLine.COLUMNNAME_FTU_MaintWorkOrder_ID + "=?";
+
+			m_lines = new Query(this.getCtx(), MFTUMaintWorkOrderLine.Table_Name, where, this.get_TrxName())
+							.setClient_ID()
+							.setOnlyActiveRecords(true)
+							.setParameters(this.getFTU_MaintWorkOrder_ID())
+							.list();
+
+		}
+		return m_lines;
+	}
+
 }

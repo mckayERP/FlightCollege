@@ -121,6 +121,21 @@ public interface I_FTU_DefectLog
 	  */
 	public int getCreatedBy();
 
+    /** Column name CT_Component_ID */
+    public static final String COLUMNNAME_CT_Component_ID = "CT_Component_ID";
+
+	/** Set Component.
+	  * A component of an assembly or asset.
+	  */
+	public void setCT_Component_ID (int CT_Component_ID);
+
+	/** Get Component.
+	  * A component of an assembly or asset.
+	  */
+	public int getCT_Component_ID();
+
+	public com.mckayerp.model.I_CT_Component getCT_Component() throws RuntimeException;
+
     /** Column name DateDoc */
     public static final String COLUMNNAME_DateDoc = "DateDoc";
 
@@ -327,6 +342,36 @@ public interface I_FTU_DefectLog
 
 	public com.mckayerp.ftu.model.I_FTU_Flightsheet getFTU_Flightsheet() throws RuntimeException;
 
+    /** Column name FTU_MaintJASCCode_ID */
+    public static final String COLUMNNAME_FTU_MaintJASCCode_ID = "FTU_MaintJASCCode_ID";
+
+	/** Set JASC Code.
+	  * The JASC Code
+	  */
+	public void setFTU_MaintJASCCode_ID (int FTU_MaintJASCCode_ID);
+
+	/** Get JASC Code.
+	  * The JASC Code
+	  */
+	public int getFTU_MaintJASCCode_ID();
+
+	public com.mckayerp.ftu.model.I_FTU_MaintJASCCode getFTU_MaintJASCCode() throws RuntimeException;
+
+    /** Column name FTU_MaintJASCHdr_ID */
+    public static final String COLUMNNAME_FTU_MaintJASCHdr_ID = "FTU_MaintJASCHdr_ID";
+
+	/** Set JASC Code Header.
+	  * The summary group of the JASC code. Typically, the first two digits of the code.
+	  */
+	public void setFTU_MaintJASCHdr_ID (int FTU_MaintJASCHdr_ID);
+
+	/** Get JASC Code Header.
+	  * The summary group of the JASC code. Typically, the first two digits of the code.
+	  */
+	public int getFTU_MaintJASCHdr_ID();
+
+	public com.mckayerp.ftu.model.I_FTU_MaintJASCHdr getFTU_MaintJASCHdr() throws RuntimeException;
+
     /** Column name FTU_MaintWorkOrderLine_ID */
     public static final String COLUMNNAME_FTU_MaintWorkOrderLine_ID = "FTU_MaintWorkOrderLine_ID";
 
@@ -402,6 +447,49 @@ public interface I_FTU_DefectLog
 	  * Is the defect repaired or resolved?
 	  */
 	public boolean isRepaired();
+
+    /** Column name LifeUsed */
+    public static final String COLUMNNAME_LifeUsed = "LifeUsed";
+
+	/** Set Life Used.
+	  * The life used for this component.
+	  */
+	public void setLifeUsed (BigDecimal LifeUsed);
+
+	/** Get Life Used.
+	  * The life used for this component.
+	  */
+	public BigDecimal getLifeUsed();
+
+    /** Column name M_AttributeSetInstance_ID */
+    public static final String COLUMNNAME_M_AttributeSetInstance_ID = "M_AttributeSetInstance_ID";
+
+	/** Set Attribute Set Instance.
+	  * Product Attribute Set Instance
+	  */
+	public void setM_AttributeSetInstance_ID (int M_AttributeSetInstance_ID);
+
+	/** Get Attribute Set Instance.
+	  * Product Attribute Set Instance
+	  */
+	public int getM_AttributeSetInstance_ID();
+
+	public I_M_AttributeSetInstance getM_AttributeSetInstance() throws RuntimeException;
+
+    /** Column name M_Product_ID */
+    public static final String COLUMNNAME_M_Product_ID = "M_Product_ID";
+
+	/** Set Product.
+	  * Product, Service, Item
+	  */
+	public void setM_Product_ID (int M_Product_ID);
+
+	/** Get Product.
+	  * Product, Service, Item
+	  */
+	public int getM_Product_ID();
+
+	public org.compiere.model.I_M_Product getM_Product() throws RuntimeException;
 
     /** Column name Processed */
     public static final String COLUMNNAME_Processed = "Processed";

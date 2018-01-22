@@ -1,0 +1,6 @@
+
+
+#Run Scripts:
+
+WARNING:  invalid value for parameter "search_path": "adempiere, sqlj, pg_catalog"
+DETAIL:  schema "sqlj" does not exist

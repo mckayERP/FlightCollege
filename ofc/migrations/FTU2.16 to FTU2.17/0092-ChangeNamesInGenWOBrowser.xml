@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Migrations>
+<Migration EntityType="MFTU" Name="Change columns in the GenerateWorkOrder browser" ReleaseNo="FTU2.17" SeqNo="92">
+<Step SeqNo="10" StepType="AD">
+<PO AD_Table_ID="53231" Action="I" Record_ID="1000006" Table="AD_View_Definition">
+<Data AD_Column_ID="58092" Column="Processing">false</Data>
+<Data AD_Column_ID="58091" Column="JoinClause">mr.FTU_MaintRequirement_ID = na.FTU_MaintRequirement_ID</Data>
+<Data AD_Column_ID="58079" Column="AD_Client_ID">0</Data>
+<Data AD_Column_ID="58080" Column="AD_Org_ID">0</Data>
+<Data AD_Column_ID="58081" Column="IsActive">true</Data>
+<Data AD_Column_ID="58082" Column="Created">2018-01-02 18:15:35.815</Data>
+<Data AD_Column_ID="58083" Column="Updated">2018-01-02 18:15:35.815</Data>
+<Data AD_Column_ID="58084" Column="CreatedBy">0</Data>
+<Data AD_Column_ID="58085" Column="UpdatedBy">0</Data>
+<Data AD_Column_ID="58090" Column="TableAlias">mr</Data>
+<Data AD_Column_ID="58087" Column="AD_View_ID">1000002</Data>
+<Data AD_Column_ID="58089" Column="AD_Table_ID">54207</Data>
+<Data AD_Column_ID="58086" Column="AD_View_Definition_ID">1000006</Data>
+<Data AD_Column_ID="58088" Column="SeqNo">20</Data>
+</PO>
+</Step>
+<Step SeqNo="20" StepType="AD">
+<PO AD_Table_ID="53232" Action="I" Record_ID="1000124" Table="AD_View_Column">
+<Data AD_Column_ID="58107" Column="ColumnName" isNewNull="true"/>
+<Data AD_Column_ID="58105" Column="Name">Maint Action</Data>
+<Data AD_Column_ID="58102" Column="Description">Maintenance action to be performed</Data>
+<Data AD_Column_ID="58109" Column="AD_Column_ID">82553</Data>
+<Data AD_Column_ID="58103" Column="EntityType">MFTU</Data>
+<Data AD_Column_ID="58106" Column="ColumnSQL" isNewNull="true"/>
+<Data AD_Column_ID="58093" Column="AD_Client_ID">0</Data>
+<Data AD_Column_ID="58094" Column="AD_Org_ID">0</Data>
+<Data AD_Column_ID="58095" Column="IsActive">true</Data>
+<Data AD_Column_ID="58096" Column="Created">2018-01-02 18:17:51.536</Data>
+<Data AD_Column_ID="58097" Column="Updated">2018-01-02 18:17:51.536</Data>
+<Data AD_Column_ID="58098" Column="CreatedBy">0</Data>
+<Data AD_Column_ID="58099" Column="UpdatedBy">0</Data>
+<Data AD_Column_ID="58100" Column="AD_View_Column_ID">1000124</Data>
+<Data AD_Column_ID="58104" Column="Help">The Maintenance Action is a summary of the action to be performed.  The action may refer to a checklists or other sub-actions.</Data>
+<Data AD_Column_ID="58108" Column="AD_View_ID">1000002</Data>
+<Data AD_Column_ID="58101" Column="AD_View_Definition_ID">1000006</Data>
+</PO>
+</Step>
+<Step SeqNo="30" StepType="AD">
+<PO AD_Table_ID="53228" Action="I" Record_ID="1000124" Table="AD_View_Column_Trl">
+<Data AD_Column_ID="58040" Column="AD_Client_ID">0</Data>
+<Data AD_Column_ID="58041" Column="AD_Org_ID">0</Data>
+<Data AD_Column_ID="58042" Column="IsActive">true</Data>
+<Data AD_Column_ID="58043" Column="Created">2018-01-02 18:17:52.373</Data>
+<Data AD_Column_ID="58044" Column="Updated">2018-01-02 18:17:52.373</Data>
+<Data AD_Column_ID="58045" Column="CreatedBy">0</Data>
+<Data AD_Column_ID="58046" Column="UpdatedBy">0</Data>
+<Data AD_Column_ID="58047" Column="AD_View_Column_ID">1000124</Data>
+<Data AD_Column_ID="58048" Column="AD_Language">es_MX</Data>
+<Data AD_Column_ID="58049" Column="Description">Maintenance action to be performed</Data>
+<Data AD_Column_ID="58050" Column="Help" isNewNull="true"/>
+<Data AD_Column_ID="58051" Column="IsTranslated">false</Data>
+<Data AD_Column_ID="58052" Column="Name">Maint Action</Data>
+</PO>
+</Step>
+<Step SeqNo="40" StepType="AD">
+<PO AD_Table_ID="53232" Action="U" Record_ID="1000124" Table="AD_View_Column">
+<Data AD_Column_ID="58107" Column="ColumnName" isOldNull="true">MR_FTU_ACTION</Data>
+<Data AD_Column_ID="58106" Column="ColumnSQL" isOldNull="true">mr.FTU_Action</Data>
+</PO>
+</Step>
+<Step SeqNo="50" StepType="AD">
+<PO AD_Table_ID="53232" Action="U" Record_ID="1000124" Table="AD_View_Column">
+<Data AD_Column_ID="58107" Column="ColumnName" oldValue="MR_FTU_ACTION">MR_FTU_Action</Data>
+</PO>
+</Step>
+<Step SeqNo="60" StepType="AD">
+<PO AD_Table_ID="53223" Action="I" Record_ID="1000101" Table="AD_Browse_Field">
+<Data AD_Column_ID="67114" Column="Callout" isNewNull="true"/>
+<Data AD_Column_ID="64853" Column="InfoFactoryClass" isNewNull="true"/>
+<Data AD_Column_ID="57969" Column="AD_Element_ID">59269</Data>
+<Data AD_Column_ID="78559" Column="SeqNoGrid">0</Data>
+<Data AD_Column_ID="57973" Column="EntityType">MFTU</Data>
+<Data AD_Column_ID="64356" Column="DisplayLogic" isNewNull="true"/>
+<Data AD_Column_ID="64358" Column="ReadOnlyLogic" isNewNull="true"/>
+<Data AD_Column_ID="64359" Column="VFormat" isNewNull="true"/>
+<Data AD_Column_ID="57962" Column="AD_Org_ID">0</Data>
+<Data AD_Column_ID="57961" Column="AD_Client_ID">0</Data>
+<Data AD_Column_ID="57963" Column="IsActive">true</Data>
+<Data AD_Column_ID="57964" Column="Created">2018-01-02 18:21:14.091</Data>
+<Data AD_Column_ID="57965" Column="Updated">2018-01-02 18:21:14.091</Data>
+<Data AD_Column_ID="57966" Column="CreatedBy">0</Data>
+<Data AD_Column_ID="57967" Column="UpdatedBy">0</Data>
+<Data AD_Column_ID="57970" Column="AD_Reference_ID">10</Data>
+<Data AD_Column_ID="57972" Column="Description">Maintenance Action</Data>
+<Data AD_Column_ID="57974" Column="Help" isNewNull="true"/>
+<Data AD_Column_ID="57976" Column="IsDisplayed">true</Data>
+<Data AD_Column_ID="57977" Column="IsIdentifier">false</Data>
+<Data AD_Column_ID="57978" Column="IsKey">false</Data>
+<Data AD_Column_ID="57979" Column="IsQueryCriteria">false</Data>
+<Data AD_Column_ID="57980" Column="IsRange">false</Data>
+<Data AD_Column_ID="57982" Column="SeqNo">0</Data>
+<Data AD_Column_ID="57984" Column="AD_Reference_Value_ID" isNewNull="true"/>
+<Data AD_Column_ID="57983" Column="AD_Browse_ID">1000001</Data>
+<Data AD_Column_ID="57975" Column="IsCentrallyMaintained">true</Data>
+<Data AD_Column_ID="57971" Column="AD_View_Column_ID">1000124</Data>
+<Data AD_Column_ID="57985" Column="IsMandatory">false</Data>
+<Data AD_Column_ID="57968" Column="AD_Browse_Field_ID">1000101</Data>
+<Data AD_Column_ID="63218" Column="Axis_Column_ID" isNewNull="true"/>
+<Data AD_Column_ID="63219" Column="Axis_Parent_Column_ID" isNewNull="true"/>
+<Data AD_Column_ID="57981" Column="Name">Maint Action</Data>
+<Data AD_Column_ID="63579" Column="IsReadOnly">true</Data>
+<Data AD_Column_ID="64222" Column="IsOrderBy">false</Data>
+<Data AD_Column_ID="64353" Column="AD_Val_Rule_ID" isNewNull="true"/>
+<Data AD_Column_ID="64354" Column="DefaultValue" isNewNull="true"/>
+<Data AD_Column_ID="64355" Column="DefaultValue2" isNewNull="true"/>
+<Data AD_Column_ID="64357" Column="FieldLength">0</Data>
+<Data AD_Column_ID="64221" Column="SortNo">0</Data>
+<Data AD_Column_ID="64360" Column="ValueMax" isNewNull="true"/>
+<Data AD_Column_ID="64361" Column="ValueMin" isNewNull="true"/>
+</PO>
+</Step>
+<Step SeqNo="70" StepType="AD">
+<PO AD_Table_ID="53227" Action="I" Record_ID="1000101" Table="AD_Browse_Field_Trl">
+<Data AD_Column_ID="58034" Column="AD_Browse_Field_ID">1000101</Data>
+<Data AD_Column_ID="58031" Column="Updated">2018-01-02 18:21:14.944</Data>
+<Data AD_Column_ID="58032" Column="CreatedBy">0</Data>
+<Data AD_Column_ID="58027" Column="AD_Client_ID">0</Data>
+<Data AD_Column_ID="58029" Column="IsActive">true</Data>
+<Data AD_Column_ID="58030" Column="Created">2018-01-02 18:21:14.944</Data>
+<Data AD_Column_ID="58033" Column="UpdatedBy">0</Data>
+<Data AD_Column_ID="58035" Column="AD_Language">es_MX</Data>
+<Data AD_Column_ID="58036" Column="Description">Maintenance Action</Data>
+<Data AD_Column_ID="58037" Column="Help" isNewNull="true"/>
+<Data AD_Column_ID="58038" Column="IsTranslated">false</Data>
+<Data AD_Column_ID="58039" Column="Name">Maint Action</Data>
+<Data AD_Column_ID="58028" Column="AD_Org_ID">0</Data>
+</PO>
+</Step>
+<Step SeqNo="80" StepType="AD">
+<PO AD_Table_ID="53223" Action="U" Record_ID="1000101" Table="AD_Browse_Field">
+<Data AD_Column_ID="57982" Column="SeqNo" oldValue="0">40</Data>
+</PO>
+</Step>
+<Step SeqNo="90" StepType="AD">
+<PO AD_Table_ID="53223" Action="U" Record_ID="1000085" Table="AD_Browse_Field">
+<Data AD_Column_ID="57982" Column="SeqNo" oldValue="40">50</Data>
+</PO>
+</Step>
+<Step SeqNo="100" StepType="AD">
+<PO AD_Table_ID="53223" Action="U" Record_ID="1000099" Table="AD_Browse_Field">
+<Data AD_Column_ID="57982" Column="SeqNo" oldValue="50">60</Data>
+</PO>
+</Step>
+<Step SeqNo="110" StepType="AD">
+<PO AD_Table_ID="53223" Action="U" Record_ID="1000094" Table="AD_Browse_Field">
+<Data AD_Column_ID="57982" Column="SeqNo" oldValue="60">70</Data>
+</PO>
+</Step>
+<Step SeqNo="120" StepType="AD">
+<PO AD_Table_ID="53223" Action="U" Record_ID="1000097" Table="AD_Browse_Field">
+<Data AD_Column_ID="57982" Column="SeqNo" oldValue="70">80</Data>
+</PO>
+</Step>
+<Step SeqNo="130" StepType="AD">
+<PO AD_Table_ID="53231" Action="U" Record_ID="1000006" Table="AD_View_Definition">
+<Data AD_Column_ID="58091" Column="JoinClause" oldValue="mr.FTU_MaintRequirement_ID = na.FTU_MaintRequirement_ID">JOIN FTU_MaintRequirement mr ON (mr.FTU_MaintRequirement_ID = na.FTU_MaintRequirement_ID)</Data>
+</PO>
+</Step>
+</Migration>
+</Migrations>

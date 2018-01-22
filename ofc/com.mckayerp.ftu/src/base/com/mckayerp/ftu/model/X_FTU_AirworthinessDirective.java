@@ -17,6 +17,7 @@
 package com.mckayerp.ftu.model;
 
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.Properties;
 import org.compiere.model.*;
 
@@ -29,7 +30,7 @@ public class X_FTU_AirworthinessDirective extends PO implements I_FTU_Airworthin
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20170413L;
+	private static final long serialVersionUID = 20180107L;
 
     /** Standard Constructor */
     public X_FTU_AirworthinessDirective (Properties ctx, int FTU_AirworthinessDirective_ID, String trxName)
@@ -252,8 +253,8 @@ public class X_FTU_AirworthinessDirective extends PO implements I_FTU_Airworthin
 		return (String)get_Value(COLUMNNAME_FTU_ADType);
 	}
 
-	/** Set Airworthiness Directives ID.
-		@param FTU_AirworthinessDirective_ID Airworthiness Directives ID	  */
+	/** Set Airworthiness Directive.
+		@param FTU_AirworthinessDirective_ID Airworthiness Directive	  */
 	public void setFTU_AirworthinessDirective_ID (int FTU_AirworthinessDirective_ID)
 	{
 		if (FTU_AirworthinessDirective_ID < 1) 
@@ -262,14 +263,31 @@ public class X_FTU_AirworthinessDirective extends PO implements I_FTU_Airworthin
 			set_ValueNoCheck (COLUMNNAME_FTU_AirworthinessDirective_ID, Integer.valueOf(FTU_AirworthinessDirective_ID));
 	}
 
-	/** Get Airworthiness Directives ID.
-		@return Airworthiness Directives ID	  */
+	/** Get Airworthiness Directive.
+		@return Airworthiness Directive	  */
 	public int getFTU_AirworthinessDirective_ID () 
 	{
 		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_AirworthinessDirective_ID);
 		if (ii == null)
 			 return 0;
 		return ii.intValue();
+	}
+
+	/** Set Date Effective.
+		@param FTU_DateEffective 
+		The effective date of the record.
+	  */
+	public void setFTU_DateEffective (Timestamp FTU_DateEffective)
+	{
+		set_Value (COLUMNNAME_FTU_DateEffective, FTU_DateEffective);
+	}
+
+	/** Get Date Effective.
+		@return The effective date of the record.
+	  */
+	public Timestamp getFTU_DateEffective () 
+	{
+		return (Timestamp)get_Value(COLUMNNAME_FTU_DateEffective);
 	}
 
 	public com.mckayerp.ftu.model.I_FTU_AirworthinessDirective getFTU_SupersedingAD() throws RuntimeException

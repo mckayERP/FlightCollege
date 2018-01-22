@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Migrations>
+<Migration EntityType="MECT" Name="Correct CT_ComponentBOM identifier" ReleaseNo="FTU2.17" SeqNo="78">
+<Step SeqNo="10" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82407" Table="AD_Column">
+<Data AD_Column_ID="126" Column="IsIdentifier" oldValue="false">true</Data>
+<Data AD_Column_ID="127" Column="SeqNo" oldValue="0">20</Data>
+</PO>
+</Step>
+<Step SeqNo="20" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="80920" Table="AD_Field">
+<Data AD_Column_ID="176" Column="IsDisplayed" oldValue="true">false</Data>
+<Data AD_Column_ID="181" Column="SeqNo" oldValue="50">0</Data>
+</PO>
+</Step>
+<Step SeqNo="30" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="80917" Table="AD_Field">
+<Data AD_Column_ID="181" Column="SeqNo" oldValue="60">50</Data>
+</PO>
+</Step>
+<Step SeqNo="40" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="80922" Table="AD_Field">
+<Data AD_Column_ID="181" Column="SeqNo" oldValue="70">60</Data>
+</PO>
+</Step>
+<Step SeqNo="50" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="80921" Table="AD_Field">
+<Data AD_Column_ID="181" Column="SeqNo" oldValue="80">70</Data>
+</PO>
+</Step>
+<Step SeqNo="60" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="80916" Table="AD_Field">
+<Data AD_Column_ID="181" Column="SeqNo" oldValue="40">30</Data>
+</PO>
+</Step>
+<Step SeqNo="70" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="80919" Table="AD_Field">
+<Data AD_Column_ID="181" Column="SeqNo" oldValue="30">40</Data>
+</PO>
+</Step>
+<Step SeqNo="80" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="80919" Table="AD_Field">
+<Data AD_Column_ID="181" Column="SeqNo" oldValue="40">30</Data>
+</PO>
+</Step>
+<Step SeqNo="90" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="80917" Table="AD_Field">
+<Data AD_Column_ID="181" Column="SeqNo" oldValue="50">40</Data>
+</PO>
+</Step>
+<Step SeqNo="100" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="80916" Table="AD_Field">
+<Data AD_Column_ID="181" Column="SeqNo" oldValue="30">50</Data>
+</PO>
+</Step>
+<Step SeqNo="110" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82434" Table="AD_Column">
+<Data AD_Column_ID="127" Column="SeqNo" oldValue="0">10</Data>
+<Data AD_Column_ID="126" Column="IsIdentifier" oldValue="false">true</Data>
+</PO>
+</Step>
+<Step SeqNo="120" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82435" Table="AD_Column">
+<Data AD_Column_ID="126" Column="IsIdentifier" oldValue="false">true</Data>
+<Data AD_Column_ID="127" Column="SeqNo" oldValue="0">20</Data>
+</PO>
+</Step>
+<Step SeqNo="130" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="80969" Table="AD_Field">
+<Data AD_Column_ID="7714" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="140" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="80977" Table="AD_Field">
+<Data AD_Column_ID="7714" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="150" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="80968" Table="AD_Field">
+<Data AD_Column_ID="7714" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="160" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="80970" Table="AD_Field">
+<Data AD_Column_ID="7714" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="170" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="80972" Table="AD_Field">
+<Data AD_Column_ID="7714" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="180" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="80978" Table="AD_Field">
+<Data AD_Column_ID="7714" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="190" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="80979" Table="AD_Field">
+<Data AD_Column_ID="7714" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="200" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="80966" Table="AD_Field">
+<Data AD_Column_ID="7714" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="210" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="80967" Table="AD_Field">
+<Data AD_Column_ID="7714" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="220" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="80976" Table="AD_Field">
+<Data AD_Column_ID="7714" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="230" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="80981" Table="AD_Field">
+<Data AD_Column_ID="7714" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="240" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="80973" Table="AD_Field">
+<Data AD_Column_ID="7714" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="250" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="80974" Table="AD_Field">
+<Data AD_Column_ID="7714" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="260" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="80975" Table="AD_Field">
+<Data AD_Column_ID="7714" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="270" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="80980" Table="AD_Field">
+<Data AD_Column_ID="7714" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="280" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="80982" Table="AD_Field">
+<Data AD_Column_ID="7714" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+</Migration>
+</Migrations>

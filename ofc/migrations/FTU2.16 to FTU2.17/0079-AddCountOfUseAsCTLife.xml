@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Migrations>
+<Migration EntityType="MECT" Name="Add Count of Use as Component Life Cycle measure" ReleaseNo="FTU2.17" SeqNo="79">
+<Step SeqNo="10" StepType="AD">
+<PO AD_Table_ID="102" Action="U" Record_ID="53877" Table="AD_Reference">
+<Data AD_Column_ID="6486" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="20" StepType="AD">
+<PO AD_Table_ID="104" Action="U" Record_ID="54865" Table="AD_Ref_List">
+<Data AD_Column_ID="7712" Column="EntityType" oldValue="MFTU">MECT</Data>
+</PO>
+</Step>
+<Step SeqNo="30" StepType="AD">
+<PO AD_Table_ID="104" Action="U" Record_ID="54865" Table="AD_Ref_List">
+<Data AD_Column_ID="7712" Column="EntityType" oldValue="MECT">MFTU</Data>
+</PO>
+</Step>
+<Step SeqNo="40" StepType="AD">
+<PO AD_Table_ID="104" Action="I" Record_ID="55047" Table="AD_Ref_List">
+<Data AD_Column_ID="563" Column="IsActive">true</Data>
+<Data AD_Column_ID="200" Column="Value">Count</Data>
+<Data AD_Column_ID="148" Column="AD_Ref_List_ID">55047</Data>
+<Data AD_Column_ID="152" Column="ValidFrom" isNewNull="true"/>
+<Data AD_Column_ID="564" Column="Created">2017-11-23 09:12:42.576</Data>
+<Data AD_Column_ID="565" Column="CreatedBy">0</Data>
+<Data AD_Column_ID="566" Column="Updated">2017-11-23 09:12:42.576</Data>
+<Data AD_Column_ID="567" Column="UpdatedBy">0</Data>
+<Data AD_Column_ID="151" Column="AD_Reference_ID">53877</Data>
+<Data AD_Column_ID="372" Column="AD_Org_ID">0</Data>
+<Data AD_Column_ID="153" Column="ValidTo" isNewNull="true"/>
+<Data AD_Column_ID="371" Column="AD_Client_ID">0</Data>
+<Data AD_Column_ID="7712" Column="EntityType">MECT</Data>
+<Data AD_Column_ID="150" Column="Description">Count of usage such as the number of times installed.</Data>
+<Data AD_Column_ID="149" Column="Name">Count of Use</Data>
+</PO>
+</Step>
+<Step SeqNo="50" StepType="AD">
+<PO AD_Table_ID="136" Action="I" Record_ID="55047" Table="AD_Ref_List_Trl">
+<Data AD_Column_ID="706" Column="IsActive">true</Data>
+<Data AD_Column_ID="710" Column="UpdatedBy">0</Data>
+<Data AD_Column_ID="1215" Column="AD_Client_ID">0</Data>
+<Data AD_Column_ID="336" Column="AD_Ref_List_ID">55047</Data>
+<Data AD_Column_ID="337" Column="AD_Language">es_MX</Data>
+<Data AD_Column_ID="1216" Column="AD_Org_ID">0</Data>
+<Data AD_Column_ID="709" Column="Updated">2017-11-23 09:12:44.227</Data>
+<Data AD_Column_ID="340" Column="IsTranslated">false</Data>
+<Data AD_Column_ID="707" Column="Created">2017-11-23 09:12:44.227</Data>
+<Data AD_Column_ID="708" Column="CreatedBy">0</Data>
+<Data AD_Column_ID="339" Column="Description">Count of usage such as the number of times installed.</Data>
+<Data AD_Column_ID="338" Column="Name">Count of Use</Data>
+</PO>
+</Step>
+<Step SeqNo="60" StepType="AD">
+<PO AD_Table_ID="104" Action="U" Record_ID="55047" Table="AD_Ref_List">
+<Data AD_Column_ID="150" Column="Description" oldValue="Count of usage such as the number of times installed.">Count of the number of times installed.  Used for items such as bolts which are to be discarded after a single use.</Data>
+<Data AD_Column_ID="149" Column="Name" oldValue="Count of Use">Count of Installations</Data>
+</PO>
+</Step>
+</Migration>
+</Migrations>

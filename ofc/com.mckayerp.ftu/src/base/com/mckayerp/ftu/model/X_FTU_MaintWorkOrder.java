@@ -30,7 +30,7 @@ public class X_FTU_MaintWorkOrder extends PO implements I_FTU_MaintWorkOrder, I_
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20170425L;
+	private static final long serialVersionUID = 20180107L;
 
     /** Standard Constructor */
     public X_FTU_MaintWorkOrder (Properties ctx, int FTU_MaintWorkOrder_ID, String trxName)
@@ -161,6 +161,34 @@ public class X_FTU_MaintWorkOrder extends PO implements I_FTU_MaintWorkOrder, I_
 	public int getC_DocType_ID () 
 	{
 		Integer ii = (Integer)get_Value(COLUMNNAME_C_DocType_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
+	public com.mckayerp.model.I_CT_Component getCT_Component() throws RuntimeException
+    {
+		return (com.mckayerp.model.I_CT_Component)MTable.get(getCtx(), com.mckayerp.model.I_CT_Component.Table_Name)
+			.getPO(getCT_Component_ID(), get_TrxName());	}
+
+	/** Set Component.
+		@param CT_Component_ID 
+		A component of an assembly or asset.
+	  */
+	public void setCT_Component_ID (int CT_Component_ID)
+	{
+		if (CT_Component_ID < 1) 
+			set_Value (COLUMNNAME_CT_Component_ID, null);
+		else 
+			set_Value (COLUMNNAME_CT_Component_ID, Integer.valueOf(CT_Component_ID));
+	}
+
+	/** Get Component.
+		@return A component of an assembly or asset.
+	  */
+	public int getCT_Component_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_CT_Component_ID);
 		if (ii == null)
 			 return 0;
 		return ii.intValue();
@@ -321,36 +349,10 @@ public class X_FTU_MaintWorkOrder extends PO implements I_FTU_MaintWorkOrder, I_
 		return (String)get_Value(COLUMNNAME_DocumentNo);
 	}
 
-	public com.mckayerp.ftu.model.I_FTU_Component getFTU_Component() throws RuntimeException
-    {
-		return (com.mckayerp.ftu.model.I_FTU_Component)MTable.get(getCtx(), com.mckayerp.ftu.model.I_FTU_Component.Table_Name)
-			.getPO(getFTU_Component_ID(), get_TrxName());	}
-
-	/** Set Component.
-		@param FTU_Component_ID 
-		A component of an assembly or asset.
+	/** Set Maintenance Work Order.
+		@param FTU_MaintWorkOrder_ID 
+		The Maintenance Work Order
 	  */
-	public void setFTU_Component_ID (int FTU_Component_ID)
-	{
-		if (FTU_Component_ID < 1) 
-			set_Value (COLUMNNAME_FTU_Component_ID, null);
-		else 
-			set_Value (COLUMNNAME_FTU_Component_ID, Integer.valueOf(FTU_Component_ID));
-	}
-
-	/** Get Component.
-		@return A component of an assembly or asset.
-	  */
-	public int getFTU_Component_ID () 
-	{
-		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_Component_ID);
-		if (ii == null)
-			 return 0;
-		return ii.intValue();
-	}
-
-	/** Set Maintenance Work Order ID.
-		@param FTU_MaintWorkOrder_ID Maintenance Work Order ID	  */
 	public void setFTU_MaintWorkOrder_ID (int FTU_MaintWorkOrder_ID)
 	{
 		if (FTU_MaintWorkOrder_ID < 1) 
@@ -359,8 +361,9 @@ public class X_FTU_MaintWorkOrder extends PO implements I_FTU_MaintWorkOrder, I_
 			set_ValueNoCheck (COLUMNNAME_FTU_MaintWorkOrder_ID, Integer.valueOf(FTU_MaintWorkOrder_ID));
 	}
 
-	/** Get Maintenance Work Order ID.
-		@return Maintenance Work Order ID	  */
+	/** Get Maintenance Work Order.
+		@return The Maintenance Work Order
+	  */
 	public int getFTU_MaintWorkOrder_ID () 
 	{
 		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_MaintWorkOrder_ID);

@@ -29,7 +29,7 @@ public class X_FTU_MaintRequirementLine extends PO implements I_FTU_MaintRequire
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20170425L;
+	private static final long serialVersionUID = 20180107L;
 
     /** Standard Constructor */
     public X_FTU_MaintRequirementLine (Properties ctx, int FTU_MaintRequirementLine_ID, String trxName)
@@ -71,6 +71,78 @@ public class X_FTU_MaintRequirementLine extends PO implements I_FTU_MaintRequire
       return sb.toString();
     }
 
+	/** CT_ComponentActionType AD_Reference_ID=53872 */
+	public static final int CT_COMPONENTACTIONTYPE_AD_Reference_ID=53872;
+	/** Shipped = Shipped */
+	public static final String CT_COMPONENTACTIONTYPE_Shipped = "Shipped";
+	/** Received = Received */
+	public static final String CT_COMPONENTACTIONTYPE_Received = "Received";
+	/** Scrapped = Scrapped */
+	public static final String CT_COMPONENTACTIONTYPE_Scrapped = "Scrapped";
+	/** Added to inventory = Added */
+	public static final String CT_COMPONENTACTIONTYPE_AddedToInventory = "Added";
+	/** Drawn from inentory = Drawn */
+	public static final String CT_COMPONENTACTIONTYPE_DrawnFromInentory = "Drawn";
+	/** Installed = Installed */
+	public static final String CT_COMPONENTACTIONTYPE_Installed = "Installed";
+	/** Uninstalled = Uninstalled */
+	public static final String CT_COMPONENTACTIONTYPE_Uninstalled = "Uninstalled";
+	/** Created = Created */
+	public static final String CT_COMPONENTACTIONTYPE_Created = "Created";
+	/** Set Action Type.
+		@param CT_ComponentActionType 
+		The type of action performed on the component
+	  */
+	public void setCT_ComponentActionType (String CT_ComponentActionType)
+	{
+
+		set_Value (COLUMNNAME_CT_ComponentActionType, CT_ComponentActionType);
+	}
+
+	/** Get Action Type.
+		@return The type of action performed on the component
+	  */
+	public String getCT_ComponentActionType () 
+	{
+		return (String)get_Value(COLUMNNAME_CT_ComponentActionType);
+	}
+
+	/** CT_ComponentResolutionType AD_Reference_ID=53872 */
+	public static final int CT_COMPONENTRESOLUTIONTYPE_AD_Reference_ID=53872;
+	/** Shipped = Shipped */
+	public static final String CT_COMPONENTRESOLUTIONTYPE_Shipped = "Shipped";
+	/** Received = Received */
+	public static final String CT_COMPONENTRESOLUTIONTYPE_Received = "Received";
+	/** Scrapped = Scrapped */
+	public static final String CT_COMPONENTRESOLUTIONTYPE_Scrapped = "Scrapped";
+	/** Added to inventory = Added */
+	public static final String CT_COMPONENTRESOLUTIONTYPE_AddedToInventory = "Added";
+	/** Drawn from inentory = Drawn */
+	public static final String CT_COMPONENTRESOLUTIONTYPE_DrawnFromInentory = "Drawn";
+	/** Installed = Installed */
+	public static final String CT_COMPONENTRESOLUTIONTYPE_Installed = "Installed";
+	/** Uninstalled = Uninstalled */
+	public static final String CT_COMPONENTRESOLUTIONTYPE_Uninstalled = "Uninstalled";
+	/** Created = Created */
+	public static final String CT_COMPONENTRESOLUTIONTYPE_Created = "Created";
+	/** Set Resolution Type.
+		@param CT_ComponentResolutionType 
+		The type of action performed on the component to resolve a maintenance requirement
+	  */
+	public void setCT_ComponentResolutionType (String CT_ComponentResolutionType)
+	{
+
+		set_Value (COLUMNNAME_CT_ComponentResolutionType, CT_ComponentResolutionType);
+	}
+
+	/** Get Resolution Type.
+		@return The type of action performed on the component to resolve a maintenance requirement
+	  */
+	public String getCT_ComponentResolutionType () 
+	{
+		return (String)get_Value(COLUMNNAME_CT_ComponentResolutionType);
+	}
+
 	/** Set Action.
 		@param FTU_Action 
 		The action that must be taken to address the maintenance requirement
@@ -86,6 +158,34 @@ public class X_FTU_MaintRequirementLine extends PO implements I_FTU_MaintRequire
 	public String getFTU_Action () 
 	{
 		return (String)get_Value(COLUMNNAME_FTU_Action);
+	}
+
+	public org.compiere.model.I_M_Product getFTU_AppliesToProduct() throws RuntimeException
+    {
+		return (org.compiere.model.I_M_Product)MTable.get(getCtx(), org.compiere.model.I_M_Product.Table_Name)
+			.getPO(getFTU_AppliesToProduct_ID(), get_TrxName());	}
+
+	/** Set Applies to Product.
+		@param FTU_AppliesToProduct_ID 
+		The product to which the maintenance requirement or schedule applies.
+	  */
+	public void setFTU_AppliesToProduct_ID (int FTU_AppliesToProduct_ID)
+	{
+		if (FTU_AppliesToProduct_ID < 1) 
+			set_Value (COLUMNNAME_FTU_AppliesToProduct_ID, null);
+		else 
+			set_Value (COLUMNNAME_FTU_AppliesToProduct_ID, Integer.valueOf(FTU_AppliesToProduct_ID));
+	}
+
+	/** Get Applies to Product.
+		@return The product to which the maintenance requirement or schedule applies.
+	  */
+	public int getFTU_AppliesToProduct_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_AppliesToProduct_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
 	}
 
 	public com.mckayerp.ftu.model.I_FTU_MaintRequirement getFTU_MaintRequirement() throws RuntimeException
@@ -151,6 +251,23 @@ public class X_FTU_MaintRequirementLine extends PO implements I_FTU_MaintRequire
 	public String getFTU_Process () 
 	{
 		return (String)get_Value(COLUMNNAME_FTU_Process);
+	}
+
+	/** Set Resolution Template.
+		@param FTU_ResolutionTemplate 
+		A text string that will be used as a template in the maintenance work order result for the resolution of the maintenance action.
+	  */
+	public void setFTU_ResolutionTemplate (String FTU_ResolutionTemplate)
+	{
+		set_Value (COLUMNNAME_FTU_ResolutionTemplate, FTU_ResolutionTemplate);
+	}
+
+	/** Get Resolution Template.
+		@return A text string that will be used as a template in the maintenance work order result for the resolution of the maintenance action.
+	  */
+	public String getFTU_ResolutionTemplate () 
+	{
+		return (String)get_Value(COLUMNNAME_FTU_ResolutionTemplate);
 	}
 
 	/** Set Line No.

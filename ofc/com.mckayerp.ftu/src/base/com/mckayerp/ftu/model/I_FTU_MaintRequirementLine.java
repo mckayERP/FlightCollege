@@ -78,6 +78,32 @@ public interface I_FTU_MaintRequirementLine
 	  */
 	public int getCreatedBy();
 
+    /** Column name CT_ComponentActionType */
+    public static final String COLUMNNAME_CT_ComponentActionType = "CT_ComponentActionType";
+
+	/** Set Action Type.
+	  * The type of action performed on the component
+	  */
+	public void setCT_ComponentActionType (String CT_ComponentActionType);
+
+	/** Get Action Type.
+	  * The type of action performed on the component
+	  */
+	public String getCT_ComponentActionType();
+
+    /** Column name CT_ComponentResolutionType */
+    public static final String COLUMNNAME_CT_ComponentResolutionType = "CT_ComponentResolutionType";
+
+	/** Set Resolution Type.
+	  * The type of action performed on the component to resolve a maintenance requirement
+	  */
+	public void setCT_ComponentResolutionType (String CT_ComponentResolutionType);
+
+	/** Get Resolution Type.
+	  * The type of action performed on the component to resolve a maintenance requirement
+	  */
+	public String getCT_ComponentResolutionType();
+
     /** Column name FTU_Action */
     public static final String COLUMNNAME_FTU_Action = "FTU_Action";
 
@@ -90,6 +116,21 @@ public interface I_FTU_MaintRequirementLine
 	  * The action that must be taken to address the maintenance requirement
 	  */
 	public String getFTU_Action();
+
+    /** Column name FTU_AppliesToProduct_ID */
+    public static final String COLUMNNAME_FTU_AppliesToProduct_ID = "FTU_AppliesToProduct_ID";
+
+	/** Set Applies to Product.
+	  * The product to which the maintenance requirement or schedule applies.
+	  */
+	public void setFTU_AppliesToProduct_ID (int FTU_AppliesToProduct_ID);
+
+	/** Get Applies to Product.
+	  * The product to which the maintenance requirement or schedule applies.
+	  */
+	public int getFTU_AppliesToProduct_ID();
+
+	public org.compiere.model.I_M_Product getFTU_AppliesToProduct() throws RuntimeException;
 
     /** Column name FTU_MaintRequirement_ID */
     public static final String COLUMNNAME_FTU_MaintRequirement_ID = "FTU_MaintRequirement_ID";
@@ -127,6 +168,19 @@ public interface I_FTU_MaintRequirementLine
 	  * A text description of the process to follow.
 	  */
 	public String getFTU_Process();
+
+    /** Column name FTU_ResolutionTemplate */
+    public static final String COLUMNNAME_FTU_ResolutionTemplate = "FTU_ResolutionTemplate";
+
+	/** Set Resolution Template.
+	  * A text string that will be used as a template in the maintenance work order result for the resolution of the maintenance action.
+	  */
+	public void setFTU_ResolutionTemplate (String FTU_ResolutionTemplate);
+
+	/** Get Resolution Template.
+	  * A text string that will be used as a template in the maintenance work order result for the resolution of the maintenance action.
+	  */
+	public String getFTU_ResolutionTemplate();
 
     /** Column name IsActive */
     public static final String COLUMNNAME_IsActive = "IsActive";

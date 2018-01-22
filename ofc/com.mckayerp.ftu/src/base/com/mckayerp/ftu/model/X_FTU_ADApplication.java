@@ -29,7 +29,7 @@ public class X_FTU_ADApplication extends PO implements I_FTU_ADApplication, I_Pe
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20170414L;
+	private static final long serialVersionUID = 20180107L;
 
     /** Standard Constructor */
     public X_FTU_ADApplication (Properties ctx, int FTU_ADApplication_ID, String trxName)
@@ -115,69 +115,21 @@ public class X_FTU_ADApplication extends PO implements I_FTU_ADApplication, I_Pe
 		return ii.intValue();
 	}
 
-	/** Set Applicability.
+	/** Set CAWIS Applicability.
 		@param FTU_CAWIS_Applicability 
-		The Applicability of this Airworthiness Directive
+		The applicability statement on the CAWIS website
 	  */
 	public void setFTU_CAWIS_Applicability (String FTU_CAWIS_Applicability)
 	{
 		set_Value (COLUMNNAME_FTU_CAWIS_Applicability, FTU_CAWIS_Applicability);
 	}
 
-	/** Get Applicability.
-		@return The Applicability of this Airworthiness Directive
+	/** Get CAWIS Applicability.
+		@return The applicability statement on the CAWIS website
 	  */
 	public String getFTU_CAWIS_Applicability () 
 	{
 		return (String)get_Value(COLUMNNAME_FTU_CAWIS_Applicability);
-	}
-
-	public com.mckayerp.ftu.model.I_FTU_CAWIS_Manufacturer getFTU_CAWIS_Manufacturer() throws RuntimeException
-    {
-		return (com.mckayerp.ftu.model.I_FTU_CAWIS_Manufacturer)MTable.get(getCtx(), com.mckayerp.ftu.model.I_FTU_CAWIS_Manufacturer.Table_Name)
-			.getPO(getFTU_CAWIS_Manufacturer_ID(), get_TrxName());	}
-
-	/** Set CAWIS Manufacturer.
-		@param FTU_CAWIS_Manufacturer_ID 
-		The CAWIS manufacturer
-	  */
-	public void setFTU_CAWIS_Manufacturer_ID (int FTU_CAWIS_Manufacturer_ID)
-	{
-		throw new IllegalArgumentException ("FTU_CAWIS_Manufacturer_ID is virtual column");	}
-
-	/** Get CAWIS Manufacturer.
-		@return The CAWIS manufacturer
-	  */
-	public int getFTU_CAWIS_Manufacturer_ID () 
-	{
-		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_CAWIS_Manufacturer_ID);
-		if (ii == null)
-			 return 0;
-		return ii.intValue();
-	}
-
-	public com.mckayerp.ftu.model.I_FTU_CAWIS_Model getFTU_CAWIS_Model() throws RuntimeException
-    {
-		return (com.mckayerp.ftu.model.I_FTU_CAWIS_Model)MTable.get(getCtx(), com.mckayerp.ftu.model.I_FTU_CAWIS_Model.Table_Name)
-			.getPO(getFTU_CAWIS_Model_ID(), get_TrxName());	}
-
-	/** Set CAWIS Model.
-		@param FTU_CAWIS_Model_ID 
-		The CAWIS Model
-	  */
-	public void setFTU_CAWIS_Model_ID (int FTU_CAWIS_Model_ID)
-	{
-		throw new IllegalArgumentException ("FTU_CAWIS_Model_ID is virtual column");	}
-
-	/** Get CAWIS Model.
-		@return The CAWIS Model
-	  */
-	public int getFTU_CAWIS_Model_ID () 
-	{
-		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_CAWIS_Model_ID);
-		if (ii == null)
-			 return 0;
-		return ii.intValue();
 	}
 
 	/** Set AD Applies.

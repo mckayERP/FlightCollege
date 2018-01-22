@@ -29,7 +29,7 @@ public class X_FTU_TrainingApplicability extends PO implements I_FTU_TrainingApp
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20161023L;
+	private static final long serialVersionUID = 20180107L;
 
     /** Standard Constructor */
     public X_FTU_TrainingApplicability (Properties ctx, int FTU_TrainingApplicability_ID, String trxName)

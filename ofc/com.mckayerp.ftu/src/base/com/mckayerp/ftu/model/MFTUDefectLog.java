@@ -259,7 +259,7 @@ public class MFTUDefectLog extends X_FTU_DefectLog implements DocAction, DocOpti
 		//format.setTranslationLanguage(language);
 		//	query
 		MQuery query = new MQuery(this.get_Table_ID());
-		query.addRestriction(this.COLUMNNAME_FTU_DefectLog_ID, MQuery.EQUAL, this.getFTU_DefectLog_ID());
+		query.addRestriction(I_FTU_DefectLog.COLUMNNAME_FTU_DefectLog_ID, MQuery.EQUAL, this.getFTU_DefectLog_ID());
 		//	log.config( "ReportCtrl.startDocumentPrint - " + format, query + " - " + language.getAD_Language());
 		//
 		String DocumentNo = "DocPrint";
@@ -502,9 +502,11 @@ public class MFTUDefectLog extends X_FTU_DefectLog implements DocAction, DocOpti
 		
 		// Create a corrective action
 		MFTUMaintRequirement maintCAR = new MFTUMaintRequirement(getCtx(), 0, get_TrxName());
+		maintCAR.setValue(Msg.parseTranslation(getCtx(), "@FTU_DefectLog_ID@:" + this.getDocumentNo()));
 		maintCAR.setFTU_Action("Repair Snag " + this.getDocumentNo() + ": " + this.getDefect());
 		maintCAR.setFTU_Process("In accordance with the MCM and AMO approved processes.");
 		maintCAR.setFTU_DefectLog_ID(getFTU_DefectLog_ID());
+		maintCAR.setCT_Component_ID(this.getCT_Component_ID());
 		if (this.isDeferred())
 		{
 			maintCAR.setFTU_ComplianceType(MFTUMaintRequirement.FTU_COMPLIANCETYPE_OnceWithinNext);
@@ -608,10 +610,10 @@ public class MFTUDefectLog extends X_FTU_DefectLog implements DocAction, DocOpti
 			return new String[] {ACTION_Reject, ACTION_Enter, 
 				ACTION_Unlock, ACTION_Void};
 		
-		if (this.STATUS_Entered.equals(getDocStatus()))
+		if (MFTUDefectLog.STATUS_Entered.equals(getDocStatus()))
 			return new String[] {ACTION_Defer, ACTION_Rectify, ACTION_Void};
 
-		if (this.STATUS_Deferred.equals(getDocStatus()))
+		if (MFTUDefectLog.STATUS_Deferred.equals(getDocStatus()))
 			return new String[] {ACTION_Rectify};
 
 		return new String[] {};

@@ -29,7 +29,7 @@ public class X_FTU_CAWIS_Manufacturer extends PO implements I_FTU_CAWIS_Manufact
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20170407L;
+	private static final long serialVersionUID = 20180107L;
 
     /** Standard Constructor */
     public X_FTU_CAWIS_Manufacturer (Properties ctx, int FTU_CAWIS_Manufacturer_ID, String trxName)

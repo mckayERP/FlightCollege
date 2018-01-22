@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Migrations>
+<Migration EntityType="MECT" Name="Add zoom and info factory to component" ReleaseNo="FTU2.17" SeqNo="91">
+<Step SeqNo="10" StepType="AD">
+<PO AD_Table_ID="53223" Action="U" Record_ID="1000096" Table="AD_Browse_Field">
+<Data AD_Column_ID="64853" Column="InfoFactoryClass" isOldNull="true">com.mckayerp.swing.apps.search.ComponentInfoFactory</Data>
+</PO>
+</Step>
+</Migration>
+</Migrations>

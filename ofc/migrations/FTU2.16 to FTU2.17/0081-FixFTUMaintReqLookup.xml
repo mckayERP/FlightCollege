@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Migrations>
+<Migration EntityType="MFTU" Name="Fix FTU_MaintRequirement lookup" ReleaseNo="FTU2.17" SeqNo="81">
+<Step SeqNo="10" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="83205" Table="AD_Column">
+<Data AD_Column_ID="126" Column="IsIdentifier" oldValue="false">true</Data>
+<Data AD_Column_ID="127" Column="SeqNo" oldValue="0">10</Data>
+</PO>
+</Step>
+<Step SeqNo="20" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="83206" Table="AD_Column">
+<Data AD_Column_ID="126" Column="IsIdentifier" oldValue="false">true</Data>
+<Data AD_Column_ID="127" Column="SeqNo" oldValue="0">20</Data>
+</PO>
+</Step>
+<Step SeqNo="30" StepType="AD">
+<PO AD_Table_ID="106" Action="U" Record_ID="54292" Table="AD_Tab">
+<Data AD_Column_ID="2741" Column="WhereClause" oldValue="FTU_MaintRequirement.FTU_AirworthinessDirective_ID is null &amp;&amp; FTU_MaintRequirement.FTU_DefectLog_ID is null">FTU_MaintRequirement.FTU_AirworthinessDirective_ID is null AND FTU_MaintRequirement.FTU_DefectLog_ID is null</Data>
+</PO>
+</Step>
+</Migration>
+</Migrations>

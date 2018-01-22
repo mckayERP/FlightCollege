@@ -7,6 +7,7 @@ import java.util.Properties;
 import org.compiere.util.Msg;
 
 import com.mckayerp.ftu.model.X_FTU_ADApplication;
+import com.mckayerp.model.MCTComponent;
 
 public class MFTUADApplication extends X_FTU_ADApplication {
 
@@ -84,14 +85,14 @@ public class MFTUADApplication extends X_FTU_ADApplication {
 
 	private void applyToComponents() {
 
-		List<MFTUComponent> components = MFTUComponent.getByProduct(getCtx(), getM_Product_ID(), get_TrxName());
+		List<MCTComponent> components = MCTComponent.getByProduct(getCtx(), getM_Product_ID(), get_TrxName());
 
-		for (MFTUComponent component : components)
+		for (MCTComponent component : components)
 		{
 		
 			MFTUADApplicability applies = new MFTUADApplicability(getCtx(),0,get_TrxName());
 			applies.setFTU_ADApplication_ID(getFTU_ADApplication_ID());
-			applies.setFTU_Component_ID(component.getFTU_Component_ID());
+			applies.setCT_Component_ID(component.getCT_Component_ID());
 			applies.setFTU_IsADApplies(true);
 			applies.saveEx();
 			

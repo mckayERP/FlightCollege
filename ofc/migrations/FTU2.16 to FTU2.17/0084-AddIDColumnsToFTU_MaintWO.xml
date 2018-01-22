@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Migrations>
+<Migration EntityType="MFTU" Name="Add ID Columns to FTU_MaintWorkOrder and FTUMaintWOLine" ReleaseNo="FTU2.17" SeqNo="84">
+<Step SeqNo="10" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="1001593" Table="AD_Column">
+<Data AD_Column_ID="126" Column="IsIdentifier" oldValue="false">true</Data>
+</PO>
+</Step>
+<Step SeqNo="20" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="1001629" Table="AD_Column">
+<Data AD_Column_ID="126" Column="IsIdentifier" oldValue="false">true</Data>
+<Data AD_Column_ID="127" Column="SeqNo" oldValue="0">10</Data>
+</PO>
+</Step>
+<Step SeqNo="30" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="1001631" Table="AD_Column">
+<Data AD_Column_ID="127" Column="SeqNo" oldValue="0">20</Data>
+</PO>
+</Step>
+<Step SeqNo="40" StepType="AD">
+<PO AD_Table_ID="100" Action="U" Record_ID="54199" Table="AD_Table">
+<Data AD_Column_ID="102" Column="Name" oldValue="Maintenance Work Order Result ID">Maintenance Work Order Result</Data>
+</PO>
+</Step>
+<Step SeqNo="50" StepType="AD">
+<PO AD_Table_ID="100" Action="U" Record_ID="1000085" Table="AD_Table">
+<Data AD_Column_ID="102" Column="Name" oldValue="Maintenance Work Order ID">Maintenance Work Order</Data>
+</PO>
+</Step>
+<Step SeqNo="60" StepType="AD">
+<PO AD_Table_ID="100" Action="U" Record_ID="1000086" Table="AD_Table">
+<Data AD_Column_ID="102" Column="Name" oldValue="Maintenance Work Order Line ID">Maintenance Work Order Line</Data>
+</PO>
+</Step>
+<Step SeqNo="70" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="83223" Table="AD_Column">
+<Data AD_Column_ID="127" Column="SeqNo" oldValue="0">10</Data>
+</PO>
+</Step>
+</Migration>
+</Migrations>

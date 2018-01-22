@@ -29,7 +29,7 @@ public class X_FTU_Course_Grade extends PO implements I_FTU_Course_Grade, I_Pers
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20161023L;
+	private static final long serialVersionUID = 20180107L;
 
     /** Standard Constructor */
     public X_FTU_Course_Grade (Properties ctx, int FTU_Course_Grade_ID, String trxName)

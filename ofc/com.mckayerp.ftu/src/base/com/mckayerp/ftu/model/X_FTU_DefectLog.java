@@ -32,7 +32,7 @@ public class X_FTU_DefectLog extends PO implements I_FTU_DefectLog, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20161116L;
+	private static final long serialVersionUID = 20180107L;
 
     /** Standard Constructor */
     public X_FTU_DefectLog (Properties ctx, int FTU_DefectLog_ID, String trxName)
@@ -43,7 +43,6 @@ public class X_FTU_DefectLog extends PO implements I_FTU_DefectLog, I_Persistent
 			setDateDoc (new Timestamp( System.currentTimeMillis() ));
 // @#Date@
 			setDefect (null);
-			setDefectType (null);
 			setDescription (null);
 			setDocAction (null);
 // ME
@@ -159,6 +158,34 @@ public class X_FTU_DefectLog extends PO implements I_FTU_DefectLog, I_Persistent
 	public int getC_DocType_ID () 
 	{
 		Integer ii = (Integer)get_Value(COLUMNNAME_C_DocType_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
+	public com.mckayerp.model.I_CT_Component getCT_Component() throws RuntimeException
+    {
+		return (com.mckayerp.model.I_CT_Component)MTable.get(getCtx(), com.mckayerp.model.I_CT_Component.Table_Name)
+			.getPO(getCT_Component_ID(), get_TrxName());	}
+
+	/** Set Component.
+		@param CT_Component_ID 
+		A component of an assembly or asset.
+	  */
+	public void setCT_Component_ID (int CT_Component_ID)
+	{
+		if (CT_Component_ID < 1) 
+			set_Value (COLUMNNAME_CT_Component_ID, null);
+		else 
+			set_Value (COLUMNNAME_CT_Component_ID, Integer.valueOf(CT_Component_ID));
+	}
+
+	/** Get Component.
+		@return A component of an assembly or asset.
+	  */
+	public int getCT_Component_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_CT_Component_ID);
 		if (ii == null)
 			 return 0;
 		return ii.intValue();
@@ -565,6 +592,62 @@ public class X_FTU_DefectLog extends PO implements I_FTU_DefectLog, I_Persistent
 		return ii.intValue();
 	}
 
+	public com.mckayerp.ftu.model.I_FTU_MaintJASCCode getFTU_MaintJASCCode() throws RuntimeException
+    {
+		return (com.mckayerp.ftu.model.I_FTU_MaintJASCCode)MTable.get(getCtx(), com.mckayerp.ftu.model.I_FTU_MaintJASCCode.Table_Name)
+			.getPO(getFTU_MaintJASCCode_ID(), get_TrxName());	}
+
+	/** Set JASC Code.
+		@param FTU_MaintJASCCode_ID 
+		The JASC Code
+	  */
+	public void setFTU_MaintJASCCode_ID (int FTU_MaintJASCCode_ID)
+	{
+		if (FTU_MaintJASCCode_ID < 1) 
+			set_Value (COLUMNNAME_FTU_MaintJASCCode_ID, null);
+		else 
+			set_Value (COLUMNNAME_FTU_MaintJASCCode_ID, Integer.valueOf(FTU_MaintJASCCode_ID));
+	}
+
+	/** Get JASC Code.
+		@return The JASC Code
+	  */
+	public int getFTU_MaintJASCCode_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_MaintJASCCode_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
+	public com.mckayerp.ftu.model.I_FTU_MaintJASCHdr getFTU_MaintJASCHdr() throws RuntimeException
+    {
+		return (com.mckayerp.ftu.model.I_FTU_MaintJASCHdr)MTable.get(getCtx(), com.mckayerp.ftu.model.I_FTU_MaintJASCHdr.Table_Name)
+			.getPO(getFTU_MaintJASCHdr_ID(), get_TrxName());	}
+
+	/** Set JASC Code Header.
+		@param FTU_MaintJASCHdr_ID 
+		The summary group of the JASC code. Typically, the first two digits of the code.
+	  */
+	public void setFTU_MaintJASCHdr_ID (int FTU_MaintJASCHdr_ID)
+	{
+		if (FTU_MaintJASCHdr_ID < 1) 
+			set_Value (COLUMNNAME_FTU_MaintJASCHdr_ID, null);
+		else 
+			set_Value (COLUMNNAME_FTU_MaintJASCHdr_ID, Integer.valueOf(FTU_MaintJASCHdr_ID));
+	}
+
+	/** Get JASC Code Header.
+		@return The summary group of the JASC code. Typically, the first two digits of the code.
+	  */
+	public int getFTU_MaintJASCHdr_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_MaintJASCHdr_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
 	public com.mckayerp.ftu.model.I_FTU_MaintWorkOrderLine getFTU_MaintWorkOrderLine() throws RuntimeException
     {
 		return (com.mckayerp.ftu.model.I_FTU_MaintWorkOrderLine)MTable.get(getCtx(), com.mckayerp.ftu.model.I_FTU_MaintWorkOrderLine.Table_Name)
@@ -677,6 +760,82 @@ public class X_FTU_DefectLog extends PO implements I_FTU_DefectLog, I_Persistent
 			return "Y".equals(oo);
 		}
 		return false;
+	}
+
+	/** Set Life Used.
+		@param LifeUsed 
+		The life used for this component.
+	  */
+	public void setLifeUsed (BigDecimal LifeUsed)
+	{
+		set_Value (COLUMNNAME_LifeUsed, LifeUsed);
+	}
+
+	/** Get Life Used.
+		@return The life used for this component.
+	  */
+	public BigDecimal getLifeUsed () 
+	{
+		BigDecimal bd = (BigDecimal)get_Value(COLUMNNAME_LifeUsed);
+		if (bd == null)
+			 return Env.ZERO;
+		return bd;
+	}
+
+	public I_M_AttributeSetInstance getM_AttributeSetInstance() throws RuntimeException
+    {
+		return (I_M_AttributeSetInstance)MTable.get(getCtx(), I_M_AttributeSetInstance.Table_Name)
+			.getPO(getM_AttributeSetInstance_ID(), get_TrxName());	}
+
+	/** Set Attribute Set Instance.
+		@param M_AttributeSetInstance_ID 
+		Product Attribute Set Instance
+	  */
+	public void setM_AttributeSetInstance_ID (int M_AttributeSetInstance_ID)
+	{
+		if (M_AttributeSetInstance_ID < 0) 
+			set_Value (COLUMNNAME_M_AttributeSetInstance_ID, null);
+		else 
+			set_Value (COLUMNNAME_M_AttributeSetInstance_ID, Integer.valueOf(M_AttributeSetInstance_ID));
+	}
+
+	/** Get Attribute Set Instance.
+		@return Product Attribute Set Instance
+	  */
+	public int getM_AttributeSetInstance_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_M_AttributeSetInstance_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
+	public org.compiere.model.I_M_Product getM_Product() throws RuntimeException
+    {
+		return (org.compiere.model.I_M_Product)MTable.get(getCtx(), org.compiere.model.I_M_Product.Table_Name)
+			.getPO(getM_Product_ID(), get_TrxName());	}
+
+	/** Set Product.
+		@param M_Product_ID 
+		Product, Service, Item
+	  */
+	public void setM_Product_ID (int M_Product_ID)
+	{
+		if (M_Product_ID < 1) 
+			set_Value (COLUMNNAME_M_Product_ID, null);
+		else 
+			set_Value (COLUMNNAME_M_Product_ID, Integer.valueOf(M_Product_ID));
+	}
+
+	/** Get Product.
+		@return Product, Service, Item
+	  */
+	public int getM_Product_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_M_Product_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
 	}
 
 	/** Set Processed.

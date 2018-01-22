@@ -325,6 +325,21 @@ public interface I_FTU_Aircraft
 	  */
 	public int getCreatedBy();
 
+    /** Column name CT_Component_ID */
+    public static final String COLUMNNAME_CT_Component_ID = "CT_Component_ID";
+
+	/** Set Component.
+	  * A component of an assembly or asset.
+	  */
+	public void setCT_Component_ID (int CT_Component_ID);
+
+	/** Get Component.
+	  * A component of an assembly or asset.
+	  */
+	public int getCT_Component_ID();
+
+	public com.mckayerp.model.I_CT_Component getCT_Component() throws RuntimeException;
+
     /** Column name DateExpiryLease */
     public static final String COLUMNNAME_DateExpiryLease = "DateExpiryLease";
 
@@ -437,21 +452,6 @@ public interface I_FTU_Aircraft
 
 	/** Get Aircraft	  */
 	public int getFTU_Aircraft_ID();
-
-    /** Column name FTU_Component_ID */
-    public static final String COLUMNNAME_FTU_Component_ID = "FTU_Component_ID";
-
-	/** Set Component.
-	  * A component of an assembly or asset.
-	  */
-	public void setFTU_Component_ID (int FTU_Component_ID);
-
-	/** Get Component.
-	  * A component of an assembly or asset.
-	  */
-	public int getFTU_Component_ID();
-
-	public com.mckayerp.ftu.model.I_FTU_Component getFTU_Component() throws RuntimeException;
 
     /** Column name FuelCapacity */
     public static final String COLUMNNAME_FuelCapacity = "FuelCapacity";

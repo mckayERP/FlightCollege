@@ -78,6 +78,21 @@ public interface I_FTU_MaintRequirement
 	  */
 	public int getCreatedBy();
 
+    /** Column name CT_Component_ID */
+    public static final String COLUMNNAME_CT_Component_ID = "CT_Component_ID";
+
+	/** Set Component.
+	  * A component of an assembly or asset.
+	  */
+	public void setCT_Component_ID (int CT_Component_ID);
+
+	/** Get Component.
+	  * A component of an assembly or asset.
+	  */
+	public int getCT_Component_ID();
+
+	public com.mckayerp.model.I_CT_Component getCT_Component() throws RuntimeException;
+
     /** Column name Description */
     public static final String COLUMNNAME_Description = "Description";
 
@@ -206,6 +221,19 @@ public interface I_FTU_MaintRequirement
 	  */
 	public String getFTU_Process();
 
+    /** Column name FTU_ResolutionTemplate */
+    public static final String COLUMNNAME_FTU_ResolutionTemplate = "FTU_ResolutionTemplate";
+
+	/** Set Resolution Template.
+	  * A text string that will be used as a template in the maintenance work order result for the resolution of the maintenance action.
+	  */
+	public void setFTU_ResolutionTemplate (String FTU_ResolutionTemplate);
+
+	/** Get Resolution Template.
+	  * A text string that will be used as a template in the maintenance work order result for the resolution of the maintenance action.
+	  */
+	public String getFTU_ResolutionTemplate();
+
     /** Column name FTU_TimeInterval */
     public static final String COLUMNNAME_FTU_TimeInterval = "FTU_TimeInterval";
 
@@ -273,6 +301,19 @@ public interface I_FTU_MaintRequirement
 
 	public org.compiere.model.I_C_UOM getFTU_TimeIntervalUOM() throws RuntimeException;
 
+    /** Column name FTU_TimeToleranceType */
+    public static final String COLUMNNAME_FTU_TimeToleranceType = "FTU_TimeToleranceType";
+
+	/** Set Time Tolerance Type.
+	  * Determines how the next time/date based scheduled maintenance requirement is determined.
+	  */
+	public void setFTU_TimeToleranceType (String FTU_TimeToleranceType);
+
+	/** Get Time Tolerance Type.
+	  * Determines how the next time/date based scheduled maintenance requirement is determined.
+	  */
+	public String getFTU_TimeToleranceType();
+
     /** Column name FTU_UsageInterval */
     public static final String COLUMNNAME_FTU_UsageInterval = "FTU_UsageInterval";
 
@@ -339,6 +380,19 @@ public interface I_FTU_MaintRequirement
 	public int getFTU_UsageIntervalUOM_ID();
 
 	public org.compiere.model.I_C_UOM getFTU_UsageIntervalUOM() throws RuntimeException;
+
+    /** Column name FTU_UsageToleranceType */
+    public static final String COLUMNNAME_FTU_UsageToleranceType = "FTU_UsageToleranceType";
+
+	/** Set Usage Tolerance Type.
+	  * Determines how the next usage based scheduled maintenance requirement is determined.
+	  */
+	public void setFTU_UsageToleranceType (String FTU_UsageToleranceType);
+
+	/** Get Usage Tolerance Type.
+	  * Determines how the next usage based scheduled maintenance requirement is determined.
+	  */
+	public String getFTU_UsageToleranceType();
 
     /** Column name Help */
     public static final String COLUMNNAME_Help = "Help";

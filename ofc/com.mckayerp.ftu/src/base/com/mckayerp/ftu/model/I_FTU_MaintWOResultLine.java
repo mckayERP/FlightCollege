@@ -78,6 +78,47 @@ public interface I_FTU_MaintWOResultLine
 	  */
 	public int getCreatedBy();
 
+    /** Column name CT_Component_ID */
+    public static final String COLUMNNAME_CT_Component_ID = "CT_Component_ID";
+
+	/** Set Component.
+	  * A component of an assembly or asset.
+	  */
+	public void setCT_Component_ID (int CT_Component_ID);
+
+	/** Get Component.
+	  * A component of an assembly or asset.
+	  */
+	public int getCT_Component_ID();
+
+	public com.mckayerp.model.I_CT_Component getCT_Component() throws RuntimeException;
+
+    /** Column name CT_ComponentActionType */
+    public static final String COLUMNNAME_CT_ComponentActionType = "CT_ComponentActionType";
+
+	/** Set Action Type.
+	  * The type of action performed on the component
+	  */
+	public void setCT_ComponentActionType (String CT_ComponentActionType);
+
+	/** Get Action Type.
+	  * The type of action performed on the component
+	  */
+	public String getCT_ComponentActionType();
+
+    /** Column name CT_ComponentLifeAtAction */
+    public static final String COLUMNNAME_CT_ComponentLifeAtAction = "CT_ComponentLifeAtAction";
+
+	/** Set Component Life.
+	  * The component life used at the time of the action. For example, the time in service of a replacement part at the time of install.
+	  */
+	public void setCT_ComponentLifeAtAction (BigDecimal CT_ComponentLifeAtAction);
+
+	/** Get Component Life.
+	  * The component life used at the time of the action. For example, the time in service of a replacement part at the time of install.
+	  */
+	public BigDecimal getCT_ComponentLifeAtAction();
+
     /** Column name FTU_Action */
     public static final String COLUMNNAME_FTU_Action = "FTU_Action";
 
@@ -90,47 +131,6 @@ public interface I_FTU_MaintWOResultLine
 	  * The action that must be taken to address the maintenance requirement
 	  */
 	public String getFTU_Action();
-
-    /** Column name FTU_Component_ID */
-    public static final String COLUMNNAME_FTU_Component_ID = "FTU_Component_ID";
-
-	/** Set Component.
-	  * A component of an assembly or asset.
-	  */
-	public void setFTU_Component_ID (int FTU_Component_ID);
-
-	/** Get Component.
-	  * A component of an assembly or asset.
-	  */
-	public int getFTU_Component_ID();
-
-	public com.mckayerp.ftu.model.I_FTU_Component getFTU_Component() throws RuntimeException;
-
-    /** Column name FTU_ComponentActionType */
-    public static final String COLUMNNAME_FTU_ComponentActionType = "FTU_ComponentActionType";
-
-	/** Set Action Type.
-	  * The type of action performed on the component
-	  */
-	public void setFTU_ComponentActionType (String FTU_ComponentActionType);
-
-	/** Get Action Type.
-	  * The type of action performed on the component
-	  */
-	public String getFTU_ComponentActionType();
-
-    /** Column name FTU_ComponentLifeAtAction */
-    public static final String COLUMNNAME_FTU_ComponentLifeAtAction = "FTU_ComponentLifeAtAction";
-
-	/** Set Component Life.
-	  * The component life used at the time of the action. For example, the time in service of a replacement part at the time of install.
-	  */
-	public void setFTU_ComponentLifeAtAction (BigDecimal FTU_ComponentLifeAtAction);
-
-	/** Get Component Life.
-	  * The component life used at the time of the action. For example, the time in service of a replacement part at the time of install.
-	  */
-	public BigDecimal getFTU_ComponentLifeAtAction();
 
     /** Column name FTU_MaintActionTaken */
     public static final String COLUMNNAME_FTU_MaintActionTaken = "FTU_MaintActionTaken";
@@ -231,6 +231,19 @@ public interface I_FTU_MaintWOResultLine
 	public int getLifeUsageUOM_ID();
 
 	public org.compiere.model.I_C_UOM getLifeUsageUOM() throws RuntimeException;
+
+    /** Column name Line */
+    public static final String COLUMNNAME_Line = "Line";
+
+	/** Set Line No.
+	  * Unique line for this document
+	  */
+	public void setLine (int Line);
+
+	/** Get Line No.
+	  * Unique line for this document
+	  */
+	public int getLine();
 
     /** Column name M_AttributeSetInstance_ID */
     public static final String COLUMNNAME_M_AttributeSetInstance_ID = "M_AttributeSetInstance_ID";

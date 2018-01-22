@@ -29,7 +29,7 @@ public class X_FTU_ADApplicability extends PO implements I_FTU_ADApplicability, 
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20170414L;
+	private static final long serialVersionUID = 20180107L;
 
     /** Standard Constructor */
     public X_FTU_ADApplicability (Properties ctx, int FTU_ADApplicability_ID, String trxName)
@@ -37,9 +37,9 @@ public class X_FTU_ADApplicability extends PO implements I_FTU_ADApplicability, 
       super (ctx, FTU_ADApplicability_ID, trxName);
       /** if (FTU_ADApplicability_ID == 0)
         {
+			setCT_Component_ID (0);
 			setFTU_ADApplicability_ID (0);
 			setFTU_ADApplication_ID (0);
-			setFTU_Component_ID (0);
         } */
     }
 
@@ -70,6 +70,34 @@ public class X_FTU_ADApplicability extends PO implements I_FTU_ADApplicability, 
         .append(get_ID()).append("]");
       return sb.toString();
     }
+
+	public com.mckayerp.model.I_CT_Component getCT_Component() throws RuntimeException
+    {
+		return (com.mckayerp.model.I_CT_Component)MTable.get(getCtx(), com.mckayerp.model.I_CT_Component.Table_Name)
+			.getPO(getCT_Component_ID(), get_TrxName());	}
+
+	/** Set Component.
+		@param CT_Component_ID 
+		A component of an assembly or asset.
+	  */
+	public void setCT_Component_ID (int CT_Component_ID)
+	{
+		if (CT_Component_ID < 1) 
+			set_ValueNoCheck (COLUMNNAME_CT_Component_ID, null);
+		else 
+			set_ValueNoCheck (COLUMNNAME_CT_Component_ID, Integer.valueOf(CT_Component_ID));
+	}
+
+	/** Get Component.
+		@return A component of an assembly or asset.
+	  */
+	public int getCT_Component_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_CT_Component_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
 
 	/** Set AD Applicability ID.
 		@param FTU_ADApplicability_ID AD Applicability ID	  */
@@ -111,34 +139,6 @@ public class X_FTU_ADApplicability extends PO implements I_FTU_ADApplicability, 
 	public int getFTU_ADApplication_ID () 
 	{
 		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_ADApplication_ID);
-		if (ii == null)
-			 return 0;
-		return ii.intValue();
-	}
-
-	public com.mckayerp.ftu.model.I_FTU_Component getFTU_Component() throws RuntimeException
-    {
-		return (com.mckayerp.ftu.model.I_FTU_Component)MTable.get(getCtx(), com.mckayerp.ftu.model.I_FTU_Component.Table_Name)
-			.getPO(getFTU_Component_ID(), get_TrxName());	}
-
-	/** Set Component.
-		@param FTU_Component_ID 
-		A component of an assembly or asset.
-	  */
-	public void setFTU_Component_ID (int FTU_Component_ID)
-	{
-		if (FTU_Component_ID < 1) 
-			set_ValueNoCheck (COLUMNNAME_FTU_Component_ID, null);
-		else 
-			set_ValueNoCheck (COLUMNNAME_FTU_Component_ID, Integer.valueOf(FTU_Component_ID));
-	}
-
-	/** Get Component.
-		@return A component of an assembly or asset.
-	  */
-	public int getFTU_Component_ID () 
-	{
-		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_Component_ID);
 		if (ii == null)
 			 return 0;
 		return ii.intValue();

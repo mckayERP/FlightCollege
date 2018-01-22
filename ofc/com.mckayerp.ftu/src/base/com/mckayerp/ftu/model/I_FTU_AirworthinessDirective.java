@@ -198,11 +198,24 @@ public interface I_FTU_AirworthinessDirective
     /** Column name FTU_AirworthinessDirective_ID */
     public static final String COLUMNNAME_FTU_AirworthinessDirective_ID = "FTU_AirworthinessDirective_ID";
 
-	/** Set Airworthiness Directives ID	  */
+	/** Set Airworthiness Directive	  */
 	public void setFTU_AirworthinessDirective_ID (int FTU_AirworthinessDirective_ID);
 
-	/** Get Airworthiness Directives ID	  */
+	/** Get Airworthiness Directive	  */
 	public int getFTU_AirworthinessDirective_ID();
+
+    /** Column name FTU_DateEffective */
+    public static final String COLUMNNAME_FTU_DateEffective = "FTU_DateEffective";
+
+	/** Set Date Effective.
+	  * The effective date of the record.
+	  */
+	public void setFTU_DateEffective (Timestamp FTU_DateEffective);
+
+	/** Get Date Effective.
+	  * The effective date of the record.
+	  */
+	public Timestamp getFTU_DateEffective();
 
     /** Column name FTU_SupersedingAD_ID */
     public static final String COLUMNNAME_FTU_SupersedingAD_ID = "FTU_SupersedingAD_ID";

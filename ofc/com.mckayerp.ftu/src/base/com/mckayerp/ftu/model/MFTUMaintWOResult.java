@@ -19,11 +19,18 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Properties;
+
+import org.adempiere.engine.IDocumentLine;
 import org.compiere.model.*;
 import org.compiere.process.DocAction;
 import org.compiere.process.DocumentEngine;
 import org.compiere.util.DB;
+import org.compiere.util.Msg;
+
+import com.mckayerp.ftu.model.I_FTU_MaintWOResultLine;
+import com.mckayerp.ftu.model.X_FTU_MaintWOResult;
 
 /** Generated Model for FTU_MaintWOResult
  *  @author Adempiere (generated) 
@@ -105,6 +112,7 @@ public class MFTUMaintWOResult extends X_FTU_MaintWOResult implements DocAction 
 	private String		m_processMsg = null;
 	/**	Just Prepared Flag			*/
 	private boolean		m_justPrepared = false;
+	private MFTUMaintWOResultLine[] m_lines;
 
 	/**
 	 * 	Unlock Document.
@@ -361,4 +369,67 @@ public class MFTUMaintWOResult extends X_FTU_MaintWOResult implements DocAction 
         .append(getSummary()).append("]");
       return sb.toString();
     }
+
+
+	public IDocumentLine[] getLines() {
+		return getLines(false);
+	}
+
+    public IDocumentLine[] getLines(boolean requery) {
+		if (m_lines != null && !requery) {
+			set_TrxName(m_lines, get_TrxName());
+			return m_lines;
+		}
+		List<MFTUMaintWOResultLine> list = new Query(getCtx(), I_FTU_MaintWOResultLine.Table_Name, "FTU_MaintWOResult_ID=?", get_TrxName())
+		.setParameters(getFTU_MaintWOResult_ID())
+		.setOrderBy(MFTUMaintWOResultLine.COLUMNNAME_Line)
+		.list();
+		//
+		m_lines = new MFTUMaintWOResultLine[list.size()];
+		list.toArray(m_lines);
+		return m_lines;
+	}
+    
+	/**
+	 * 	Called before Save for Pre-Save Operation
+	 * 	@param newRecord new record
+	 *	@return true if record can be saved
+	 */
+	protected boolean beforeSave(boolean newRecord)
+	{
+		/** Prevents saving
+		log.saveError("Error", Msg.parseTranslation(getCtx(), "@C_Currency_ID@ = @C_Currency_ID@"));
+		log.saveError("FillMandatory", Msg.getElement(getCtx(), "PriceEntered"));
+		/** Issues message
+		log.saveWarning(AD_Message, message);
+		log.saveInfo (AD_Message, message);
+		**/
+		if (this.getFTU_MaintWorkOrder_ID() == 0)
+		{
+			log.saveError("FillMandatory", Msg.getElement(getCtx(), "FTU_MaintWorkOrder"));
+			return false;
+		}
+		
+		if (newRecord)
+		{
+			this.setParentComponent_ID(this.getFTU_MaintWorkOrder().getCT_Component_ID());
+			this.setC_BPartner_ID(this.getFTU_MaintWorkOrder().getC_BPartner_ID());
+			this.setC_BPartner_Location_ID(this.getFTU_MaintWorkOrder().getC_BPartner_Location_ID());
+			this.setDescription(this.getFTU_MaintWorkOrder().getDescription());
+		}
+		
+		return true;
+	}	//	beforeSave
+
+	/**
+	 * 	Called after Save for Post-Save Operation
+	 * 	@param newRecord new record
+	 *	@param success true if save operation was success
+	 *	@return if save was a success
+	 */
+	protected boolean afterSave (boolean newRecord, boolean success)
+	{
+		return success;
+	}	//	afterSave
+
 }

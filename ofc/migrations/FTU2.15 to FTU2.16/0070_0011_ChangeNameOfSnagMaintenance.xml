@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="MFTU" Name="ChangeNameOfSnagMaintenance" ReleaseNo="FTU2.16" SeqNo="70">
+    <Comments>#11</Comments>
+    <Step SeqNo="10" StepType="AD">
+      <PO AD_Table_ID="105" Action="U" Record_ID="1000027" Table="AD_Window">
+        <Data AD_Column_ID="156" Column="Name" oldValue="Snag Maintenance">Defect Control and Rectification</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="20" StepType="AD">
+      <PO AD_Table_ID="116" Action="U" Record_ID="1000079" Table="AD_Menu">
+        <Data AD_Column_ID="229" Column="Name" oldValue="Snag Maintenance">Defect Control and Rectification</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="30" StepType="AD">
+      <PO AD_Table_ID="106" Action="U" Record_ID="1000068" Table="AD_Tab">
+        <Data AD_Column_ID="161" Column="Name" oldValue="Snags">Defect</Data>
+      </PO>
+    </Step>
+  </Migration>
+</Migrations>

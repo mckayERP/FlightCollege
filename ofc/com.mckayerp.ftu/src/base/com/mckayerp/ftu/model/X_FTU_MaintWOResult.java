@@ -30,7 +30,7 @@ public class X_FTU_MaintWOResult extends PO implements I_FTU_MaintWOResult, I_Pe
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20170425L;
+	private static final long serialVersionUID = 20180107L;
 
     /** Standard Constructor */
     public X_FTU_MaintWOResult (Properties ctx, int FTU_MaintWOResult_ID, String trxName)
@@ -38,6 +38,8 @@ public class X_FTU_MaintWOResult extends PO implements I_FTU_MaintWOResult, I_Pe
       super (ctx, FTU_MaintWOResult_ID, trxName);
       /** if (FTU_MaintWOResult_ID == 0)
         {
+			setC_BPartner_ID (0);
+			setC_BPartner_Location_ID (0);
 			setC_DocType_ID (0);
 			setDateDoc (new Timestamp( System.currentTimeMillis() ));
 // @#Date@
@@ -47,6 +49,7 @@ public class X_FTU_MaintWOResult extends PO implements I_FTU_MaintWOResult, I_Pe
 // DR
 			setDocumentNo (null);
 			setFTU_MaintWOResult_ID (0);
+			setFTU_MaintWorkOrder_ID (0);
 			setIsApproved (false);
 // N
 			setM_Warehouse_ID (0);
@@ -82,6 +85,62 @@ public class X_FTU_MaintWOResult extends PO implements I_FTU_MaintWOResult, I_Pe
         .append(get_ID()).append("]");
       return sb.toString();
     }
+
+	public org.compiere.model.I_C_BPartner getC_BPartner() throws RuntimeException
+    {
+		return (org.compiere.model.I_C_BPartner)MTable.get(getCtx(), org.compiere.model.I_C_BPartner.Table_Name)
+			.getPO(getC_BPartner_ID(), get_TrxName());	}
+
+	/** Set Business Partner .
+		@param C_BPartner_ID 
+		Identifies a Business Partner
+	  */
+	public void setC_BPartner_ID (int C_BPartner_ID)
+	{
+		if (C_BPartner_ID < 1) 
+			set_Value (COLUMNNAME_C_BPartner_ID, null);
+		else 
+			set_Value (COLUMNNAME_C_BPartner_ID, Integer.valueOf(C_BPartner_ID));
+	}
+
+	/** Get Business Partner .
+		@return Identifies a Business Partner
+	  */
+	public int getC_BPartner_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_C_BPartner_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
+	public org.compiere.model.I_C_BPartner_Location getC_BPartner_Location() throws RuntimeException
+    {
+		return (org.compiere.model.I_C_BPartner_Location)MTable.get(getCtx(), org.compiere.model.I_C_BPartner_Location.Table_Name)
+			.getPO(getC_BPartner_Location_ID(), get_TrxName());	}
+
+	/** Set Partner Location.
+		@param C_BPartner_Location_ID 
+		Identifies the (ship to) address for this Business Partner
+	  */
+	public void setC_BPartner_Location_ID (int C_BPartner_Location_ID)
+	{
+		if (C_BPartner_Location_ID < 1) 
+			set_Value (COLUMNNAME_C_BPartner_Location_ID, null);
+		else 
+			set_Value (COLUMNNAME_C_BPartner_Location_ID, Integer.valueOf(C_BPartner_Location_ID));
+	}
+
+	/** Get Partner Location.
+		@return Identifies the (ship to) address for this Business Partner
+	  */
+	public int getC_BPartner_Location_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_C_BPartner_Location_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
 
 	public org.compiere.model.I_C_DocType getC_DocType() throws RuntimeException
     {
@@ -291,8 +350,10 @@ public class X_FTU_MaintWOResult extends PO implements I_FTU_MaintWOResult, I_Pe
 		return (com.mckayerp.ftu.model.I_FTU_MaintWorkOrder)MTable.get(getCtx(), com.mckayerp.ftu.model.I_FTU_MaintWorkOrder.Table_Name)
 			.getPO(getFTU_MaintWorkOrder_ID(), get_TrxName());	}
 
-	/** Set Maintenance Work Order ID.
-		@param FTU_MaintWorkOrder_ID Maintenance Work Order ID	  */
+	/** Set Maintenance Work Order.
+		@param FTU_MaintWorkOrder_ID 
+		The Maintenance Work Order
+	  */
 	public void setFTU_MaintWorkOrder_ID (int FTU_MaintWorkOrder_ID)
 	{
 		if (FTU_MaintWorkOrder_ID < 1) 
@@ -301,8 +362,9 @@ public class X_FTU_MaintWOResult extends PO implements I_FTU_MaintWOResult, I_Pe
 			set_ValueNoCheck (COLUMNNAME_FTU_MaintWorkOrder_ID, Integer.valueOf(FTU_MaintWorkOrder_ID));
 	}
 
-	/** Get Maintenance Work Order ID.
-		@return Maintenance Work Order ID	  */
+	/** Get Maintenance Work Order.
+		@return The Maintenance Work Order
+	  */
 	public int getFTU_MaintWorkOrder_ID () 
 	{
 		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_MaintWorkOrder_ID);
@@ -363,9 +425,9 @@ public class X_FTU_MaintWOResult extends PO implements I_FTU_MaintWOResult, I_Pe
 		return ii.intValue();
 	}
 
-	public com.mckayerp.ftu.model.I_FTU_Component getParentComponent() throws RuntimeException
+	public com.mckayerp.model.I_CT_Component getParentComponent() throws RuntimeException
     {
-		return (com.mckayerp.ftu.model.I_FTU_Component)MTable.get(getCtx(), com.mckayerp.ftu.model.I_FTU_Component.Table_Name)
+		return (com.mckayerp.model.I_CT_Component)MTable.get(getCtx(), com.mckayerp.model.I_CT_Component.Table_Name)
 			.getPO(getParentComponent_ID(), get_TrxName());	}
 
 	/** Set Parent Component.
@@ -375,9 +437,9 @@ public class X_FTU_MaintWOResult extends PO implements I_FTU_MaintWOResult, I_Pe
 	public void setParentComponent_ID (int ParentComponent_ID)
 	{
 		if (ParentComponent_ID < 1) 
-			set_Value (COLUMNNAME_ParentComponent_ID, null);
+			set_ValueNoCheck (COLUMNNAME_ParentComponent_ID, null);
 		else 
-			set_Value (COLUMNNAME_ParentComponent_ID, Integer.valueOf(ParentComponent_ID));
+			set_ValueNoCheck (COLUMNNAME_ParentComponent_ID, Integer.valueOf(ParentComponent_ID));
 	}
 
 	/** Get Parent Component.

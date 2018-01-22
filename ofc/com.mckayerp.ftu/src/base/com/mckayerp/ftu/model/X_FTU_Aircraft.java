@@ -32,7 +32,7 @@ public class X_FTU_Aircraft extends PO implements I_FTU_Aircraft, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20170412L;
+	private static final long serialVersionUID = 20180107L;
 
     /** Standard Constructor */
     public X_FTU_Aircraft (Properties ctx, int FTU_Aircraft_ID, String trxName)
@@ -478,6 +478,34 @@ public class X_FTU_Aircraft extends PO implements I_FTU_Aircraft, I_Persistent
 		return (String)get_Value(COLUMNNAME_CallSign);
 	}
 
+	public com.mckayerp.model.I_CT_Component getCT_Component() throws RuntimeException
+    {
+		return (com.mckayerp.model.I_CT_Component)MTable.get(getCtx(), com.mckayerp.model.I_CT_Component.Table_Name)
+			.getPO(getCT_Component_ID(), get_TrxName());	}
+
+	/** Set Component.
+		@param CT_Component_ID 
+		A component of an assembly or asset.
+	  */
+	public void setCT_Component_ID (int CT_Component_ID)
+	{
+		if (CT_Component_ID < 1) 
+			set_Value (COLUMNNAME_CT_Component_ID, null);
+		else 
+			set_Value (COLUMNNAME_CT_Component_ID, Integer.valueOf(CT_Component_ID));
+	}
+
+	/** Get Component.
+		@return A component of an assembly or asset.
+	  */
+	public int getCT_Component_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_CT_Component_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
 	/** Set Lease Expiry Date.
 		@param DateExpiryLease 
 		The date the lease expires.
@@ -638,34 +666,6 @@ public class X_FTU_Aircraft extends PO implements I_FTU_Aircraft, I_Persistent
 	public int getFTU_Aircraft_ID () 
 	{
 		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_Aircraft_ID);
-		if (ii == null)
-			 return 0;
-		return ii.intValue();
-	}
-
-	public com.mckayerp.ftu.model.I_FTU_Component getFTU_Component() throws RuntimeException
-    {
-		return (com.mckayerp.ftu.model.I_FTU_Component)MTable.get(getCtx(), com.mckayerp.ftu.model.I_FTU_Component.Table_Name)
-			.getPO(getFTU_Component_ID(), get_TrxName());	}
-
-	/** Set Component.
-		@param FTU_Component_ID 
-		A component of an assembly or asset.
-	  */
-	public void setFTU_Component_ID (int FTU_Component_ID)
-	{
-		if (FTU_Component_ID < 1) 
-			set_Value (COLUMNNAME_FTU_Component_ID, null);
-		else 
-			set_Value (COLUMNNAME_FTU_Component_ID, Integer.valueOf(FTU_Component_ID));
-	}
-
-	/** Get Component.
-		@return A component of an assembly or asset.
-	  */
-	public int getFTU_Component_ID () 
-	{
-		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_Component_ID);
 		if (ii == null)
 			 return 0;
 		return ii.intValue();
