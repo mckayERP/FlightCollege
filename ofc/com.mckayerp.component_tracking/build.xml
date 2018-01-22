@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================= -->
+<!-- com.mckayerp.component_tracking                            -->
+<!-- ============================================= -->
+
+<project name="com.mckayerp.component_tracking" default="dist" basedir=".">
+
+  <description>
+    This buildfile is used to build the com.mckayerp.component_tracking subproject
+  </description>
+
+  <!-- set global properties for this build -->
+  <property file="../utils_dev/buildCustomization.properties"/>
+  <property name="src" value="base/src"/>
+  <!-- property name="looksSrc" value="../looks/src"/ -->
+  <property name="build.dir" value="build"/>
+  <property name="dist.dir" value="../lib"/>
+  <property name="jar.path" value="${adempiere.trunk}/lib"/>
+
+  <!-- set path to include the necessary jar files for javac -->
+  <path id="lib.class.path">
+    <fileset dir="../bin">
+       <include name="**/*.*"/>
+    </fileset>
+    <pathelement path="${classpath}"/>
+  	<pathelement path="${dist.dir}/${adempiere.customJarFile}"/>
+    <pathelement path="${adempiere.trunk}/lib/CCTools.jar"/>
+    <pathelement path="${adempiere.trunk}/lib/Adempiere.jar"/>
+    <pathelement path="${adempiere.trunk}/lib/oracle.jar"/>
+    <pathelement path="${adempiere.trunk}/lib/postgresql.jar"/>
+    <pathelement path="${adempiere.trunk}/lib/jboss.jar"/>
+    <pathelement path="${adempiere.trunk}/lib/glassfish.jar"/>
+	<pathelement path="${adempiere.trunk}/tools/lib/mysql-connector-java-5.1.13-bin.jar"/><!--@MySQl-->
+    <pathelement path="${adempiere.trunk}/tools/lib/junit.jar"/>
+    <pathelement path="${adempiere.trunk}/tools/lib/j2ee.jar"/>
+    <pathelement path="${adempiere.trunk}/tools/lib/jnlp.jar"/>
+    <pathelement path="${adempiere.trunk}/tools/lib/servlet-api.jar" />  	
+  	<pathelement path="${adempiere.trunk}/tools/lib/cron4j-2.2.1.jar" />
+    <pathelement path="${adempiere.trunk}/tools/lib/xml-apis-1.4.01.jar" />
+    <pathelement path="${adempiere.trunk}/base/build/Base.jar" />
+    <pathelement path="${adempiere.trunk}/packages/liberoMFG.jar" />
+    <pathelement path="${adempiere.trunk}/packages/*.jar" />
+    <pathelement path="../packages/mckayerp_ftu.jar" />  	
+  </path>
+	
+  <!-- set path to src files -->
+  <path id="src.path">
+    <pathelement path="${src}"/>
+    <pathelement path="../com.mckayerp.ftu/src"/>
+  </path>
+
+  <target name="init" description="initialization target">
+    <echo message="=========== Build com.mckayerp.component_tracking"/>
+    <!-- create the time stamp -->
+    <tstamp/>
+    <!-- create the build directory structure used by compile -->
+    <mkdir dir="${build.dir}"/>
+    <!-- check for the distribution directory -->
+    <available file="${dist.dir}" type="dir" property="dist.dir.exists"/>
+  </target>
+
+  <target name="makedir" depends="init" unless="dist.dir.exists">
+    <!-- create the distribution directory if not available -->
+    <mkdir dir="${dist.dir}"/>
+  </target>
+
+  
+  <target name="compile" depends="makedir">
+    <!-- compile the java code from ${src} into ${build.dir} -->
+    <javac target="1.8" fork="true" 
+    	destdir="${build.dir}" 
+    	deprecation="on" 
+    	debug="on" 
+    	memoryinitialsize="512m" 
+    	memorymaximumsize="512m"
+    	includeantruntime="false">
+      <src refid="src.path"/>
+      <classpath refid="lib.class.path"/>
+      <compilerarg line="-XDignore.symbol.file" />
+    </javac>
+    <!-- copy all image & sound files from src to the build directory -->
+    <copy todir="${build.dir}">
+      <fileset dir="${src}">
+        <include name="**/images/*"/>
+        <include name="**/*.gif"/>
+        <include name="**/*.jpg"/>
+        <include name="**/*.png"/>
+        <include name="**/*.wav"/>
+        <include name="**/*.htm"/>
+        <include name="**/*.html"/>
+        <include name="**/*.properties"/>
+        <exclude name="**/package.html"/>
+      </fileset>
+    </copy>
+
+  </target>
+
+
+  <!-- =========================================== -->
+  <!-- Distribution                                -->
+  <!-- =========================================== -->
+  <target name="dist" depends="compile">
+    <!-- put everything from ${build.dir} into the ${jar.name}.jar file -->
+	<jar
+	  jarfile="${dist.dir}/${adempiere.customJarFile}" 
+	  basedir="${build.dir}"
+	  update="true">
+	</jar>
+  </target>
+
+  <path id="class.path.test">
+    <pathelement path="${build.dir}"/>
+    <pathelement path="${classpath}"/>
+    <pathelement path="${jar.path}/CCTools.jar"/>
+    <pathelement path="${adempiere.trunk}/tools/lib/junit.jar"/>
+    <pathelement path="${adempiere.trunk}/adempiere/Adempiere/lib/Adempiere.jar" />
+    <pathelement path="${adempiere.trunk}/adempiere/Adempiere/lib/jboss.jar" />
+    <pathelement path="${adempiere.trunk}/adempiere/Adempiere/lib/oracle.jar" />
+    <pathelement path="${adempiere.trunk}/adempiere/Adempiere/lib/postgresql.jar" />
+	<pathelement path="${adempiere.trunk}/adempiere/Adempiere/lib/mysql-connector-java-5.1.13-bin.jar" /><!--@MySQL-->
+  </path>
+
+  <target name="clean">
+    <!-- Delete the ${build.dir} directory trees -->
+    <delete dir="${build.dir}"/>
+    <delete file="${dist.dir}/${jar.name}.jar" failonerror="false"/>
+  </target>
+
+</project>
