@@ -29,3 +29,4 @@ ofc/packages/mckayerp_ftu.jar
 ofc/customization.jar
 zip*.tmp
 ofc/hs_err*.log
+ofc/launch/Release/launch4j.log

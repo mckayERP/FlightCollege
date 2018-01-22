@@ -85,7 +85,7 @@
 	<target name="dist" depends="compile">
 		<!-- put everything from ${build.dir} into Customization.jar file -->
 		<jar
-		  jarfile="${packages.dir}/${adempiere.customJarFile}" 
+		  jarfile="${dist.dir}/${adempiere.customJarFile}" 
 		  basedir="${build.dir}"
 		  update="true">
 		</jar>
