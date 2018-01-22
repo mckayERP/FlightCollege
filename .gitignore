@@ -28,3 +28,4 @@ ofc/packages/helcim_semi_integrated.jar
 ofc/packages/mckayerp_ftu.jar
 ofc/customization.jar
 zip*.tmp
+ofc/hs_err*.log
