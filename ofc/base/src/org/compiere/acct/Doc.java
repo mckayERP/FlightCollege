@@ -39,6 +39,7 @@ import org.compiere.model.MTable;
 import org.compiere.model.ModelValidationEngine;
 import org.compiere.model.ModelValidator;
 import org.compiere.model.PO;
+import org.compiere.process.DocAction;
 import org.compiere.process.DocumentEngine;
 import org.compiere.util.AdempiereUserError;
 import org.compiere.util.CLogger;
@@ -338,6 +339,94 @@ public abstract class Doc
 	}   //  get
 
 	/**
+	 *  Create Posting document
+	 *	@param ass accounting schema
+	 *  @param AD_Table_ID Table ID of Documents
+	 *  @param rs ResultSet
+	 *  @param trxName transaction name
+	 *  @return Document
+	 * @throws AdempiereUserError 
+	 */
+	public static Doc get (MAcctSchema[] ass, DocAction m_document, String trxName) throws AdempiereUserError
+	{
+		Doc doc = null;
+		
+		/* Classname of the Doc class follows this convention:
+		 * if the prefix (letters before the first underscore _) is 1 character, then the class is Doc_TableWithoutPrefixWithoutUnderscores
+		 * otherwise Doc_WholeTableWithoutUnderscores
+		 * i.e. following this query
+              SELECT t.ad_table_id, tablename, 
+              	CASE 
+              		WHEN instr(tablename, '_') = 2 
+              		THEN 'Doc_' || substr(tablename, 3) 
+              		WHEN instr(tablename, '_') > 2 
+              		THEN 'Doc_' || 
+              		ELSE '' 
+              	REPLACE
+              		(
+              			tablename, '_', ''
+              		)
+              	END AS classname 
+              FROM ad_table t, ad_column C 
+              WHERE t.ad_table_id = C.ad_table_id AND
+              	C.columnname = 'Posted' AND
+              	isview = 'N' 
+              ORDER BY 1
+		 * This is:
+		 * 224		GL_Journal			Doc_GLJournal
+		 * 259		C_Order				Doc_Order
+		 * 318		C_Invoice			Doc_Invoice
+		 * 319		M_InOut				Doc_InOut
+		 * 321		M_Inventory			Doc_Inventory
+		 * 323		M_Movement			Doc_Movement
+		 * 325		M_Production		Doc_Production
+		 * 335		C_Payment			Doc_Payment
+		 * 392		C_BankStatement		Doc_BankStatement
+		 * 407		C_Cash				Doc_Cash
+		 * 472		M_MatchInv			Doc_MatchInv
+		 * 473		M_MatchPO			Doc_MatchPO
+		 * 623		C_ProjectIssue		Doc_ProjectIssue
+		 * 702		M_Requisition		Doc_Requisition
+		 * 735		C_AllocationHdr		Doc_AllocationHdr
+		 * 53027	PP_Order			Doc_PPOrder
+		 * 53035	PP_Cost_Collector	Doc_PPCostCollector
+		 * 53037	DD_Order			Doc_DDOrder
+		 * 53092	HR_Process			Doc_HRProcess
+		 */
+		
+		int AD_Table_ID = m_document.get_Table_ID();
+		int Record_ID = m_document.get_ID();
+		
+		String tableName = MTable.getTableName(Env.getCtx(), AD_Table_ID);
+		String packageName = "org.compiere.acct";
+		String className = null;
+
+		int firstUnderscore = tableName.indexOf("_");
+		if (firstUnderscore == 1)
+			className = packageName + ".Doc_" + tableName.substring(2).replaceAll("_", "");
+		else
+			className = packageName + ".Doc_" + tableName.replaceAll("_", "");
+		
+		try
+		{
+			Class<?> cClass = Class.forName(className);
+			Constructor<?> cnstr = cClass.getConstructor(new Class[] {MAcctSchema[].class, DocAction.class, String.class});
+			doc = (Doc) cnstr.newInstance(ass, m_document, trxName);
+		}
+		catch (Exception e)
+		{
+			s_log.log(Level.WARNING, "Doc Class invalid or has no DocAction parameter in the constructor.");
+		}
+
+		if (doc == null)
+			return get(ass, AD_Table_ID, Record_ID, trxName);
+		
+		if (doc == null)
+			s_log.log(Level.SEVERE, "Unknown AD_Table_ID=" + AD_Table_ID);
+		return doc;
+	}   //  get
+
+	/**
 	 *  Post Document
 	 * 	@param ass accounting schemata
 	 * 	@param 	AD_Table_ID		Transaction table
@@ -353,6 +442,31 @@ public abstract class Doc
 		if (doc != null)
 			return doc.post (force, true);	//	repost
 		return "NoDoc";
+	}   //  post
+
+	/**
+	 *  Post Document
+	 * 	@param ass accounting schemata
+	 *  @param  m_document       		PO model
+	 *  @param  force           force posting
+	 *  @param trxName			transaction
+	 *  @return null if the document was posted or error message
+	 */
+	public static String postImmediate (MAcctSchema[] ass, 
+		DocAction m_document, boolean force, String trxName)
+	{
+		String result = null;
+		try {
+			Doc doc = get (ass, m_document, trxName);
+			if (doc != null)
+				result = doc.post (force, true); //	repost
+		}
+		catch (Exception e)
+		{
+			result = "NoDoc";
+		}
+		return 	result;
+				
 	}   //  post
 
 	/**	Static Log						*/
@@ -392,6 +506,49 @@ public abstract class Doc
 			log.severe(msg);
 			throw new IllegalArgumentException(msg);
 		}
+
+		//	DocStatus
+		int index = p_po.get_ColumnIndex("DocStatus");
+		if (index != -1)
+			m_DocStatus = (String)p_po.get_Value(index);
+		
+		//	Document Type
+		setDocumentType (defaultDocumentType);
+		m_trxName = trxName;
+		m_manageLocalTrx = false;
+		if (m_trxName == null) {
+			m_trxName = "Post" + m_DocumentType + p_po.get_ID();
+			m_manageLocalTrx = true;
+		}
+		p_po.set_TrxName(m_trxName);
+
+		//	Amounts
+		m_Amounts[0] = Env.ZERO;
+		m_Amounts[1] = Env.ZERO;
+		m_Amounts[2] = Env.ZERO;
+		m_Amounts[3] = Env.ZERO;
+	}
+		
+	/**************************************************************************
+	 *  Constructor
+	 * 	@param ass accounting schemata
+	 * 	@param clazz Document Class
+	 * 	@param doc DocAction (Model or PO)
+	 * 	@param defaultDocumentType default document type or null
+	 * 	@param trxName trx
+	 */
+	Doc (MAcctSchema[] ass, Class<?> clazz, DocAction doc, String defaultDocumentType, String trxName)
+	{
+
+		p_Status = STATUS_Error;
+		m_ass = ass;
+		m_ctx = new Properties(m_ass[0].getCtx());
+		m_ctx.setProperty("#AD_Client_ID", String.valueOf(m_ass[0].getAD_Client_ID()));
+
+		if (doc == null)
+			throw new IllegalArgumentException("doc == null");
+			
+		p_po = (PO) doc;
 		
 		//	DocStatus
 		int index = p_po.get_ColumnIndex("DocStatus");

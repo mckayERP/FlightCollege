@@ -51,7 +51,15 @@ public class HCMTerminalSimulator implements Runnable {
     public final Timer receiptTimer = new Timer();
     public final Timer responseTimer = new Timer();
     
-    private int stateCounter = 0;
+	private static int batchTotal = 0;
+	private static int batchTotalCount = 0;
+	private static int batchSaleTotal = 0;
+	private static int batchSaleTotalCount = 0;
+	private static int batchRefundTotal = 0;
+	private static int batchRefundTotalCount = 0;
+	private static int batchVoidTotal = 0;
+	private static int batchVoidTotalCount = 0;
+	private static int batchCashBackTotal = 0;
 
 	public HCMTerminalSimulator() {
 		
@@ -270,6 +278,7 @@ public class HCMTerminalSimulator implements Runnable {
         
         if (this.requestType.equals("Purchase")) 
         {
+        	this.setBatchTotal(requestType, this.amount);
         	
         	this.stringResponse += "601"
         			+ this.getTID()
@@ -312,9 +321,11 @@ public class HCMTerminalSimulator implements Runnable {
                     + " ";
         	
         }  
-        else if (this.requestType.equals("Refund")) 
+        else if (this.requestType.equals("Refund") || this.requestType.equals("Void")) 
         {
         	
+        	this.setBatchTotal(requestType, this.amount);
+
         	this.stringResponse += "601"
         			+ this.getTID()
                     + " ";
@@ -361,49 +372,45 @@ public class HCMTerminalSimulator implements Runnable {
         	this.stringResponse += "500"
         			+ this.getBatchNumber()
                     + " ";
-/*        	
-        	this.stringReponse += "502"
+        	
+        	this.stringResponse += "502"
         			+ this.getBatchTotal()
                     + " ";
         	
-        	this.stringReponse += "503"
+        	this.stringResponse += "503"
         			+ this.getBatchTotalCount()
                     + " ";
         	
-        	this.stringReponse += "504"
+        	this.stringResponse += "504"
         			+ this.getBatchSaleTotal()
                     + " ";
         	
-        	this.stringReponse += "505"
+        	this.stringResponse += "505"
         			+ this.getBatchSaleTotalCount()
                     + " ";
         	
-        	this.stringReponse += "506"
+        	this.stringResponse += "506"
         			+ this.getBatchRefundTotal()
                     + " ";
         	
         	
-        	this.stringReponse += "507"
+        	this.stringResponse += "507"
         			+ this.getBatchRefundTotalCount()
                     + " ";
         	
-        	this.stringReponse += "508"
+        	this.stringResponse += "508"
         			+ this.getBatchVoidTotal()
                     + " ";
         	
-        	this.stringReponse += "509"
+        	this.stringResponse += "509"
         			+ this.getBatchVoidTotalCount()
                     + " ";
         	
-        	this.stringReponse += "512"
+        	this.stringResponse += "512"
         			+ this.getBatchCashBackTotal()
                     + " ";
-  */      	
+      	
         } // End Batch
-        else if (this.requestType.equals("Void")) 
-        {
-        	this.stringResponse += "Transaction Voided";
-        }
 
         if (this.stringResponse != null) 
         {
@@ -430,6 +437,41 @@ public class HCMTerminalSimulator implements Runnable {
 
     } // END FUNCTION
 
+	private int getBatchCashBackTotal() {
+		return batchCashBackTotal;
+	}
+
+
+	private int getBatchVoidTotalCount() {
+		return batchVoidTotalCount;
+	}
+
+
+	private int getBatchVoidTotal() {
+		return batchVoidTotal;
+	}
+
+
+	private int getBatchRefundTotalCount() {
+		return batchRefundTotalCount;
+	}
+
+
+	private int getBatchRefundTotal() {
+		return batchRefundTotal;
+	}
+
+
+	private int getBatchSaleTotalCount() {
+		return batchSaleTotalCount;
+	}
+
+
+	private int getBatchSaleTotal() {
+		return batchSaleTotal;
+	}
+
+
 	private void sendResponse() {
         // SEND REQUEST
         try {
@@ -439,7 +481,6 @@ public class HCMTerminalSimulator implements Runnable {
       	  sendingStream.flush();
       	  
         } catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
         }
         finally
@@ -450,26 +491,23 @@ public class HCMTerminalSimulator implements Runnable {
     		  serverSocket.close();
     		  hcmSocket.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
         }
 	}
 
-
-
-
 	private String getBatchNumber() {
-		return "673";
+		Random rand = new Random();
+		int refNum = rand.nextInt(1000);
+		DecimalFormat myFormatter = new DecimalFormat("000");
+		return myFormatter.format(refNum);
 	}
 
 	private String getMID() {
-		// TODO Auto-generated method stub
 		return "OFC04326";
 	}
 
 	private String getResponseCode() {
-		// TODO Auto-generated method stub
 		return "AA";
 	}
 
@@ -478,7 +516,10 @@ public class HCMTerminalSimulator implements Runnable {
 	}
 
 	private String getAuthorizationNumber() {
-		return "007511";
+		Random rand = new Random();
+		int refNum = rand.nextInt(100000);
+		DecimalFormat myFormatter = new DecimalFormat("00000");
+		return myFormatter.format(refNum);
 	}
 
 	private String getReferenceNumber() {
@@ -547,6 +588,63 @@ public class HCMTerminalSimulator implements Runnable {
 
 	public int getPort() {
 		return port;
+	}
+
+
+	public int getBatchTotal() {
+		return batchTotal;
+	}
+
+
+	public void setBatchTotal(String requestType, int trxAmount) {
+		
+    	batchTotalCount ++;
+
+    	if (this.requestType.equals("Purchase")) 
+        {
+        	batchTotal += this.amount;
+            batchSaleTotal += this.amount;
+            batchSaleTotalCount ++;
+         }  
+        else if (this.requestType.equals("Refund")) 
+        {
+        	batchTotal -= this.amount;
+            batchRefundTotal += this.amount;
+            batchRefundTotalCount ++;
+        }
+        else if (this.requestType.equals("Void")) 
+        {
+        	batchTotal -= this.amount;
+            batchVoidTotal += this.amount;
+            batchVoidTotalCount ++;
+        }
+        else if (this.requestType.equals("CashBack")) 
+        {
+        	batchTotal -= this.amount;
+            batchVoidTotal += this.amount;
+            batchVoidTotalCount ++;
+        }
+	}
+
+
+	private void zeroBatch() {
+		batchTotal = 0;
+		batchSaleTotal = 0;
+		batchRefundTotal = 0;
+		batchVoidTotal = 0;
+		batchTotalCount = 0;
+		batchSaleTotalCount = 0;
+		batchRefundTotalCount = 0;
+		batchVoidTotalCount = 0;
+	}
+	
+	public int getBatchTotalCount() {
+		return batchTotalCount;
+	}
+
+
+	public void setBatchTotalCount(int batchTotalCount) {
+		this.batchTotalCount = batchTotalCount;
 	}
 
 }

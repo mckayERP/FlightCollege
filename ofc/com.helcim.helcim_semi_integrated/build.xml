@@ -16,7 +16,6 @@
   <!-- property name="looksSrc" value="../looks/src"/ -->
   <property name="build.dir" value="build"/>
   <property name="dist.dir" value="../packages"/>
-  <property name="jar.name" value="helcim_semi_integrated.jar"/>
 
   <!-- set path to include the necessary jar files for javac -->
   <path id="lib.class.path">
@@ -78,9 +77,9 @@
   <!-- Distribution                                -->
   <!-- =========================================== -->
   <target name="dist" depends="compile">
-    <!-- put everything from ${build.dir} into the ${jar.name}.jar file -->
+    <!-- put everything from ${build.dir} into the ${helcim.jarFile} file -->
 	<jar
-	  jarfile="${dist.dir}/${jar.name}" 
+	  jarfile="${dist.dir}/${helcim.jarFile}" 
 	  basedir="${build.dir}"
 	  update="true">
 	</jar>
@@ -89,7 +88,7 @@
   <target name="clean">
     <!-- Delete the ${build.dir} directory trees -->
     <delete dir="${build.dir}"/>
-    <delete file="${dist.dir}/${jar.name}.jar" failonerror="false"/>
+    <delete file="${dist.dir}/${helcim.jarFile}" failonerror="false"/>
   </target>
 
 </project>

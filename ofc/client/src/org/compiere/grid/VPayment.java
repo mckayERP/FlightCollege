@@ -19,6 +19,7 @@ package org.compiere.grid;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -39,6 +40,8 @@ import java.util.Hashtable;
 import java.util.logging.Level;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.SwingUtilities;
 
 import org.adempiere.plaf.AdempierePLAF;
 import org.compiere.apps.ADialog;
@@ -54,12 +57,15 @@ import org.compiere.model.MConversionRate;
 import org.compiere.model.MInvoice;
 import org.compiere.model.MOrder;
 import org.compiere.model.MPayment;
+import org.compiere.model.MPaymentProcessor;
 import org.compiere.model.MPaymentValidate;
 import org.compiere.model.MRole;
 import org.compiere.model.MSysConfig;
+import org.compiere.model.PaymentProcessor;
 import org.compiere.model.X_C_Order;
 import org.compiere.process.DocAction;
 import org.compiere.swing.CButton;
+import org.compiere.swing.CCheckBox;
 import org.compiere.swing.CComboBox;
 import org.compiere.swing.CDialog;
 import org.compiere.swing.CLabel;
@@ -135,7 +141,6 @@ public class VPayment extends CDialog
 		m_button = button;
 		try
 		{
-			bDateField = new VDate("DateAcct", false, false, true, DisplayType.Date, "DateAcct");
 			jbInit();
 			m_initOK = dynInit(m_button);     //  Null Pointer if order/invoice not saved yet
 		}
@@ -242,7 +247,7 @@ public class VPayment extends CDialog
 	private VNumber bAmountField = new VNumber();
 	private CLabel sAmountLabel = new CLabel();
 	private VNumber sAmountField = new VNumber();
-	private VDate bDateField;
+	private VDate bDateField = new VDate("DateAcct", false, false, true, DisplayType.Date, "DateAcct");
 	private CLabel bDateLabel = new CLabel();
 	private ConfirmPanel confirmPanel = new ConfirmPanel(true);
 	private CTextField sCheckField = new CTextField();
@@ -252,6 +257,7 @@ public class VPayment extends CDialog
 	private CButton kPreauth = new CButton();
 	private CButton kCapture = new CButton();
 	private CButton kReprint = new CButton();
+	private CCheckBox kEnableOnline = new CCheckBox();
 	private CButton sOnline = new CButton();
 	private CComboBox sBankAccountCombo = new CComboBox();
 	private CLabel sBankAccountLabel = new CLabel();
@@ -275,6 +281,10 @@ public class VPayment extends CDialog
 	 *  in the case of credit memos.
 	 */
 	private BigDecimal m_payAmount;
+	private CButton cpNewButton;
+	
+	Boolean m_addNew = false;
+	private boolean m_invoicePaid = false;
 
 	/**
 	 *	Static Init
@@ -287,6 +297,10 @@ public class VPayment extends CDialog
 		mainPanel.setLayout(mainLayout);
 		mainPanel.add(centerPanel, BorderLayout.CENTER);
 		//
+		cpNewButton = ConfirmPanel.createNewButton(true);
+		confirmPanel.addComponent (cpNewButton);
+		cpNewButton.addActionListener(this);
+		//
 		northPanel.setLayout(northLayout);
 		paymentLabel.setText(Msg.translate(Env.getCtx(), "PaymentRule"));
 		mainPanel.add(northPanel, BorderLayout.NORTH);
@@ -298,6 +312,7 @@ public class VPayment extends CDialog
 		//      CreditCard
 		kPanel.setLayout(kLayout);
 		kTypeCombo.setPreferredSize(new Dimension(100,21));
+		kTypeCombo.addActionListener(this);
 		kNumberField.setPreferredSize(new Dimension(160, 21));
 		kNameField.setPreferredSize(new Dimension(160, 21));
 		kExpField.setPreferredSize(new Dimension(40, 21));
@@ -312,6 +327,8 @@ public class VPayment extends CDialog
 		kApprovalLabel.setText(Msg.translate(Env.getCtx(), MPayment.COLUMNNAME_R_AuthCode));
 		kRefLabel.setText(Msg.translate(Env.getCtx(), MPayment.COLUMNNAME_R_PnRef));
 		kAmountLabel.setText(Msg.getMsg(Env.getCtx(), "Amount"));
+		kEnableOnline.setText(Msg.translate(Env.getCtx(), "Use Terminal"));
+		kEnableOnline.addActionListener(this);
 
 		// CC Buttons
 		kPurchase.setText(Msg.getMsg(Env.getCtx(), "Purchase"));
@@ -360,16 +377,18 @@ public class VPayment extends CDialog
 			,GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(2, 5, 2, 5), 0, 0));
 		kPanel.add(terminalLog, new GridBagConstraints(2, 0, 3, 5, 0.0, 0.0
 				,GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(2, 2, 2, 2), 0, 0));
-		kPanel.add(kPurchase, new GridBagConstraints(2, 5, 1, 1, 0.0, 0.0
-				,GridBagConstraints.SOUTHEAST, GridBagConstraints.NONE, new Insets(2, 2, 2, 5), 0, 0));
-		kPanel.add(kVoid, new GridBagConstraints(3, 5, 1, 1, 0.0, 0.0
-				,GridBagConstraints.SOUTHWEST, GridBagConstraints.NONE, new Insets(2, 5, 2, 2), 0, 0));
-		kPanel.add(kPreauth, new GridBagConstraints(4, 5, 1, 1, 0.0, 0.0
-				,GridBagConstraints.SOUTHEAST, GridBagConstraints.NONE, new Insets(2, 2, 2, 5), 0, 0));
-		kPanel.add(kCapture, new GridBagConstraints(2, 6, 1, 1, 0.0, 0.0
-				,GridBagConstraints.SOUTHWEST, GridBagConstraints.NONE, new Insets(2, 5, 2, 2), 0, 0));
+		kPanel.add(kEnableOnline, new GridBagConstraints(1, 6, 1, 1, 0.0, 0.0
+				,GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(2, 0, 2, 5), 0, 0));
+		kPanel.add(kPurchase, new GridBagConstraints(2, 6, 1, 1, 0.0, 0.0
+				,GridBagConstraints.SOUTHEAST, GridBagConstraints.NONE, new Insets(2, 2, 5, 5), 0, 0));
+//		kPanel.add(kVoid, new GridBagConstraints(3, 5, 1, 1, 0.0, 0.0
+//				,GridBagConstraints.SOUTHWEST, GridBagConstraints.NONE, new Insets(2, 5, 2, 2), 0, 0));
+//		kPanel.add(kPreauth, new GridBagConstraints(4, 5, 1, 1, 0.0, 0.0
+//				,GridBagConstraints.SOUTHEAST, GridBagConstraints.NONE, new Insets(2, 2, 2, 5), 0, 0));
+//		kPanel.add(kCapture, new GridBagConstraints(2, 6, 1, 1, 0.0, 0.0
+//				,GridBagConstraints.SOUTHWEST, GridBagConstraints.NONE, new Insets(2, 5, 2, 2), 0, 0));
 		kPanel.add(kReprint, new GridBagConstraints(3, 6, 1, 1, 0.0, 0.0
-				,GridBagConstraints.SOUTHWEST, GridBagConstraints.NONE, new Insets(2, 5, 2, 2), 0, 0));
+				,GridBagConstraints.SOUTHWEST, GridBagConstraints.NONE, new Insets(2, 5, 5, 2), 0, 0));
 		//	DircetDebit/Credit
 		tPanel.setLayout(tPanelLayout);
 		tAccountLabel.setText(Msg.translate(Env.getCtx(), "C_BP_BankAccount_ID"));
@@ -559,6 +578,35 @@ public class VPayment extends CDialog
 			return false;
 		}
 		
+		//  Make sure the invoice (if any) is not already paid.
+		//  Get Order and optionally Invoice
+		int C_Order_ID = Env.getContextAsInt(Env.getCtx(), m_WindowNo, "C_Order_ID");
+		int C_Invoice_ID = Env.getContextAsInt(Env.getCtx(), m_WindowNo, "C_Invoice_ID");
+		if (C_Invoice_ID == 0 && m_DocStatus.equals("CO"))
+			C_Invoice_ID = getInvoiceID (C_Order_ID, null);
+
+		//  Amount sign negative, if ARC (Credit Memo) or API (AP Invoice)
+		m_payAmount = m_Amount;
+		MInvoice invoice = null;
+		if (C_Invoice_ID != 0) 
+		{
+			invoice = new MInvoice(Env.getCtx(),C_Invoice_ID,null);
+			m_invoicePaid  = invoice.isPaid();
+			m_payAmount = invoice.getOpenAmt();
+			if (invoice.isCreditMemo())
+				m_payAmount = m_payAmount.negate();
+			if (m_invoicePaid || m_payAmount.compareTo(Env.ZERO) == 0)
+			{
+				ADialog.warn(m_WindowNo, this, "InvoicePaid");
+				cpNewButton.setVisible(false);
+			}
+		}
+
+		MOrder order = null;
+		if (invoice == null && C_Order_ID != 0)
+			order = new MOrder (Env.getCtx(), C_Order_ID, null);
+		
+
 		/**
 		 *	Get Data from Grid
 		 */
@@ -570,42 +618,14 @@ public class VPayment extends CDialog
 		m_C_Currency_ID = ((Integer)m_mTab.getValue("C_Currency_ID")).intValue();
 		m_DateAcct = (Timestamp)m_mTab.getValue("DateAcct");
 		
-		//  Make sure the invoice (if any) is not already paid.
-		//  Get Order and optionally Invoice
-		int C_Order_ID = Env.getContextAsInt(Env.getCtx(), m_WindowNo, "C_Order_ID");
-		int C_Invoice_ID = Env.getContextAsInt(Env.getCtx(), m_WindowNo, "C_Invoice_ID");
-		if (C_Invoice_ID == 0 && m_DocStatus.equals("CO"))
-			C_Invoice_ID = getInvoiceID (C_Order_ID, null);
-		Boolean invoicePaid = false;
-		if (C_Invoice_ID != 0) 
-		{
-			MInvoice invoice = new MInvoice(Env.getCtx(),C_Invoice_ID,null);
-			invoicePaid = invoice.isPaid();
-		}
-
-		//  Amount sign negative, if ARC (Credit Memo) or API (AP Invoice)
-		m_payAmount = m_Amount;
-		MInvoice invoice = null;
-		if (C_Invoice_ID != 0)
-		{
-			invoice = new MInvoice (Env.getCtx(), C_Invoice_ID, null);
-			if (invoice.isCreditMemo())
-				m_payAmount = m_Amount.negate();
-		}
-
 		bAmountField.setValue(m_payAmount);
 		sAmountField.setValue(m_payAmount);
 		kAmountField.setValue(m_payAmount);
 		
-		MOrder order = null;
-		if (invoice == null && C_Order_ID != 0)
-			order = new MOrder (Env.getCtx(), C_Order_ID, null);
-		
-
 		if (m_mTab.getValue("C_PaymentTerm_ID") != null)
 			m_C_PaymentTerm_ID = ((Integer)m_mTab.getValue("C_PaymentTerm_ID")).intValue();
 		//  Existing Payment
-		if (m_mTab.getValue("C_Payment_ID") != null)
+		if (m_mTab.getValue("C_Payment_ID") != null && !m_addNew)
 		{
 			m_C_Payment_ID = ((Integer)m_mTab.getValue("C_Payment_ID")).intValue();
 			if (m_C_Payment_ID != 0)
@@ -622,17 +642,19 @@ public class VPayment extends CDialog
 				kStatus.setText(m_mPayment.getR_Result());
 				kAmountField.setValue(m_mPayment.getPayAmt());
 				terminalLog.setValue(m_mPayment.getDescription());
+				kEnableOnline.setSelected(m_mPayment.isOnline());
 				
 				terminalLog.setReadWrite(false);
 				
 				//	if approved/paid, don't let it change
-				kTypeCombo.setReadWrite(!m_mPayment.isApproved() && !invoicePaid);
-				kNumberField.setReadWrite(!m_mPayment.isApproved() && !invoicePaid);
-				kNameField.setReadWrite(!m_mPayment.isApproved() && !invoicePaid);
-				kExpField.setReadWrite(!m_mPayment.isApproved() && !invoicePaid);
-				kRefField.setReadWrite(!m_mPayment.isApproved() && !invoicePaid);
-				kApprovalField.setReadWrite(!m_mPayment.isApproved() && !invoicePaid);
-				kAmountField.setReadWrite(!m_mPayment.isApproved() && !invoicePaid);
+				paymentCombo.setReadWrite(!m_mPayment.isApproved() && !m_invoicePaid);
+				kTypeCombo.setReadWrite(!m_mPayment.isApproved() && !m_invoicePaid);
+				kNumberField.setReadWrite(!m_mPayment.isApproved() && !m_invoicePaid);
+				kNameField.setReadWrite(!m_mPayment.isApproved() && !m_invoicePaid);
+				kExpField.setReadWrite(!m_mPayment.isApproved() && !m_invoicePaid);
+				kRefField.setReadWrite(!m_mPayment.isApproved() && !m_invoicePaid);
+				kApprovalField.setReadWrite(!m_mPayment.isApproved() && !m_invoicePaid);
+				kAmountField.setReadWrite(!m_mPayment.isApproved() && !m_invoicePaid);
 								
 				//  Check
 				m_C_BankAccount_ID = m_mPayment.getC_BankAccount_ID();
@@ -647,9 +669,22 @@ public class VPayment extends CDialog
 				tStatus.setText(m_mPayment.getR_PnRef());
 				// Cash
 				bAmountField.setValue(m_mPayment.getPayAmt());
+				
+				// Buttons
+				if (m_mPayment.getDocStatus().equals(MPayment.DOCSTATUS_Completed)
+					|| m_mPayment.getDocStatus().equals(MPayment.DOCSTATUS_Closed))
+				{
+					kPurchase.setText(Msg.getMsg(Env.getCtx(), "Refund/Void"));
+				}
+				else
+				{
+					kPurchase.setText(Msg.getMsg(Env.getCtx(), "Purchase"));
+				}
+//				kVoid.setVisible(true);
+				kReprint.setVisible(true);
 			}
 		}
-		if (m_mPayment == null)
+		else // No payment info
 		{
 			m_mPayment = new MPayment (Env.getCtx (), 0, null);
 			m_mPayment.setAD_Org_ID(m_AD_Org_ID);
@@ -664,35 +699,66 @@ public class VPayment extends CDialog
 			kReprint.setVisible(false);
 			kCapture.setVisible(false);
 			kPreauth.setVisible(true);
+			kEnableOnline.setSelected(false);
+			
+			m_CCType = m_mPayment.getCreditCardType();
+			kNumberField.setText(m_mPayment.getCreditCardNumber());
+			kNameField.setText(m_mPayment.getA_Name());
+			kExpField.setText(m_mPayment.getCreditCardExp(null));
+			kApprovalField.setText(m_mPayment.getR_AuthCode());
+			kRefField.setText(m_mPayment.getR_PnRef());
+			kStatus.setText(m_mPayment.getR_Result());
+			kAmountField.setValue(m_mPayment.getPayAmt());
+			terminalLog.setValue(m_mPayment.getDescription());
+			
+			terminalLog.setReadWrite(false);
+			
+			//	if approved/paid, don't let it change
+			paymentCombo.setReadWrite(!m_mPayment.isApproved() && !m_invoicePaid);
+			kTypeCombo.setReadWrite(!m_mPayment.isApproved() && !m_invoicePaid);
+			kNumberField.setReadWrite(!m_mPayment.isApproved() && !m_invoicePaid);
+			kNameField.setReadWrite(!m_mPayment.isApproved() && !m_invoicePaid);
+			kExpField.setReadWrite(!m_mPayment.isApproved() && !m_invoicePaid);
+			kRefField.setReadWrite(!m_mPayment.isApproved() && !m_invoicePaid);
+			kApprovalField.setReadWrite(!m_mPayment.isApproved() && !m_invoicePaid);
+			kAmountField.setReadWrite(!m_mPayment.isApproved() && !m_invoicePaid);
+							
+			//  Check
+			m_C_BankAccount_ID = m_mPayment.getC_BankAccount_ID();
+			sRoutingField.setText(m_mPayment.getRoutingNo());
+			sNumberField.setText(m_mPayment.getAccountNo());
+			sCheckField.setText(m_mPayment.getCheckNo());
+			sStatus.setText(m_mPayment.getR_PnRef());
+			sAmountField.setValue(m_mPayment.getPayAmt());
+			//  Transfer
+			tRoutingField.setText(m_mPayment.getRoutingNo());
+			tNumberField.setText(m_mPayment.getAccountNo());
+			tStatus.setText(m_mPayment.getR_PnRef());
+			// Cash
+			bAmountField.setValue(m_mPayment.getPayAmt());
 
+
+		}
+				
+		if (m_mPayment.getDocStatus().equals(MPayment.DOCSTATUS_Completed))
+		{
+			kCapture.setVisible(false);
+			kPreauth.setVisible(false);
 		}
 		else
 		{
-			// Buttons
-			kPurchase.setText(Msg.getMsg(Env.getCtx(), "Refund"));
-			kVoid.setVisible(true);
-			kReprint.setVisible(true);
-			if (m_mPayment.getDocStatus().equals(MPayment.DOCSTATUS_Completed))
+			if (m_mPayment.getR_AuthCode() == null || m_mPayment.getR_AuthCode().isEmpty())
 			{
 				kCapture.setVisible(false);
-				kPreauth.setVisible(false);
+				kPreauth.setVisible(true);
 			}
 			else
 			{
-				if (m_mPayment.getR_AuthCode() == null || m_mPayment.getR_AuthCode().isEmpty())
-				{
-					kCapture.setVisible(false);
-					kPreauth.setVisible(true);
-				}
-				else
-				{
-					kCapture.setVisible(true);
-					kPreauth.setVisible(false);					
-				}
+				kCapture.setVisible(true);
+				kPreauth.setVisible(false);					
 			}
-
 		}
-		
+
 		//  Existing Cashbook entry
 		m_cashLine = null;
 		m_C_CashLine_ID = 0;
@@ -850,7 +916,31 @@ public class VPayment extends CDialog
 		//	Set Selection
 		if (vp != null)
 			kTypeCombo.setSelectedItem(vp);
+		
+		// Set kEnableOnline
+		if (m_mPayment.getC_Payment_ID() == 0 && !m_invoicePaid)
+		{
 
+			String ccType = "";
+			ValueNamePair ccPair = (ValueNamePair)kTypeCombo.getSelectedItem();
+			if (ccPair != null)
+				ccType = ccPair.getValue();
+
+			Boolean ppOK =	m_mPayment.setPaymentProcessor(MPayment.TENDERTYPE_CreditCard, ccType); 
+			kEnableOnline.setSelected(ppOK);
+			kEnableOnline.setEnabled(ppOK);
+		}
+		else
+		{
+			kEnableOnline.setSelected(m_mPayment.isOnline());
+			kEnableOnline.setEnabled(false);
+		}
+		kPurchase.setEnabled(kEnableOnline.isSelected() && !m_invoicePaid);
+		kCapture.setEnabled(kEnableOnline.isSelected() && !m_invoicePaid);
+		kPreauth.setEnabled(kEnableOnline.isSelected() && !m_invoicePaid);
+		kReprint.setEnabled(kEnableOnline.isSelected() && !m_invoicePaid);
+		confirmPanel.getOKButton().setEnabled(!kEnableOnline.isSelected() && !m_invoicePaid);
+		
 		/**
 		 *  Load Bank Accounts
 		 */
@@ -927,6 +1017,7 @@ public class VPayment extends CDialog
 				m_C_CashBook_ID = kp.getKey();  //  set to default to avoid 'cashbook changed' message
 		}
 
+		m_addNew = false;
 		//
 		return true;
 	}	//	dynInit
@@ -989,12 +1080,20 @@ public class VPayment extends CDialog
 		}
 		else if (e.getActionCommand().equals(ConfirmPanel.A_CANCEL))
 		{
-			if (m_alreadyProcessing)
-			{
-				voidTrx();
-				m_mPayment.stopProcessOnline();
-			}
+			if (m_mPayment != null)
+				m_mPayment.stopProcessOnline();  // May not work.
 			dispose();
+		}
+
+		else if (e.getActionCommand().equals(ConfirmPanel.A_NEW))
+		{
+			m_addNew = true;
+			try {
+				m_initOK = dynInit(m_button);
+			} catch (Exception e1) {
+				log.log(Level.SEVERE, "VPayment", e1);
+				m_initOK = false;
+			}
 		}
 
 		//	Payment Method Change
@@ -1007,10 +1106,10 @@ public class VPayment extends CDialog
 				String s = pp.getValue().toLowerCase();
 				
 				// Disable the confirm panel OK button when credit card payments
-				// are selected.
+				// are selected and OnLine is enabled.
 				if (X_C_Order.PAYMENTRULE_CreditCard.equalsIgnoreCase(s))
 				{
-					confirmPanel.getOKButton().setEnabled(false);
+					confirmPanel.getOKButton().setEnabled(!kEnableOnline.isSelected());
 				}
 				else
 				{
@@ -1019,19 +1118,20 @@ public class VPayment extends CDialog
 				
 				if (X_C_Order.PAYMENTRULE_DirectDebit.equalsIgnoreCase(s))
 					s = X_C_Order.PAYMENTRULE_DirectDeposit.toLowerCase();
+				
 				s += "Panel";	
 				centerLayout.show(centerPanel, s);	//	switch to panel
 				//Bojana&Daniel
-				//If Invoice is Vendor invoice then Cash has to be created by negative amount
-				int C_Invoice_ID = Env.getContextAsInt(Env.getCtx(), m_WindowNo, "C_Invoice_ID");
-				MInvoice invoice_tmp = new MInvoice (Env.getCtx(), C_Invoice_ID, null);
-				if (! invoice_tmp.isSOTrx())
-				{
-					bAmountField.setValue(m_Amount.negate());
-				}else {
-					bAmountField.setValue(m_Amount);
-				}
-				invoice_tmp = null;
+//				//If Invoice is Vendor invoice then Cash has to be created by negative amount
+//				int C_Invoice_ID = Env.getContextAsInt(Env.getCtx(), m_WindowNo, "C_Invoice_ID");
+//				MInvoice invoice_tmp = new MInvoice (Env.getCtx(), C_Invoice_ID, null);
+//				if (! invoice_tmp.isSOTrx())
+//				{
+//					bAmountField.setValue(m_Amount.negate());
+//				}else {
+//					bAmountField.setValue(m_Amount);
+//				}
+//				invoice_tmp = null;
 				
 			}
 		}
@@ -1054,61 +1154,107 @@ public class VPayment extends CDialog
 		}
 
 		//  Online
-		else if ((e.getSource() == kPurchase && m_mPayment.getPayAmt().signum()>0) || e.getSource() == sOnline)
+		else if ((e.getSource() == kPurchase && kPurchase.getText().equals(Msg.getMsg(Env.getCtx(), "Purchase"))) || e.getSource() == sOnline)
 		{
-			processOnline();
+			kPurchase.setEnabled(false);  // Prevent second action.
+			sOnline.setEnabled(false);  // Prevent second action.
+			//
+			// The Cursor is reset in the Property Change Listener.
+			setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+			//
+			SwingUtilities.invokeLater(new Runnable() { public void run() {
+			         processOnline();
+			     } } );
 		}
-		else if ((e.getSource() == kPurchase && m_mPayment.getPayAmt().signum()<0))
+		else if ((e.getSource() == kPurchase && kPurchase.getText().equals(Msg.getMsg(Env.getCtx(), "Refund/Void")))) 
 		{
-//			refundTrx();
-		}
-		else if (e.getSource() == kVoid)
-		{
+			kPurchase.setEnabled(false);  // Prevent second action.
 			voidTrx();
+
 		}
 			
 		else if (e.getSource() == kPreauth)
 		{
-//			preauthTrx();
+			// The Cursor is reset in the Property Change Listener.
+			setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+			preauthTrx();
 		}
 
 		else if (e.getSource() == kCapture)
 		{
-//			captureTrx();
+			// The Cursor is reset in the Property Change Listener.
+			setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+			captureTrx();
 		}
 
 		else if (e.getSource() == kReprint)
 		{
-//			reprint();
+			 
+			setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+			reprint();
+			setCursor(Cursor.getDefaultCursor());
 		}
-
+		
+		else if (e.getSource() == kEnableOnline)
+		{
+			
+			// Enable the terminal buttons
+			kPurchase.setEnabled(kEnableOnline.isSelected());
+			kCapture.setEnabled(kEnableOnline.isSelected());
+			kPreauth.setEnabled(kEnableOnline.isSelected());
+			kReprint.setEnabled(kEnableOnline.isSelected());
+			confirmPanel.getOKButton().setEnabled(!kEnableOnline.isSelected());
+			
+		}
+		
 	}	//	actionPerformed
 
 
 	private void reprint() {
-		// TODO Auto-generated method stub
-		
+		if (m_mPayment != null)
+			m_mPayment.processOnline("Reprint");
 	}
 
 
 	private void captureTrx() {
-		// TODO Auto-generated method stub
-		
+		if (m_mPayment != null)
+			m_mPayment.processOnline("Capture");		
 	}
 
 
 	private void preauthTrx() {
-		// TODO Auto-generated method stub
-		
+		if (m_mPayment != null)
+			m_mPayment.processOnline("Preauth");		
 	}
 
 
 	private void voidTrx() {
 
-		if (m_alreadyProcessing && m_mPayment.getPaymentProcessor() != null) {
-			m_mPayment.getPaymentProcessor().voidTrx();
+		if (m_mPayment != null)
+		{
+			ADialog.info(m_WindowNo, this, "Refund/void credit card transaction: follow prompts on the terminal.");  // TODO Translate
+			//
+			setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+			//
+			if (m_mPayment.voidIt())
+			{
+				String info = m_mPayment.getCreditCardNumber() + " " + Msg.parseTranslation(Env.getCtx(), "@PayAmt@") + ": " + m_mPayment.getPayAmt();
+				ADialog.info(m_WindowNo, this, "Payment Voided", info + "\n" + Msg.parseTranslation(Env.getCtx(), "@C_Payment_ID@") + ": " + m_mPayment.getDocumentNo());
+				saveChanges();
+			}
+			try
+			{
+				m_mTab.dataRefresh(m_mTab.getCurrentRow());
+				m_initOK = dynInit(m_button);     //  Null Pointer if order/invoice not saved yet
+			}
+			catch(Exception ex)
+			{
+				log.log(Level.SEVERE, "VPayment", ex);
+				m_initOK = false;
+			}
+			//
+			setCursor(Cursor.getDefaultCursor());
 		}
-		
 	}
 
 
@@ -1138,6 +1284,9 @@ public class VPayment extends CDialog
 			m_mPayment.set_TrxName(null);
 		if (m_mPaymentOriginal != null)
 			m_mPayment.set_TrxName(null);
+		
+		m_mTab.dataSave(false);
+		
 		return success[0];
 	} // saveChanges
 
@@ -1651,7 +1800,10 @@ public class VPayment extends CDialog
 			return;
 		
 		// Can't process an existing payment
-		if (!m_mPayment.is_new())
+		if (m_mPayment.getDocStatus().equals(MPayment.DOCSTATUS_Completed)
+			||m_mPayment.getDocStatus().equals(MPayment.DOCSTATUS_Voided)
+			||m_mPayment.getDocStatus().equals(MPayment.DOCSTATUS_Reversed)
+			||m_mPayment.getDocStatus().equals(MPayment.DOCSTATUS_Closed))
 		{
 			log.info("There already is an existing payment.");
 			return;
@@ -1687,6 +1839,8 @@ public class VPayment extends CDialog
 		//  --  CreditCard
 		if (PaymentRule.equals(X_C_Order.PAYMENTRULE_CreditCard))
 		{
+			
+			m_payAmount = (BigDecimal) this.kAmountField.getValue();
 			vp = (ValueNamePair)kTypeCombo.getSelectedItem();
 			String CCType = vp.getValue();
 
@@ -1707,8 +1861,69 @@ public class VPayment extends CDialog
 				m_mPayment.deleteEx(true);
 			} else {
 				m_mPayment.getMPaymentProcessor().addPropertyChangeListener(this);
-				m_alreadyProcessing = m_mPayment.processOnline();  // Starts threads.  Returns true if started OK.
-				kVoid.setVisible(true);
+				ADialog.info(m_WindowNo, this, "Credit card transaction: follow prompts on the terminal.");  // TODO Translate
+				m_alreadyProcessing = true;
+				Boolean approved = m_mPayment.processOnline();  // blocks until complete.
+				
+				String info = "";
+						
+				if (approved)
+				{
+					
+					info = m_mPayment.getR_RespMsg() + " (Auth:" + m_mPayment.getR_AuthCode()
+							+ ") Ref=" + m_mPayment.getR_PnRef();
+					
+					kNumberField.setText(m_mPayment.getCreditCardNumber());
+					this.kApprovalField.setText(m_mPayment.getR_AuthCode());
+					for (int i=0; i<kTypeCombo.getItemCount(); i++)
+					{
+						if (((ValueNamePair) kTypeCombo.getItemAt(i)).getID().equals(m_mPayment.getCreditCardType()))
+						{
+							kTypeCombo.setSelectedIndex(i);
+							break;
+						}
+					}
+					ADialog.info(m_WindowNo, this, "PaymentProcessed", info + "\n" + Msg.parseTranslation(Env.getCtx(), "@C_Payment_ID@") + ": " + m_mPayment.getDocumentNo());
+					saveChanges();
+					m_mPayment.getMPaymentProcessor().removePropertyChangeListener(this);
+					dispose();
+					return;
+					
+				}
+				else
+				{
+					if (m_mPayment.getR_RespMsg() != null)
+						info = m_mPayment.getR_RespMsg();
+					else if (terminalLog.getText().contains("Transaction Voided"))
+						info = "Transaction voided";
+					
+					ADialog.error(m_WindowNo, this, "PaymentNotProcessed", info);
+					m_mPayment.getMPaymentProcessor().removePropertyChangeListener(this);
+					m_mPayment.deleteEx(true);
+					
+					kVoid.setVisible(false);
+
+					m_mPayment = null;
+					
+					// Reinitialize the dialog
+					try
+					{
+						int paymentRule = paymentCombo.getSelectedIndex();
+						m_initOK = dynInit(m_button);     //  Null Pointer if order/invoice not saved yet
+						paymentCombo.setSelectedIndex(paymentRule);
+					}
+					catch(Exception ex)
+					{
+						log.log(Level.SEVERE, "VPayment", ex);
+						m_initOK = false;
+					}
+
+				}
+				m_alreadyProcessing = false;
+				//
+				setCursor(Cursor.getDefaultCursor());
+				//
+
 			}
 		}
 		else
@@ -1742,64 +1957,12 @@ public class VPayment extends CDialog
 				terminalLog.setText("");
 			terminalLog.setValue(terminalLog.getText() + (String) evt.getNewValue());
 		}
+		else if (evt.getPropertyName().endsWith("ConnectionEnded"))
+		{
+			log.info("Connection with terminal ended.");
+		}
 		else if (evt.getPropertyName().equals("OnlineProcessCompleted"))
 		{
-			Boolean approved = (Boolean) evt.getNewValue();
-			
-			String info = "";
-					
-			if (approved)
-			{
-				
-				info = m_mPayment.getR_RespMsg() + " (Auth:" + m_mPayment.getR_AuthCode()
-						+ ") Ref=" + m_mPayment.getR_PnRef();
-				
-				kNumberField.setText(m_mPayment.getCreditCardNumber());
-				this.kApprovalField.setText(m_mPayment.getR_AuthCode());
-				for (int i=0; i<kTypeCombo.getItemCount(); i++)
-				{
-					if (((ValueNamePair) kTypeCombo.getItemAt(i)).getID().equals(m_mPayment.getCreditCardType()))
-					{
-						kTypeCombo.setSelectedIndex(i);
-						break;
-					}
-				}
-				ADialog.info(m_WindowNo, this, "PaymentProcessed", info + "\n" + Msg.parseTranslation(Env.getCtx(), "@C_Payment_ID@") + ": " + m_mPayment.getDocumentNo());
-				saveChanges();
-				m_mPayment.getMPaymentProcessor().removePropertyChangeListener(this);
-				dispose();
-				
-			}
-			else
-			{
-				if (m_mPayment.getR_RespMsg() != null)
-					info = m_mPayment.getR_RespMsg();
-				else if (terminalLog.getText().contains("Transaction Voided"))
-					info = "Transaction voided";
-				
-				ADialog.error(m_WindowNo, this, "PaymentNotProcessed", info);
-				m_mPayment.getMPaymentProcessor().removePropertyChangeListener(this);
-				m_mPayment.deleteEx(true);
-			}
-			m_alreadyProcessing = false;
-			kVoid.setVisible(false);
-			m_mPayment = null;
-			
-			// Reinitialize the dialog
-			try
-			{
-				int paymentRule = paymentCombo.getSelectedIndex();
-//				bDateField = new VDate("DateAcct", false, false, true, DisplayType.Date, "DateAcct");
-//				jbInit();
-				m_initOK = dynInit(m_button);     //  Null Pointer if order/invoice not saved yet
-				paymentCombo.setSelectedIndex(paymentRule);
-			}
-			catch(Exception ex)
-			{
-				log.log(Level.SEVERE, "VPayment", ex);
-				m_initOK = false;
-			}
-
 		}		
 	}
 		

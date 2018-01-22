@@ -222,4 +222,22 @@ public class MPaymentProcessor extends X_C_PaymentProcessor
 		return false;
 	}	//	accepts
 
+	/**
+	 * Get the payment processor by the processor class name.
+	 * @param ctx
+	 * @param className
+	 * @param trxName
+	 * @return The first MPaymentProcessor associated with the class found.
+	 */
+	public static MPaymentProcessor getByClass(Properties ctx, String className, String trxName) {
+		
+		String where = MPaymentProcessor.COLUMNNAME_PayProcessorClass + "=?";
+		
+		return new Query(ctx, MPaymentProcessor.Table_Name, where, trxName)
+						.setClient_ID()
+						.setOnlyActiveRecords(true)
+						.setParameters(className)
+						.first();	
+	}
+	
 }	//	MPaymentProcessor

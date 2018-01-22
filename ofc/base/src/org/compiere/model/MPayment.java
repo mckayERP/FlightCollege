@@ -448,19 +448,29 @@ public final class MPayment extends X_C_Payment
 		setA_Country(country);
 	}   //  setAccountAddress
 
-	
 	/**************************************************************************
 	 *  Process Payment
 	 *  @return true if approved
 	 */
 	public boolean processOnline()
 	{
+		return processOnline(null);
+	}
+	/**************************************************************************
+	 *  Process Payment
+	 *  @param action - the payment processor action to perform.
+	 *  @return true if approved
+	 */
+	public boolean processOnline(String action)
+	{
 		log.info ("Amt=" + getPayAmt());
 		//
 		setIsOnline(true);
 		setErrorMessage(null);
 		//	prevent charging twice
-		if (isApproved())
+		if (isApproved() && (MPayment.DOCSTATUS_Completed.equals(getDocStatus())
+				|| MPayment.DOCSTATUS_Closed.equals(getDocStatus()))
+				&& (action == null || "Purchase".endsWith(action) || "Capture".equals(action)))
 		{
 			log.info("Already processed - " + getR_Result() + " - " + getR_RespMsg());
 			setErrorMessage("Payment already Processed");
@@ -486,17 +496,16 @@ public final class MPayment extends X_C_Payment
 			else
 			{
 				// Validate before trying to process
-				// String msg = pp.validate();
-				String msg = null;
+				String msg = m_paymentProcessor.validate();
 				if (msg!=null && msg.trim().length()>0) {
 					setErrorMessage(Msg.getMsg(getCtx(), msg));
 				} else {
 					// Process if validation succeeds
-					approved = m_paymentProcessor.processCC ();
+					approved = m_paymentProcessor.processCC (action);
 					if (approved)
 						setErrorMessage(null);
 					else
-						setErrorMessage("From " +  getCreditCardName() + ": " + getR_RespMsg());
+						setErrorMessage("Payment Processor Error From " +  getCreditCardName() + ": " + m_paymentProcessor.getResult());
 				}
 			}
 		}
@@ -505,7 +514,7 @@ public final class MPayment extends X_C_Payment
 			log.log(Level.SEVERE, "processOnline", e);
 			setErrorMessage("Payment Processor Error: " + e.getMessage());
 		}
-		setIsApproved(approved);
+		//setIsApproved(approved);
 		return approved;
 	}   //  processOnline
 	
@@ -519,7 +528,8 @@ public final class MPayment extends X_C_Payment
 
 	public void stopProcessOnline()
 	{
-		m_paymentProcessor.closeAllThreads();
+		if (m_paymentProcessor != null)
+			m_paymentProcessor.closeAllThreads();
 	}
 
 	/**
@@ -869,6 +879,7 @@ public final class MPayment extends X_C_Payment
 			if (m_mPaymentProcessors[i].accepts (tender, CCType))
 			{
 				m_mPaymentProcessor = m_mPaymentProcessors[i];
+				break;
 			}
 		}
 		if (m_mPaymentProcessor != null)
@@ -2280,9 +2291,10 @@ public final class MPayment extends X_C_Payment
 			//	Order
 			sql = "UPDATE C_Order o "
 				+ "SET C_Payment_ID = NULL "
-				+ "WHERE EXISTS (SELECT * FROM C_Invoice i "
-					+ "WHERE o.C_Order_ID=i.C_Order_ID AND i.C_Invoice_ID=" + getC_Invoice_ID() + ")"
-				+ " AND C_Payment_ID=" + getC_Payment_ID();
+//				+ "WHERE EXISTS (SELECT * FROM C_Invoice i "
+//					+ "WHERE o.C_Order_ID=i.C_Order_ID AND i.C_Invoice_ID=" + getC_Invoice_ID() + ")"
+//				+ " AND C_Payment_ID=" + getC_Payment_ID();
+				+ "WHERE C_Payment_ID=" + getC_Payment_ID();
 			no = DB.executeUpdate(sql, get_TrxName());
 			if (no != 0)
 				log.fine("Unlink Order #" + no);
@@ -2404,12 +2416,23 @@ public final class MPayment extends X_C_Payment
 		reversal.setDiscountAmt(getDiscountAmt().negate());
 		reversal.setWriteOffAmt(getWriteOffAmt().negate());
 		reversal.setOverUnderAmt(getOverUnderAmt().negate());
+		reversal.setIsOnline(isOnline());
+		if (isOnline())
+		{
+			// Used for credit card void transactions.
+			// The CC R_PnRef will be overwritten by the reversal process.
+			reversal.setR_PnRef(this.getR_PnRef()); 
+			reversal.setIsApproved(false); // used as a flag in the on-line process
+			reversal.setDateTrx(getDateTrx());  // The timestamp of the original action - not the accounting date
+		}
+		else
+		{
+			reversal.setR_PnRef(null);
+			reversal.setIsApproved(true); 
+		}
 		//
 		reversal.setIsAllocated(true);
 		reversal.setIsReconciled(reconciled);	//	to put on bank statement
-		reversal.setIsOnline(false);
-		reversal.setIsApproved(true); 
-		reversal.setR_PnRef(null);
 		reversal.setR_Result(null);
 		reversal.setR_RespMsg(null);
 		reversal.setR_AuthCode(null);
@@ -2424,7 +2447,17 @@ public final class MPayment extends X_C_Payment
 		reversal.setReversal_ID(getC_Payment_ID());
 		reversal.saveEx(get_TrxName());
 		//	Post Reversal
-		if (!reversal.processIt(DocAction.ACTION_Complete))
+		if (reversal.isOnline())
+		{
+			// The online process will "complete" the payment if
+			// the process is successful
+			if (!reversal.processOnline())   
+			{
+				m_processMsg = m_processMsg + " Reversal ERROR: Terminal transaction failed.";
+				return false;			
+			}
+		} 
+		else if (!reversal.processIt(DocAction.ACTION_Complete))
 		{
 			m_processMsg = "Reversal ERROR: " + reversal.getProcessMsg();
 			return false;

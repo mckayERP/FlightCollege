@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Migrations>
+<Migration EntityType="MFTU" Name="Add doc action callout to Payment table." ReleaseNo="FTU2.17" SeqNo="95">
+<Step SeqNo="10" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="5497" Table="AD_Column">
+<Data AD_Column_ID="1692" Column="Callout" isOldNull="true">org.compiere.model.CalloutDocAction.docAction</Data>
+</PO>
+</Step>
+<Step SeqNo="20" StepType="AD">
+<PO AD_Table_ID="53058" Action="U" Record_ID="1000002" Table="AD_Rule">
+<Data AD_Column_ID="54257" Column="Script" oldValue="import org.compiere.model.MPayment;&#10;&#10;if(&quot;C&quot;.equals(A_Tab.getValue(&quot;TenderType&quot;)) &amp;&amp; A_Tab.getValue(&quot;CreditCardType&quot;) != null &amp;&amp; &quot;&quot;.compareTo(A_Tab.getValue(&quot;CreditCardType&quot;) ) != 0)&#10;{&#10;    MPayment pmt = new MPayment(A_Ctx, 0,null);&#10;    pmt.setTenderType(A_Tab.getValue(&quot;TenderType&quot;));&#10;    pmt.setC_Currency_ID(A_Tab.getValue(&quot;C_Currency_ID&quot;));&#10;    pmt.setCreditCardType(A_Tab.getValue(&quot;CreditCardType&quot;));&#10;    pmt.setPaymentProcessor();&#10;    A_Tab.setValue(&quot;C_BankAccount_ID&quot;, pmt.getC_BankAccount_ID());&#10;    pmt = null;&#10;}&#10;else&#10;{&#10;    if(&quot;X&quot;.equals(A_Tab.getValue(&quot;TenderType&quot;)))&#10;    {&#10;    &#9;A_Tab.setValue(&quot;C_BankAccount_ID&quot;, 1000008); //Cash&#10;    }&#10;    else&#10;    {&#10;        if(&quot;K&quot;.equals(A_Tab.getValue(&quot;TenderType&quot;)))&#10;        {&#10;    &#9;A_Tab.setValue(&quot;C_BankAccount_ID&quot;, 1000000);  //RBC&#10;        }&#10;        else&#10;        {&#10;    &#9;A_Tab.setValue(&quot;C_BankAccount_ID&quot;, 0);&#10;        }&#10;    }&#10;}    &#10;result=&quot;&quot;;">import org.compiere.model.MPayment;
+
+if("C".equals(A_Tab.getValue("TenderType")) 
+     &amp;&amp; A_Tab.getValue("CreditCardType") != null &amp;&amp; A_Tab.getValue("CreditCardType") != -1
+     &amp;&amp; "".compareTo(A_Tab.getValue("CreditCardType") ) != 0)
+{
+    MPayment pmt = new MPayment(A_Ctx, 0,null);
+    pmt.setTenderType(A_Tab.getValue("TenderType"));
+    pmt.setC_Currency_ID(A_Tab.getValue("C_Currency_ID"));
+    pmt.setCreditCardType(A_Tab.getValue("CreditCardType"));
+    pmt.setPaymentProcessor();
+    A_Tab.setValue("C_BankAccount_ID", pmt.getC_BankAccount_ID());
+    pmt = null;
+}
+else
+{
+    if("X".equals(A_Tab.getValue("TenderType")))
+    {
+    	A_Tab.setValue("C_BankAccount_ID", 1000008); //Cash
+    }
+    else
+    {
+        if("K".equals(A_Tab.getValue("TenderType")))
+        {
+    	A_Tab.setValue("C_BankAccount_ID", 1000000);  //RBC
+        }
+        else
+        {
+    	A_Tab.setValue("C_BankAccount_ID", 0);
+        }
+    }
+}    
+result="";</Data>
+</PO>
+</Step>
+<Step SeqNo="30" StepType="AD">
+<PO AD_Table_ID="53058" Action="U" Record_ID="1000002" Table="AD_Rule">
+<Data AD_Column_ID="54257" Column="Script" oldValue="import org.compiere.model.MPayment;&#10;&#10;if(&quot;C&quot;.equals(A_Tab.getValue(&quot;TenderType&quot;)) &#10;     &amp;&amp; A_Tab.getValue(&quot;CreditCardType&quot;) != null &amp;&amp; A_Tab.getValue(&quot;CreditCardType&quot;) != -1&#10;     &amp;&amp; &quot;&quot;.compareTo(A_Tab.getValue(&quot;CreditCardType&quot;) ) != 0)&#10;{&#10;    MPayment pmt = new MPayment(A_Ctx, 0,null);&#10;    pmt.setTenderType(A_Tab.getValue(&quot;TenderType&quot;));&#10;    pmt.setC_Currency_ID(A_Tab.getValue(&quot;C_Currency_ID&quot;));&#10;    pmt.setCreditCardType(A_Tab.getValue(&quot;CreditCardType&quot;));&#10;    pmt.setPaymentProcessor();&#10;    A_Tab.setValue(&quot;C_BankAccount_ID&quot;, pmt.getC_BankAccount_ID());&#10;    pmt = null;&#10;}&#10;else&#10;{&#10;    if(&quot;X&quot;.equals(A_Tab.getValue(&quot;TenderType&quot;)))&#10;    {&#10;    &#9;A_Tab.setValue(&quot;C_BankAccount_ID&quot;, 1000008); //Cash&#10;    }&#10;    else&#10;    {&#10;        if(&quot;K&quot;.equals(A_Tab.getValue(&quot;TenderType&quot;)))&#10;        {&#10;    &#9;A_Tab.setValue(&quot;C_BankAccount_ID&quot;, 1000000);  //RBC&#10;        }&#10;        else&#10;        {&#10;    &#9;A_Tab.setValue(&quot;C_BankAccount_ID&quot;, 0);&#10;        }&#10;    }&#10;}    &#10;result=&quot;&quot;;">import org.compiere.model.MPayment;
+
+if("C".equals(A_Tab.getValue("TenderType")) 
+     &amp;&amp; A_Tab.getValue("CreditCardType") != null &amp;&amp; "-1".compareTo(A_Tab.getValue("CreditCardType")) != 0
+     &amp;&amp; "".compareTo(A_Tab.getValue("CreditCardType") ) != 0)
+{
+    MPayment pmt = new MPayment(A_Ctx, 0,null);
+    pmt.setTenderType(A_Tab.getValue("TenderType"));
+    pmt.setC_Currency_ID(A_Tab.getValue("C_Currency_ID"));
+    pmt.setCreditCardType(A_Tab.getValue("CreditCardType"));
+    pmt.setPaymentProcessor();
+    A_Tab.setValue("C_BankAccount_ID", pmt.getC_BankAccount_ID());
+    pmt = null;
+}
+else
+{
+    if("X".equals(A_Tab.getValue("TenderType")))
+    {
+    	A_Tab.setValue("C_BankAccount_ID", 1000008); //Cash
+    }
+    else
+    {
+        if("K".equals(A_Tab.getValue("TenderType")))
+        {
+    	A_Tab.setValue("C_BankAccount_ID", 1000000);  //RBC
+        }
+        else
+        {
+    	A_Tab.setValue("C_BankAccount_ID", 0);
+        }
+    }
+}    
+result="";</Data>
+</PO>
+</Step>
+<Step SeqNo="40" StepType="AD">
+<PO AD_Table_ID="284" Action="U" Record_ID="153" Table="AD_Process">
+<Data AD_Column_ID="2811" Column="Help" isOldNull="true">Click confirm to proceed. Advise the customer to enter the reqired information in the terminal.  If voiding a transaction, you may need to enter the reference number of the original transaction.  Follow the prompts on the terminal.</Data>
+<Data AD_Column_ID="2810" Column="Description" isOldNull="true">Process the order on line or using a credit card terminal.  If using the terminal, click confirm and advise the customer to proceed. For voids or refunds, follow the prompts on the terminal.</Data>
+</PO>
+</Step>
+<Step SeqNo="50" StepType="AD">
+<PO AD_Table_ID="287" Action="U" Record_ID="0" Table="AD_Process_Trl">
+<Data AD_Column_ID="2844" Column="AD_Language" oldValue="es_MX">es_MX</Data>
+<Data AD_Column_ID="2843" Column="AD_Process_ID" oldValue="153">153</Data>
+<Data AD_Column_ID="2855" Column="IsTranslated" oldValue="true">false</Data>
+</PO>
+</Step>
+</Migration>
+</Migrations>

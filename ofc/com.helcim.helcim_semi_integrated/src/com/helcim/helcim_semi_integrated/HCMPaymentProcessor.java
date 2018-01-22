@@ -19,6 +19,7 @@
 package com.helcim.helcim_semi_integrated;
 
 import java.math.RoundingMode;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -27,6 +28,7 @@ import java.util.TimerTask;
 import org.adempiere.exceptions.AdempiereException;
 import org.compiere.model.I_C_Currency;
 import org.compiere.model.MPayment;
+import org.compiere.model.MPaymentValidate;
 import org.compiere.model.MSysConfig;
 import org.compiere.model.PaymentProcessor;
 import org.compiere.model.X_C_Payment;
@@ -91,6 +93,20 @@ public class HCMPaymentProcessor extends PaymentProcessor {
 	
 	/** A thread synchronization object used for wait/notify actions */
 	public static final Object syncObject = new Object();
+
+	private static final String ACTION_Purchase = "Purchase";
+
+	private static final String ACTION_Void = "Void";
+
+	private static final String ACTION_Refund = "Refund";
+
+	private static final String ACTION_Preauth = "Preauth";
+
+	private static final String ACTION_Capture = "Capture";
+
+	private static final String ACTION_Settle = "Settle";
+
+	private static final String ACTION_Reprint = "Reprint";
 	
     private boolean m_done = false;
 
@@ -125,9 +141,14 @@ public class HCMPaymentProcessor extends PaymentProcessor {
 		
 		private String resultMsg = "";
 		
-		HCMTerminalConsumer(HCMTerminalProducer producer)
+		private Boolean processSuccess = false;
+
+		private String m_action = "";
+		
+		HCMTerminalConsumer(HCMTerminalProducer producer, String action)
 		{
 			m_producer = producer;
+			m_action  = action;
 		}
 
 		StringBuffer trxLog = new StringBuffer("");
@@ -160,6 +181,8 @@ public class HCMPaymentProcessor extends PaymentProcessor {
 	        		log.fine("Terminal Consumer loop finished. Ended Connection: " + terminalLog.contains("Ended Connection")
 	        				+ ", Error: " + terminalLog.contains("Error") 
 	        				+ ", Interruption: " + Thread.currentThread().isInterrupted());
+					//  Send the clear text to the user interface.
+					p_mpp.firePropertyChange("ConnectionEnded", null, terminalLog.contains("Error"));
 	        		m_done = true;
 	        	}
 	        }
@@ -167,7 +190,7 @@ public class HCMPaymentProcessor extends PaymentProcessor {
 	        
 			//  Need a final value for the payment save/post result inside 
 	        //  the TrxRunnable below - using an array
-			final boolean[] success = new boolean[] { false };
+			final boolean[] success = new boolean[] { true };
 
 			//  Check for a response from the terminal - there should be one if the transaction
 			//  was successful.
@@ -175,7 +198,8 @@ public class HCMPaymentProcessor extends PaymentProcessor {
 			{
 				//  There is a response
 				log.fine("Terminal response code: " + terminal.response);
-				if (terminal.response.equals(APPROVED))
+				
+				if (terminal.response.equals(APPROVED))  // TODO - which transactions provide this? Purchase, PreAuth or Capture?
 				{
 					
 					// The transaction was approved.
@@ -183,43 +207,72 @@ public class HCMPaymentProcessor extends PaymentProcessor {
 					
 					//  Save/Post the payment - its important that this succeeds or the user will have
 					//  to take some action to manually create the payment.
-					if (p_mp.get_ID() > 0 && MPayment.DOCSTATUS_Drafted.equals(p_mp.getDocStatus()))
+					if (p_mp != null && p_mp.get_ID() > 0 && (MPayment.DOCSTATUS_Drafted.equals(p_mp.getDocStatus())
+							|| MPayment.DOCSTATUS_Invalid.equals(p_mp.getDocStatus())))
 					{
 						// Use the payment transaction or create a new one if it is null.
 						try {
 							
 							Trx.run(
-									p_mp.get_TrxName(), 
-									new TrxRunnable() 
+								p_mp.get_TrxName(), 
+								new TrxRunnable() 
+								{
+	
+									public void run(String trxName) 
 									{
-		
-										public void run(String trxName) 
-										{
+										// Reprint and Settle actions will not get here unless the response is APPROVED
+//										if (HCMPaymentProcessor.ACTION_Reprint.equals(m_action)
+//											|| HCMPaymentProcessor.ACTION_Settle.equals(m_action))
+//										{
+//											success[0] = true;
+//											return;
+//										}
 										
-											//  Save the transaction results in the payment
-											p_mp.setR_Result(terminal.responseMessage);
-											p_mp.setCreditCardNumber(terminal.cardNumber, false);
-											p_mp.setCreditCardType(ccType(terminal.cardType));
-											p_mp.setR_PnRef(terminal.referenceNumber);
-											p_mp.setR_AuthCode(terminal.authorizationNumber);
-											p_mp.setR_RespMsg(terminal.responseMessage + " " + terminal.responseCode);
-											p_mp.setDateTrx(Env.getContextAsDate(Env.getCtx(), "#Date"));
-											p_mp.setDateAcct(Env.getContextAsDate(Env.getCtx(), "#Date"));
-											p_mp.setDescription(trxLog.toString());
-											p_mp.saveEx();
-											
-											success[0] = p_mp.processIt(DocAction.ACTION_Complete);
-											
-											// Close the payment as it has a credit card transaction associated
-											// with it.  Void not allowed.
-											success[0] = p_mp.processIt(DocAction.ACTION_Close);
+										//  Save the transaction results in the payment
+										p_mp.setIsApproved(true);
+										p_mp.setR_Result(terminal.responseMessage);
+										p_mp.setCreditCardNumber(terminal.cardNumber, false);
+										p_mp.setCreditCardType(ccType(terminal.cardType));
+										p_mp.setR_PnRef(terminal.referenceNumber);
+										p_mp.setR_AuthCode(terminal.authorizationNumber);
+										p_mp.setR_RespMsg(terminal.responseMessage + " " + terminal.responseCode);
+										p_mp.setDateTrx(new Timestamp(System.currentTimeMillis()));
+										//p_mp.setDateAcct(Env.getContextAsDate(Env.getCtx(), "#Date"));
+										p_mp.setDescription(trxLog.toString());
+										//p_mp.saveEx();
+
+										if (HCMPaymentProcessor.ACTION_Purchase.equals(m_action)
+												|| HCMPaymentProcessor.ACTION_Void.equals(m_action)
+												|| HCMPaymentProcessor.ACTION_Refund.equals(m_action)
+												|| HCMPaymentProcessor.ACTION_Capture.equals(m_action))
+										{
+											// Try to fix invalid status first
+											if (MPayment.DOCSTATUS_Invalid.equals(p_mp.getDocStatus()))
+											{
+												success[0] = p_mp.processIt(DocAction.ACTION_Prepare);
+											}
+											if (success[0])
+											{
+												success[0] = p_mp.processIt(DocAction.ACTION_Complete);
+											}
+										}
+										else if (HCMPaymentProcessor.ACTION_Preauth.equals(m_action))
+										{
+											success[0] = p_mp.processIt(DocAction.ACTION_Prepare);
 										}
 										
+//										if (success[0])
+//										{
+//											// Close the payment as it has a credit card transaction associated
+//											// with it.  Void not allowed.
+//											success[0] = p_mp.processIt(DocAction.ACTION_Close);
+//										}
+										p_mp.saveEx();
 									}
-								);
-							
+								}
+							);							
 						} 
-						catch (AdempiereException e) 
+						catch (AdempiereException | IllegalStateException e) 
 						{
 							// Problem! The credit card transaction was approved but the 
 							// ADempiere payment wasn't processed.
@@ -239,10 +292,10 @@ public class HCMPaymentProcessor extends PaymentProcessor {
 			
 			try 
 			{
-				// The transaction is finished.  Let the calling processes/UI known the results.
-				//  Fire property change event for the UI.  Harmless if no listeners were registered.
-				log.fine("Firing property change: OnlineProcessCompleted");
-				p_mpp.firePropertyChange("OnlineProcessCompleted",null,terminal.response != null && terminal.response.equals(APPROVED));
+//				// The transaction is finished.  Let the calling processes/UI known the results.
+//				//  Fire property change event for the UI.  Harmless if no listeners were registered.
+//				log.fine("Firing property change: OnlineProcessCompleted");
+//				p_mpp.firePropertyChange("OnlineProcessCompleted", null, terminal.response != null && terminal.response.equals(APPROVED));
 				
 				
 				//  Save the result message to pass to the calling process, if any.
@@ -264,6 +317,7 @@ public class HCMPaymentProcessor extends PaymentProcessor {
 					result = "@Error@ Payment not saved/posted successfully.";
 				}
 				
+				setProcessSuccess(success[0]);
 				setResult(result);
 
 			}
@@ -288,6 +342,7 @@ public class HCMPaymentProcessor extends PaymentProcessor {
 			synchronized(syncObject)
 			{
 				try {
+					if (consumerThread.isAlive())
 					syncObject.wait();
 				} catch (InterruptedException e) {
 					if (resultMsg == null || resultMsg.isEmpty())
@@ -309,8 +364,22 @@ public class HCMPaymentProcessor extends PaymentProcessor {
 		{
 			synchronized (syncObject) {
 				resultMsg = result;
-				syncObject.notify();
+				syncObject.notifyAll();
 			}
+		}
+
+		/**
+		 * @return the processSuccess
+		 */
+		public Boolean getProcessSuccess() {
+			return processSuccess;
+		}
+
+		/**
+		 * @param processSuccess the processSuccess to set
+		 */
+		public void setProcessSuccess(Boolean processSuccess) {
+			this.processSuccess = processSuccess;
 		}
 
 		/**
@@ -675,7 +744,8 @@ public class HCMPaymentProcessor extends PaymentProcessor {
 	 */
 	@Override
 	public boolean processCC() throws IllegalArgumentException {
-		return processCC("Purchase");
+		
+		return processCC(null);
 	}
 
 	/**
@@ -683,17 +753,41 @@ public class HCMPaymentProcessor extends PaymentProcessor {
 	 */
 	public boolean processCC(String action) throws IllegalArgumentException {
 		
-		// Have the payment processor and payment fields been set?
-		if (p_mpp == null || p_mp == null)
+		if (action == null || action.isEmpty())
+		{
+			if (p_mp == null)
+				return false;
+			
+			if (p_mp.getPayAmt().compareTo(Env.ZERO) > 0)
+			{
+				action = ACTION_Purchase;
+			}
+			else if (p_mp.getPayAmt().compareTo(Env.ZERO) < 0)
+			{
+				// Void transactions on the same day and when there is a transaction reference.
+				if (p_mp.getDateTrx().compareTo(Env.getContextAsDate(p_mp.getCtx(), "#Date")) == 0 
+					&& p_mp.getR_PnRef() != null && !p_mp.getR_PnRef().isEmpty())
+				{
+					action = ACTION_Void;
+				}
+				else
+				{
+					action = ACTION_Refund;
+				}
+			}
+		}
+		
+		// Has the payment processor been set?
+		if (p_mpp == null)
 		{
 
 			closeAllThreads();
-			throw new IllegalArgumentException("Payment Processor and Payment not set.");
+			throw new IllegalArgumentException("Payment Processor not set.");
 
 		}
 		
 		//  Check for the correct currency.  The Helcim terminals process in CDN
-		if ( p_mpp.getC_Currency_ID() != 0 && p_mpp.getC_Currency_ID() != p_mp.getC_Currency_ID() )
+		if ( p_mp != null &&  p_mpp.getC_Currency_ID() != 0 && p_mpp.getC_Currency_ID() != p_mp.getC_Currency_ID() )
 		{
 		
 			closeAllThreads();
@@ -703,7 +797,7 @@ public class HCMPaymentProcessor extends PaymentProcessor {
 		
 		//  Check for minimum payment amount - only test on positive payment amounts.
 		//  Negative payment amounts indicate refunds and have no limit.
-		if ( p_mp.getPayAmt().signum() >= 0 &&  p_mpp.getMinimumAmt().compareTo(p_mp.getPayAmt()) > 0)
+		if ( p_mp != null && p_mp.getPayAmt().signum() >= 0 &&  p_mpp.getMinimumAmt().compareTo(p_mp.getPayAmt()) > 0)
 		{
 			
 			closeAllThreads();
@@ -712,7 +806,7 @@ public class HCMPaymentProcessor extends PaymentProcessor {
 		}
 		
 		// Check if the CVC code is required by the processor
-		if ( p_mpp.isRequireVV() && Util.isEmpty(p_mp.getCreditCardVV(), true) )
+		if ( p_mp != null && p_mpp.isRequireVV() && Util.isEmpty(p_mp.getCreditCardVV(), true) )
 		{
 		
 			closeAllThreads();
@@ -721,7 +815,7 @@ public class HCMPaymentProcessor extends PaymentProcessor {
 		}
 		
 		//  Check the payment transaction type - only sales are supported
-		if (!p_mp.getTrxType().equals(MPayment.TRXTYPE_Sales))
+		if (p_mp != null && !p_mp.getTrxType().equals(MPayment.TRXTYPE_Sales))
 		{
 		
 			closeAllThreads();
@@ -729,6 +823,90 @@ public class HCMPaymentProcessor extends PaymentProcessor {
 			
 		}
 		
+		setupTerminal(action);
+
+		switch (action)
+		{
+			case ACTION_Purchase: 
+			{
+				//  Purchase 
+				if (terminal.amount < 0)
+				{
+					throw new IllegalArgumentException("Payment amount is negative for sale.");
+				}
+				terminal.hcmPurchase();
+				break;
+			}
+				
+			case ACTION_Void:
+			{
+				terminal.hcmVoid();
+				break;
+			}
+			
+			case ACTION_Refund:
+			{
+				if (terminal.amount > 0)
+				{
+					throw new IllegalArgumentException("Can't refund a positive payment amount.");
+				}
+			
+				//  Refund
+				//  Negative payment amounts indicate a refund but the terminal
+				//  accepts refunds as positive numbers
+	
+				// TODO Test
+				terminal.amount = terminal.amount * -1;
+				terminal.hcmRefund();
+				break;
+			}
+
+			case ACTION_Preauth:
+			{
+				terminal.hcmPreAuth();
+				break;
+			}
+
+			case ACTION_Capture:
+			{
+				terminal.hcmCapture();
+				break;
+			}
+
+			case ACTION_Settle:
+			{
+				terminal.hcmSettle();
+				break;
+			}
+
+			case ACTION_Reprint:
+			{
+				terminal.hcmRePrint();
+				break;
+			}
+
+		}  // End switch
+
+		// Need to wait here
+		
+		try {
+			if (simThread != null)
+				simThread.join(120000);
+			
+			producerThread.join(120000);
+			consumerThread.join(120000);
+		}
+		catch (InterruptedException e)
+		{
+			
+		}
+		
+		return isProcessedOK();
+        
+	}
+
+	private void setupTerminal(String action) {
+
 		// Create the terminal API
 		terminal = new hcmTerminal();
 		
@@ -778,113 +956,55 @@ public class HCMPaymentProcessor extends PaymentProcessor {
         producerThread = new Thread(producer);
         producerThread.start();
 
-        consumer = new HCMTerminalConsumer(producer);
+        consumer = new HCMTerminalConsumer(producer, action);
         consumerThread = new Thread(consumer);
         consumerThread.start();
         
 		
 		//  Get the currency precision
 		int precision = 2;  // cents
-		I_C_Currency currency = null;
-		currency = p_mp.getC_Currency();
-		if ( currency != null )
-		{
-			precision = currency.getStdPrecision();
-		}
+		terminal.amount = 0;
+		terminal.invoiceNumber = 0;
 		
-		
-		//  Set the transaction amount without decimal places - if CAD, then in cents
-		String stringAmount = this.p_mp.getPayAmt()
-				.scaleByPowerOfTen(precision)
-				.setScale(0, RoundingMode.HALF_UP)
-				.toPlainString();
-
-		terminal.amount = Integer.parseInt(stringAmount);
-
-		//  Use the invoice document number as the invoice number for the terminal.
-		if (p_mp.getC_Invoice_ID() > 0)
+		if (p_mp != null)
 		{
-			
-			String documentNo = p_mp.getC_Invoice().getDocumentNo();
-			documentNo = documentNo.replaceAll("\\D+","");
-		    terminal.invoiceNumber = Integer.parseInt(documentNo);
-		    
-		}
-		else
-		{
-			
-			terminal.invoiceNumber = 0;
-			
-		}
-		
-		// Set the terminal clerkID to the User ID
-		terminal.clerkId = 200;
-
-		switch (action)
-		{
-			case "Purchase": 
+			I_C_Currency currency = null;
+			currency = p_mp.getC_Currency();
+			if ( currency != null )
 			{
-				//  Purchase 
-				if (terminal.amount < 0)
-				{
-					throw new IllegalArgumentException("Payment amount is negative for sale.");
-				}
-				terminal.hcmPurchase();
+				precision = currency.getStdPrecision();
 			}
+
+			//  Set the transaction amount without decimal places - if CAD, then in cents
+			String stringAmount = p_mp.getPayAmt()
+					.scaleByPowerOfTen(precision)
+					.setScale(0, RoundingMode.HALF_UP)
+					.toPlainString();
+			terminal.amount = Integer.parseInt(stringAmount);
+
+			//  Use the invoice document number as the invoice number for the terminal.
+			if (p_mp.getC_Invoice_ID() > 0)
+			{
 				
-			case "Void":
-			{
-				terminal.hcmVoid();
+				String documentNo = p_mp.getC_Invoice().getDocumentNo();
+				documentNo = documentNo.replaceAll("\\D+","");
+			    terminal.invoiceNumber = Integer.parseInt(documentNo);
+			    
 			}
 			
-			case "Refund":
-			{
-				if (terminal.amount > 0)
-				{
-					throw new IllegalArgumentException("Can't refund a positive payment amount.");
-				}
-			
-				//  Refund
-				//  Negative payment amounts indicate a refund but the terminal
-				//  accepts refunds as positive numbers
-	
-				// TODO Test
-				terminal.amount = terminal.amount * -1;
-				terminal.hcmRefund();
-	
-			}
+			terminal.referenceNumber = p_mp.getR_PnRef();
+		}		
+				
+		// Set the terminal clerkID to the User ID
+		terminal.clerkId = Env.getAD_User_ID(Env.getCtx());
 
-			case "Preauth":
-			{
-				terminal.hcmPreAuth();
-			}
-
-			case "Capture":
-			{
-				terminal.hcmCapture();
-			}
-
-			case "Settle":
-			{
-				terminal.hcmPreAuth();
-			}
-
-			case "Reprint":
-			{
-				terminal.hcmPreAuth();
-			}
-
-		}  // End switch
-
-		return true;
-        
 	}
 
 	@Override
 	public boolean isProcessedOK() 
 	{
 		
-		return terminal.response.equals(APPROVED);
+		return consumer.getProcessSuccess();
 		
 	}
 
@@ -1183,6 +1303,7 @@ public class HCMPaymentProcessor extends PaymentProcessor {
 			consumerThread.interrupt();
 			
 		}
+		
 	}
 	
 	/**
@@ -1196,4 +1317,10 @@ public class HCMPaymentProcessor extends PaymentProcessor {
 		return consumer.getResult();  // Will block until complete.
 		
 	}
+	
+	@Override
+	public String validate() throws IllegalArgumentException {
+		return(null); // Not required for Helcim terminals
+	}
+
 }
