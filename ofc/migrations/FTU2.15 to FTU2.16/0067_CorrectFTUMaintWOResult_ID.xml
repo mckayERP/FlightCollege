@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Migrations>
-  <Migration EntityType="MFTU" Name="Correct FTUMaintWOResultLine ID name" ReleaseNo="FTU2.16" SeqNo="66">
+  <Migration EntityType="MFTU" Name="Correct FTUMaintWOResultLine ID name" ReleaseNo="FTU2.16" SeqNo="67">
     <Comments>Correct the name of FTUMaintWOResultLine - previous ID name was too long and was not corrected.</Comments>
     <Step DBType="ALL" Parse="Y" SeqNo="10" StepType="SQL">
       <SQLStatement>ALTER TABLE adempiere.ftu_maintworesultline DROP CONSTRAINT ftu_maintworesultline_key;
