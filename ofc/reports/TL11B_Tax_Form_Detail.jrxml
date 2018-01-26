@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TL11B_Tax_Form_Detail" pageWidth="611" pageHeight="752" columnWidth="611" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a9b1ccef-989b-46cf-b249-216128041972">
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="505"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="C_BPartner_ID" class="java.math.BigDecimal">
 		<defaultValueExpression><![CDATA[new BigDecimal(1000844)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Report_Year" class="java.math.BigDecimal">
-		<defaultValueExpression><![CDATA[2010]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new BigDecimal(2010)]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT td.ad_client_id, td.ad_org_id,
@@ -120,7 +120,7 @@ SELECT tf.ad_client_id, tf.ad_org_id,
 				<textFieldExpression><![CDATA[$F{year_to}]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤ #,##0.00" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="287" y="0" width="55" height="11" backcolor="#FFFFFF" uuid="3aa5ef24-8fc1-4b62-b8be-dc05e0ce1229"/>
+				<reportElement mode="Transparent" x="284" y="0" width="55" height="11" backcolor="#FFFFFF" uuid="3aa5ef24-8fc1-4b62-b8be-dc05e0ce1229"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
@@ -159,21 +159,21 @@ SELECT tf.ad_client_id, tf.ad_org_id,
 	<columnFooter>
 		<band height="13">
 			<textField isStretchWithOverflow="true" pattern="¤ #,##0.00">
-				<reportElement mode="Transparent" x="287" y="0" width="55" height="11" uuid="71537a3e-3b53-41a0-b0db-9e193f55e722"/>
+				<reportElement mode="Transparent" x="284" y="2" width="55" height="11" uuid="71537a3e-3b53-41a0-b0db-9e193f55e722"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{TOTAL_TUITION}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0">
-				<reportElement mode="Transparent" x="490" y="0" width="45" height="13" uuid="6869553e-c16b-4827-86db-a740c04c6543"/>
+				<reportElement mode="Transparent" x="490" y="2" width="45" height="11" uuid="6869553e-c16b-4827-86db-a740c04c6543"/>
 				<textElement textAlignment="Center">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{MAX_PT}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0">
-				<reportElement mode="Transparent" x="538" y="0" width="45" height="13" uuid="0864ec09-2464-4f3b-a172-2b2f264bf7d8"/>
+				<reportElement mode="Transparent" x="538" y="2" width="45" height="11" uuid="0864ec09-2464-4f3b-a172-2b2f264bf7d8"/>
 				<textElement textAlignment="Center">
 					<font size="8"/>
 				</textElement>
