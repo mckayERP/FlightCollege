@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Migrations>
-<Migration EntityType="MFTU" Name="Add doc action callout to Payment table." ReleaseNo="FTU2.17" SeqNo="95">
+<Migration EntityType="MFTU" Name="Add help to  online payment process." ReleaseNo="FTU2.17" SeqNo="95">
 <Step SeqNo="40" StepType="AD">
 <PO AD_Table_ID="284" Action="U" Record_ID="153" Table="AD_Process">
 <Data AD_Column_ID="2811" Column="Help" isOldNull="true">Click confirm to proceed. Advise the customer to enter the reqired information in the terminal.  If voiding a transaction, you may need to enter the reference number of the original transaction.  Follow the prompts on the terminal.</Data>
-<Data AD_Column_ID="2810" Column="Description" isOldNull="true">Process the order on line or using a credit card terminal.  If using the terminal, click confirm and advise the customer to proceed. For voids or refunds, follow the prompts on the terminal.</Data>
+<Data AD_Column_ID="2810" Column="Description" isOldNull="true">Process the order on line or using a credit card terminal.</Data>
 </PO>
 </Step>
 <Step SeqNo="50" StepType="AD">

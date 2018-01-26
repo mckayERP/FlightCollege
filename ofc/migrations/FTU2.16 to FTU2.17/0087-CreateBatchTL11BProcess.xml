@@ -104,6 +104,7 @@
 </Step>
 <Step SeqNo="60" StepType="AD">
 <PO AD_Table_ID="286" Action="I" Record_ID="1000329" Table="AD_Process_Para_Trl">
+<Data AD_Column_ID="2841" Column="Description">Calendar Year</Data>
 <Data AD_Column_ID="2835" Column="IsActive">true</Data>
 <Data AD_Column_ID="2831" Column="AD_Process_Para_ID">1000329</Data>
 <Data AD_Column_ID="2842" Column="IsTranslated">false</Data>
@@ -116,7 +117,6 @@
 <Data AD_Column_ID="3743" Column="Help">The Year identifies the Calendar year</Data>
 <Data AD_Column_ID="2839" Column="UpdatedBy">0</Data>
 <Data AD_Column_ID="2840" Column="Name">Year</Data>
-<Data AD_Column_ID="2841" Column="Description">Calendar Year</Data>
 </PO>
 </Step>
 <Step SeqNo="70" StepType="AD">
@@ -262,61 +262,6 @@
 <Data AD_Column_ID="2841" Column="Description">Select to email the TL11B forms automatically.  </Data>
 </PO>
 </Step>
-<Step SeqNo="160" StepType="AD">
-<PO AD_Table_ID="285" Action="I" Record_ID="1000332" Table="AD_Process_Para">
-<Data AD_Column_ID="2824" Column="Help">The Mail Template indicates the mail template for return messages. Mail text can include variables.  The priority of parsing is User/Contact, Business Partner and then the underlying business object (like Request, Dunning, Workflow object).&lt;br&gt;
-So, @Name@ would resolve into the User name (if user is defined defined), then Business Partner name (if business partner is defined) and then the Name of the business object if it has a Name.&lt;br&gt;
-For Multi-Lingual systems, the template is translated based on the Business Partner's language selection.</Data>
-<Data AD_Column_ID="2817" Column="IsActive">true</Data>
-<Data AD_Column_ID="2830" Column="IsRange">false</Data>
-<Data AD_Column_ID="2814" Column="AD_Process_Para_ID">1000332</Data>
-<Data AD_Column_ID="2815" Column="AD_Client_ID">0</Data>
-<Data AD_Column_ID="3737" Column="FieldLength">22</Data>
-<Data AD_Column_ID="2821" Column="UpdatedBy">0</Data>
-<Data AD_Column_ID="2825" Column="AD_Process_ID">1000017</Data>
-<Data AD_Column_ID="2820" Column="Updated">2017-12-19 08:37:02.847</Data>
-<Data AD_Column_ID="2819" Column="CreatedBy">0</Data>
-<Data AD_Column_ID="3742" Column="ValueMax" isNewNull="true"/>
-<Data AD_Column_ID="5819" Column="IsCentrallyMaintained">true</Data>
-<Data AD_Column_ID="5593" Column="DefaultValue2" isNewNull="true"/>
-<Data AD_Column_ID="3740" Column="VFormat" isNewNull="true"/>
-<Data AD_Column_ID="2827" Column="AD_Reference_ID">19</Data>
-<Data AD_Column_ID="3741" Column="ValueMin" isNewNull="true"/>
-<Data AD_Column_ID="3736" Column="AD_Val_Rule_ID" isNewNull="true"/>
-<Data AD_Column_ID="2826" Column="SeqNo">30</Data>
-<Data AD_Column_ID="3738" Column="IsMandatory">true</Data>
-<Data AD_Column_ID="2818" Column="Created">2017-12-19 08:37:02.847</Data>
-<Data AD_Column_ID="2828" Column="AD_Reference_Value_ID" isNewNull="true"/>
-<Data AD_Column_ID="3739" Column="DefaultValue" isNewNull="true"/>
-<Data AD_Column_ID="2816" Column="AD_Org_ID">0</Data>
-<Data AD_Column_ID="7728" Column="EntityType">MFTU</Data>
-<Data AD_Column_ID="56299" Column="ReadOnlyLogic" isNewNull="true"/>
-<Data AD_Column_ID="56300" Column="DisplayLogic" isNewNull="true"/>
-<Data AD_Column_ID="2822" Column="Name">EMail Template</Data>
-<Data AD_Column_ID="4017" Column="ColumnName">R_MailText_ID</Data>
-<Data AD_Column_ID="2823" Column="Description">Text templates for mailings</Data>
-<Data AD_Column_ID="7729" Column="AD_Element_ID">1515</Data>
-</PO>
-</Step>
-<Step SeqNo="170" StepType="AD">
-<PO AD_Table_ID="286" Action="I" Record_ID="1000332" Table="AD_Process_Para_Trl">
-<Data AD_Column_ID="2835" Column="IsActive">true</Data>
-<Data AD_Column_ID="2831" Column="AD_Process_Para_ID">1000332</Data>
-<Data AD_Column_ID="2842" Column="IsTranslated">false</Data>
-<Data AD_Column_ID="2834" Column="AD_Org_ID">0</Data>
-<Data AD_Column_ID="2833" Column="AD_Client_ID">0</Data>
-<Data AD_Column_ID="2832" Column="AD_Language">es_MX</Data>
-<Data AD_Column_ID="2838" Column="Updated">2017-12-19 08:37:12.315</Data>
-<Data AD_Column_ID="2836" Column="Created">2017-12-19 08:37:12.315</Data>
-<Data AD_Column_ID="2837" Column="CreatedBy">0</Data>
-<Data AD_Column_ID="3743" Column="Help">The Mail Template indicates the mail template for return messages. Mail text can include variables.  The priority of parsing is User/Contact, Business Partner and then the underlying business object (like Request, Dunning, Workflow object).&lt;br&gt;
-So, @Name@ would resolve into the User name (if user is defined defined), then Business Partner name (if business partner is defined) and then the Name of the business object if it has a Name.&lt;br&gt;
-For Multi-Lingual systems, the template is translated based on the Business Partner's language selection.</Data>
-<Data AD_Column_ID="2839" Column="UpdatedBy">0</Data>
-<Data AD_Column_ID="2840" Column="Name">EMail Template</Data>
-<Data AD_Column_ID="2841" Column="Description">Text templates for mailings</Data>
-</PO>
-</Step>
 <Step SeqNo="180" StepType="AD">
 <PO AD_Table_ID="116" Action="I" Record_ID="1000093" Table="AD_Menu">
 <Data AD_Column_ID="399" Column="AD_Client_ID">0</Data>
@@ -377,10 +322,10 @@ For Multi-Lingual systems, the template is translated based on the Business Part
 </Step>
 <Step SeqNo="210" StepType="AD">
 <PO AD_Table_ID="452" Action="U" Record_ID="10" Table="AD_TreeNodeMM">
-<Data AD_Column_ID="6160" Column="AD_Tree_ID" oldValue="10">10</Data>
 <Data AD_Column_ID="6155" Column="Parent_ID" oldValue="0">1000077</Data>
 <Data AD_Column_ID="6157" Column="SeqNo" oldValue="999">6</Data>
 <Data AD_Column_ID="6161" Column="Node_ID" oldValue="1000093">1000093</Data>
+<Data AD_Column_ID="6160" Column="AD_Tree_ID" oldValue="10">10</Data>
 </PO>
 </Step>
 <Step SeqNo="220" StepType="AD">
@@ -458,144 +403,6 @@ For Multi-Lingual systems, the template is translated based on the Business Part
 <Step SeqNo="270" StepType="AD">
 <PO AD_Table_ID="108" Action="U" Record_ID="1000014" Table="AD_Val_Rule">
 <Data AD_Column_ID="193" Column="Code" oldValue="C_BPartner_ID IN (SELECT FTU_Student .C_BPartner FROM FTU_Student WHERE FTU_Student.IsActive = 'Y' AND FTU_Student.IsVocational = 'Y')">C_BPartner_ID IN (SELECT FTU_Student .C_BPartner_ID FROM FTU_Student WHERE FTU_Student.IsActive = 'Y' AND FTU_Student.IsVocational = 'Y')</Data>
-</PO>
-</Step>
-<Step SeqNo="280" StepType="AD">
-<PO AD_Table_ID="286" Action="D" Record_ID="1000332" Table="AD_Process_Para_Trl">
-<Data AD_Column_ID="2835" Column="IsActive" isNewNull="true" oldValue="true"/>
-<Data AD_Column_ID="2831" Column="AD_Process_Para_ID" oldValue="1000332">1000332</Data>
-<Data AD_Column_ID="2842" Column="IsTranslated" isNewNull="true" oldValue="false"/>
-<Data AD_Column_ID="2834" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
-<Data AD_Column_ID="2833" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
-<Data AD_Column_ID="2832" Column="AD_Language" oldValue="es_MX">es_MX</Data>
-<Data AD_Column_ID="2838" Column="Updated" isNewNull="true" oldValue="2017-12-19 08:37:12.0"/>
-<Data AD_Column_ID="2836" Column="Created" isNewNull="true" oldValue="2017-12-19 08:37:12.0"/>
-<Data AD_Column_ID="2837" Column="CreatedBy" isNewNull="true" oldValue="0"/>
-<Data AD_Column_ID="3743" Column="Help" isNewNull="true" oldValue="The Mail Template indicates the mail template for return messages. Mail text can include variables.  The priority of parsing is User/Contact, Business Partner and then the underlying business object (like Request, Dunning, Workflow object).&lt;br&gt;&#10;So, @Name@ would resolve into the User name (if user is defined defined), then Business Partner name (if business partner is defined) and then the Name of the business object if it has a Name.&lt;br&gt;&#10;For Multi-Lingual systems, the template is translated based on the Business Partner's language selection."/>
-<Data AD_Column_ID="2839" Column="UpdatedBy" isNewNull="true" oldValue="0"/>
-<Data AD_Column_ID="2840" Column="Name" isNewNull="true" oldValue="EMail Template"/>
-<Data AD_Column_ID="2841" Column="Description" isNewNull="true" oldValue="Text templates for mailings"/>
-</PO>
-</Step>
-<Step SeqNo="290" StepType="AD">
-<PO AD_Table_ID="285" Action="D" Record_ID="1000332" Table="AD_Process_Para">
-<Data AD_Column_ID="2824" Column="Help" isNewNull="true" oldValue="The Mail Template indicates the mail template for return messages. Mail text can include variables.  The priority of parsing is User/Contact, Business Partner and then the underlying business object (like Request, Dunning, Workflow object).&lt;br&gt;&#10;So, @Name@ would resolve into the User name (if user is defined defined), then Business Partner name (if business partner is defined) and then the Name of the business object if it has a Name.&lt;br&gt;&#10;For Multi-Lingual systems, the template is translated based on the Business Partner's language selection."/>
-<Data AD_Column_ID="2817" Column="IsActive" isNewNull="true" oldValue="true"/>
-<Data AD_Column_ID="2830" Column="IsRange" isNewNull="true" oldValue="false"/>
-<Data AD_Column_ID="2814" Column="AD_Process_Para_ID" isNewNull="true" oldValue="1000332"/>
-<Data AD_Column_ID="2815" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
-<Data AD_Column_ID="3737" Column="FieldLength" isNewNull="true" oldValue="22"/>
-<Data AD_Column_ID="2821" Column="UpdatedBy" isNewNull="true" oldValue="0"/>
-<Data AD_Column_ID="2825" Column="AD_Process_ID" isNewNull="true" oldValue="1000017"/>
-<Data AD_Column_ID="2820" Column="Updated" isNewNull="true" oldValue="2017-12-19 08:37:02.0"/>
-<Data AD_Column_ID="2819" Column="CreatedBy" isNewNull="true" oldValue="0"/>
-<Data AD_Column_ID="3742" Column="ValueMax" isNewNull="true" isOldNull="true"/>
-<Data AD_Column_ID="5819" Column="IsCentrallyMaintained" isNewNull="true" oldValue="true"/>
-<Data AD_Column_ID="5593" Column="DefaultValue2" isNewNull="true" isOldNull="true"/>
-<Data AD_Column_ID="3740" Column="VFormat" isNewNull="true" isOldNull="true"/>
-<Data AD_Column_ID="2827" Column="AD_Reference_ID" isNewNull="true" oldValue="19"/>
-<Data AD_Column_ID="3741" Column="ValueMin" isNewNull="true" isOldNull="true"/>
-<Data AD_Column_ID="3736" Column="AD_Val_Rule_ID" isNewNull="true" isOldNull="true"/>
-<Data AD_Column_ID="2826" Column="SeqNo" isNewNull="true" oldValue="30"/>
-<Data AD_Column_ID="3738" Column="IsMandatory" isNewNull="true" oldValue="true"/>
-<Data AD_Column_ID="2818" Column="Created" isNewNull="true" oldValue="2017-12-19 08:37:02.0"/>
-<Data AD_Column_ID="2828" Column="AD_Reference_Value_ID" isNewNull="true" isOldNull="true"/>
-<Data AD_Column_ID="3739" Column="DefaultValue" isNewNull="true" isOldNull="true"/>
-<Data AD_Column_ID="2816" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
-<Data AD_Column_ID="7728" Column="EntityType" isNewNull="true" oldValue="MFTU"/>
-<Data AD_Column_ID="56299" Column="ReadOnlyLogic" isNewNull="true" isOldNull="true"/>
-<Data AD_Column_ID="56300" Column="DisplayLogic" isNewNull="true" isOldNull="true"/>
-<Data AD_Column_ID="2822" Column="Name" isNewNull="true" oldValue="EMail Template"/>
-<Data AD_Column_ID="4017" Column="ColumnName" isNewNull="true" oldValue="R_MailText_ID"/>
-<Data AD_Column_ID="2823" Column="Description" isNewNull="true" oldValue="Text templates for mailings"/>
-<Data AD_Column_ID="7729" Column="AD_Element_ID" isNewNull="true" oldValue="1515"/>
-</PO>
-</Step>
-<Step SeqNo="300" StepType="AD">
-<PO AD_Table_ID="284" Action="I" Record_ID="1000053" Table="AD_Process">
-<Data AD_Column_ID="78843" Column="GenerateClass" isNewNull="true"/>
-<Data AD_Column_ID="12458" Column="IsBetaFunctionality">false</Data>
-<Data AD_Column_ID="14084" Column="IsServerProcess">false</Data>
-<Data AD_Column_ID="57920" Column="CopyFromProcess">N</Data>
-<Data AD_Column_ID="2804" Column="IsActive">true</Data>
-<Data AD_Column_ID="11563" Column="WorkflowValue" isNewNull="true"/>
-<Data AD_Column_ID="4023" Column="Value">TL11B Tax Form Batch</Data>
-<Data AD_Column_ID="2803" Column="AD_Org_ID">0</Data>
-<Data AD_Column_ID="2802" Column="AD_Client_ID">0</Data>
-<Data AD_Column_ID="11834" Column="AD_Workflow_ID" isNewNull="true"/>
-<Data AD_Column_ID="2811" Column="Help">To be eligible to deduct expenses, the pilot must be registered as a vocational student.</Data>
-<Data AD_Column_ID="2801" Column="AD_Process_ID">1000053</Data>
-<Data AD_Column_ID="2806" Column="CreatedBy">0</Data>
-<Data AD_Column_ID="2807" Column="Updated">2017-12-20 11:23:26.279</Data>
-<Data AD_Column_ID="2808" Column="UpdatedBy">0</Data>
-<Data AD_Column_ID="2805" Column="Created">2017-12-20 11:23:26.279</Data>
-<Data AD_Column_ID="4214" Column="IsDirectPrint">false</Data>
-<Data AD_Column_ID="4374" Column="AD_ReportView_ID" isNewNull="true"/>
-<Data AD_Column_ID="3371" Column="IsReport">true</Data>
-<Data AD_Column_ID="5790" Column="AccessLevel">3</Data>
-<Data AD_Column_ID="50181" Column="ShowHelp">Y</Data>
-<Data AD_Column_ID="6485" Column="EntityType">U</Data>
-<Data AD_Column_ID="6653" Column="Statistic_Seconds">0</Data>
-<Data AD_Column_ID="6652" Column="Statistic_Count">0</Data>
-<Data AD_Column_ID="4656" Column="Classname" isNewNull="true"/>
-<Data AD_Column_ID="50182" Column="JasperReport">attachment:TL11B_Tax_Form.jasper</Data>
-<Data AD_Column_ID="56515" Column="AD_Form_ID" isNewNull="true"/>
-<Data AD_Column_ID="7752" Column="AD_PrintFormat_ID" isNewNull="true"/>
-<Data AD_Column_ID="2813" Column="ProcedureName" isNewNull="true"/>
-<Data AD_Column_ID="2810" Column="Description">The TL11B Tax form for deduction of tuition expenses</Data>
-<Data AD_Column_ID="2809" Column="Name">TL11B Tax Form</Data>
-<Data AD_Column_ID="63488" Column="AD_Browse_ID" isNewNull="true"/>
-</PO>
-</Step>
-<Step SeqNo="310" StepType="AD">
-<PO AD_Table_ID="287" Action="I" Record_ID="0" Table="AD_Process_Trl">
-<Data AD_Column_ID="2847" Column="IsActive">true</Data>
-<Data AD_Column_ID="2849" Column="CreatedBy">0</Data>
-<Data AD_Column_ID="2844" Column="AD_Language">es_MX</Data>
-<Data AD_Column_ID="2854" Column="Help">To be eligible to deduct expenses, the pilot must be registered as a vocational student.</Data>
-<Data AD_Column_ID="2846" Column="AD_Org_ID">0</Data>
-<Data AD_Column_ID="2850" Column="Updated">2017-12-20 11:23:31.132</Data>
-<Data AD_Column_ID="2848" Column="Created">2017-12-20 11:23:31.132</Data>
-<Data AD_Column_ID="2851" Column="UpdatedBy">0</Data>
-<Data AD_Column_ID="2843" Column="AD_Process_ID">1000053</Data>
-<Data AD_Column_ID="2855" Column="IsTranslated">false</Data>
-<Data AD_Column_ID="2845" Column="AD_Client_ID">0</Data>
-<Data AD_Column_ID="2852" Column="Name">TL11B Tax Form</Data>
-<Data AD_Column_ID="2853" Column="Description">The TL11B Tax form for deduction of tuition expenses</Data>
-</PO>
-</Step>
-<Step SeqNo="320" StepType="AD">
-<PO AD_Table_ID="284" Action="U" Record_ID="1000053" Table="AD_Process">
-<Data AD_Column_ID="6485" Column="EntityType" oldValue="U">MFTU</Data>
-</PO>
-</Step>
-<Step SeqNo="330" StepType="AD">
-<PO AD_Table_ID="284" Action="U" Record_ID="1000053" Table="AD_Process">
-<Data AD_Column_ID="4214" Column="IsDirectPrint" oldValue="false">true</Data>
-</PO>
-</Step>
-<Step SeqNo="340" StepType="AD">
-<PO AD_Table_ID="284" Action="U" Record_ID="1000053" Table="AD_Process">
-<Data AD_Column_ID="4023" Column="Value" oldValue="TL11B Tax Form Batch">TL11B Form Batch</Data>
-<Data AD_Column_ID="2810" Column="Description" oldValue="The TL11B Tax form for deduction of tuition expenses">The TL11B Tax form for deduction of tuition expenses - Direct Print</Data>
-<Data AD_Column_ID="2809" Column="Name" oldValue="TL11B Tax Form">TL11B Tax Form - Batch</Data>
-</PO>
-</Step>
-<Step SeqNo="350" StepType="AD">
-<PO AD_Table_ID="254" Action="I" Record_ID="1000095" Table="AD_Attachment">
-<Data AD_Column_ID="2090" Column="IsActive">true</Data>
-<Data AD_Column_ID="2087" Column="AD_Attachment_ID">1000095</Data>
-<Data AD_Column_ID="2088" Column="AD_Client_ID">0</Data>
-<Data AD_Column_ID="2091" Column="Created">2017-12-20 11:48:19.309</Data>
-<Data AD_Column_ID="2089" Column="AD_Org_ID">0</Data>
-<Data AD_Column_ID="2096" Column="AD_Table_ID">284</Data>
-<Data AD_Column_ID="2097" Column="Record_ID">1000053</Data>
-<Data AD_Column_ID="2092" Column="CreatedBy">0</Data>
-<Data AD_Column_ID="2093" Column="Updated">2017-12-20 11:48:19.309</Data>
-<Data AD_Column_ID="2094" Column="UpdatedBy">0</Data>
-<Data AD_Column_ID="4822" Column="Title">zip</Data>
-<Data AD_Column_ID="11530" Column="TextMsg" isNewNull="true"/>
-<Data AD_Column_ID="2099" Column="BinaryData">[B@65105ec</Data>
 </PO>
 </Step>
 </Migration>
