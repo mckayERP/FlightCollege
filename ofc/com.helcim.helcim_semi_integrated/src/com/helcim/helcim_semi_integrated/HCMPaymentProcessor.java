@@ -304,11 +304,15 @@ public class HCMPaymentProcessor extends PaymentProcessor {
 				
 				if (success[0])
 				{
-					
-					info = p_mp.getR_RespMsg() + " (Auth:" + p_mp.getR_AuthCode()
+					if (p_mp != null)
+					{
+						info = p_mp.getR_RespMsg() + " (Auth:" + p_mp.getR_AuthCode()
 							+ ") Ref=" + p_mp.getR_PnRef();
-					result = Msg.translate(Env.getCtx(), "PaymentProcessed") + " " +  info 
+						result = Msg.translate(Env.getCtx(), "PaymentProcessed") + " " +  info 
 							+ "\n" + Msg.parseTranslation(Env.getCtx(), "@C_Payment_ID@") + ": " + p_mp.getDocumentNo();
+					}
+					else
+						result = "";
 					
 				}
 				else
