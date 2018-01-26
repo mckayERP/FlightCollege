@@ -51,6 +51,9 @@
 		<jar jarfile="${dist.dir}/mckayerp_ftu.jar" duplicate="preserve">
 
 			<!-- htmlunit & dependencies	-->
+            <zipgroupfileset dir="lib" includes="*.jar"/>
+     		
+			<!-- 
 			<zipfileset src="lib/commons-lang3-3.5.jar">
 				<patternset refid="manifest.exclude" />
 			</zipfileset>
@@ -96,6 +99,7 @@
 			<zipfileset src="lib/websocket-common-9.4.1.v20170120.jar">
 				<patternset refid="manifest.exclude" />
 			</zipfileset>
+			-->
 			<manifest>
 				<attribute name="Specification-Title" value="MckayERP FTU Package" />
 				<attribute name="Specification-Version" value="${ftu.FTU_VERSION}" />
