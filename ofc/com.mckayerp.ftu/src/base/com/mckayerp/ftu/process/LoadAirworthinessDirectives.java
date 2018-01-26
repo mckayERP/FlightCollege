@@ -1,4 +1,4 @@
-package com.mckayerp.process;
+package com.mckayerp.ftu.process;
 
 import java.io.IOException;
 import java.util.List;
@@ -86,6 +86,11 @@ public class LoadAirworthinessDirectives extends SvrProcess {
 	
 	private List<MProduct> products = null;
 
+	/** A flag to indicate if the CAWIS manufacturers should be loaded. */
+	private boolean m_isLoadManufacturers;
+	/**	Parameter Name for IsLoadManufacturers	*/
+	public static final String IsLoadManufacturers = "IsLoadManufacturers";
+
 	protected void prepare() {
 						
 		// Get any parameters and set the local variables
@@ -98,6 +103,8 @@ public class LoadAirworthinessDirectives extends SvrProcess {
 		m_AD_Client_ID = this.getParameterAsInt("AD_Client_ID");
 		m_AD_Org_ID = this.getParameterAsInt("AD_Org_ID");
 		m_AD_User_ID = this.getParameterAsInt("AD_User_ID");
+		
+		m_isLoadManufacturers  = this.getParameterAsBoolean(IsLoadManufacturers);
 
 		// TODO - fix for a server process where the ctx has to change
 		m_ctx = getCtx();
@@ -107,7 +114,10 @@ public class LoadAirworthinessDirectives extends SvrProcess {
 	@Override
 	protected String doIt() throws Exception {
 		
-		updateCAWISManufacturersAndModels();
+		if (m_isLoadManufacturers)
+		{
+			updateCAWISManufacturersAndModels();
+		}
 		
 		loadAC_Engines_Props();
 		
@@ -248,7 +258,8 @@ public class LoadAirworthinessDirectives extends SvrProcess {
 		
 		log.info("");
 		
-		final WebClient webClient = new WebClient();
+		final WebClient webClient = new WebClient(BrowserVersion.FIREFOX_45);
+		webClient.getOptions().setCssEnabled(false);
 		
 		if (products == null)
 		{
@@ -311,6 +322,7 @@ public class LoadAirworthinessDirectives extends SvrProcess {
 					// we have good data!
 					rowCount ++;
 					int cellCount = 0;
+					rowResults = new Object[9];  // Last element empty
 				    for (final HtmlTableCell cell : row.getCells()) {
 				    	
 				    	switch (cellCount) 
@@ -328,7 +340,7 @@ public class LoadAirworthinessDirectives extends SvrProcess {
 				    			
 				    		case 4: case 5:
 				        		DomNode link = cell.getFirstChild().getNextSibling();
-				        		if (link instanceof HtmlAnchor) 
+				        		if (link != null && link instanceof HtmlAnchor) 
 				        		{
 				        			try {
 				        				final Page linkPage = ((HtmlAnchor) link).click();  // Triggers a new page and causes an event.
@@ -379,7 +391,8 @@ public class LoadAirworthinessDirectives extends SvrProcess {
 		
 		log.info("");
 
-		final WebClient webClient = new WebClient();
+		final WebClient webClient = new WebClient(BrowserVersion.FIREFOX_45);
+		webClient.getOptions().setCssEnabled(false);
 
 		try 
 		{	
@@ -558,7 +571,8 @@ public class LoadAirworthinessDirectives extends SvrProcess {
 		
 		log.info("");
 
-		final WebClient webClient = new WebClient(BrowserVersion.CHROME);
+		final WebClient webClient = new WebClient(BrowserVersion.FIREFOX_45);
+		webClient.getOptions().setCssEnabled(false);
 
 		if (products == null)
 		{
@@ -857,8 +871,9 @@ public class LoadAirworthinessDirectives extends SvrProcess {
 			
 			//Import Airworthiness Directives
 			ProcessInfo processInfo = ProcessBuilder.create(context)
-			.process(com.mckayerp.process.LoadAirworthinessDirectives.class)
+			.process(com.mckayerp.ftu.process.LoadAirworthinessDirectives.class)
 			.withTitle("Import Airworthiness Directives")
+			.withParameter(IsLoadManufacturers, false)
 			.execute();
 
 			log.log(Level.CONFIG, "Process=" + processInfo.getTitle() + " Error="+processInfo.isError() + " Summary=" + processInfo.getSummary());

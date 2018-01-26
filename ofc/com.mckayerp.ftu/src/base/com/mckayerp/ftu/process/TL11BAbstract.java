@@ -14,7 +14,7 @@
  * or via info@adempiere.net or http://www.adempiere.net/license.html         *
  *****************************************************************************/
 
-package com.mckayerp.process;
+package com.mckayerp.ftu.process;
 
 import org.compiere.model.MClient;
 import org.compiere.model.MMailText;
@@ -30,14 +30,12 @@ public abstract class TL11BAbstract extends SvrProcess
 	/** Process Name 	*/
 	private static final String NAME = "Batch EMail TL11B Forms";
 	/** Process Id 	*/
-	private static final int ID = 1000052;
+	private static final int ID = 1000053;
  
 	/**	Parameter Name for CalendarYear	*/
 	public static final String CalendarYear = "CalendarYear";
 	/**	Parameter Name for C_BPartner_ID	*/
 	public static final String C_BPartner_ID = "C_BPartner_ID";
-	/**	Parameter Name for IsEmailAutomatically	*/
-	public static final String IsEmailAutomatically = "IsEmailAutomatically";
 	/**	Parameter Name for R_MailText_ID	*/
 	public static final String R_MailText_ID = "R_MailText_ID";
 
@@ -61,7 +59,6 @@ public abstract class TL11BAbstract extends SvrProcess
 	{
 		year = getParameterAsString(CalendarYear);
 		vocationalStudentId = getParameterAsInt(C_BPartner_ID);
-		isEmailAutomatically = getParameterAsBoolean(IsEmailAutomatically);
 		emailTemplateId = getParameterAsInt(R_MailText_ID);
 		
 		m_client = MClient.get(getCtx(), getAD_Client_ID());

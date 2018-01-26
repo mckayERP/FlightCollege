@@ -36,7 +36,7 @@ import org.compiere.util.CLogger;
 import org.compiere.util.Env;
 import org.w3c.dom.Element;
 
-import com.mckayerp.process.LoadFlightsheetFromXML;
+import com.mckayerp.ftu.process.LoadFlightsheetFromXML;
 
 /**
  * @author mckayERP

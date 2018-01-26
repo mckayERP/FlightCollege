@@ -13,7 +13,7 @@
  * For the text or an alternative of this public license, you may reach us    *
  * or via info@adempiere.net or http://www.adempiere.net/license.html         *
  *****************************************************************************/
-package com.mckayerp.process;
+package com.mckayerp.ftu.process;
 
 import java.math.BigDecimal;
 import java.util.logging.Level;

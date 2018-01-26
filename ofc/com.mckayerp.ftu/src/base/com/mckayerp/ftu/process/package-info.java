@@ -8,4 +8,4 @@
  * @version 1.0
  *
  */
-package com.mckayerp.process;
+package com.mckayerp.ftu.process;

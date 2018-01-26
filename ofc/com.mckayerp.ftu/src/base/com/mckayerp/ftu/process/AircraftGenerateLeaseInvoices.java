@@ -1,4 +1,4 @@
-package com.mckayerp.process;
+package com.mckayerp.ftu.process;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -64,7 +64,7 @@ public class AircraftGenerateLeaseInvoices extends SvrProcess {
 		if (updateFlightsheet)
 		{
 			ProcessBuilder.create(getCtx())
-			.process(com.mckayerp.process.LoadFlightsheetFromXML.class)
+			.process(com.mckayerp.ftu.process.LoadFlightsheetFromXML.class)
 			.withTitle("Update flightsheets")
 			.withParameterRange("FlightDate", startDate, endDate)
 			.execute();

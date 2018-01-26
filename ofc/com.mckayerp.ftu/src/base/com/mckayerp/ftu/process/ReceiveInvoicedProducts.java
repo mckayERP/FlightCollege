@@ -12,7 +12,7 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.                     *
  *																			  *
  *****************************************************************************/
-package com.mckayerp.process;
+package com.mckayerp.ftu.process;
 
 import java.math.BigDecimal;
 import java.sql.PreparedStatement;

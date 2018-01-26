@@ -14,7 +14,7 @@
  * or via info@adempiere.net or http://www.adempiere.net/license.html         *
  *****************************************************************************/
 
-package com.mckayerp.process;
+package com.mckayerp.ftu.process;
 
 import java.io.File;
 import java.math.BigDecimal;
@@ -45,7 +45,7 @@ public class TL11B extends TL11BAbstract
 {
 	/** Recipient List to prevent duplicate mails	*/
 	private ArrayList<Integer>	m_list = new ArrayList<Integer>();
-	private static final int TL11B_FORM_PROCESS_ID = 1000053;
+	private static final int TL11B_FORM_PROCESS_ID = 1000017;
 
 	@Override
 	protected void prepare()

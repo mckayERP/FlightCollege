@@ -1,4 +1,4 @@
-package com.mckayerp.process;
+package com.mckayerp.ftu.process;
 
 import java.io.BufferedReader;
 import java.io.IOException;

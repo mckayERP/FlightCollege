@@ -14,29 +14,34 @@
  * or via info@adempiere.net or http://www.adempiere.net/license.html         *
  *****************************************************************************/
 
-package com.mckayerp.process;
+package com.mckayerp.ftu.process;
+
+import java.util.List;
 
 import org.compiere.process.SvrProcess;
-/** Generated Process for (Create Maint WO Result Lines)
+/** Generated Process for (Cancel Flight)
  *  @author ADempiere (generated) 
  *  @version OFC Custom 3.8.0_2
  */
-public abstract class CreateWOResultLinesAbstract extends SvrProcess
+public abstract class BatchCancelFlightsAbstract extends SvrProcess
 {
 	/** Process Value 	*/
-	private static final String VALUE = "FTU_MaintWOResult_CreateLinesFromWO";
+	private static final String VALUE = "FTU_CancelFlight";
 	/** Process Name 	*/
-	private static final String NAME = "Create Maint WO Result Lines";
+	private static final String NAME = "Cancel Flight";
 	/** Process Id 	*/
-	private static final int ID = 1000055;
+	private static final int ID = 1000049;
  
-
- 
+	/** List of flights to cancel */
+	List<Integer> flights;
+	 
 
 	@Override
 	protected void prepare()
 	{
+		flights = this.getSelectionKeys();
 	}
+
 
 	/**	 Getter Parameter Value for Process ID	*/
 	public static final int getProcessId() {

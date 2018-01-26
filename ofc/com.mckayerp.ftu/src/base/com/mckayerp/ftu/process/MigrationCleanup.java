@@ -1,4 +1,4 @@
-package com.mckayerp.process;
+package com.mckayerp.ftu.process;
 
 import java.util.List;
 import java.util.Properties;
@@ -197,7 +197,7 @@ public class MigrationCleanup extends SvrProcess {
 			
 			//Import Airworthiness Directives
 			ProcessInfo processInfo = ProcessBuilder.create(context)
-			.process(com.mckayerp.process.MigrationCleanup.class)
+			.process(com.mckayerp.ftu.process.MigrationCleanup.class)
 			.withTitle("Migration Cleanup")
 			.withParameter("AD_Migration_ID", 1000214)
 			.execute();

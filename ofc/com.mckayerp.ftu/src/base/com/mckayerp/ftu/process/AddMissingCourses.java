@@ -1,4 +1,4 @@
-package com.mckayerp.process;
+package com.mckayerp.ftu.process;
 
 import org.compiere.process.SvrProcess;
 import org.compiere.util.DB;

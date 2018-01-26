@@ -14,7 +14,7 @@
  * or via info@adempiere.net or http://www.adempiere.net/license.html         *
  *****************************************************************************/
 
-package com.mckayerp.process;
+package com.mckayerp.ftu.process;
 
 import org.compiere.util.Env;
 
