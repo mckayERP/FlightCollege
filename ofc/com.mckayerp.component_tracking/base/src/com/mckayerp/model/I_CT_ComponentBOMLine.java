@@ -195,6 +195,17 @@ public interface I_CT_ComponentBOMLine
 	  */
 	public String getDescription();
 
+    /** Column name FTU_MaintWOResultLine_ID */
+    public static final String COLUMNNAME_FTU_MaintWOResultLine_ID = "FTU_MaintWOResultLine_ID";
+
+	/** Set Maintenance Work Order Result Line	  */
+	public void setFTU_MaintWOResultLine_ID (int FTU_MaintWOResultLine_ID);
+
+	/** Get Maintenance Work Order Result Line	  */
+	public int getFTU_MaintWOResultLine_ID();
+
+	public com.mckayerp.ftu.model.I_FTU_MaintWOResultLine getFTU_MaintWOResultLine() throws RuntimeException;
+
     /** Column name IntervalInstalled */
     public static final String COLUMNNAME_IntervalInstalled = "IntervalInstalled";
 

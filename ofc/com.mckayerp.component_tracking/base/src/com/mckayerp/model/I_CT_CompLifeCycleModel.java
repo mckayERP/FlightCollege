@@ -143,6 +143,32 @@ public interface I_CT_CompLifeCycleModel
 	  */
 	public boolean isLifeExtensionPossible();
 
+    /** Column name IsOnCondition */
+    public static final String COLUMNNAME_IsOnCondition = "IsOnCondition";
+
+	/** Set On Condition Program Applies.
+	  * The life cycle is governed by an "On Condition" program of preventative maintenance rather than a hard life limit.
+	  */
+	public void setIsOnCondition (boolean IsOnCondition);
+
+	/** Get On Condition Program Applies.
+	  * The life cycle is governed by an "On Condition" program of preventative maintenance rather than a hard life limit.
+	  */
+	public boolean isOnCondition();
+
+    /** Column name IsPistonACEngine */
+    public static final String COLUMNNAME_IsPistonACEngine = "IsPistonACEngine";
+
+	/** Set Piston A/C Engine.
+	  * Is the component a piston aircraft engine?
+	  */
+	public void setIsPistonACEngine (boolean IsPistonACEngine);
+
+	/** Get Piston A/C Engine.
+	  * Is the component a piston aircraft engine?
+	  */
+	public boolean isPistonACEngine();
+
     /** Column name LifeUsageSource */
     public static final String COLUMNNAME_LifeUsageSource = "LifeUsageSource";
 
@@ -214,6 +240,34 @@ public interface I_CT_CompLifeCycleModel
 	  */
 	public BigDecimal getMaxLifeUsage();
 
+    /** Column name MaxOverhaulCount */
+    public static final String COLUMNNAME_MaxOverhaulCount = "MaxOverhaulCount";
+
+	/** Set Max Number of Overhaul Cycles.
+	  * The maximum number of times that a component can be overhauled.
+	  */
+	public void setMaxOverhaulCount (int MaxOverhaulCount);
+
+	/** Get Max Number of Overhaul Cycles.
+	  * The maximum number of times that a component can be overhauled.
+	  */
+	public int getMaxOverhaulCount();
+
+    /** Column name MaxRPMRefDataSet */
+    public static final String COLUMNNAME_MaxRPMRefDataSet = "MaxRPMRefDataSet";
+
+	/** Set Max Static RPM Reference Data Set.
+	  * Select the data set used to capture the maximum static RPM after overhaul.
+	  */
+	public void setMaxRPMRefDataSet (int MaxRPMRefDataSet);
+
+	/** Get Max Static RPM Reference Data Set.
+	  * Select the data set used to capture the maximum static RPM after overhaul.
+	  */
+	public int getMaxRPMRefDataSet();
+
+	public com.mckayerp.model.I_CT_DataSet getMaxRPMRefData() throws RuntimeException;
+
     /** Column name Name */
     public static final String COLUMNNAME_Name = "Name";
 
@@ -226,6 +280,21 @@ public interface I_CT_CompLifeCycleModel
 	  * Alphanumeric identifier of the entity
 	  */
 	public String getName();
+
+    /** Column name OilConsumptionDataSet */
+    public static final String COLUMNNAME_OilConsumptionDataSet = "OilConsumptionDataSet";
+
+	/** Set Oil Consumption Data Set.
+	  * The data set used in the Dispatch Control window to record oil consumption.
+	  */
+	public void setOilConsumptionDataSet (int OilConsumptionDataSet);
+
+	/** Get Oil Consumption Data Set.
+	  * The data set used in the Dispatch Control window to record oil consumption.
+	  */
+	public int getOilConsumptionDataSet();
+
+	public com.mckayerp.model.I_CT_DataSet getOilConsumptionData() throws RuntimeException;
 
     /** Column name Updated */
     public static final String COLUMNNAME_Updated = "Updated";

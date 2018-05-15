@@ -32,10 +32,13 @@ public class CalloutComponent extends CalloutEngine {
 				
 				if (model != null)
 				{
+					// Changing the model will cause actions in the before save similar to the following
+					mTab.setValue(MCTComponent.COLUMNNAME_CT_CompLifeCycleModel_ID, model.getCT_CompLifeCycleModel_ID());
 					mTab.setValue(MCTComponent.COLUMNNAME_LifeUsageSource, model.getLifeUsageSource());
 					mTab.setValue(MCTComponent.COLUMNNAME_MaxLifeUsage, model.getMaxLifeUsage());
 					mTab.setValue(MCTComponent.COLUMNNAME_LifeUsageUOM_ID, model.getLifeUsageUOM_ID());
 					mTab.setValue(MCTComponent.COLUMNNAME_IsLifeExtensionPossible, model.isLifeExtensionPossible());
+					mTab.setValue(MCTComponent.COLUMNNAME_MaxOverhaulCount, model.getMaxOverhaulCount());
 				}
 			}
 			else
@@ -46,6 +49,5 @@ public class CalloutComponent extends CalloutEngine {
 		}
 
 		return "";
-	}
-	
+	}	
 }

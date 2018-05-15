@@ -11,7 +11,8 @@
 
   <!-- set global properties for this build -->
   <property file="../utils_dev/buildCustomization.properties"/>
-  <property name="src" value="base/src"/>
+  <property name="src.base" value="base/src"/>
+  <property name="src.client" value="client/src"/>
   <!-- property name="looksSrc" value="../looks/src"/ -->
   <property name="build.dir" value="build"/>
   <property name="dist.dir" value="../lib"/>
@@ -45,7 +46,8 @@
 	
   <!-- set path to src files -->
   <path id="src.path">
-    <pathelement path="${src}"/>
+    <pathelement path="${src.base}"/>
+    <pathelement path="${src.client}"/>
     <pathelement path="../com.mckayerp.ftu/src"/>
   </path>
 
@@ -66,7 +68,7 @@
 
   
   <target name="compile" depends="makedir">
-    <!-- compile the java code from ${src} into ${build.dir} -->
+    <!-- compile the java code from ${src.path} into ${build.dir} -->
     <javac target="1.8" fork="true" 
     	destdir="${build.dir}" 
     	deprecation="on" 
@@ -80,7 +82,20 @@
     </javac>
     <!-- copy all image & sound files from src to the build directory -->
     <copy todir="${build.dir}">
-      <fileset dir="${src}">
+      <fileset dir="${src.base}">
+        <include name="**/images/*"/>
+        <include name="**/*.gif"/>
+        <include name="**/*.jpg"/>
+        <include name="**/*.png"/>
+        <include name="**/*.wav"/>
+        <include name="**/*.htm"/>
+        <include name="**/*.html"/>
+        <include name="**/*.properties"/>
+        <exclude name="**/package.html"/>
+      </fileset>
+    </copy>
+    <copy todir="${build.dir}">
+      <fileset dir="${src.client}">
         <include name="**/images/*"/>
         <include name="**/*.gif"/>
         <include name="**/*.jpg"/>

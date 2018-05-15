@@ -23,6 +23,8 @@ import org.compiere.util.Env;
 import org.compiere.util.Msg;
 import org.eevolution.model.MPPProductBOMLine;
 
+import com.mckayerp.ftu.model.MFTUMaintWOResultLine;
+
 public class ComponentModelValidator implements ModelValidator {
 
 	public ComponentModelValidator() {
@@ -93,7 +95,7 @@ public class ComponentModelValidator implements ModelValidator {
 		if(isAfterSave 
 			&& po instanceof MCTComponentBOMLine)
 		{
-			return mc_componenteBOMLine_afterSave(po);
+			return mc_componentBOMLine_afterSave(po);
 		}  
 
 		if(isAfterSave 
@@ -144,6 +146,9 @@ public class ComponentModelValidator implements ModelValidator {
 		log.finest("");
 		
 		MCTComponent component = (MCTComponent) po;
+		
+		//  Update the life used of sub components, where the Life Usage Source
+		//  is "Inherit from Parent"
 		if (component.is_ValueChanged(MCTComponent.COLUMNNAME_LifeUsed))
 		{
 			
@@ -184,13 +189,13 @@ public class ComponentModelValidator implements ModelValidator {
 		return null;
 	}
 
-	private String mc_componenteBOMLine_afterSave(PO po) {
+	private String mc_componentBOMLine_afterSave(PO po) {
 		
 		log.finest("");
 
 		MCTComponentBOMLine bomLine = (MCTComponentBOMLine) po;
 		
-		// New component ID install
+		// New component ID install - manual
 		// TODO test for source i.e. Work Order - WO line should be recorded in history
 		if (bomLine.is_ValueChanged(MCTComponentBOMLine.COLUMNNAME_CT_Component_ID) 
 				&& bomLine.get_ValueAsInt(MCTComponentBOMLine.COLUMNNAME_CT_Component_ID) > 0)
@@ -200,25 +205,28 @@ public class ComponentModelValidator implements ModelValidator {
 			MCTComponent component = (MCTComponent) bomLine.getCT_Component();
 			MCTComponent parent = (MCTComponent) bom.getCT_Component();
 
-			MCTComponentHistory history = new MCTComponentHistory(po.getCtx(), 0, po.get_TrxName());
-			history.setCT_Component_ID(component.getCT_Component_ID());
-			history.setCT_ComponentActionType(MCTComponentHistory.CT_COMPONENTACTIONTYPE_Installed);
-			history.setDateAction(bomLine.getDateInstalled());
-			history.setQty(bomLine.getQtyInstalled());
-			history.setParentComponent_ID(parent.getCT_Component_ID());
-			history.setComponentLifeAtAction(bomLine.getCompLifeAtInstall());
-			history.setParentLifeAtAction(bomLine.getParentLifeAtInstall());
-			history.setCT_ComponentBOMLine_ID(bomLine.getCT_ComponentBOMLine_ID());
-			history.saveEx();
-			
 			// Update the component's root component id. This should match the parent 
-			// or be the parent, if the parent is a root component.
+			// or be null, if the parent is a root component.
 			int root_component_id = parent.getRoot_Component_ID();
 			if (root_component_id == 0)
 				root_component_id = parent.getCT_Component_ID();
 			component.setRoot_Component_ID(root_component_id); // Will trigger updates in sub components
 			component.saveEx();
-				
+
+			MCTComponentHistory history = new MCTComponentHistory(po.getCtx(), 0, po.get_TrxName());
+			history.setCT_Component_ID(component.getCT_Component_ID());
+			history.setOverhaulCount(component.getOverhaulCount());
+			history.setCT_ComponentActionType(MCTComponentHistory.CT_COMPONENTACTIONTYPE_Installed);
+			history.setDateAction(bomLine.getDateInstalled());
+			history.setQty(bomLine.getQtyInstalled());
+			history.setParentComponent_ID(parent.getCT_Component_ID());
+			history.setRoot_Component_ID(component.getRoot_Component_ID());
+			history.setComponentLifeAtAction(bomLine.getCompLifeAtInstall());
+			history.setParentLifeAtAction(bomLine.getParentLifeAtInstall());
+			history.setCT_ComponentBOMLine_ID(bomLine.getCT_ComponentBOMLine_ID());
+			history.setFTU_MaintWOResultLine_ID(bomLine.getFTU_MaintWOResultLine_ID());  // Library access?
+			history.saveEx();
+							
 		}
 		
 		// Old component uninstalled
@@ -249,7 +257,9 @@ public class ComponentModelValidator implements ModelValidator {
 			history.setParentComponent_ID(parent.getCT_Component_ID());
 			history.setCT_ComponentBOMLine_ID(bomLine.getCT_ComponentBOMLine_ID());
 			history.setComponentLifeAtAction(component.getLifeUsed());
+			history.setOverhaulCount(component.getOverhaulCount());
 			history.setParentLifeAtAction(parent.getLifeUsed());
+			history.setFTU_MaintWOResultLine_ID(bomLine.getFTU_MaintWOResultLine_ID());  // Library access?
 			history.saveEx();
 			
 			// Update the root component for the uninstalled component and its sub components
@@ -358,7 +368,7 @@ public class ComponentModelValidator implements ModelValidator {
 			if(bomLine.getDateInstalled() == null)
 				bomLine.setDateInstalled(new Timestamp (System.currentTimeMillis()));
 
-			if(bomLine.getQtyInstalled() == null)
+			if(bomLine.getQtyInstalled().compareTo(Env.ZERO) == 0)
 				bomLine.setQtyInstalled(Env.ONE);
 
 			bomLine.setParentLifeAtInstall(parent.getLifeUsed());
@@ -367,7 +377,7 @@ public class ComponentModelValidator implements ModelValidator {
 			bomLine.setCurrentCompLife(component.getLifeUsed());
 			bomLine.setParentUsageSinceInstall(Env.ZERO);
 			bomLine.setCompUsageSinceInstall(Env.ZERO);
-								
+											
 		}
 		
 		if (bomLine.is_ValueChanged(MCTComponentBOMLine.COLUMNNAME_CT_Component_ID) 
@@ -385,7 +395,7 @@ public class ComponentModelValidator implements ModelValidator {
 			bomLine.setCurrentCompLife(Env.ZERO);
 			bomLine.setParentUsageSinceInstall(Env.ZERO);
 			bomLine.setCompUsageSinceInstall(Env.ZERO);
-			
+						
 		}
 		
 		if ((bomLine.is_ValueChanged(MCTComponentBOMLine.COLUMNNAME_ParentLifeAtInstall)
@@ -481,7 +491,7 @@ public class ComponentModelValidator implements ModelValidator {
 							component.setRoot_InOut_ID(0);							
 						}
 						
-						addHistoryFromDocLine(po.getCtx(), component, line, line.getM_Locator_ID(), 0, action, movementType, po.get_TrxName());
+						addHistoryFromDocLine(po.getCtx(), component, line, line.getM_Locator_ID(), 0, component.getRoot_Component_ID(), action, movementType, po.get_TrxName());
 						
 					}
 					else if (po instanceof MInventory)
@@ -501,7 +511,7 @@ public class ComponentModelValidator implements ModelValidator {
 							component.setRoot_Locator_ID(line.getM_LocatorTo_ID());
 						}
 						
-						addHistoryFromDocLine(po.getCtx(), component, line, line.getM_Locator_ID(), 0, action, movementType, po.get_TrxName());
+						addHistoryFromDocLine(po.getCtx(), component, line, line.getM_Locator_ID(), 0, 0, action, movementType, po.get_TrxName());
 						
 					}
 					else if (po instanceof MMovement)
@@ -540,7 +550,7 @@ public class ComponentModelValidator implements ModelValidator {
 							}
 							componentFrom.saveEx();
 							
-							addHistoryFromDocLine(po.getCtx(), componentFrom, line, line.getM_Locator_ID(), 0, action, movementType, po.get_TrxName());
+							addHistoryFromDocLine(po.getCtx(), componentFrom, line, line.getM_Locator_ID(), 0, 0, action, movementType, po.get_TrxName());
 
 						}
 
@@ -559,7 +569,7 @@ public class ComponentModelValidator implements ModelValidator {
 							component.setRoot_Locator_ID(line.getM_LocatorTo_ID());
 						}
 						
-						addHistoryFromDocLine(po.getCtx(), component, line, line.getM_LocatorTo_ID(), 0, action, movementType, po.get_TrxName());
+						addHistoryFromDocLine(po.getCtx(), component, line, line.getM_LocatorTo_ID(), 0, 0, action, movementType, po.get_TrxName());
 						
 					}
 					
@@ -574,12 +584,21 @@ public class ComponentModelValidator implements ModelValidator {
 	}
 
 	public static void addHistoryFromDocLine(Properties ctx, MCTComponent component,
-			IDocumentLine line, int m_locator_id, int parentComponent_id, String action, String movementType,
+			IDocumentLine line, int m_locator_id, int parentComponent_id, int rootComponent_id, String action, String movementType,
 			String trxName) {
 		
 		MCTComponentHistory history = MCTComponentHistory.getByline(ctx, line, action, trxName);
 		if (history == null)
 		{
+			
+			int overhaulCount = component.getOverhaulCount();
+			if (((PO) line).get_ColumnIndex(MCTComponent.COLUMNNAME_OverhaulCount) > 0)
+				overhaulCount = ((PO) line).get_ValueAsInt(MCTComponent.COLUMNNAME_OverhaulCount);
+			
+			BigDecimal compLife = component.getLifeUsed();
+			if (((PO) line).get_ColumnIndex(MFTUMaintWOResultLine.COLUMNNAME_CT_ComponentLifeAtAction) > 0)
+				compLife = (BigDecimal) ((PO) line).get_Value(MFTUMaintWOResultLine.COLUMNNAME_CT_ComponentLifeAtAction);
+			
 			history = new MCTComponentHistory(ctx, 0, trxName);
 			history.setCT_Component_ID(component.getCT_Component_ID());
 			history.setLine_ID(line);
@@ -589,10 +608,42 @@ public class ComponentModelValidator implements ModelValidator {
 			history.setQty(line.getMovementQty());
 			history.setM_Locator_ID(m_locator_id);
 			history.setParentComponent_ID(parentComponent_id);
-			history.setComponentLifeAtAction(component.getLife());  // TODO: Will be the current life, not the life at the movement date.
+			history.setRoot_Component_ID(rootComponent_id);
+			history.setComponentLifeAtAction(compLife);  // TODO: Will be the current life, not the life at the movement date.
+			history.setOverhaulCount(overhaulCount);
 			history.setParentLifeAtAction(component.getParenetLife()); // TODO: will be the current life, not the life at the movement date.
 			history.saveEx();
 		}
 	}
+
+//	public static void addHistoryFromMaintWORLDetail(Properties ctx,
+//			MCTComponent component, MFTUMaintWORLDetail detail, 
+//			String trxName) {
+//
+//		MCTComponentHistory history = MCTComponentHistory.getByDetail(ctx, detail, trxName);
+//		if (history == null)
+//		{
+//			history = new MCTComponentHistory(ctx, 0, trxName);
+//			history.setCT_Component_ID(component.getCT_Component_ID());
+//			history.setFTU_MaintWOResultLine_ID(detail.getFTU_MaintWOResultLine_ID());
+//			history.setCT_ComponentActionType(detail.getCT_ComponentActionType());
+//			history.setDateAction(detail.getFTU_MaintWOResultLine().getFTU_MaintWOResult().getDateDoc());  // TODO detail specific
+//			history.setQty(detail.getQty());
+//			if (MFTUMaintWORLDetail.CT_COMPONENTACTIONTYPE_Installed.equals(detail.getCT_ComponentActionType()))
+//			{
+//				history.setRoot_Component_ID(detail.getTarget_RootComponent_ID());
+//				history.setParentComponent_ID(detail.getTarget_ParentComponent_ID());
+//			}
+//			if (MFTUMaintWORLDetail.CT_COMPONENTACTIONTYPE_Uninstalled.equals(detail.getCT_ComponentActionType()))
+//			{
+//				history.setRoot_Component_ID(detail.getRoot_Component_ID());
+//				history.setParentComponent_ID(detail.getParentComponent_ID());
+//			}
+//			history.setComponentLifeAtAction(component.getLife());  // TODO: Will be the current life, not the life at the movement date.
+//			history.setParentLifeAtAction(component.getParenetLife()); // TODO: will be the current life, not the life at the movement date.
+//			history.saveEx();
+//		}
+//		
+//	}
 
 }

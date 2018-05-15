@@ -78,6 +78,21 @@ public interface I_CT_Component
 	  */
 	public int getCreatedBy();
 
+    /** Column name CT_CompLifeCycleModel_ID */
+    public static final String COLUMNNAME_CT_CompLifeCycleModel_ID = "CT_CompLifeCycleModel_ID";
+
+	/** Set Component Life Cycle Model.
+	  * The component life cycle model to use when creating new components for this product.
+	  */
+	public void setCT_CompLifeCycleModel_ID (int CT_CompLifeCycleModel_ID);
+
+	/** Get Component Life Cycle Model.
+	  * The component life cycle model to use when creating new components for this product.
+	  */
+	public int getCT_CompLifeCycleModel_ID();
+
+	public com.mckayerp.model.I_CT_CompLifeCycleModel getCT_CompLifeCycleModel() throws RuntimeException;
+
     /** Column name CT_Component_ID */
     public static final String COLUMNNAME_CT_Component_ID = "CT_Component_ID";
 
@@ -129,6 +144,19 @@ public interface I_CT_Component
 	  * Can the life be extended beyond the maximum life?
 	  */
 	public boolean isLifeExtensionPossible();
+
+    /** Column name IsOnCondition */
+    public static final String COLUMNNAME_IsOnCondition = "IsOnCondition";
+
+	/** Set On Condition Program Applies.
+	  * The life cycle is governed by an "On Condition" program of preventative maintenance rather than a hard life limit.
+	  */
+	public void setIsOnCondition (boolean IsOnCondition);
+
+	/** Get On Condition Program Applies.
+	  * The life cycle is governed by an "On Condition" program of preventative maintenance rather than a hard life limit.
+	  */
+	public boolean isOnCondition();
 
     /** Column name LifeUsageSource */
     public static final String COLUMNNAME_LifeUsageSource = "LifeUsageSource";
@@ -213,6 +241,32 @@ public interface I_CT_Component
 	  * The maximum life use expected in the life usage units.
 	  */
 	public BigDecimal getMaxLifeUsage();
+
+    /** Column name MaxOverhaulCount */
+    public static final String COLUMNNAME_MaxOverhaulCount = "MaxOverhaulCount";
+
+	/** Set Max Number of Overhaul Cycles.
+	  * The maximum number of times that a component can be overhauled.
+	  */
+	public void setMaxOverhaulCount (int MaxOverhaulCount);
+
+	/** Get Max Number of Overhaul Cycles.
+	  * The maximum number of times that a component can be overhauled.
+	  */
+	public int getMaxOverhaulCount();
+
+    /** Column name OverhaulCount */
+    public static final String COLUMNNAME_OverhaulCount = "OverhaulCount";
+
+	/** Set Overhaul Count.
+	  * The number of life cycles completed or underway.
+	  */
+	public void setOverhaulCount (int OverhaulCount);
+
+	/** Get Overhaul Count.
+	  * The number of life cycles completed or underway.
+	  */
+	public int getOverhaulCount();
 
     /** Column name Root_Component_ID */
     public static final String COLUMNNAME_Root_Component_ID = "Root_Component_ID";
