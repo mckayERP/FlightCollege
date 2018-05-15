@@ -126,12 +126,6 @@ public class CalloutBankDeposit extends CalloutEngine
 		//
 		MPayment pmt = new MPayment(ctx,C_Payment_ID,null);
 
-		if (pmt == null)
-		{
-			log.severe("No payment found for Payment ID " + C_Payment_ID);
-			return "No payment found.";
-		}
-
 		// Check the bank currency - the payment could be in a different currency
 		Object currencyID = mTab.getField("C_Currency_ID").getValue();
 		if (currencyID != null)
