@@ -130,23 +130,27 @@ public class Evaluator
 	private static boolean evaluateLogicTuple (Evaluatee source, String logic)
 	{
 		// [@]([^@]*)[@]([!=|!|^|=|<|<=|>|>=|>\-<])[\'\"](.*)[\'\"]
-		String regexp = "([@|\'|\"]?[^@]*[@|\'|\"]?)([!=|!|^|=|<|<=|>|>=])([@|\'|\"]?[^@]*[@|\'|\"]?)";
+		String regexp = "(-?)([@|\'|\"]?[^@]*[@|\'|\"]?)(<[=>]?|=[=>]?|>[=]?|![=]?)(-?)([@|\'|\"]?[^@]*[@|\'|\"]?)";
+		String firstModifier;
 		String first;
 		String second;
+		String secondModifier;
 		String operand;
 		Pattern pattern = Pattern.compile(regexp);
-	   Matcher matcher = pattern.matcher(logic);
-	   if (matcher.find()) {
-	      first = matcher.group(1);
-	      operand = matcher.group(2);
-	      second = matcher.group(3);
-	   }
-	   else
-	   {
+		Matcher matcher = pattern.matcher(logic);
+		if (matcher.find()) {
+			firstModifier = matcher.group(1);
+			first = matcher.group(2);
+			operand = matcher.group(3);
+			secondModifier = matcher.group(4);
+			second = matcher.group(5);
+		}
+		else
+		{
 		   s_log.log(Level.SEVERE, "Logic tuple does not comply with format "
-				+ "'@context@<operand>value' where <operand> could be one of '=!^><' => " + logic);
+				+ "'[-]@context@<operand>[-]value' where <operand> could be one of '=!^><' => " + logic);
 		   return false;		   
-	   }
+		}
 
 		//	First Part
 		String firstEval = first.trim();
@@ -173,7 +177,7 @@ public class Evaluator
 			secondEval = "0";
 
 		//	Logical Comparison
-		boolean result = evaluateLogicTuple (firstEval, operand, secondEval);
+		boolean result = evaluateLogicTuple (firstEval, firstModifier, operand, secondEval, secondModifier);
 		//
 		if (CLogMgt.isLevelFinest())
 			s_log.finest(logic 
@@ -187,21 +191,50 @@ public class Evaluator
 	 *	@param value1 value
 	 *	@param operand operand = ~ ^ ! > <
 	 *	@param value2
+	 * @param secondModifier 
+	 * @param secondEval 
 	 *	@return evaluation
 	 */
-	private static boolean evaluateLogicTuple (String value1, String operand, String value2)
+	private static boolean evaluateLogicTuple (String value1, String value1Mod, String operand, String value2, String value2Mod)
 	{
 		if (value1 == null || operand == null || value2 == null)
 			return false;
 		
+		value1Mod = value1Mod == null ? "" : value1Mod;
+		value2Mod = value2Mod == null ? "" : value2Mod;
+		
+		// Check for tests for null similar to variable == null  or variable != null
+		// If a value is an empty string and is compared with anything
+		if (value2.equals("null"))
+		{
+			if (value1.isEmpty())
+			{
+				if (operand.equals("=") || operand.equals("=="))
+					return true;
+				else // Assume all other tests are equivalent to not equal
+					return false;
+			}
+			else
+			{
+				if (operand.equals("=") || operand.equals("=="))
+					return false;
+				else // Assume all other tests are equivalent to not equal
+					return true;
+			}
+		}
+		
 		BigDecimal value1bd = null;
 		BigDecimal value2bd = null;
+		BigDecimal negate1 = value1Mod.equals("-") ? BigDecimal.ONE.negate() : BigDecimal.ONE;
+		BigDecimal negate2 = value2Mod.equals("-") ? BigDecimal.ONE.negate() : BigDecimal.ONE;
 		try
 		{
 			if (!value1.startsWith("'"))
-				value1bd = new BigDecimal (value1);
+			{
+				value1bd = new BigDecimal (value1).multiply(negate1);
+			}
 			if (!value2.startsWith("'"))
-				value2bd = new BigDecimal (value2);
+				value2bd = new BigDecimal (value2).multiply(negate2);
 		}
 		catch (Exception e)
 		{
@@ -209,7 +242,7 @@ public class Evaluator
 			value2bd = null;
 		}
 		//
-		if (operand.equals("="))
+		if (operand.equals("=") || operand.equals("=="))
 		{
 			if (value1bd != null && value2bd != null)
 				return value1bd.compareTo(value2bd) == 0;
@@ -233,13 +266,13 @@ public class Evaluator
 				return value1bd.compareTo(value2bd) <= 0;
 			return value1.compareTo(value2) <= 0;
 		}
-		else if (operand.equals("=>"))
+		else if (operand.equals("=>") || operand.equals(">="))
 		{
 			if (value1bd != null && value2bd != null)
 				return value1bd.compareTo(value2bd) >= 0;
 			return value1.compareTo(value2) >= 0;
 		}
-		else //	interpreted as not
+		else //	interpreted as not  (!, !=, <>)
 		{
 			if (value1bd != null && value2bd != null)
 				return value1bd.compareTo(value2bd) != 0;
@@ -270,7 +303,10 @@ public class Evaluator
 			String variable = s.substring(0, pos);
 			s = s.substring(pos+1);
 		//	log.fine( variable);
-			list.add(variable);
+			// Can't assume the variable is used only once
+			// Multiple times are possible.
+			if (!list.contains(variable))
+				list.add(variable);
 		}
 	}   //  parseDepends
 
