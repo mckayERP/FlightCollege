@@ -1339,7 +1339,15 @@ public class GridField
 
 		// [ 1881480 ] Navigation problem between tabs
 		String columnName = m_vo.ColumnNameAlias.isEmpty() ? m_vo.ColumnName : m_vo.ColumnNameAlias;
-		Env.setContext(m_vo.ctx, m_vo.WindowNo, columnName, (String) m_value);
+		if (isKey())
+		{
+			Env.setContext(m_vo.ctx, m_vo.WindowNo, columnName, (String) m_value);
+			Env.setContext(m_vo.ctx, m_vo.WindowNo, m_vo.TabNo, columnName, (String) m_value);
+		}
+		else
+		{
+			Env.setContext(m_vo.ctx, m_vo.WindowNo, m_vo.TabNo, columnName, (String) m_value);
+		}
 
 		//  Does not fire, if same value
 		m_propertyChangeListeners.firePropertyChange(PROPERTY, m_oldValue, m_value);
@@ -1580,7 +1588,7 @@ public class GridField
 
 	/**
 	 *  Overwrite Displayed
-	 *  @param displayed trie if displayed
+	 *  @param displayed true if displayed
 	 */
 	public void setDisplayed (boolean displayed)
 	{
