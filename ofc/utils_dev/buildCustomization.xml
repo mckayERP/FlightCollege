@@ -22,7 +22,7 @@
 		<ant inheritAll="false" dir="install"/>
 		<ant inheritAll="false" dir="zkwebui"/>
         <ant inheritAll="false" dir="com.mckayerp.component_tracking"/>
-        <ant inheritAll="false" dir="com.mckayerp.ftu"/>
+        <!-- ant inheritAll="false" dir="com.mckayerp.ftu"/ -->
         <ant inheritAll="false" dir="com.helcim.helcim_semi_integrated"/>		
         <ant inheritAll="false" dir="com.mckayerp.helcim"/>       
         <ant inheritAll="false" dir="serverRoot"/>

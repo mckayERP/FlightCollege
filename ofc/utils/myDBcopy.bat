@@ -22,7 +22,7 @@
 
 @Echo Make local copy
 @REM Comment this line to prevent local storage of the backup.
-@copy ExpDat.jar "ExpDat%DATETIME%.jar"
+@copy /Y %ADEMPIERE_HOME%\data\ExpDat.jar "%ADEMPIERE_HOME%\data\ExpDat%DATETIME%.jar"
 
 @Echo copy %ADEMPIERE_HOME%\data\ExpDat%DATETIME%.jar to backup media
 @copy %ADEMPIERE_HOME%\data\ExpDat.jar "T:\6 - IT\Adempiere\Backups\ExpDat%DATETIME%.jar"
@@ -38,11 +38,11 @@
 @REM @Echo Delete old off-site backups
 @REM cd "C:\My Dropbox\ADempiere Backups\"
 cd "C:\Users\admin\Google Drive\backup\adempiere\data\"
-wscript "C:\Scripts\DeletesOlderThan.js" 60
+wscript "C:\Scripts\DeletesOlderThan.js" 20
 
 @Echo Delete old on-site backups
 cd %ADEMPIERE_HOME%\data\
-wscript "C:\Scripts\DeletesOlderThan.js" 20
+wscript "C:\Scripts\DeletesOlderThan.js" 5
 
 @Echo Delete old T:\ drive backups
 cd "T:\6 - IT\Adempiere\Backups\"

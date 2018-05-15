@@ -12,7 +12,7 @@
 <listEntry value="org.eclipse.debug.ui.launchGroup.run"/>
 </listAttribute>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.adempiere.util.GenerateModel"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="C:/dev/repos/github/ofc-project/OFC/com.mckayerp.ftu/src/base/com/mckayerp/ftu/model/&#13;&#10;com.mckayerp.ftu.model&#13;&#10;&quot;'MFTU'&quot;&#13;&#10;'FTU_%'"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="C:/dev/repos/github/ofc-project/OFC/com.mckayerp.ftu/src/base/com/mckayerp/ftu/model/&#13;&#10;com.mckayerp.ftu.model&#13;&#10;&quot;'MFTU'&quot;&#13;&#10;'FTU_Aircraft%'"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="adempiere"/>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-DPropertyFile=&quot;${adempierePropertiesFile}&quot;&#13;&#10;-DADEMPIERE_HOME=&quot;${ADEMPIERE_HOME}&quot;"/>
 </launchConfiguration>
