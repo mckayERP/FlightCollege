@@ -78,6 +78,21 @@ public interface I_FTU_MaintRequirement
 	  */
 	public int getCreatedBy();
 
+    /** Column name CT_CompLifeCycleModel_ID */
+    public static final String COLUMNNAME_CT_CompLifeCycleModel_ID = "CT_CompLifeCycleModel_ID";
+
+	/** Set Component Life Cycle Model.
+	  * The component life cycle model to use when creating new components for this product.
+	  */
+	public void setCT_CompLifeCycleModel_ID (int CT_CompLifeCycleModel_ID);
+
+	/** Get Component Life Cycle Model.
+	  * The component life cycle model to use when creating new components for this product.
+	  */
+	public int getCT_CompLifeCycleModel_ID();
+
+	public com.mckayerp.model.I_CT_CompLifeCycleModel getCT_CompLifeCycleModel() throws RuntimeException;
+
     /** Column name CT_Component_ID */
     public static final String COLUMNNAME_CT_Component_ID = "CT_Component_ID";
 
@@ -92,6 +107,21 @@ public interface I_FTU_MaintRequirement
 	public int getCT_Component_ID();
 
 	public com.mckayerp.model.I_CT_Component getCT_Component() throws RuntimeException;
+
+    /** Column name CT_DataSet_ID */
+    public static final String COLUMNNAME_CT_DataSet_ID = "CT_DataSet_ID";
+
+	/** Set Data Set.
+	  * A definition of a set of data.
+	  */
+	public void setCT_DataSet_ID (int CT_DataSet_ID);
+
+	/** Get Data Set.
+	  * A definition of a set of data.
+	  */
+	public int getCT_DataSet_ID();
+
+	public com.mckayerp.model.I_CT_DataSet getCT_DataSet() throws RuntimeException;
 
     /** Column name Description */
     public static final String COLUMNNAME_Description = "Description";
@@ -129,6 +159,21 @@ public interface I_FTU_MaintRequirement
 	public int getFTU_AirworthinessDirective_ID();
 
 	public com.mckayerp.ftu.model.I_FTU_AirworthinessDirective getFTU_AirworthinessDirective() throws RuntimeException;
+
+    /** Column name FTU_AppliesToProdGroup_ID */
+    public static final String COLUMNNAME_FTU_AppliesToProdGroup_ID = "FTU_AppliesToProdGroup_ID";
+
+	/** Set Appies to Product Group.
+	  * Applies to all products in the product group.
+	  */
+	public void setFTU_AppliesToProdGroup_ID (int FTU_AppliesToProdGroup_ID);
+
+	/** Get Appies to Product Group.
+	  * Applies to all products in the product group.
+	  */
+	public int getFTU_AppliesToProdGroup_ID();
+
+	public org.compiere.model.I_M_Product_Group getFTU_AppliesToProdGroup() throws RuntimeException;
 
     /** Column name FTU_AppliesToProduct_ID */
     public static final String COLUMNNAME_FTU_AppliesToProduct_ID = "FTU_AppliesToProduct_ID";
@@ -208,6 +253,47 @@ public interface I_FTU_MaintRequirement
 	  */
 	public int getFTU_MaintRequirement_ID();
 
+    /** Column name FTU_PhaseFromMaintReq_ID */
+    public static final String COLUMNNAME_FTU_PhaseFromMaintReq_ID = "FTU_PhaseFromMaintReq_ID";
+
+	/** Set Phase From Maint Req.
+	  * Phase the maintenance action from the next performance of this maintenance requirement.
+	  */
+	public void setFTU_PhaseFromMaintReq_ID (int FTU_PhaseFromMaintReq_ID);
+
+	/** Get Phase From Maint Req.
+	  * Phase the maintenance action from the next performance of this maintenance requirement.
+	  */
+	public int getFTU_PhaseFromMaintReq_ID();
+
+	public com.mckayerp.ftu.model.I_FTU_MaintRequirement getFTU_PhaseFromMaintReq() throws RuntimeException;
+
+    /** Column name FTU_PhaseInterval */
+    public static final String COLUMNNAME_FTU_PhaseInterval = "FTU_PhaseInterval";
+
+	/** Set Internal Phase Interval.
+	  * The phase interval in the base unit (days).
+	  */
+	public void setFTU_PhaseInterval (BigDecimal FTU_PhaseInterval);
+
+	/** Get Internal Phase Interval.
+	  * The phase interval in the base unit (days).
+	  */
+	public BigDecimal getFTU_PhaseInterval();
+
+    /** Column name FTU_PhaseIntervalEntered */
+    public static final String COLUMNNAME_FTU_PhaseIntervalEntered = "FTU_PhaseIntervalEntered";
+
+	/** Set Phase Interval.
+	  * The phase interval from the phase Maintenance Requirement identified.
+	  */
+	public void setFTU_PhaseIntervalEntered (BigDecimal FTU_PhaseIntervalEntered);
+
+	/** Get Phase Interval.
+	  * The phase interval from the phase Maintenance Requirement identified.
+	  */
+	public BigDecimal getFTU_PhaseIntervalEntered();
+
     /** Column name FTU_Process */
     public static final String COLUMNNAME_FTU_Process = "FTU_Process";
 
@@ -220,6 +306,19 @@ public interface I_FTU_MaintRequirement
 	  * A text description of the process to follow.
 	  */
 	public String getFTU_Process();
+
+    /** Column name FTU_ResolutionFFTemplate */
+    public static final String COLUMNNAME_FTU_ResolutionFFTemplate = "FTU_ResolutionFFTemplate";
+
+	/** Set Resolution Fault Found Template.
+	  * A text string that will be used as a template in the maintenance work order result for the resolution of the maintenance action when a fault is found.
+	  */
+	public void setFTU_ResolutionFFTemplate (String FTU_ResolutionFFTemplate);
+
+	/** Get Resolution Fault Found Template.
+	  * A text string that will be used as a template in the maintenance work order result for the resolution of the maintenance action when a fault is found.
+	  */
+	public String getFTU_ResolutionFFTemplate();
 
     /** Column name FTU_ResolutionTemplate */
     public static final String COLUMNNAME_FTU_ResolutionTemplate = "FTU_ResolutionTemplate";
@@ -419,6 +518,32 @@ public interface I_FTU_MaintRequirement
 	  * The record is active in the system
 	  */
 	public boolean isActive();
+
+    /** Column name IsOnConditionSchedule */
+    public static final String COLUMNNAME_IsOnConditionSchedule = "IsOnConditionSchedule";
+
+	/** Set On Condition Schedule.
+	  * The Maintenance Requirement relates to an on-condition program for the associated components.
+	  */
+	public void setIsOnConditionSchedule (boolean IsOnConditionSchedule);
+
+	/** Get On Condition Schedule.
+	  * The Maintenance Requirement relates to an on-condition program for the associated components.
+	  */
+	public boolean isOnConditionSchedule();
+
+    /** Column name IsOverhaulSchedule */
+    public static final String COLUMNNAME_IsOverhaulSchedule = "IsOverhaulSchedule";
+
+	/** Set Overhaul Schedule.
+	  * The Maintenance Requirement is related to the overhaul schedule (Max Life) of the Component Life Cycle Model
+	  */
+	public void setIsOverhaulSchedule (boolean IsOverhaulSchedule);
+
+	/** Get Overhaul Schedule.
+	  * The Maintenance Requirement is related to the overhaul schedule (Max Life) of the Component Life Cycle Model
+	  */
+	public boolean isOverhaulSchedule();
 
     /** Column name Name */
     public static final String COLUMNNAME_Name = "Name";

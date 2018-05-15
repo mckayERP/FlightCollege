@@ -29,7 +29,7 @@ public class X_FTU_MaintRequirementLine extends PO implements I_FTU_MaintRequire
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20180107L;
+	private static final long serialVersionUID = 20180407L;
 
     /** Standard Constructor */
     public X_FTU_MaintRequirementLine (Properties ctx, int FTU_MaintRequirementLine_ID, String trxName)
@@ -89,6 +89,12 @@ public class X_FTU_MaintRequirementLine extends PO implements I_FTU_MaintRequire
 	public static final String CT_COMPONENTACTIONTYPE_Uninstalled = "Uninstalled";
 	/** Created = Created */
 	public static final String CT_COMPONENTACTIONTYPE_Created = "Created";
+	/** Inspected = Inspected */
+	public static final String CT_COMPONENTACTIONTYPE_Inspected = "Inspected";
+	/** Overhauled = Overhauled */
+	public static final String CT_COMPONENTACTIONTYPE_Overhauled = "Overhauled";
+	/** Repaired = Repaired */
+	public static final String CT_COMPONENTACTIONTYPE_Repaired = "Repaired";
 	/** Set Action Type.
 		@param CT_ComponentActionType 
 		The type of action performed on the component
@@ -125,6 +131,12 @@ public class X_FTU_MaintRequirementLine extends PO implements I_FTU_MaintRequire
 	public static final String CT_COMPONENTRESOLUTIONTYPE_Uninstalled = "Uninstalled";
 	/** Created = Created */
 	public static final String CT_COMPONENTRESOLUTIONTYPE_Created = "Created";
+	/** Inspected = Inspected */
+	public static final String CT_COMPONENTRESOLUTIONTYPE_Inspected = "Inspected";
+	/** Overhauled = Overhauled */
+	public static final String CT_COMPONENTRESOLUTIONTYPE_Overhauled = "Overhauled";
+	/** Repaired = Repaired */
+	public static final String CT_COMPONENTRESOLUTIONTYPE_Repaired = "Repaired";
 	/** Set Resolution Type.
 		@param CT_ComponentResolutionType 
 		The type of action performed on the component to resolve a maintenance requirement
@@ -141,6 +153,34 @@ public class X_FTU_MaintRequirementLine extends PO implements I_FTU_MaintRequire
 	public String getCT_ComponentResolutionType () 
 	{
 		return (String)get_Value(COLUMNNAME_CT_ComponentResolutionType);
+	}
+
+	public com.mckayerp.model.I_CT_DataSet getCT_DataSet() throws RuntimeException
+    {
+		return (com.mckayerp.model.I_CT_DataSet)MTable.get(getCtx(), com.mckayerp.model.I_CT_DataSet.Table_Name)
+			.getPO(getCT_DataSet_ID(), get_TrxName());	}
+
+	/** Set Data Set.
+		@param CT_DataSet_ID 
+		A definition of a set of data.
+	  */
+	public void setCT_DataSet_ID (int CT_DataSet_ID)
+	{
+		if (CT_DataSet_ID < 1) 
+			set_Value (COLUMNNAME_CT_DataSet_ID, null);
+		else 
+			set_Value (COLUMNNAME_CT_DataSet_ID, Integer.valueOf(CT_DataSet_ID));
+	}
+
+	/** Get Data Set.
+		@return A definition of a set of data.
+	  */
+	public int getCT_DataSet_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_CT_DataSet_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
 	}
 
 	/** Set Action.
@@ -216,8 +256,8 @@ public class X_FTU_MaintRequirementLine extends PO implements I_FTU_MaintRequire
 		return ii.intValue();
 	}
 
-	/** Set Maintenance Requirement Line ID.
-		@param FTU_MaintRequirementLine_ID Maintenance Requirement Line ID	  */
+	/** Set Maintenance Requirement Line.
+		@param FTU_MaintRequirementLine_ID Maintenance Requirement Line	  */
 	public void setFTU_MaintRequirementLine_ID (int FTU_MaintRequirementLine_ID)
 	{
 		if (FTU_MaintRequirementLine_ID < 1) 
@@ -226,8 +266,8 @@ public class X_FTU_MaintRequirementLine extends PO implements I_FTU_MaintRequire
 			set_ValueNoCheck (COLUMNNAME_FTU_MaintRequirementLine_ID, Integer.valueOf(FTU_MaintRequirementLine_ID));
 	}
 
-	/** Get Maintenance Requirement Line ID.
-		@return Maintenance Requirement Line ID	  */
+	/** Get Maintenance Requirement Line.
+		@return Maintenance Requirement Line	  */
 	public int getFTU_MaintRequirementLine_ID () 
 	{
 		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_MaintRequirementLine_ID);
@@ -251,6 +291,23 @@ public class X_FTU_MaintRequirementLine extends PO implements I_FTU_MaintRequire
 	public String getFTU_Process () 
 	{
 		return (String)get_Value(COLUMNNAME_FTU_Process);
+	}
+
+	/** Set Resolution Fault Found Template.
+		@param FTU_ResolutionFFTemplate 
+		A text string that will be used as a template in the maintenance work order result for the resolution of the maintenance action when a fault is found.
+	  */
+	public void setFTU_ResolutionFFTemplate (String FTU_ResolutionFFTemplate)
+	{
+		set_Value (COLUMNNAME_FTU_ResolutionFFTemplate, FTU_ResolutionFFTemplate);
+	}
+
+	/** Get Resolution Fault Found Template.
+		@return A text string that will be used as a template in the maintenance work order result for the resolution of the maintenance action when a fault is found.
+	  */
+	public String getFTU_ResolutionFFTemplate () 
+	{
+		return (String)get_Value(COLUMNNAME_FTU_ResolutionFFTemplate);
 	}
 
 	/** Set Resolution Template.

@@ -203,6 +203,17 @@ public interface I_FTU_MaintWorkOrder
 	  */
 	public String getDocumentNo();
 
+    /** Column name FTU_Aircraft_ID */
+    public static final String COLUMNNAME_FTU_Aircraft_ID = "FTU_Aircraft_ID";
+
+	/** Set Aircraft	  */
+	public void setFTU_Aircraft_ID (int FTU_Aircraft_ID);
+
+	/** Get Aircraft	  */
+	public int getFTU_Aircraft_ID();
+
+	public com.mckayerp.ftu.model.I_FTU_Aircraft getFTU_Aircraft() throws RuntimeException;
+
     /** Column name FTU_MaintWorkOrder_ID */
     public static final String COLUMNNAME_FTU_MaintWorkOrder_ID = "FTU_MaintWorkOrder_ID";
 

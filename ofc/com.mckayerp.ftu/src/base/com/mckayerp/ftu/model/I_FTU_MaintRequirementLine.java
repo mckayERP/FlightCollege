@@ -104,6 +104,21 @@ public interface I_FTU_MaintRequirementLine
 	  */
 	public String getCT_ComponentResolutionType();
 
+    /** Column name CT_DataSet_ID */
+    public static final String COLUMNNAME_CT_DataSet_ID = "CT_DataSet_ID";
+
+	/** Set Data Set.
+	  * A definition of a set of data.
+	  */
+	public void setCT_DataSet_ID (int CT_DataSet_ID);
+
+	/** Get Data Set.
+	  * A definition of a set of data.
+	  */
+	public int getCT_DataSet_ID();
+
+	public com.mckayerp.model.I_CT_DataSet getCT_DataSet() throws RuntimeException;
+
     /** Column name FTU_Action */
     public static final String COLUMNNAME_FTU_Action = "FTU_Action";
 
@@ -150,10 +165,10 @@ public interface I_FTU_MaintRequirementLine
     /** Column name FTU_MaintRequirementLine_ID */
     public static final String COLUMNNAME_FTU_MaintRequirementLine_ID = "FTU_MaintRequirementLine_ID";
 
-	/** Set Maintenance Requirement Line ID	  */
+	/** Set Maintenance Requirement Line	  */
 	public void setFTU_MaintRequirementLine_ID (int FTU_MaintRequirementLine_ID);
 
-	/** Get Maintenance Requirement Line ID	  */
+	/** Get Maintenance Requirement Line	  */
 	public int getFTU_MaintRequirementLine_ID();
 
     /** Column name FTU_Process */
@@ -168,6 +183,19 @@ public interface I_FTU_MaintRequirementLine
 	  * A text description of the process to follow.
 	  */
 	public String getFTU_Process();
+
+    /** Column name FTU_ResolutionFFTemplate */
+    public static final String COLUMNNAME_FTU_ResolutionFFTemplate = "FTU_ResolutionFFTemplate";
+
+	/** Set Resolution Fault Found Template.
+	  * A text string that will be used as a template in the maintenance work order result for the resolution of the maintenance action when a fault is found.
+	  */
+	public void setFTU_ResolutionFFTemplate (String FTU_ResolutionFFTemplate);
+
+	/** Get Resolution Fault Found Template.
+	  * A text string that will be used as a template in the maintenance work order result for the resolution of the maintenance action when a fault is found.
+	  */
+	public String getFTU_ResolutionFFTemplate();
 
     /** Column name FTU_ResolutionTemplate */
     public static final String COLUMNNAME_FTU_ResolutionTemplate = "FTU_ResolutionTemplate";

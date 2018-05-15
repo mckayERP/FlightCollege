@@ -123,6 +123,19 @@ public interface I_FTU_MaintWOResult
 	  */
 	public int getCreatedBy();
 
+    /** Column name CT_ComponentLifeAtAction */
+    public static final String COLUMNNAME_CT_ComponentLifeAtAction = "CT_ComponentLifeAtAction";
+
+	/** Set Component Life.
+	  * The component life used at the time of the action. For example, the time in service of a replacement part at the time of install.
+	  */
+	public void setCT_ComponentLifeAtAction (BigDecimal CT_ComponentLifeAtAction);
+
+	/** Get Component Life.
+	  * The component life used at the time of the action. For example, the time in service of a replacement part at the time of install.
+	  */
+	public BigDecimal getCT_ComponentLifeAtAction();
+
     /** Column name DateDoc */
     public static final String COLUMNNAME_DateDoc = "DateDoc";
 
@@ -188,13 +201,39 @@ public interface I_FTU_MaintWOResult
 	  */
 	public String getDocumentNo();
 
+    /** Column name FTU_AMORef */
+    public static final String COLUMNNAME_FTU_AMORef = "FTU_AMORef";
+
+	/** Set AMO Reference.
+	  * The identifier of the associated document from the AMO.
+	  */
+	public void setFTU_AMORef (String FTU_AMORef);
+
+	/** Get AMO Reference.
+	  * The identifier of the associated document from the AMO.
+	  */
+	public String getFTU_AMORef();
+
+    /** Column name FTU_MaintCreateResultLines */
+    public static final String COLUMNNAME_FTU_MaintCreateResultLines = "FTU_MaintCreateResultLines";
+
+	/** Set Create Result Lines.
+	  * Creates draft lines based on the work order.
+	  */
+	public void setFTU_MaintCreateResultLines (String FTU_MaintCreateResultLines);
+
+	/** Get Create Result Lines.
+	  * Creates draft lines based on the work order.
+	  */
+	public String getFTU_MaintCreateResultLines();
+
     /** Column name FTU_MaintWOResult_ID */
     public static final String COLUMNNAME_FTU_MaintWOResult_ID = "FTU_MaintWOResult_ID";
 
-	/** Set Maintenance Work Order Result ID	  */
+	/** Set Maintenance Work Order Result	  */
 	public void setFTU_MaintWOResult_ID (int FTU_MaintWOResult_ID);
 
-	/** Get Maintenance Work Order Result ID	  */
+	/** Get Maintenance Work Order Result	  */
 	public int getFTU_MaintWOResult_ID();
 
     /** Column name FTU_MaintWorkOrder_ID */
@@ -237,6 +276,21 @@ public interface I_FTU_MaintWOResult
 	  * Indicates if this document requires approval
 	  */
 	public boolean isApproved();
+
+    /** Column name LifeUsageUOM_ID */
+    public static final String COLUMNNAME_LifeUsageUOM_ID = "LifeUsageUOM_ID";
+
+	/** Set Life Use UOM.
+	  * The unit of measure (UOM) for the life usage.  Example, hours, km.
+	  */
+	public void setLifeUsageUOM_ID (int LifeUsageUOM_ID);
+
+	/** Get Life Use UOM.
+	  * The unit of measure (UOM) for the life usage.  Example, hours, km.
+	  */
+	public int getLifeUsageUOM_ID();
+
+	public org.compiere.model.I_C_UOM getLifeUsageUOM() throws RuntimeException;
 
     /** Column name M_Warehouse_ID */
     public static final String COLUMNNAME_M_Warehouse_ID = "M_Warehouse_ID";

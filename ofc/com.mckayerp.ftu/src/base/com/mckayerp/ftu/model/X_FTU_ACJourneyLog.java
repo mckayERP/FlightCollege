@@ -32,7 +32,7 @@ public class X_FTU_ACJourneyLog extends PO implements I_FTU_ACJourneyLog, I_Pers
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20180107L;
+	private static final long serialVersionUID = 20180407L;
 
     /** Standard Constructor */
     public X_FTU_ACJourneyLog (Properties ctx, int FTU_ACJourneyLog_ID, String trxName)

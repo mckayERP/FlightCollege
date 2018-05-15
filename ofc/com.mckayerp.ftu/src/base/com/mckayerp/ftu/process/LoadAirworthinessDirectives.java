@@ -8,9 +8,6 @@ import java.util.logging.Level;
 
 import org.adempiere.exceptions.AdempiereException;
 import org.compiere.Adempiere;
-import org.compiere.model.MAttribute;
-import org.compiere.model.MAttributeSet;
-import org.compiere.model.MAttributeSetInstance;
 import org.compiere.model.MProduct;
 import org.compiere.model.Query;
 import org.compiere.process.ProcessInfo;
@@ -21,43 +18,28 @@ import org.compiere.util.DB;
 import org.compiere.util.Env;
 import org.eevolution.service.dsl.ProcessBuilder;
 
-import com.gargoylesoftware.htmlunit.AjaxController;
 import com.gargoylesoftware.htmlunit.BrowserVersion;
-import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
+import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.WebRequest;
-import com.gargoylesoftware.htmlunit.WebResponse;
-import com.gargoylesoftware.htmlunit.WebResponseData;
-import com.gargoylesoftware.htmlunit.WebWindowEvent;
-import com.gargoylesoftware.htmlunit.WebWindowListener;
 import com.gargoylesoftware.htmlunit.html.DomElement;
 import com.gargoylesoftware.htmlunit.html.DomNode;
 import com.gargoylesoftware.htmlunit.html.DomNodeList;
 import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
-import com.gargoylesoftware.htmlunit.html.HtmlButton;
 import com.gargoylesoftware.htmlunit.html.HtmlButtonInput;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlForm;
-import com.gargoylesoftware.htmlunit.html.HtmlHeading2;
 import com.gargoylesoftware.htmlunit.html.HtmlInput;
 import com.gargoylesoftware.htmlunit.html.HtmlOption;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlSelect;
-import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
-import com.gargoylesoftware.htmlunit.html.HtmlTable;
 import com.gargoylesoftware.htmlunit.html.HtmlTableCell;
 import com.gargoylesoftware.htmlunit.html.HtmlTableRow;
-import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
-import com.gargoylesoftware.htmlunit.util.WebConnectionWrapper;
-import com.mckayerp.ftu.model.MFTUADApplicability;
 import com.mckayerp.ftu.model.MFTUADApplication;
-import com.mckayerp.ftu.model.MFTUAircraft;
 import com.mckayerp.ftu.model.MFTUAirworthinessDirective;
 import com.mckayerp.ftu.model.MFTUCAWISManufacturer;
 import com.mckayerp.ftu.model.MFTUCAWISModel;
 import com.mckayerp.ftu.model.X_FTU_AirworthinessDirective;
-import com.mckayerp.model.MCTComponent;
 
 public class LoadAirworthinessDirectives extends SvrProcess {
 	
@@ -90,6 +72,8 @@ public class LoadAirworthinessDirectives extends SvrProcess {
 	private boolean m_isLoadManufacturers;
 	/**	Parameter Name for IsLoadManufacturers	*/
 	public static final String IsLoadManufacturers = "IsLoadManufacturers";
+	
+	private Object waitObject = new Object();
 
 	protected void prepare() {
 						
@@ -309,13 +293,13 @@ public class LoadAirworthinessDirectives extends SvrProcess {
 
 			for (DomElement rowElement : rowElements)
 			{
-					
+				// Only interested in HtmlTableRows
 				if (!(rowElement instanceof HtmlTableRow))
 					continue;
 				
 				HtmlTableRow row = (HtmlTableRow) rowElement; 
 
-				
+				// Look for the "inside" rows that have the data
 				if (row.getAttribute("class").startsWith("Inside"))
 				{
 					
@@ -359,6 +343,8 @@ public class LoadAirworthinessDirectives extends SvrProcess {
 				    	
 				    	cellCount++;
 				    }
+				    
+				    log.fine("Found AD: " + rowResults[3]);
 				    
 				    // Check if any products have that manufacturer
 				    for (MProduct product : products)
@@ -435,8 +421,44 @@ public class LoadAirworthinessDirectives extends SvrProcess {
 	        	}
 	        		        	
 	        	advSearchPage = selectMake.setSelectedAttribute(make.getValueAttribute(), true);
-
-		        form = advSearchPage.getFormByName("F");
+	        	
+	        	if (advSearchPage == null)
+	        	{
+	        		log.warning("Make " + make.getText() + " has no page link or search results. Skipping.");
+	        		continue;
+	        	}
+	        	
+	        	form = null;
+	        	
+	        	for (int i=0; i < 20; i++) // 20 * 500 ms = 10 seconds for the page to load
+	        	{
+			        try 
+			        {
+			        	form = advSearchPage.getFormByName("F");  // Can cause a null pointer exception.
+			        	break;
+			        }
+			        catch (NullPointerException 
+			        	|  ElementNotFoundException e)
+			        {
+			        	log.fine("Model form 'F' not loaded. Trying again: " + i + "/20");
+			        	try {
+			        		synchronized (waitObject)
+			        		{
+								waitObject.wait(500);
+			        		}
+						} 
+			        	catch (InterruptedException e1) 
+			        	{
+							e1.printStackTrace();
+						}
+			        }
+	        	}
+	        	
+		        if (form == null)
+		        {
+	        		log.warning("Can't load models for manufacturer " + make.getText() + ". Skipping.");
+	        		continue;
+		        }
 		        
 		        // Try to find Aircraft, Engine or Prop models
 		        HtmlSelect selectModel = form.getSelectByName("AIRCRAFT_SELECT_RESULT");
@@ -873,7 +895,7 @@ public class LoadAirworthinessDirectives extends SvrProcess {
 			ProcessInfo processInfo = ProcessBuilder.create(context)
 			.process(com.mckayerp.ftu.process.LoadAirworthinessDirectives.class)
 			.withTitle("Import Airworthiness Directives")
-			.withParameter(IsLoadManufacturers, false)
+			.withParameter(IsLoadManufacturers, true)
 			.execute();
 
 			log.log(Level.CONFIG, "Process=" + processInfo.getTitle() + " Error="+processInfo.isError() + " Summary=" + processInfo.getSummary());

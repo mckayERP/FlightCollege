@@ -30,7 +30,7 @@ public class X_FTU_MaintSchedule extends PO implements I_FTU_MaintSchedule, I_Pe
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20180107L;
+	private static final long serialVersionUID = 20180407L;
 
     /** Standard Constructor */
     public X_FTU_MaintSchedule (Properties ctx, int FTU_MaintSchedule_ID, String trxName)
@@ -134,8 +134,8 @@ public class X_FTU_MaintSchedule extends PO implements I_FTU_MaintSchedule, I_Pe
 		return ii.intValue();
 	}
 
-	/** Set Maintenance Schedule ID.
-		@param FTU_MaintSchedule_ID Maintenance Schedule ID	  */
+	/** Set Maintenance Schedule.
+		@param FTU_MaintSchedule_ID Maintenance Schedule	  */
 	public void setFTU_MaintSchedule_ID (int FTU_MaintSchedule_ID)
 	{
 		if (FTU_MaintSchedule_ID < 1) 
@@ -144,8 +144,8 @@ public class X_FTU_MaintSchedule extends PO implements I_FTU_MaintSchedule, I_Pe
 			set_ValueNoCheck (COLUMNNAME_FTU_MaintSchedule_ID, Integer.valueOf(FTU_MaintSchedule_ID));
 	}
 
-	/** Get Maintenance Schedule ID.
-		@return Maintenance Schedule ID	  */
+	/** Get Maintenance Schedule.
+		@return Maintenance Schedule	  */
 	public int getFTU_MaintSchedule_ID () 
 	{
 		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_MaintSchedule_ID);

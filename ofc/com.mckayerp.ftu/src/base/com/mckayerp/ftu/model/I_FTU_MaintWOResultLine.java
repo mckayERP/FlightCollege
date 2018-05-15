@@ -93,19 +93,6 @@ public interface I_FTU_MaintWOResultLine
 
 	public com.mckayerp.model.I_CT_Component getCT_Component() throws RuntimeException;
 
-    /** Column name CT_ComponentActionType */
-    public static final String COLUMNNAME_CT_ComponentActionType = "CT_ComponentActionType";
-
-	/** Set Action Type.
-	  * The type of action performed on the component
-	  */
-	public void setCT_ComponentActionType (String CT_ComponentActionType);
-
-	/** Get Action Type.
-	  * The type of action performed on the component
-	  */
-	public String getCT_ComponentActionType();
-
     /** Column name CT_ComponentLifeAtAction */
     public static final String COLUMNNAME_CT_ComponentLifeAtAction = "CT_ComponentLifeAtAction";
 
@@ -118,6 +105,60 @@ public interface I_FTU_MaintWOResultLine
 	  * The component life used at the time of the action. For example, the time in service of a replacement part at the time of install.
 	  */
 	public BigDecimal getCT_ComponentLifeAtAction();
+
+    /** Column name CT_DataSet_ID */
+    public static final String COLUMNNAME_CT_DataSet_ID = "CT_DataSet_ID";
+
+	/** Set Data Set.
+	  * A definition of a set of data.
+	  */
+	public void setCT_DataSet_ID (int CT_DataSet_ID);
+
+	/** Get Data Set.
+	  * A definition of a set of data.
+	  */
+	public int getCT_DataSet_ID();
+
+	public com.mckayerp.model.I_CT_DataSet getCT_DataSet() throws RuntimeException;
+
+    /** Column name CT_DataSetInstance_ID */
+    public static final String COLUMNNAME_CT_DataSetInstance_ID = "CT_DataSetInstance_ID";
+
+	/** Set Data Set Instance.
+	  * A data point within a data set.
+	  */
+	public void setCT_DataSetInstance_ID (Object CT_DataSetInstance_ID);
+
+	/** Get Data Set Instance.
+	  * A data point within a data set.
+	  */
+	public Object getCT_DataSetInstance_ID();
+
+    /** Column name CT_RootLifeAtAction */
+    public static final String COLUMNNAME_CT_RootLifeAtAction = "CT_RootLifeAtAction";
+
+	/** Set Root Component Life.
+	  * The Life of the Root Component at the time of the action.
+	  */
+	public void setCT_RootLifeAtAction (BigDecimal CT_RootLifeAtAction);
+
+	/** Get Root Component Life.
+	  * The Life of the Root Component at the time of the action.
+	  */
+	public BigDecimal getCT_RootLifeAtAction();
+
+    /** Column name DefectDate */
+    public static final String COLUMNNAME_DefectDate = "DefectDate";
+
+	/** Set Defect Date.
+	  * The date and time the defect was entered in the log.
+	  */
+	public void setDefectDate (Timestamp DefectDate);
+
+	/** Get Defect Date.
+	  * The date and time the defect was entered in the log.
+	  */
+	public Timestamp getDefectDate();
 
     /** Column name FTU_Action */
     public static final String COLUMNNAME_FTU_Action = "FTU_Action";
@@ -132,6 +173,56 @@ public interface I_FTU_MaintWOResultLine
 	  */
 	public String getFTU_Action();
 
+    /** Column name FTU_DateCompleted */
+    public static final String COLUMNNAME_FTU_DateCompleted = "FTU_DateCompleted";
+
+	/** Set Date Completed.
+	  * The date on which the action was completed. 
+	  */
+	public void setFTU_DateCompleted (Timestamp FTU_DateCompleted);
+
+	/** Get Date Completed.
+	  * The date on which the action was completed. 
+	  */
+	public Timestamp getFTU_DateCompleted();
+
+    /** Column name FTU_DateNextDue */
+    public static final String COLUMNNAME_FTU_DateNextDue = "FTU_DateNextDue";
+
+	/** Set Next Due (Date).
+	  * The date when the maintenance requirement is next due. (Calculated)
+	  */
+	public void setFTU_DateNextDue (Timestamp FTU_DateNextDue);
+
+	/** Get Next Due (Date).
+	  * The date when the maintenance requirement is next due. (Calculated)
+	  */
+	public Timestamp getFTU_DateNextDue();
+
+    /** Column name FTU_DateToleranceApplied */
+    public static final String COLUMNNAME_FTU_DateToleranceApplied = "FTU_DateToleranceApplied";
+
+	/** Set Date Tolerance Applied.
+	  * The amount of a date tolerance applied at the time of the maintenance action
+	  */
+	public void setFTU_DateToleranceApplied (BigDecimal FTU_DateToleranceApplied);
+
+	/** Get Date Tolerance Applied.
+	  * The amount of a date tolerance applied at the time of the maintenance action
+	  */
+	public BigDecimal getFTU_DateToleranceApplied();
+
+    /** Column name FTU_DefectLog_ID */
+    public static final String COLUMNNAME_FTU_DefectLog_ID = "FTU_DefectLog_ID";
+
+	/** Set Defect	  */
+	public void setFTU_DefectLog_ID (int FTU_DefectLog_ID);
+
+	/** Get Defect	  */
+	public int getFTU_DefectLog_ID();
+
+	public com.mckayerp.ftu.model.I_FTU_DefectLog getFTU_DefectLog() throws RuntimeException;
+
     /** Column name FTU_MaintActionTaken */
     public static final String COLUMNNAME_FTU_MaintActionTaken = "FTU_MaintActionTaken";
 
@@ -144,6 +235,17 @@ public interface I_FTU_MaintWOResultLine
 	  * The maintenance action taken to satisfy the maintenance requirement.
 	  */
 	public String getFTU_MaintActionTaken();
+
+    /** Column name FTU_MaintNextAction_ID */
+    public static final String COLUMNNAME_FTU_MaintNextAction_ID = "FTU_MaintNextAction_ID";
+
+	/** Set Next Maintenance Action	  */
+	public void setFTU_MaintNextAction_ID (int FTU_MaintNextAction_ID);
+
+	/** Get Next Maintenance Action	  */
+	public int getFTU_MaintNextAction_ID();
+
+	public com.mckayerp.ftu.model.I_FTU_MaintNextAction getFTU_MaintNextAction() throws RuntimeException;
 
     /** Column name FTU_MaintRequirement_ID */
     public static final String COLUMNNAME_FTU_MaintRequirement_ID = "FTU_MaintRequirement_ID";
@@ -163,21 +265,34 @@ public interface I_FTU_MaintWOResultLine
     /** Column name FTU_MaintRequirementLine_ID */
     public static final String COLUMNNAME_FTU_MaintRequirementLine_ID = "FTU_MaintRequirementLine_ID";
 
-	/** Set Maintenance Requirement Line ID	  */
+	/** Set Maintenance Requirement Line	  */
 	public void setFTU_MaintRequirementLine_ID (int FTU_MaintRequirementLine_ID);
 
-	/** Get Maintenance Requirement Line ID	  */
+	/** Get Maintenance Requirement Line	  */
 	public int getFTU_MaintRequirementLine_ID();
 
 	public com.mckayerp.ftu.model.I_FTU_MaintRequirementLine getFTU_MaintRequirementLine() throws RuntimeException;
 
+    /** Column name FTU_MaintResultType */
+    public static final String COLUMNNAME_FTU_MaintResultType = "FTU_MaintResultType";
+
+	/** Set Resolution Type.
+	  * The maintenance action can be completed or completed with a fault found.
+	  */
+	public void setFTU_MaintResultType (String FTU_MaintResultType);
+
+	/** Get Resolution Type.
+	  * The maintenance action can be completed or completed with a fault found.
+	  */
+	public String getFTU_MaintResultType();
+
     /** Column name FTU_MaintWOResult_ID */
     public static final String COLUMNNAME_FTU_MaintWOResult_ID = "FTU_MaintWOResult_ID";
 
-	/** Set Maintenance Work Order Result ID	  */
+	/** Set Maintenance Work Order Result	  */
 	public void setFTU_MaintWOResult_ID (int FTU_MaintWOResult_ID);
 
-	/** Get Maintenance Work Order Result ID	  */
+	/** Get Maintenance Work Order Result	  */
 	public int getFTU_MaintWOResult_ID();
 
 	public com.mckayerp.ftu.model.I_FTU_MaintWOResult getFTU_MaintWOResult() throws RuntimeException;
@@ -190,6 +305,84 @@ public interface I_FTU_MaintWOResultLine
 
 	/** Get Maintenance Work Order Result Line	  */
 	public int getFTU_MaintWOResultLine_ID();
+
+    /** Column name FTU_TimeIntervalTol */
+    public static final String COLUMNNAME_FTU_TimeIntervalTol = "FTU_TimeIntervalTol";
+
+	/** Set Time Interval Tol (+/-).
+	  * The Tolerance in the Time Interval in the same units as the Interval
+	  */
+	public void setFTU_TimeIntervalTol (BigDecimal FTU_TimeIntervalTol);
+
+	/** Get Time Interval Tol (+/-).
+	  * The Tolerance in the Time Interval in the same units as the Interval
+	  */
+	public BigDecimal getFTU_TimeIntervalTol();
+
+    /** Column name FTU_TimeToleranceType */
+    public static final String COLUMNNAME_FTU_TimeToleranceType = "FTU_TimeToleranceType";
+
+	/** Set Time Tolerance Type.
+	  * Determines how the next time/date based scheduled maintenance requirement is determined.
+	  */
+	public void setFTU_TimeToleranceType (String FTU_TimeToleranceType);
+
+	/** Get Time Tolerance Type.
+	  * Determines how the next time/date based scheduled maintenance requirement is determined.
+	  */
+	public String getFTU_TimeToleranceType();
+
+    /** Column name FTU_UsageIntervalTol */
+    public static final String COLUMNNAME_FTU_UsageIntervalTol = "FTU_UsageIntervalTol";
+
+	/** Set Usage Interval Tol (+/-).
+	  * The Tolerance in the Usage Interval in the same units as the Usage Interval
+	  */
+	public void setFTU_UsageIntervalTol (BigDecimal FTU_UsageIntervalTol);
+
+	/** Get Usage Interval Tol (+/-).
+	  * The Tolerance in the Usage Interval in the same units as the Usage Interval
+	  */
+	public BigDecimal getFTU_UsageIntervalTol();
+
+    /** Column name FTU_UsageNextDue */
+    public static final String COLUMNNAME_FTU_UsageNextDue = "FTU_UsageNextDue";
+
+	/** Set Next Due (Usage).
+	  * The usage/life when the maintenance requirement is next due. (Calculated)
+	  */
+	public void setFTU_UsageNextDue (BigDecimal FTU_UsageNextDue);
+
+	/** Get Next Due (Usage).
+	  * The usage/life when the maintenance requirement is next due. (Calculated)
+	  */
+	public BigDecimal getFTU_UsageNextDue();
+
+    /** Column name FTU_UsageTolApplied */
+    public static final String COLUMNNAME_FTU_UsageTolApplied = "FTU_UsageTolApplied";
+
+	/** Set Usage Tolerance Applied.
+	  * The amount of usage/life tolerance applied on the last maintenance action
+	  */
+	public void setFTU_UsageTolApplied (BigDecimal FTU_UsageTolApplied);
+
+	/** Get Usage Tolerance Applied.
+	  * The amount of usage/life tolerance applied on the last maintenance action
+	  */
+	public BigDecimal getFTU_UsageTolApplied();
+
+    /** Column name FTU_UsageToleranceType */
+    public static final String COLUMNNAME_FTU_UsageToleranceType = "FTU_UsageToleranceType";
+
+	/** Set Usage Tolerance Type.
+	  * Determines how the next usage based scheduled maintenance requirement is determined.
+	  */
+	public void setFTU_UsageToleranceType (String FTU_UsageToleranceType);
+
+	/** Get Usage Tolerance Type.
+	  * Determines how the next usage based scheduled maintenance requirement is determined.
+	  */
+	public String getFTU_UsageToleranceType();
 
     /** Column name IsActive */
     public static final String COLUMNNAME_IsActive = "IsActive";
@@ -207,13 +400,13 @@ public interface I_FTU_MaintWOResultLine
     /** Column name IsMaintReqCompleted */
     public static final String COLUMNNAME_IsMaintReqCompleted = "IsMaintReqCompleted";
 
-	/** Set Completed.
-	  * Is the maintenance requirement completed.
+	/** Set Maint Requirement Completed.
+	  * Is the maintenance requirement completed?
 	  */
 	public void setIsMaintReqCompleted (boolean IsMaintReqCompleted);
 
-	/** Get Completed.
-	  * Is the maintenance requirement completed.
+	/** Get Maint Requirement Completed.
+	  * Is the maintenance requirement completed?
 	  */
 	public boolean isMaintReqCompleted();
 
@@ -289,6 +482,47 @@ public interface I_FTU_MaintWOResultLine
 	public int getM_Product_ID();
 
 	public org.compiere.model.I_M_Product getM_Product() throws RuntimeException;
+
+    /** Column name OverhaulCount */
+    public static final String COLUMNNAME_OverhaulCount = "OverhaulCount";
+
+	/** Set Overhaul Count.
+	  * The number of life cycles completed or underway.
+	  */
+	public void setOverhaulCount (int OverhaulCount);
+
+	/** Get Overhaul Count.
+	  * The number of life cycles completed or underway.
+	  */
+	public int getOverhaulCount();
+
+    /** Column name Processed */
+    public static final String COLUMNNAME_Processed = "Processed";
+
+	/** Set Processed.
+	  * The document has been processed
+	  */
+	public void setProcessed (boolean Processed);
+
+	/** Get Processed.
+	  * The document has been processed
+	  */
+	public boolean isProcessed();
+
+    /** Column name Root_Component_ID */
+    public static final String COLUMNNAME_Root_Component_ID = "Root_Component_ID";
+
+	/** Set Root Component.
+	  * The Root Component of the component BOM tree.
+	  */
+	public void setRoot_Component_ID (int Root_Component_ID);
+
+	/** Get Root Component.
+	  * The Root Component of the component BOM tree.
+	  */
+	public int getRoot_Component_ID();
+
+	public com.mckayerp.model.I_CT_Component getRoot_Component() throws RuntimeException;
 
     /** Column name Updated */
     public static final String COLUMNNAME_Updated = "Updated";

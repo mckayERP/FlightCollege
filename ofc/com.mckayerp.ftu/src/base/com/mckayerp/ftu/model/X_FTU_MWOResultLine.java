@@ -29,7 +29,7 @@ public class X_FTU_MWOResultLine extends PO implements I_FTU_MWOResultLine, I_Pe
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20180107L;
+	private static final long serialVersionUID = 20180407L;
 
     /** Standard Constructor */
     public X_FTU_MWOResultLine (Properties ctx, int FTU_MWOResultLine_ID, String trxName)
@@ -74,8 +74,8 @@ public class X_FTU_MWOResultLine extends PO implements I_FTU_MWOResultLine, I_Pe
 		return (com.mckayerp.ftu.model.I_FTU_MaintWOResult)MTable.get(getCtx(), com.mckayerp.ftu.model.I_FTU_MaintWOResult.Table_Name)
 			.getPO(getFTU_MaintWOResult_ID(), get_TrxName());	}
 
-	/** Set Maintenance Work Order Result ID.
-		@param FTU_MaintWOResult_ID Maintenance Work Order Result ID	  */
+	/** Set Maintenance Work Order Result.
+		@param FTU_MaintWOResult_ID Maintenance Work Order Result	  */
 	public void setFTU_MaintWOResult_ID (int FTU_MaintWOResult_ID)
 	{
 		if (FTU_MaintWOResult_ID < 1) 
@@ -84,8 +84,8 @@ public class X_FTU_MWOResultLine extends PO implements I_FTU_MWOResultLine, I_Pe
 			set_ValueNoCheck (COLUMNNAME_FTU_MaintWOResult_ID, Integer.valueOf(FTU_MaintWOResult_ID));
 	}
 
-	/** Get Maintenance Work Order Result ID.
-		@return Maintenance Work Order Result ID	  */
+	/** Get Maintenance Work Order Result.
+		@return Maintenance Work Order Result	  */
 	public int getFTU_MaintWOResult_ID () 
 	{
 		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_MaintWOResult_ID);

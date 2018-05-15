@@ -32,7 +32,7 @@ public class X_FTU_MaintRequirement extends PO implements I_FTU_MaintRequirement
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20180107L;
+	private static final long serialVersionUID = 20180407L;
 
     /** Standard Constructor */
     public X_FTU_MaintRequirement (Properties ctx, int FTU_MaintRequirement_ID, String trxName)
@@ -72,6 +72,34 @@ public class X_FTU_MaintRequirement extends PO implements I_FTU_MaintRequirement
       return sb.toString();
     }
 
+	public com.mckayerp.model.I_CT_CompLifeCycleModel getCT_CompLifeCycleModel() throws RuntimeException
+    {
+		return (com.mckayerp.model.I_CT_CompLifeCycleModel)MTable.get(getCtx(), com.mckayerp.model.I_CT_CompLifeCycleModel.Table_Name)
+			.getPO(getCT_CompLifeCycleModel_ID(), get_TrxName());	}
+
+	/** Set Component Life Cycle Model.
+		@param CT_CompLifeCycleModel_ID 
+		The component life cycle model to use when creating new components for this product.
+	  */
+	public void setCT_CompLifeCycleModel_ID (int CT_CompLifeCycleModel_ID)
+	{
+		if (CT_CompLifeCycleModel_ID < 1) 
+			set_Value (COLUMNNAME_CT_CompLifeCycleModel_ID, null);
+		else 
+			set_Value (COLUMNNAME_CT_CompLifeCycleModel_ID, Integer.valueOf(CT_CompLifeCycleModel_ID));
+	}
+
+	/** Get Component Life Cycle Model.
+		@return The component life cycle model to use when creating new components for this product.
+	  */
+	public int getCT_CompLifeCycleModel_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_CT_CompLifeCycleModel_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
 	public com.mckayerp.model.I_CT_Component getCT_Component() throws RuntimeException
     {
 		return (com.mckayerp.model.I_CT_Component)MTable.get(getCtx(), com.mckayerp.model.I_CT_Component.Table_Name)
@@ -84,9 +112,9 @@ public class X_FTU_MaintRequirement extends PO implements I_FTU_MaintRequirement
 	public void setCT_Component_ID (int CT_Component_ID)
 	{
 		if (CT_Component_ID < 1) 
-			set_Value (COLUMNNAME_CT_Component_ID, null);
+			set_ValueNoCheck (COLUMNNAME_CT_Component_ID, null);
 		else 
-			set_Value (COLUMNNAME_CT_Component_ID, Integer.valueOf(CT_Component_ID));
+			set_ValueNoCheck (COLUMNNAME_CT_Component_ID, Integer.valueOf(CT_Component_ID));
 	}
 
 	/** Get Component.
@@ -95,6 +123,34 @@ public class X_FTU_MaintRequirement extends PO implements I_FTU_MaintRequirement
 	public int getCT_Component_ID () 
 	{
 		Integer ii = (Integer)get_Value(COLUMNNAME_CT_Component_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
+	public com.mckayerp.model.I_CT_DataSet getCT_DataSet() throws RuntimeException
+    {
+		return (com.mckayerp.model.I_CT_DataSet)MTable.get(getCtx(), com.mckayerp.model.I_CT_DataSet.Table_Name)
+			.getPO(getCT_DataSet_ID(), get_TrxName());	}
+
+	/** Set Data Set.
+		@param CT_DataSet_ID 
+		A definition of a set of data.
+	  */
+	public void setCT_DataSet_ID (int CT_DataSet_ID)
+	{
+		if (CT_DataSet_ID < 1) 
+			set_Value (COLUMNNAME_CT_DataSet_ID, null);
+		else 
+			set_Value (COLUMNNAME_CT_DataSet_ID, Integer.valueOf(CT_DataSet_ID));
+	}
+
+	/** Get Data Set.
+		@return A definition of a set of data.
+	  */
+	public int getCT_DataSet_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_CT_DataSet_ID);
 		if (ii == null)
 			 return 0;
 		return ii.intValue();
@@ -154,6 +210,34 @@ public class X_FTU_MaintRequirement extends PO implements I_FTU_MaintRequirement
 	public int getFTU_AirworthinessDirective_ID () 
 	{
 		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_AirworthinessDirective_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
+	public org.compiere.model.I_M_Product_Group getFTU_AppliesToProdGroup() throws RuntimeException
+    {
+		return (org.compiere.model.I_M_Product_Group)MTable.get(getCtx(), org.compiere.model.I_M_Product_Group.Table_Name)
+			.getPO(getFTU_AppliesToProdGroup_ID(), get_TrxName());	}
+
+	/** Set Appies to Product Group.
+		@param FTU_AppliesToProdGroup_ID 
+		Applies to all products in the product group.
+	  */
+	public void setFTU_AppliesToProdGroup_ID (int FTU_AppliesToProdGroup_ID)
+	{
+		if (FTU_AppliesToProdGroup_ID < 1) 
+			set_Value (COLUMNNAME_FTU_AppliesToProdGroup_ID, null);
+		else 
+			set_Value (COLUMNNAME_FTU_AppliesToProdGroup_ID, Integer.valueOf(FTU_AppliesToProdGroup_ID));
+	}
+
+	/** Get Appies to Product Group.
+		@return Applies to all products in the product group.
+	  */
+	public int getFTU_AppliesToProdGroup_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_AppliesToProdGroup_ID);
 		if (ii == null)
 			 return 0;
 		return ii.intValue();
@@ -297,6 +381,74 @@ public class X_FTU_MaintRequirement extends PO implements I_FTU_MaintRequirement
 		return ii.intValue();
 	}
 
+	public com.mckayerp.ftu.model.I_FTU_MaintRequirement getFTU_PhaseFromMaintReq() throws RuntimeException
+    {
+		return (com.mckayerp.ftu.model.I_FTU_MaintRequirement)MTable.get(getCtx(), com.mckayerp.ftu.model.I_FTU_MaintRequirement.Table_Name)
+			.getPO(getFTU_PhaseFromMaintReq_ID(), get_TrxName());	}
+
+	/** Set Phase From Maint Req.
+		@param FTU_PhaseFromMaintReq_ID 
+		Phase the maintenance action from the next performance of this maintenance requirement.
+	  */
+	public void setFTU_PhaseFromMaintReq_ID (int FTU_PhaseFromMaintReq_ID)
+	{
+		if (FTU_PhaseFromMaintReq_ID < 1) 
+			set_Value (COLUMNNAME_FTU_PhaseFromMaintReq_ID, null);
+		else 
+			set_Value (COLUMNNAME_FTU_PhaseFromMaintReq_ID, Integer.valueOf(FTU_PhaseFromMaintReq_ID));
+	}
+
+	/** Get Phase From Maint Req.
+		@return Phase the maintenance action from the next performance of this maintenance requirement.
+	  */
+	public int getFTU_PhaseFromMaintReq_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_PhaseFromMaintReq_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
+	/** Set Internal Phase Interval.
+		@param FTU_PhaseInterval 
+		The phase interval in the base unit (days).
+	  */
+	public void setFTU_PhaseInterval (BigDecimal FTU_PhaseInterval)
+	{
+		set_Value (COLUMNNAME_FTU_PhaseInterval, FTU_PhaseInterval);
+	}
+
+	/** Get Internal Phase Interval.
+		@return The phase interval in the base unit (days).
+	  */
+	public BigDecimal getFTU_PhaseInterval () 
+	{
+		BigDecimal bd = (BigDecimal)get_Value(COLUMNNAME_FTU_PhaseInterval);
+		if (bd == null)
+			 return Env.ZERO;
+		return bd;
+	}
+
+	/** Set Phase Interval.
+		@param FTU_PhaseIntervalEntered 
+		The phase interval from the phase Maintenance Requirement identified.
+	  */
+	public void setFTU_PhaseIntervalEntered (BigDecimal FTU_PhaseIntervalEntered)
+	{
+		set_Value (COLUMNNAME_FTU_PhaseIntervalEntered, FTU_PhaseIntervalEntered);
+	}
+
+	/** Get Phase Interval.
+		@return The phase interval from the phase Maintenance Requirement identified.
+	  */
+	public BigDecimal getFTU_PhaseIntervalEntered () 
+	{
+		BigDecimal bd = (BigDecimal)get_Value(COLUMNNAME_FTU_PhaseIntervalEntered);
+		if (bd == null)
+			 return Env.ZERO;
+		return bd;
+	}
+
 	/** Set Process.
 		@param FTU_Process 
 		A text description of the process to follow.
@@ -312,6 +464,23 @@ public class X_FTU_MaintRequirement extends PO implements I_FTU_MaintRequirement
 	public String getFTU_Process () 
 	{
 		return (String)get_Value(COLUMNNAME_FTU_Process);
+	}
+
+	/** Set Resolution Fault Found Template.
+		@param FTU_ResolutionFFTemplate 
+		A text string that will be used as a template in the maintenance work order result for the resolution of the maintenance action when a fault is found.
+	  */
+	public void setFTU_ResolutionFFTemplate (String FTU_ResolutionFFTemplate)
+	{
+		set_Value (COLUMNNAME_FTU_ResolutionFFTemplate, FTU_ResolutionFFTemplate);
+	}
+
+	/** Get Resolution Fault Found Template.
+		@return A text string that will be used as a template in the maintenance work order result for the resolution of the maintenance action when a fault is found.
+	  */
+	public String getFTU_ResolutionFFTemplate () 
+	{
+		return (String)get_Value(COLUMNNAME_FTU_ResolutionFFTemplate);
 	}
 
 	/** Set Resolution Template.
@@ -614,6 +783,54 @@ public class X_FTU_MaintRequirement extends PO implements I_FTU_MaintRequirement
 	public String getHelp () 
 	{
 		return (String)get_Value(COLUMNNAME_Help);
+	}
+
+	/** Set On Condition Schedule.
+		@param IsOnConditionSchedule 
+		The Maintenance Requirement relates to an on-condition program for the associated components.
+	  */
+	public void setIsOnConditionSchedule (boolean IsOnConditionSchedule)
+	{
+		set_Value (COLUMNNAME_IsOnConditionSchedule, Boolean.valueOf(IsOnConditionSchedule));
+	}
+
+	/** Get On Condition Schedule.
+		@return The Maintenance Requirement relates to an on-condition program for the associated components.
+	  */
+	public boolean isOnConditionSchedule () 
+	{
+		Object oo = get_Value(COLUMNNAME_IsOnConditionSchedule);
+		if (oo != null) 
+		{
+			 if (oo instanceof Boolean) 
+				 return ((Boolean)oo).booleanValue(); 
+			return "Y".equals(oo);
+		}
+		return false;
+	}
+
+	/** Set Overhaul Schedule.
+		@param IsOverhaulSchedule 
+		The Maintenance Requirement is related to the overhaul schedule (Max Life) of the Component Life Cycle Model
+	  */
+	public void setIsOverhaulSchedule (boolean IsOverhaulSchedule)
+	{
+		set_Value (COLUMNNAME_IsOverhaulSchedule, Boolean.valueOf(IsOverhaulSchedule));
+	}
+
+	/** Get Overhaul Schedule.
+		@return The Maintenance Requirement is related to the overhaul schedule (Max Life) of the Component Life Cycle Model
+	  */
+	public boolean isOverhaulSchedule () 
+	{
+		Object oo = get_Value(COLUMNNAME_IsOverhaulSchedule);
+		if (oo != null) 
+		{
+			 if (oo instanceof Boolean) 
+				 return ((Boolean)oo).booleanValue(); 
+			return "Y".equals(oo);
+		}
+		return false;
 	}
 
 	/** Set Name.

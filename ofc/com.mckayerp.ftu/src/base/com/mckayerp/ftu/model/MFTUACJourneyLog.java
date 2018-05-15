@@ -295,7 +295,7 @@ public class MFTUACJourneyLog extends X_FTU_ACJourneyLog {
 					if (totalAirframeTime.compareTo(ac.getAirframeTime()) != 0)
 					{
 						retMsg += "\n" + ac + " airframe time updated to " + totalAirframeTime.setScale(1,RoundingMode.HALF_UP);
-						ac.setIsDirectLoad(true);
+						//ac.setIsDirectLoad(true);
 						ac.setAirframeTime(totalAirframeTime);
 						ac.saveEx();
 					}
@@ -320,7 +320,7 @@ public class MFTUACJourneyLog extends X_FTU_ACJourneyLog {
 			if (jlog.getAirTime().compareTo(logAirTime) != 0 || jlog.getTotalAirframeTime().compareTo(totalAirframeTime) != 0)
 			{
 				
-				jlog.setIsDirectLoad(true);
+				//jlog.setIsDirectLoad(true);
 				jlog.setAirTime(logAirTime);
 				jlog.setTotalAirframeTime(totalAirframeTime);
 				jlog.saveEx();
@@ -369,11 +369,13 @@ public class MFTUACJourneyLog extends X_FTU_ACJourneyLog {
 		// Assumes that only new log entries are added or updated. Old 
 		// entries are never changed.  In this way, the totalAirframeTime
 		// of the log entry is always the max.
-		if (newRecord || this.is_ValueChanged(COLUMNNAME_AirTime)) {
-			MFTUAircraft ac = (MFTUAircraft) this.getFTU_Aircraft();
-			ac.setAirframeTime(this.getTotalAirframeTime());
-			ac.saveEx();
-		}
+		//  Can't make this assumption - airframe time is set when the journey logs
+		//  are recalculated during the load of the flightsheets.
+//		if (newRecord || this.is_ValueChanged(COLUMNNAME_AirTime)) {
+//			MFTUAircraft ac = (MFTUAircraft) this.getFTU_Aircraft();
+//			ac.setAirframeTime(this.getTotalAirframeTime());
+//			ac.saveEx();
+//		}
 		
 		return success;
 	}
@@ -448,4 +450,25 @@ public class MFTUACJourneyLog extends X_FTU_ACJourneyLog {
 				+ ", Flight time: " + this.getFlightTime().setScale(1, RoundingMode.HALF_UP) 
 				+ ", Total Airframe Time: " + this.getTotalAirframeTime().setScale(1, RoundingMode.HALF_UP);
 	}
+	
+	/**
+	 * 	Called before Save for Pre-Save Operation
+	 * 	@param newRecord new record
+	 *	@return true if record can be saved
+	 */
+	protected boolean beforeSave(boolean newRecord)
+	{
+		/** Prevents saving
+		log.saveError("Error", Msg.parseTranslation(getCtx(), "@C_Currency_ID@ = @C_Currency_ID@"));
+		log.saveError("FillMandatory", Msg.getElement(getCtx(), "PriceEntered"));
+		/** Issues message
+		log.saveWarning(AD_Message, message);
+		log.saveInfo (AD_Message, message);
+		**/
+		if (this.getFlightDate() == null)
+			this.setFlightDate(this.getEntryDate());
+		
+		return true;
+	}	//	beforeSave
+
 }

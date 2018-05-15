@@ -20,19 +20,23 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.adempiere.exceptions.AdempiereException;
 import org.compiere.model.MSysConfig;
 import org.compiere.model.Query;
+import org.compiere.process.ProcessInfo;
 import org.compiere.process.ProcessInfoParameter;
 import org.compiere.process.SvrProcess;
 import org.compiere.util.CLogger;
 import org.compiere.util.DB;
 import org.compiere.util.Env;
 import org.compiere.util.Trx;
+import org.eevolution.service.dsl.ProcessBuilder;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import com.mckayerp.ftu.model.MFTUACJourneyLog;
+import com.mckayerp.ftu.model.MFTUAircraft;
 import com.mckayerp.ftu.model.MFTUFlightsheet;
+import com.mckayerp.ftu.model.MFTUMaintWORLDetail;
 
 public class LoadFlightsheetFromXML extends SvrProcess {
 
@@ -162,6 +166,7 @@ public class LoadFlightsheetFromXML extends SvrProcess {
 			
 			String jlogUpdate = MFTUACJourneyLog.recalculateLog(getCtx(), 0, startTime, get_TrxName());
 			log.fine(jlogUpdate);
+			
 		}
 		catch ( ParserConfigurationException
 				| SAXException 
@@ -172,6 +177,7 @@ public class LoadFlightsheetFromXML extends SvrProcess {
 		finally {
 			releaseLock(get_TrxName());
 		}
+		
 		return "Load Flightsheets completed.";
 	}
 
@@ -308,6 +314,29 @@ public class LoadFlightsheetFromXML extends SvrProcess {
 			DB.close(rs, pstmt);
 		}
 		return false;	
+	}
+
+	/**
+	 * Post process actions (outside trx).
+	 * Please note that at this point the transaction is committed so
+	 * you can't rollback.
+	 * This method is useful if you need to do some custom work when 
+	 * the process complete the work (e.g. open some windows).
+	 *  
+	 * @param success true if the process was success
+	 * @since 3.1.4
+	 */
+	protected void postProcess(boolean success) {
+
+		if (success)
+		{
+			ProcessInfo processInfo = ProcessBuilder.create(this.getCtx())
+			.process(com.mckayerp.ftu.process.MaintUpdateACServiceabilityStatus.class)
+			.withTitle("Update AC Serviceability Status")
+			.withParameter(MaintUpdateACServiceabilityStatus.FTU_Aircraft_ID, 0)
+			.withParameter(MaintUpdateACServiceabilityStatus.FTU_MaintWOResult_ID, 0)
+			.execute();
+		}
 	}
 
 }

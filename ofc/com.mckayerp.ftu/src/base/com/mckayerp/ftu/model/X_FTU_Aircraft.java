@@ -32,7 +32,7 @@ public class X_FTU_Aircraft extends PO implements I_FTU_Aircraft, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20180107L;
+	private static final long serialVersionUID = 20180419L;
 
     /** Standard Constructor */
     public X_FTU_Aircraft (Properties ctx, int FTU_Aircraft_ID, String trxName)
@@ -221,6 +221,26 @@ public class X_FTU_Aircraft extends PO implements I_FTU_Aircraft, I_Persistent
 		return (Timestamp)get_Value(COLUMNNAME_ACNextMaintDate);
 	}
 
+	/** Set Next Maint Date Tolerance.
+		@param ACNextMaintDateTol 
+		The tolerance in days around the next maintenance date.
+	  */
+	public void setACNextMaintDateTol (BigDecimal ACNextMaintDateTol)
+	{
+		set_Value (COLUMNNAME_ACNextMaintDateTol, ACNextMaintDateTol);
+	}
+
+	/** Get Next Maint Date Tolerance.
+		@return The tolerance in days around the next maintenance date.
+	  */
+	public BigDecimal getACNextMaintDateTol () 
+	{
+		BigDecimal bd = (BigDecimal)get_Value(COLUMNNAME_ACNextMaintDateTol);
+		if (bd == null)
+			 return Env.ZERO;
+		return bd;
+	}
+
 	/** Set Next Maint Hours.
 		@param ACNextMaintHrs 
 		The Airframe hours when the next maintenance action is due.
@@ -236,6 +256,26 @@ public class X_FTU_Aircraft extends PO implements I_FTU_Aircraft, I_Persistent
 	public BigDecimal getACNextMaintHrs () 
 	{
 		BigDecimal bd = (BigDecimal)get_Value(COLUMNNAME_ACNextMaintHrs);
+		if (bd == null)
+			 return Env.ZERO;
+		return bd;
+	}
+
+	/** Set Next Maint Hours Tolerance.
+		@param ACNextMaintHrsTol 
+		The tolerance in hours use around the next maintenance due.
+	  */
+	public void setACNextMaintHrsTol (BigDecimal ACNextMaintHrsTol)
+	{
+		set_Value (COLUMNNAME_ACNextMaintHrsTol, ACNextMaintHrsTol);
+	}
+
+	/** Get Next Maint Hours Tolerance.
+		@return The tolerance in hours use around the next maintenance due.
+	  */
+	public BigDecimal getACNextMaintHrsTol () 
+	{
+		BigDecimal bd = (BigDecimal)get_Value(COLUMNNAME_ACNextMaintHrsTol);
 		if (bd == null)
 			 return Env.ZERO;
 		return bd;
@@ -1230,6 +1270,25 @@ public class X_FTU_Aircraft extends PO implements I_FTU_Aircraft, I_Persistent
 	public String getName () 
 	{
 		return (String)get_Value(COLUMNNAME_Name);
+	}
+
+	/** Set Row Status.
+		@param RowStatus 
+		A code that indicates the status of a row.
+	  */
+	public void setRowStatus (BigDecimal RowStatus)
+	{
+		throw new IllegalArgumentException ("RowStatus is virtual column");	}
+
+	/** Get Row Status.
+		@return A code that indicates the status of a row.
+	  */
+	public BigDecimal getRowStatus () 
+	{
+		BigDecimal bd = (BigDecimal)get_Value(COLUMNNAME_RowStatus);
+		if (bd == null)
+			 return Env.ZERO;
+		return bd;
 	}
 
 	public org.compiere.model.I_S_Resource getS_Resource() throws RuntimeException

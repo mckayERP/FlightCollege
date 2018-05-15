@@ -27,6 +27,10 @@ import org.compiere.util.DB;
 import org.compiere.util.Env;
 import org.compiere.util.Msg;
 
+import com.mckayerp.model.MCTComponent;
+import com.mckayerp.model.MCTComponentBOM;
+import com.mckayerp.model.MCTComponentBOMLine;
+
 public class MFTUDefectLog extends X_FTU_DefectLog implements DocAction, DocOptions {
 
 	/**
@@ -35,6 +39,7 @@ public class MFTUDefectLog extends X_FTU_DefectLog implements DocAction, DocOpti
 	private static final long serialVersionUID = 5534916727936182301L;
 	private String m_processMsg;
 	private DocumentEngine m_documentEngine;
+	private MFTUMaintRequirement m_ftuMaintRequirement = null;
 
 	/**	Aircraft Maintenance Defect Entry   */
 	public static final String 	DOCTYPE_DefectRecord     = "AMD";
@@ -154,9 +159,6 @@ public class MFTUDefectLog extends X_FTU_DefectLog implements DocAction, DocOpti
 		//
 		this.setDefect("VOIDED: " + getDefect());
 		
-		// Set the aircraft status - remove it from service.
-		setACStatus(getFTU_Aircraft_ID());
-
 		return true;
 	}
 
@@ -340,7 +342,6 @@ public class MFTUDefectLog extends X_FTU_DefectLog implements DocAction, DocOpti
 				return false;
 			}
 
-			return true;
 		}
 		else if (this.isDeferred() && !this.isRepaired()) {
 			if (this.getDeferredNote() == null || this.getDeferredNote().length() == 0) {
@@ -361,7 +362,53 @@ public class MFTUDefectLog extends X_FTU_DefectLog implements DocAction, DocOpti
 				Timestamp now = new Timestamp(System.currentTimeMillis());
 				this.setRepairedDate(now);
 			}
-		}		
+		}
+		
+		// Ensure component is identified - it should be the aircraft, unless a defect is
+		// identified on a component from the aircraft
+		if (this.getCT_Component_ID() <= 0)
+		{
+			if (this.getFTU_Aircraft_ID() > 0)
+			{
+				// Use the root component of the aircraft - it may be null if none is identified
+				this.setCT_Component_ID(this.getFTU_Aircraft().getCT_Component_ID());
+			}
+		}
+		else
+		{
+			// The component should override the aircraft
+			// Verify the root component is used - this should be set in the window validation rules
+			// but to be sure ...
+			int ct_component_id = ((MCTComponent) getCT_Component()).getRoot_Component_ID();
+			if (ct_component_id != getCT_Component_ID())
+				setCT_Component_ID(ct_component_id);
+			
+			MFTUAircraft ac = MFTUAircraft.getByCT_Component_ID(getCtx(), ct_component_id, get_TrxName());
+			if (ac != null)
+			{
+				this.setFTU_Aircraft_ID(ac.getFTU_Aircraft_ID());
+			}
+		}
+
+		if (getFTU_Aircraft_ID() > 0)
+		{
+			this.setTotalAirframeTime(this.getFTU_Aircraft().getAirframeTime());
+		}
+
+		// Update the product/asi and life used of the component.
+		if (this.getCT_Component_ID() > 0 && this.is_ValueChanged(X_FTU_DefectLog.COLUMNNAME_CT_Component_ID))
+		{
+			this.setM_Product_ID(this.getCT_Component().getM_Product_ID());
+			this.setM_AttributeSetInstance_ID(this.getCT_Component().getM_AttributeSetInstance_ID());
+			this.setLifeUsed(this.getCT_Component().getLifeUsed());
+		}
+		else if(this.getCT_Component_ID() <= 0)
+		{
+			this.setM_Product_ID(0);
+			this.setM_AttributeSetInstance_ID(-1);  // zero is a valid ASI value
+			this.setLifeUsed(null);
+		}
+
 		return true;	
 	}
 
@@ -373,6 +420,12 @@ public class MFTUDefectLog extends X_FTU_DefectLog implements DocAction, DocOpti
 		if (!m_documentEngine.isValidAction(ACTION_Rectify))
 			return false;
 		
+		if (this.getFTU_MaintWOResultLine_ID() <= 0 || !this.getFTU_MaintWOResultLine().isMaintReqCompleted())
+		{
+			m_processMsg = "Must use a Maintenance Result document to rectify a defect record.";	
+			return false;
+		}
+		
 		Timestamp now = new Timestamp(System.currentTimeMillis());		
 		if (getRepairedDate() == null) {
 			setRepairedDate(now);
@@ -382,17 +435,17 @@ public class MFTUDefectLog extends X_FTU_DefectLog implements DocAction, DocOpti
 		setDocStatus(STATUS_Rectified);
 		setProcessed(true);
 		
-		MFTUACJourneyLog jl = new MFTUACJourneyLog(getCtx(), 0, get_TrxName());
-		jl.setFTU_Aircraft_ID(getFTU_Aircraft_ID());
-		jl.setEntryDate(this.getRepairedDate());
-		jl.setIntendedFlight("SNAG Repaired: [" + this.getDocumentNo() + "] " + this.getRectification());
-		jl.setFTU_DefectLog_ID(this.getFTU_DefectLog_ID());
-		jl.setTotalAirframeTime(MFTUACJourneyLog.getTotalAirframeTime(getCtx(), getFTU_Aircraft_ID(), this.getRepairedDate(), get_TrxName()));
-		jl.saveEx();
-		
-		// Set the aircraft status - remove it from service.
-		setACStatus(getFTU_Aircraft_ID());
-
+		if (getFTU_Aircraft_ID() >= 0  && !isAdministrative())
+		{
+			MFTUACJourneyLog jl = new MFTUACJourneyLog(getCtx(), 0, get_TrxName());
+			jl.setFTU_Aircraft_ID(getFTU_Aircraft_ID());
+			jl.setEntryDate(this.getRepairedDate());
+			jl.setIntendedFlight("SNAG Repaired: [" + this.getDocumentNo() + "] " + this.getRectification());
+			jl.setFTU_DefectLog_ID(this.getFTU_DefectLog_ID());
+			jl.setTotalAirframeTime(MFTUACJourneyLog.getTotalAirframeTime(getCtx(), getFTU_Aircraft_ID(), this.getRepairedDate(), get_TrxName()));
+			jl.saveEx();
+		}
+				
 		return true;
 	}
 
@@ -403,6 +456,16 @@ public class MFTUDefectLog extends X_FTU_DefectLog implements DocAction, DocOpti
 
 		if (!m_documentEngine.isValidAction(ACTION_Defer))
 			return false;
+		
+		// Check if a deferral is possible in the case of a missing component
+		if (this.getCT_ComponentBOMLine_ID() > 0)
+		{
+			MCTComponentBOMLine bomLine = (MCTComponentBOMLine) this.getCT_ComponentBOMLine();
+			if (bomLine.getPP_Product_BOMLine().isCritical())
+			{
+				throw new AdempiereException("Can't defer a defect related to a missing critical component. See the component bom line."); // TODO Translate
+			}
+		}
 		
 		if (this.getDeferredNote() == null || this.getDeferredNote().length() == 0)
 			throw new AdempiereException("A note regarding the deferral of this defect is required.");  // TODO Translate
@@ -415,16 +478,17 @@ public class MFTUDefectLog extends X_FTU_DefectLog implements DocAction, DocOpti
 		this.setDocAction(DOCACTION_Rectify);
 		this.setDocStatus(STATUS_Deferred);
 
-		MFTUACJourneyLog jl = new MFTUACJourneyLog(getCtx(), 0, get_TrxName());
-		jl.setFTU_Aircraft_ID(getFTU_Aircraft_ID());
-		jl.setEntryDate(this.getDeferredDate());
-		jl.setIntendedFlight("SNAG Deferred: [" + this.getDocumentNo() + "] " + this.getDeferredNote());
-		jl.setFTU_DefectLog_ID(this.getFTU_DefectLog_ID());
-		jl.setTotalAirframeTime(MFTUACJourneyLog.getTotalAirframeTime(getCtx(), getFTU_Aircraft_ID(), this.getDeferredDate(), get_TrxName()));
-		jl.saveEx();
-		
-		// Set the aircraft status.
-		setACStatus(getFTU_Aircraft_ID());
+		if (getFTU_Aircraft_ID() >= 0  && !isAdministrative())
+		{
+			MFTUACJourneyLog jl = new MFTUACJourneyLog(getCtx(), 0, get_TrxName());
+			jl.setFTU_Aircraft_ID(getFTU_Aircraft_ID());
+			jl.setEntryDate(this.getDeferredDate());
+			jl.setIntendedFlight("SNAG Deferred: [" + this.getDocumentNo() + "] " + this.getDeferredNote());
+			jl.setFTU_DefectLog_ID(this.getFTU_DefectLog_ID());
+			jl.setTotalAirframeTime(MFTUACJourneyLog.getTotalAirframeTime(getCtx(), getFTU_Aircraft_ID(), this.getDeferredDate(), get_TrxName()));
+			jl.saveEx();
+			
+		}
 		
 		// Set any maintenance requirements to a 30 day time interval from the date of the snag
 		List<MFTUMaintRequirement> maintCARs = MFTUMaintRequirement.getByFTU_DefectLog(getCtx(), this.getFTU_DefectLog_ID(), get_TrxName());
@@ -437,7 +501,7 @@ public class MFTUDefectLog extends X_FTU_DefectLog implements DocAction, DocOpti
 			if (this.isDeferred())
 			{
 				maintCAR.setFTU_ComplianceType(MFTUMaintRequirement.FTU_COMPLIANCETYPE_OnceWithinNext);
-				maintCAR.setFTU_TimeInterval(new BigDecimal(30));
+				maintCAR.setFTU_TimeInterval_Entered(new BigDecimal(30));
 				maintCAR.setFTU_TimeIntervalUOM_ID(MUOM.get(getCtx(), "Day", get_TrxName()).getC_UOM_ID());
 				maintCAR.setFTU_DateAfter(this.getDefectDate());
 			}
@@ -454,7 +518,7 @@ public class MFTUDefectLog extends X_FTU_DefectLog implements DocAction, DocOpti
 				if (this.isDeferred())
 				{
 					maintCAR.setFTU_ComplianceType(MFTUMaintRequirement.FTU_COMPLIANCETYPE_OnceWithinNext);
-					maintCAR.setFTU_TimeInterval(new BigDecimal(30));
+					maintCAR.setFTU_TimeInterval_Entered(new BigDecimal(30));
 					maintCAR.setFTU_TimeIntervalUOM_ID(MUOM.get(getCtx(), "Day", get_TrxName()).getC_UOM_ID());
 					maintCAR.setFTU_DateAfter(this.getDefectDate());
 					maintCAR.saveEx();
@@ -483,30 +547,31 @@ public class MFTUDefectLog extends X_FTU_DefectLog implements DocAction, DocOpti
 			this.setDefectDate(now);
 		}
 
-		// Add the defect to the Journey Log
-		MFTUACJourneyLog jl = new MFTUACJourneyLog(getCtx(), 0, get_TrxName());
-		jl.setFTU_Aircraft_ID(getFTU_Aircraft_ID());
-		jl.setEntryDate(this.getDefectDate());
-		jl.setIntendedFlight("SNAG: [" + this.getDocumentNo() + "] " + this.getDefect());
-		jl.setFTU_DefectLog_ID(this.getFTU_DefectLog_ID());
-		jl.setTotalAirframeTime(MFTUACJourneyLog.getTotalAirframeTime(getCtx(), getFTU_Aircraft_ID(), this.getDefectDate(), get_TrxName()));
-		jl.saveEx();
+		// Add the defect to the Journey Log if an aircraft is defined and the defect isn't an administrative defect.
+		if (getFTU_Aircraft_ID() >= 0  && !isAdministrative())
+		{
+			MFTUACJourneyLog jl = new MFTUACJourneyLog(getCtx(), 0, get_TrxName());
+			jl.setFTU_Aircraft_ID(getFTU_Aircraft_ID());
+			jl.setEntryDate(this.getDefectDate());
+			jl.setIntendedFlight("SNAG: [" + this.getDocumentNo() + "] " + this.getDefect());
+			jl.setFTU_DefectLog_ID(this.getFTU_DefectLog_ID());
+			jl.setTotalAirframeTime(MFTUACJourneyLog.getTotalAirframeTime(getCtx(), getFTU_Aircraft_ID(), this.getDefectDate(), get_TrxName()));
+			jl.saveEx();
 		
-		this.setTotalAirframeTime(jl.getTotalAirframeTime());
+			this.setTotalAirframeTime(jl.getTotalAirframeTime());			
+		}
+		
 		this.setEnteredBy(Env.getAD_User_ID(getCtx()));
 		this.setDocStatus(STATUS_Entered);
 		this.setDocAction(DOCACTION_Rectify);
-				
-		// Set the aircraft status - remove it from service.
-		setACStatus(getFTU_Aircraft_ID());
-		
+						
 		// Create a corrective action
 		MFTUMaintRequirement maintCAR = new MFTUMaintRequirement(getCtx(), 0, get_TrxName());
 		maintCAR.setValue(Msg.parseTranslation(getCtx(), "@FTU_DefectLog_ID@:" + this.getDocumentNo()));
-		maintCAR.setFTU_Action("Repair Snag " + this.getDocumentNo() + ": " + this.getDefect());
+		maintCAR.setFTU_Action("Repair Snag " + getDocumentNo() + ": " + getDefect());
 		maintCAR.setFTU_Process("In accordance with the MCM and AMO approved processes.");
 		maintCAR.setFTU_DefectLog_ID(getFTU_DefectLog_ID());
-		maintCAR.setCT_Component_ID(this.getCT_Component_ID());
+		maintCAR.setCT_Component_ID(getCT_Component_ID());
 		if (this.isDeferred())
 		{
 			maintCAR.setFTU_ComplianceType(MFTUMaintRequirement.FTU_COMPLIANCETYPE_OnceWithinNext);
@@ -519,33 +584,11 @@ public class MFTUDefectLog extends X_FTU_DefectLog implements DocAction, DocOpti
 			maintCAR.setFTU_ComplianceType(MFTUMaintRequirement.FTU_COMPLIANCETYPE_BeforeFurtherFlightOrUse);
 		}
 		maintCAR.saveEx();
+		
+		// Save the maintenance CAR
+		m_ftuMaintRequirement = maintCAR;
 
 		return true;
-	}
-
-	/**
-	 * Set the AC Status according to the open snags/defect log.
-	 */
-	public void setACStatus(int FTU_Aircraft_ID) {
-
-		if (FTU_Aircraft_ID == 0)
-			return;
-		
-		MFTUAircraft ac = new MFTUAircraft(getCtx(), getFTU_Aircraft_ID(), get_TrxName());
-
-		String where = MFTUDefectLog.COLUMNNAME_FTU_Aircraft_ID + "=" + getFTU_Aircraft_ID() + " AND "  
-					 + MFTUDefectLog.COLUMNNAME_DocStatus + "=" + DB.TO_STRING(MFTUDefectLog.STATUS_Entered);
-		
-		int count = new Query(getCtx(),MFTUDefectLog.Table_Name,where,get_TrxName())
-						.count();
-		
-		if (count > 0) {
-			ac.setACStatus(MFTUAircraft.ACSTATUS_Unservicable);
-		}
-		else {
-			ac.setACStatus(MFTUAircraft.ACSTATUS_Servicable);
-		}
-		ac.saveEx();
 	}
 
 	@Override
@@ -632,4 +675,197 @@ public class MFTUDefectLog extends X_FTU_DefectLog implements DocAction, DocOpti
 
 		return false;
 	}
+
+	public MFTUMaintRequirement getFTU_MaintRequirement() {
+		
+		return m_ftuMaintRequirement;
+		
+	}
+
+	public static MFTUDefectLog createDefectFromUninstalledBOMLine(
+			Properties ctx, int ftu_aircraft_id, int ct_componentBOMLine_id,
+			int ftu_maintWOResult_id, String trxName) {
+		
+		if (ftu_aircraft_id == 0 || ct_componentBOMLine_id == 0)
+			return null;
+		
+		MFTUDefectLog defect = null;
+		
+		// Only one open defect related to an uninstalled component is allowed
+		// per component BOM Line.  If more than one was allowed, it would be
+		// possible to create multiple defects for the same uninstalled component
+		// in cases where maintenance work extends across multiple work orders 
+		// and result documents.  
+		//
+		// Search for an existing open defect for that BOM line that 
+		String where = MFTUDefectLog.COLUMNNAME_CT_ComponentBOMLine_ID + "=?"
+				+ " AND " + MFTUDefectLog.COLUMNNAME_DocStatus + " IN ('"
+					+ MFTUDefectLog.DOCSTATUS_Entered + "', '"
+					+ MFTUDefectLog.DOCSTATUS_Deferred + "')";
+		
+		int existingDefect_id = new Query(ctx, MFTUDefectLog.Table_Name, where, trxName)
+						.setClient_ID()
+						.setOnlyActiveRecords(true)
+						.setParameters(ct_componentBOMLine_id)
+						.firstIdOnly();
+		
+		if (existingDefect_id <= 0)
+		{
+			
+			// Create a defect record
+			MFTUAircraft ac = new MFTUAircraft(ctx, ftu_aircraft_id, trxName);
+			
+			MFTUMaintWOResult MWOR = null;
+			if (ftu_maintWOResult_id > 0)
+				MWOR = new MFTUMaintWOResult(ctx, ftu_maintWOResult_id, trxName);
+			
+			MCTComponentBOMLine bomLine = new MCTComponentBOMLine(ctx, ct_componentBOMLine_id, trxName);
+			MCTComponentBOM bom = (MCTComponentBOM) bomLine.getCT_ComponentBOM();
+			
+			boolean hasNoHistory = !bomLine.hasHistory();
+			
+			// Build string description and defect
+			int line = bomLine.getLine();
+			String productValue = bomLine.getMaster_Product().getValue();
+			String productName = bomLine.getMaster_Product().getName();
+			String parentComponent = ((MCTComponent) bom.getCT_Component()).toString();
+
+			String description = Msg.getElement(ctx, MCTComponentBOMLine.COLUMNNAME_CT_ComponentBOMLine_ID)
+					+ " " + line + " missing " + productValue + " " + productName
+					+ " " + Msg.getElement(ctx, MCTComponentBOMLine.COLUMNNAME_QtyInstalled) + ": " + bomLine.getQtyInstalled() 
+					+ " " + Msg.getElement(ctx, MCTComponentBOMLine.COLUMNNAME_QtyRequired) + ": " + bomLine.getQtyRequired();
+			
+			if (MWOR != null)
+			{
+				// Add reference to result document
+				description = "After " + Msg.getElement(ctx, MFTUMaintWOResult.COLUMNNAME_FTU_MaintWOResult_ID) 
+					+ " " + MWOR.getDocumentNo() + ": " + description;   
+			}
+			
+			String defectShortDesc = Msg.getElement(ctx, MCTComponentBOMLine.COLUMNNAME_CT_ComponentBOMLine_ID)
+					+ " " + line + " missing " + productValue + " " + productName;
+					
+			defect = new MFTUDefectLog(ctx, 0, trxName);
+			if (MWOR != null)
+			{
+				defect.setAD_Org_ID(MWOR.getAD_Org_ID());
+				defect.setFTU_MaintWOResult_ID(MWOR.getFTU_MaintWOResult_ID());
+				defect.setDateDoc(MWOR.getDateDoc());
+				defect.setIdentifiedDate(MWOR.getDateDoc());
+			}
+			else
+			{
+				defect.setAD_Org_ID(Env.getAD_Org_ID(ctx));
+				defect.setFTU_MaintWOResult_ID(0);
+				defect.setDateDoc(new Timestamp(System.currentTimeMillis()));
+				defect.setIdentifiedDate(new Timestamp(System.currentTimeMillis()));
+			}
+			defect.setFTU_MaintWOResultLine_ID(0);
+			defect.setDefect(defectShortDesc);
+			defect.setCT_Component_ID(ac.getCT_Component_ID());
+			defect.setCT_ComponentBOMLine_ID(ct_componentBOMLine_id);
+			defect.setM_Product_ID(ac.getCT_Component().getM_Product_ID());
+			defect.setM_AttributeSetInstance_ID(ac.getCT_Component().getM_AttributeSetInstance_ID());
+			defect.setC_BPartner_ID(0);
+			defect.setDefectDate(new Timestamp(System.currentTimeMillis()));
+			defect.setDescription(description);
+			defect.setEnteredBy(Env.getAD_User_ID(ctx));
+			defect.setFTU_Aircraft_ID(ftu_aircraft_id);
+			defect.setIsAdministrative(hasNoHistory);
+			defect.saveEx();  // Get the ID - not assigned until it is saved.
+			defect.enterIt();  // Creates the Maintenance Requirement
+
+			// Find the maint requirement and update it a bit.
+			MFTUMaintRequirement mr = defect.getFTU_MaintRequirement(); 
+			if (mr != null)
+			{
+				mr.setFTU_Action(defectShortDesc); 
+				mr.setFTU_ResolutionTemplate("Missing component installed.");
+				mr.setFTU_ResolutionFFTemplate("(Please complete defect resolution with fault found template.)");
+				mr.saveEx();
+				
+				if (ftu_maintWOResult_id > 0)
+				{
+					// As a default, add the defect maint requirement to the maintenance result lines.
+					// This assumes that faults found will be fixed in the same work order/result.
+					where = MFTUMaintWOResultLine.COLUMNNAME_FTU_MaintWOResult_ID + "=?";
+					int lineNo = (new Query(ctx, MFTUMaintWOResultLine.Table_Name, where, trxName)
+									.setClient_ID()
+									.setOnlyActiveRecords(true)
+									.setParameters(ftu_maintWOResult_id)
+									.aggregate(MFTUMaintWOResultLine.Table_Name + "." + MFTUMaintWOResultLine.COLUMNNAME_Line,
+									   Query.AGGREGATE_MAX)).intValue()+10;
+					MFTUMaintWOResultLine rLine = new MFTUMaintWOResultLine(ctx, 0, trxName);
+					rLine.setFTU_MaintWOResult_ID(ftu_maintWOResult_id);
+					rLine.setFTU_Action(mr.getFTU_Action());
+					rLine.setFTU_MaintRequirement_ID(mr.getFTU_MaintRequirement_ID());
+					rLine.setFTU_MaintRequirementLine_ID(0);
+					rLine.setLine(lineNo);
+								
+					if (ac.getCT_Component_ID() > 0)
+					{
+						rLine.setCT_Component_ID(ac.getCT_Component_ID());
+						rLine.setM_Product_ID(ac.getCT_Component().getM_Product_ID());
+						rLine.setM_AttributeSetInstance_ID(ac.getCT_Component().getM_AttributeSetInstance_ID());
+						rLine.setCT_ComponentLifeAtAction(ac.getCT_Component().getLifeUsed());
+						rLine.setLifeUsageUOM_ID(ac.getCT_Component().getLifeUsageUOM_ID());
+					}
+					rLine.saveEx();
+					defect.setFTU_MaintWOResultLine_ID(rLine.getFTU_MaintWOResultLine_ID());
+				}
+			}
+			defect.saveEx();
+		}		
+		return defect;
+	}
+
+	public static MFTUDefectLog getByComponentBOMLine(Properties ctx,
+			int ct_componentBOMLine_id, String trxName) {
+		
+		//  Search for an existing open defect for that BOM line
+		//  There can only be one at a time.
+		String where = MFTUDefectLog.COLUMNNAME_CT_ComponentBOMLine_ID + "=?"
+				+ " AND " + MFTUDefectLog.COLUMNNAME_DocStatus + " IN ('"
+					+ MFTUDefectLog.DOCSTATUS_Entered + "', '"
+					+ MFTUDefectLog.DOCSTATUS_Deferred + "')";
+		
+		return new Query(ctx, MFTUDefectLog.Table_Name, where, trxName)
+						.setClient_ID()
+						.setOnlyActiveRecords(true)
+						.setParameters(ct_componentBOMLine_id)
+						.firstOnly();
+	}
+	
+	/**
+	 * 	Executed before Delete operation.
+	 *	@return true if record can be deleted
+	 */
+	protected boolean beforeDelete ()
+	{
+		if (isAdministrative() || DocAction.STATUS_Drafted.equals(getDocStatus()))
+		{
+			List<MFTUMaintRequirement> mrs = MFTUMaintRequirement.getByFTU_DefectLog(getCtx(), getFTU_DefectLog_ID(), get_TrxName());
+			for (MFTUMaintRequirement mr : mrs)
+			{
+				mr.deleteEx(true);
+			}
+			return true;
+		}
+		log.saveError("Error", Msg.getMsg(getCtx(), "CannotDelete"));
+		return false;
+	} 	//	beforeDelete
+
+	public static int getCountOpenbyComponent(Properties ctx,
+			int ct_component_id, String trxName) {
+		
+		String where = MFTUDefectLog.COLUMNNAME_CT_Component_ID + "=?"
+				+ " AND " + MFTUDefectLog.COLUMNNAME_DocStatus + "=?";
+		
+		return new Query(ctx, MFTUDefectLog.Table_Name, where, trxName)
+					.setClient_ID()
+					.setOnlyActiveRecords(true)
+					.setParameters(ct_component_id, MFTUDefectLog.DOCSTATUS_Entered)
+					.count();
+	}
+
 }

@@ -20,10 +20,10 @@ import java.sql.ResultSet;
 import java.util.Properties;
 import org.compiere.model.*;
 
-/** Generated Model for FTU_MaintJASCHdr
+/** Generated Model for FTU_ACStatus
  *  @author Adempiere (generated) 
  *  @version Release 3.8.0 - $Id$ */
-public class X_FTU_MaintJASCHdr extends PO implements I_FTU_MaintJASCHdr, I_Persistent 
+public class X_FTU_ACStatus extends PO implements I_FTU_ACStatus, I_Persistent 
 {
 
 	/**
@@ -32,24 +32,23 @@ public class X_FTU_MaintJASCHdr extends PO implements I_FTU_MaintJASCHdr, I_Pers
 	private static final long serialVersionUID = 20180407L;
 
     /** Standard Constructor */
-    public X_FTU_MaintJASCHdr (Properties ctx, int FTU_MaintJASCHdr_ID, String trxName)
+    public X_FTU_ACStatus (Properties ctx, int FTU_ACStatus_ID, String trxName)
     {
-      super (ctx, FTU_MaintJASCHdr_ID, trxName);
-      /** if (FTU_MaintJASCHdr_ID == 0)
+      super (ctx, FTU_ACStatus_ID, trxName);
+      /** if (FTU_ACStatus_ID == 0)
         {
-			setFTU_MaintJASCHdr_ID (0);
-			setJASCHeaderCode (null);
+			setFTU_ACStatus_ID (0);
         } */
     }
 
     /** Load Constructor */
-    public X_FTU_MaintJASCHdr (Properties ctx, ResultSet rs, String trxName)
+    public X_FTU_ACStatus (Properties ctx, ResultSet rs, String trxName)
     {
       super (ctx, rs, trxName);
     }
 
     /** AccessLevel
-      * @return 7 - System - Client - Org 
+      * @return 2 - Client 
       */
     protected int get_AccessLevel()
     {
@@ -65,65 +64,42 @@ public class X_FTU_MaintJASCHdr extends PO implements I_FTU_MaintJASCHdr, I_Pers
 
     public String toString()
     {
-      StringBuffer sb = new StringBuffer ("X_FTU_MaintJASCHdr[")
+      StringBuffer sb = new StringBuffer ("X_FTU_ACStatus[")
         .append(get_ID()).append("]");
       return sb.toString();
     }
 
-	/** Set JASC Code Header.
-		@param FTU_MaintJASCHdr_ID 
-		The summary group of the JASC code. Typically, the first two digits of the code.
-	  */
-	public void setFTU_MaintJASCHdr_ID (int FTU_MaintJASCHdr_ID)
+	/** Set Aircraft Status.
+		@param ACStatus Aircraft Status	  */
+	public void setACStatus (Object ACStatus)
 	{
-		if (FTU_MaintJASCHdr_ID < 1) 
-			set_ValueNoCheck (COLUMNNAME_FTU_MaintJASCHdr_ID, null);
-		else 
-			set_ValueNoCheck (COLUMNNAME_FTU_MaintJASCHdr_ID, Integer.valueOf(FTU_MaintJASCHdr_ID));
+		set_Value (COLUMNNAME_ACStatus, ACStatus);
 	}
 
-	/** Get JASC Code Header.
-		@return The summary group of the JASC code. Typically, the first two digits of the code.
-	  */
-	public int getFTU_MaintJASCHdr_ID () 
+	/** Get Aircraft Status.
+		@return Aircraft Status	  */
+	public Object getACStatus () 
 	{
-		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_MaintJASCHdr_ID);
+				return get_Value(COLUMNNAME_ACStatus);
+	}
+
+	/** Set FTU_ACStatus ID.
+		@param FTU_ACStatus_ID FTU_ACStatus ID	  */
+	public void setFTU_ACStatus_ID (int FTU_ACStatus_ID)
+	{
+		if (FTU_ACStatus_ID < 1) 
+			set_ValueNoCheck (COLUMNNAME_FTU_ACStatus_ID, null);
+		else 
+			set_ValueNoCheck (COLUMNNAME_FTU_ACStatus_ID, Integer.valueOf(FTU_ACStatus_ID));
+	}
+
+	/** Get FTU_ACStatus ID.
+		@return FTU_ACStatus ID	  */
+	public int getFTU_ACStatus_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_ACStatus_ID);
 		if (ii == null)
 			 return 0;
 		return ii.intValue();
-	}
-
-	/** Set Header Code.
-		@param JASCHeaderCode 
-		The two digit code of the JASC header - typically the first two digits of the JASC code
-	  */
-	public void setJASCHeaderCode (String JASCHeaderCode)
-	{
-		set_ValueNoCheck (COLUMNNAME_JASCHeaderCode, JASCHeaderCode);
-	}
-
-	/** Get Header Code.
-		@return The two digit code of the JASC header - typically the first two digits of the JASC code
-	  */
-	public String getJASCHeaderCode () 
-	{
-		return (String)get_Value(COLUMNNAME_JASCHeaderCode);
-	}
-
-	/** Set Name.
-		@param Name 
-		Alphanumeric identifier of the entity
-	  */
-	public void setName (String Name)
-	{
-		set_Value (COLUMNNAME_Name, Name);
-	}
-
-	/** Get Name.
-		@return Alphanumeric identifier of the entity
-	  */
-	public String getName () 
-	{
-		return (String)get_Value(COLUMNNAME_Name);
 	}
 }

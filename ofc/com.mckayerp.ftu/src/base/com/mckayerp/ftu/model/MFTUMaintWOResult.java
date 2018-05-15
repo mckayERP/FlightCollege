@@ -26,11 +26,15 @@ import org.adempiere.engine.IDocumentLine;
 import org.compiere.model.*;
 import org.compiere.process.DocAction;
 import org.compiere.process.DocumentEngine;
+import org.compiere.process.ProcessInfo;
+import org.compiere.process.ProcessInfoLog;
 import org.compiere.util.DB;
 import org.compiere.util.Msg;
+import org.eevolution.service.dsl.ProcessBuilder;
 
 import com.mckayerp.ftu.model.I_FTU_MaintWOResultLine;
 import com.mckayerp.ftu.model.X_FTU_MaintWOResult;
+import com.mckayerp.model.MCTComponent;
 
 /** Generated Model for FTU_MaintWOResult
  *  @author Adempiere (generated) 
@@ -155,7 +159,7 @@ public class MFTUMaintWOResult extends X_FTU_MaintWOResult implements DocAction 
 			m_processMsg = "@PeriodClosed@";
 			return DocAction.STATUS_Invalid;
 		}
-		//	Add up Amounts
+		
 		m_processMsg = ModelValidationEngine.get().fireDocValidate(this, ModelValidator.TIMING_AFTER_PREPARE);
 		if (m_processMsg != null)
 			return DocAction.STATUS_Invalid;
@@ -210,6 +214,81 @@ public class MFTUMaintWOResult extends X_FTU_MaintWOResult implements DocAction 
 			approveIt();
 		log.info(toString());
 		//
+		
+		// Process the result lines and details - requery and unprocessed only
+		MFTUMaintWOResultLine[] lines = (MFTUMaintWOResultLine[]) this.getLines(true, true);
+		for (MFTUMaintWOResultLine line : lines)
+		{
+			
+			ProcessInfo processInfo = ProcessBuilder.create(this.getCtx())
+			.process(com.mckayerp.ftu.process.FTU_MaintWOResultLine_Process.class)
+			.withTitle("Process Maintenance WO Result Line")
+			.withRecordId(MFTUMaintWOResultLine.Table_ID, line.getFTU_MaintWOResultLine_ID())
+			.execute();
+			
+			if (processInfo.isError())
+			{
+				if (processInfo.getLogList() != null)
+				{
+					for (ProcessInfoLog log : processInfo.getLogList())
+					{
+						m_processMsg += log.getP_Msg() + "\n";
+					}
+				}
+				else
+				{
+					m_processMsg = "Problem processing result lines."; // TODO translate
+				}
+				return DocAction.STATUS_Invalid;
+			}			
+		}
+
+		// Check the component/aircraft status for new defects caused by the detail lines
+		// These could be parts uninstalled but not reinstalled in the aircraft.
+		// As all the detail lines are processed at this point, the missing parts do create
+		// a valid defect.  For these to be considered "real" defects as opposed to 
+		// administrative defects related to incorrect data, there needs to have been at 
+		// least one "installed" component in the BOM location.  Administrative defects
+		// exist when the component BOM is first created but not populated.
+		// Also only concerned with aircraft, not uninstalled components.
+		
+		// Find the aircraft from the work order
+		MFTUAircraft ac = null;
+		
+		MFTUMaintWorkOrder mwo = (MFTUMaintWorkOrder) this.getFTU_MaintWorkOrder();
+		if (mwo != null && mwo.getFTU_Aircraft_ID() > 0)
+		{
+			ac = (MFTUAircraft) mwo.getFTU_Aircraft();
+		}
+		else
+		{
+			// The aircraft wasn't identified specifically, try the WO Result parent component
+			if (getParentComponent_ID() > 0)
+			{
+				ac = MFTUAircraft.getByCT_Component_ID(getCtx(), getParentComponent_ID(), get_TrxName());
+				if (ac == null)
+				{
+					// Try the root of the parent component
+					MCTComponent parentComp = (MCTComponent) getParentComponent();
+					ac = MFTUAircraft.getByCT_Component_ID(getCtx(), parentComp.getRoot_Component_ID(), get_TrxName());
+				}
+			}
+		}
+		
+		if (ac != null)
+		{
+			boolean createDefects = true;
+			ac.checkComponentBOM(getFTU_MaintWOResult_ID(), createDefects);
+		}
+		
+
+		// See if we are done.  Some lines may have added new lines which need to be processed.
+		lines = (MFTUMaintWOResultLine[]) this.getLines(true, true);
+		if (lines != null && lines.length > 0)
+		{
+			m_processMsg = "Not all lines have been completed/processed. New lines may have been added. Please check.";
+			return DocAction.STATUS_InProgress;
+		}
 		
 		//	User Validation
 		String valid = ModelValidationEngine.get().fireDocValidate(this, ModelValidator.TIMING_AFTER_COMPLETE);
@@ -372,15 +451,18 @@ public class MFTUMaintWOResult extends X_FTU_MaintWOResult implements DocAction 
 
 
 	public IDocumentLine[] getLines() {
-		return getLines(false);
+		return getLines(false, false);
 	}
 
-    public IDocumentLine[] getLines(boolean requery) {
+    public IDocumentLine[] getLines(boolean requery, boolean unprocessedOnly) {
 		if (m_lines != null && !requery) {
 			set_TrxName(m_lines, get_TrxName());
 			return m_lines;
 		}
-		List<MFTUMaintWOResultLine> list = new Query(getCtx(), I_FTU_MaintWOResultLine.Table_Name, "FTU_MaintWOResult_ID=?", get_TrxName())
+		String where = I_FTU_MaintWOResultLine.COLUMNNAME_FTU_MaintWOResult_ID + "=?";
+		if (unprocessedOnly)
+			where += " AND " + I_FTU_MaintWOResultLine.COLUMNNAME_Processed + "!='Y'";
+		List<MFTUMaintWOResultLine> list = new Query(getCtx(), I_FTU_MaintWOResultLine.Table_Name, where, get_TrxName())
 		.setParameters(getFTU_MaintWOResult_ID())
 		.setOrderBy(MFTUMaintWOResultLine.COLUMNNAME_Line)
 		.list();
@@ -409,10 +491,20 @@ public class MFTUMaintWOResult extends X_FTU_MaintWOResult implements DocAction 
 			log.saveError("FillMandatory", Msg.getElement(getCtx(), "FTU_MaintWorkOrder"));
 			return false;
 		}
-		
+
+		if (this.getFTU_MaintWorkOrder().getCT_Component_ID() == 0)
+		{
+			// Shouldn't happen. Caught by MFTUMaintWorkOrder beforesave().  Added in case to catch NPE below
+			log.saveError("FillMandatory", Msg.parseTranslation(getCtx(), "@FTU_MaintWorkOrder@ @CT_Component_ID@ == 0"));
+			return false;
+		}
+
 		if (newRecord)
 		{
+			MCTComponent comp = (MCTComponent) this.getFTU_MaintWorkOrder().getCT_Component();
 			this.setParentComponent_ID(this.getFTU_MaintWorkOrder().getCT_Component_ID());
+			this.setCT_ComponentLifeAtAction(comp.getLifeUsed());
+			this.setLifeUsageUOM_ID(comp.getLifeUsageUOM_ID());
 			this.setC_BPartner_ID(this.getFTU_MaintWorkOrder().getC_BPartner_ID());
 			this.setC_BPartner_Location_ID(this.getFTU_MaintWorkOrder().getC_BPartner_Location_ID());
 			this.setDescription(this.getFTU_MaintWorkOrder().getDescription());

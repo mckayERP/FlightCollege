@@ -45,8 +45,8 @@ public class TL11B extends TL11BAbstract
 {
 	/** Recipient List to prevent duplicate mails	*/
 	private ArrayList<Integer>	m_list = new ArrayList<Integer>();
-	private static final int TL11B_FORM_PROCESS_ID = 1000017;
-
+	private static final int TL11B_FORM_BATCH_PROCESS_ID = 1000053;
+	
 	@Override
 	protected void prepare()
 	{
@@ -107,7 +107,7 @@ public class TL11B extends TL11BAbstract
 		{
 
 			ArrayList<File> attachments = new ArrayList<File>();
-			int ad_process_id = TL11B_FORM_PROCESS_ID ;
+			int ad_process_id = TL11B_FORM_BATCH_PROCESS_ID;
 			
 			String studentName = student.getC_BPartner().getName();
 			

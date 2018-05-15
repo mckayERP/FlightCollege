@@ -29,7 +29,7 @@ public class X_FTU_License_Type extends PO implements I_FTU_License_Type, I_Pers
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20180107L;
+	private static final long serialVersionUID = 20180407L;
 
     /** Standard Constructor */
     public X_FTU_License_Type (Properties ctx, int FTU_License_Type_ID, String trxName)

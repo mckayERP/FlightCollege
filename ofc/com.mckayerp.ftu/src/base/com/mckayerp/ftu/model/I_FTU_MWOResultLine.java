@@ -43,10 +43,10 @@ public interface I_FTU_MWOResultLine
     /** Column name FTU_MaintWOResult_ID */
     public static final String COLUMNNAME_FTU_MaintWOResult_ID = "FTU_MaintWOResult_ID";
 
-	/** Set Maintenance Work Order Result ID	  */
+	/** Set Maintenance Work Order Result	  */
 	public void setFTU_MaintWOResult_ID (int FTU_MaintWOResult_ID);
 
-	/** Get Maintenance Work Order Result ID	  */
+	/** Get Maintenance Work Order Result	  */
 	public int getFTU_MaintWOResult_ID();
 
 	public com.mckayerp.ftu.model.I_FTU_MaintWOResult getFTU_MaintWOResult() throws RuntimeException;

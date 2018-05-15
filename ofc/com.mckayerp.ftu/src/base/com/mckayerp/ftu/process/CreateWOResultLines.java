@@ -18,6 +18,8 @@ package com.mckayerp.ftu.process;
 
 import java.util.List;
 
+import org.compiere.model.Query;
+
 import com.mckayerp.ftu.model.MFTUMaintWOResult;
 import com.mckayerp.ftu.model.MFTUMaintWOResultLine;
 import com.mckayerp.ftu.model.MFTUMaintWorkOrder;
@@ -58,28 +60,46 @@ public class CreateWOResultLines extends CreateWOResultLinesAbstract
 		MFTUMaintWorkOrder wohdr = (MFTUMaintWorkOrder) result.getFTU_MaintWorkOrder();
 		List<MFTUMaintWorkOrderLine> woLines = wohdr.getLines(false);
 		
+		String where = MFTUMaintWOResultLine.COLUMNNAME_FTU_MaintWOResult_ID + "=" + result.getFTU_MaintWOResult_ID();
+		Query lineQuery = new Query(getCtx(), MFTUMaintWOResultLine.Table_Name, where, get_TrxName())
+								.setClient_ID()
+								.setOnlyActiveRecords(true);
+		
 		int i = 0;
 		for (MFTUMaintWorkOrderLine woLine : woLines)
 		{
+			int lineNo = (lineQuery
+					.aggregate(MFTUMaintWOResultLine.Table_Name + "." + MFTUMaintWOResultLine.COLUMNNAME_Line,
+							   Query.AGGREGATE_MAX)).intValue()+10;
 			MFTUMaintWOResultLine rLine = new MFTUMaintWOResultLine(getCtx(),0,get_TrxName());
 			rLine.setFTU_MaintWOResult_ID(this.getRecord_ID());
 			rLine.setFTU_Action(woLine.getFTU_Action());
 			rLine.setFTU_MaintRequirement_ID(woLine.getFTU_MaintRequirement_ID());
 			rLine.setFTU_MaintRequirementLine_ID(woLine.getFTU_MaintRequirementLine_ID());
-			String actionTaken = "";
-			String compActionType = "";
+			rLine.setFTU_DateNextDue(woLine.getFTU_DateNextDue());
+			rLine.setFTU_TimeIntervalTol(woLine.getFTU_TimeIntervalTol());
+			rLine.setFTU_TimeToleranceType(woLine.getFTU_TimeToleranceType());
+			rLine.setFTU_UsageNextDue(woLine.getFTU_UsageNextDue());
+			rLine.setFTU_UsageIntervalTol(woLine.getFTU_UsageIntervalTol());
+			rLine.setFTU_UsageToleranceType(woLine.getFTU_UsageToleranceType());
+
+			rLine.setLine(lineNo);
+			
+			String actionTaken = ""; 
 			if(woLine.getFTU_MaintRequirementLine_ID()>0)
 			{
 				actionTaken = woLine.getFTU_MaintRequirementLine().getFTU_ResolutionTemplate();
-				compActionType = woLine.getFTU_MaintRequirementLine().getCT_ComponentResolutionType();
+				if(woLine.getFTU_MaintRequirementLine().getCT_DataSet_ID() > 0)
+					rLine.setCT_DataSet_ID(woLine.getFTU_MaintRequirementLine().getCT_DataSet_ID());
 			}
 			else if (woLine.getFTU_MaintRequirement_ID() > 0)
 			{
 				actionTaken = woLine.getFTU_MaintRequirement().getFTU_ResolutionTemplate();
-				compActionType = null;
+				if(woLine.getFTU_MaintRequirement().getCT_DataSet_ID() > 0)
+					rLine.setCT_DataSet_ID(woLine.getFTU_MaintRequirement().getCT_DataSet_ID());
 			}
-			
 			rLine.setFTU_MaintActionTaken(actionTaken);
+			
 			if (woLine.getCT_Component_ID() > 0)
 			{
 				rLine.setCT_Component_ID(woLine.getCT_Component_ID());
@@ -87,7 +107,9 @@ public class CreateWOResultLines extends CreateWOResultLinesAbstract
 				rLine.setM_AttributeSetInstance_ID(woLine.getCT_Component().getM_AttributeSetInstance_ID());
 				rLine.setCT_ComponentLifeAtAction(woLine.getCT_Component().getLifeUsed());
 				rLine.setLifeUsageUOM_ID(woLine.getCT_Component().getLifeUsageUOM_ID());
-				rLine.setCT_ComponentActionType(compActionType);
+				rLine.setRoot_Component_ID(woLine.getCT_Component().getRoot_Component_ID());
+				if (rLine.getRoot_Component_ID() > 0)
+					rLine.setCT_RootLifeAtAction(rLine.getRoot_Component().getLifeUsed());
 			}
 			rLine.saveEx();
 			i++;

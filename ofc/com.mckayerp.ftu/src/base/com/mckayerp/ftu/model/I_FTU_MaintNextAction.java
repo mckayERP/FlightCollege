@@ -91,6 +91,8 @@ public interface I_FTU_MaintNextAction
 	  */
 	public int getCT_Component_ID();
 
+	public com.mckayerp.model.I_CT_Component getCT_Component() throws RuntimeException;
+
     /** Column name FTU_DateLastDone */
     public static final String COLUMNNAME_FTU_DateLastDone = "FTU_DateLastDone";
 
@@ -146,10 +148,10 @@ public interface I_FTU_MaintNextAction
     /** Column name FTU_MaintNextAction_ID */
     public static final String COLUMNNAME_FTU_MaintNextAction_ID = "FTU_MaintNextAction_ID";
 
-	/** Set Next Maintenance Action ID	  */
+	/** Set Next Maintenance Action	  */
 	public void setFTU_MaintNextAction_ID (int FTU_MaintNextAction_ID);
 
-	/** Get Next Maintenance Action ID	  */
+	/** Get Next Maintenance Action	  */
 	public int getFTU_MaintNextAction_ID();
 
     /** Column name FTU_MaintRequirement_ID */
@@ -164,6 +166,34 @@ public interface I_FTU_MaintNextAction
 	  * A requirement to perform some maintenance action due to a snag, preventive maintenance or other corrective action.
 	  */
 	public int getFTU_MaintRequirement_ID();
+
+	public com.mckayerp.ftu.model.I_FTU_MaintRequirement getFTU_MaintRequirement() throws RuntimeException;
+
+    /** Column name FTU_TimeIntervalTol */
+    public static final String COLUMNNAME_FTU_TimeIntervalTol = "FTU_TimeIntervalTol";
+
+	/** Set Time Interval Tol (+/-).
+	  * The Tolerance in the Time Interval in the same units as the Interval
+	  */
+	public void setFTU_TimeIntervalTol (BigDecimal FTU_TimeIntervalTol);
+
+	/** Get Time Interval Tol (+/-).
+	  * The Tolerance in the Time Interval in the same units as the Interval
+	  */
+	public BigDecimal getFTU_TimeIntervalTol();
+
+    /** Column name FTU_UsageIntervalTol */
+    public static final String COLUMNNAME_FTU_UsageIntervalTol = "FTU_UsageIntervalTol";
+
+	/** Set Usage Interval Tol (+/-).
+	  * The Tolerance in the Usage Interval in the same units as the Usage Interval
+	  */
+	public void setFTU_UsageIntervalTol (BigDecimal FTU_UsageIntervalTol);
+
+	/** Get Usage Interval Tol (+/-).
+	  * The Tolerance in the Usage Interval in the same units as the Usage Interval
+	  */
+	public BigDecimal getFTU_UsageIntervalTol();
 
     /** Column name FTU_UsageLastDone */
     public static final String COLUMNNAME_FTU_UsageLastDone = "FTU_UsageLastDone";
@@ -229,6 +259,34 @@ public interface I_FTU_MaintNextAction
 	  * The record is active in the system
 	  */
 	public boolean isActive();
+
+    /** Column name Root_Component_ID */
+    public static final String COLUMNNAME_Root_Component_ID = "Root_Component_ID";
+
+	/** Set Root Component.
+	  * The Root Component of the component BOM tree.
+	  */
+	public void setRoot_Component_ID (int Root_Component_ID);
+
+	/** Get Root Component.
+	  * The Root Component of the component BOM tree.
+	  */
+	public int getRoot_Component_ID();
+
+	public com.mckayerp.model.I_CT_Component getRoot_Component() throws RuntimeException;
+
+    /** Column name RowStatus */
+    public static final String COLUMNNAME_RowStatus = "RowStatus";
+
+	/** Set Row Status.
+	  * A code that indicates the status of a row.
+	  */
+	public void setRowStatus (BigDecimal RowStatus);
+
+	/** Get Row Status.
+	  * A code that indicates the status of a row.
+	  */
+	public BigDecimal getRowStatus();
 
     /** Column name Updated */
     public static final String COLUMNNAME_Updated = "Updated";

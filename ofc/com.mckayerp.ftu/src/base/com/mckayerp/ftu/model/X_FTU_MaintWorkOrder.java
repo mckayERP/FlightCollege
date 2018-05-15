@@ -30,7 +30,7 @@ public class X_FTU_MaintWorkOrder extends PO implements I_FTU_MaintWorkOrder, I_
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20180107L;
+	private static final long serialVersionUID = 20180407L;
 
     /** Standard Constructor */
     public X_FTU_MaintWorkOrder (Properties ctx, int FTU_MaintWorkOrder_ID, String trxName)
@@ -347,6 +347,31 @@ public class X_FTU_MaintWorkOrder extends PO implements I_FTU_MaintWorkOrder, I_
 	public String getDocumentNo () 
 	{
 		return (String)get_Value(COLUMNNAME_DocumentNo);
+	}
+
+	public com.mckayerp.ftu.model.I_FTU_Aircraft getFTU_Aircraft() throws RuntimeException
+    {
+		return (com.mckayerp.ftu.model.I_FTU_Aircraft)MTable.get(getCtx(), com.mckayerp.ftu.model.I_FTU_Aircraft.Table_Name)
+			.getPO(getFTU_Aircraft_ID(), get_TrxName());	}
+
+	/** Set Aircraft.
+		@param FTU_Aircraft_ID Aircraft	  */
+	public void setFTU_Aircraft_ID (int FTU_Aircraft_ID)
+	{
+		if (FTU_Aircraft_ID < 1) 
+			set_Value (COLUMNNAME_FTU_Aircraft_ID, null);
+		else 
+			set_Value (COLUMNNAME_FTU_Aircraft_ID, Integer.valueOf(FTU_Aircraft_ID));
+	}
+
+	/** Get Aircraft.
+		@return Aircraft	  */
+	public int getFTU_Aircraft_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_Aircraft_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
 	}
 
 	/** Set Maintenance Work Order.

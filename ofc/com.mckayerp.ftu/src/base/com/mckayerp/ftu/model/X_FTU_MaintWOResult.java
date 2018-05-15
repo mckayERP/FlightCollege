@@ -16,10 +16,12 @@
 /** Generated Model - DO NOT CHANGE */
 package com.mckayerp.ftu.model;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.Properties;
 import org.compiere.model.*;
+import org.compiere.util.Env;
 
 /** Generated Model for FTU_MaintWOResult
  *  @author Adempiere (generated) 
@@ -30,7 +32,7 @@ public class X_FTU_MaintWOResult extends PO implements I_FTU_MaintWOResult, I_Pe
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20180107L;
+	private static final long serialVersionUID = 20180407L;
 
     /** Standard Constructor */
     public X_FTU_MaintWOResult (Properties ctx, int FTU_MaintWOResult_ID, String trxName)
@@ -38,8 +40,6 @@ public class X_FTU_MaintWOResult extends PO implements I_FTU_MaintWOResult, I_Pe
       super (ctx, FTU_MaintWOResult_ID, trxName);
       /** if (FTU_MaintWOResult_ID == 0)
         {
-			setC_BPartner_ID (0);
-			setC_BPartner_Location_ID (0);
 			setC_DocType_ID (0);
 			setDateDoc (new Timestamp( System.currentTimeMillis() ));
 // @#Date@
@@ -168,6 +168,26 @@ public class X_FTU_MaintWOResult extends PO implements I_FTU_MaintWOResult, I_Pe
 		if (ii == null)
 			 return 0;
 		return ii.intValue();
+	}
+
+	/** Set Component Life.
+		@param CT_ComponentLifeAtAction 
+		The component life used at the time of the action. For example, the time in service of a replacement part at the time of install.
+	  */
+	public void setCT_ComponentLifeAtAction (BigDecimal CT_ComponentLifeAtAction)
+	{
+		set_Value (COLUMNNAME_CT_ComponentLifeAtAction, CT_ComponentLifeAtAction);
+	}
+
+	/** Get Component Life.
+		@return The component life used at the time of the action. For example, the time in service of a replacement part at the time of install.
+	  */
+	public BigDecimal getCT_ComponentLifeAtAction () 
+	{
+		BigDecimal bd = (BigDecimal)get_Value(COLUMNNAME_CT_ComponentLifeAtAction);
+		if (bd == null)
+			 return Env.ZERO;
+		return bd;
 	}
 
 	/** Set Document Date.
@@ -325,8 +345,42 @@ public class X_FTU_MaintWOResult extends PO implements I_FTU_MaintWOResult, I_Pe
 		return (String)get_Value(COLUMNNAME_DocumentNo);
 	}
 
-	/** Set Maintenance Work Order Result ID.
-		@param FTU_MaintWOResult_ID Maintenance Work Order Result ID	  */
+	/** Set AMO Reference.
+		@param FTU_AMORef 
+		The identifier of the associated document from the AMO.
+	  */
+	public void setFTU_AMORef (String FTU_AMORef)
+	{
+		set_Value (COLUMNNAME_FTU_AMORef, FTU_AMORef);
+	}
+
+	/** Get AMO Reference.
+		@return The identifier of the associated document from the AMO.
+	  */
+	public String getFTU_AMORef () 
+	{
+		return (String)get_Value(COLUMNNAME_FTU_AMORef);
+	}
+
+	/** Set Create Result Lines.
+		@param FTU_MaintCreateResultLines 
+		Creates draft lines based on the work order.
+	  */
+	public void setFTU_MaintCreateResultLines (String FTU_MaintCreateResultLines)
+	{
+		set_Value (COLUMNNAME_FTU_MaintCreateResultLines, FTU_MaintCreateResultLines);
+	}
+
+	/** Get Create Result Lines.
+		@return Creates draft lines based on the work order.
+	  */
+	public String getFTU_MaintCreateResultLines () 
+	{
+		return (String)get_Value(COLUMNNAME_FTU_MaintCreateResultLines);
+	}
+
+	/** Set Maintenance Work Order Result.
+		@param FTU_MaintWOResult_ID Maintenance Work Order Result	  */
 	public void setFTU_MaintWOResult_ID (int FTU_MaintWOResult_ID)
 	{
 		if (FTU_MaintWOResult_ID < 1) 
@@ -335,8 +389,8 @@ public class X_FTU_MaintWOResult extends PO implements I_FTU_MaintWOResult, I_Pe
 			set_ValueNoCheck (COLUMNNAME_FTU_MaintWOResult_ID, Integer.valueOf(FTU_MaintWOResult_ID));
 	}
 
-	/** Get Maintenance Work Order Result ID.
-		@return Maintenance Work Order Result ID	  */
+	/** Get Maintenance Work Order Result.
+		@return Maintenance Work Order Result	  */
 	public int getFTU_MaintWOResult_ID () 
 	{
 		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_MaintWOResult_ID);
@@ -395,6 +449,34 @@ public class X_FTU_MaintWOResult extends PO implements I_FTU_MaintWOResult, I_Pe
 			return "Y".equals(oo);
 		}
 		return false;
+	}
+
+	public org.compiere.model.I_C_UOM getLifeUsageUOM() throws RuntimeException
+    {
+		return (org.compiere.model.I_C_UOM)MTable.get(getCtx(), org.compiere.model.I_C_UOM.Table_Name)
+			.getPO(getLifeUsageUOM_ID(), get_TrxName());	}
+
+	/** Set Life Use UOM.
+		@param LifeUsageUOM_ID 
+		The unit of measure (UOM) for the life usage.  Example, hours, km.
+	  */
+	public void setLifeUsageUOM_ID (int LifeUsageUOM_ID)
+	{
+		if (LifeUsageUOM_ID < 1) 
+			set_Value (COLUMNNAME_LifeUsageUOM_ID, null);
+		else 
+			set_Value (COLUMNNAME_LifeUsageUOM_ID, Integer.valueOf(LifeUsageUOM_ID));
+	}
+
+	/** Get Life Use UOM.
+		@return The unit of measure (UOM) for the life usage.  Example, hours, km.
+	  */
+	public int getLifeUsageUOM_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_LifeUsageUOM_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
 	}
 
 	public org.compiere.model.I_M_Warehouse getM_Warehouse() throws RuntimeException

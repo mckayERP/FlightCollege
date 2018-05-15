@@ -46,6 +46,8 @@ public class MFTUFlightsheet extends X_FTU_Flightsheet {
 
 	private static final long serialVersionUID = -2365898440532283687L;
 	
+	private static CLogger log = CLogger.getCLogger("com.mckayerp.ftu.model.MFTUFLightsheet");
+
 	private boolean processing = false;
 
 	/** Standard Constructor */
@@ -155,9 +157,7 @@ public class MFTUFlightsheet extends X_FTU_Flightsheet {
 			return null;
 
 		MFTUFlightsheet flight = null;
-		
-		CLogger log = CLogger.getCLogger("com.mckayerp.ftu.model.MFTUFLightsheet");
-		
+				
 	    // <flightNumber>195781</flightNumber> [ed: this is the (Flt #xxxxxx) 
 		// in the 'Invoice' column of the Daily Flight Sheet]
 		String flightIDString = flightData.getElementsByTagName("flightNumber").item(0).getTextContent();

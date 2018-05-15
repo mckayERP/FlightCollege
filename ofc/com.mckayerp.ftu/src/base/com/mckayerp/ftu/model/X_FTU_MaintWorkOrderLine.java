@@ -16,9 +16,12 @@
 /** Generated Model - DO NOT CHANGE */
 package com.mckayerp.ftu.model;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.Properties;
 import org.compiere.model.*;
+import org.compiere.util.Env;
 
 /** Generated Model for FTU_MaintWorkOrderLine
  *  @author Adempiere (generated) 
@@ -29,7 +32,7 @@ public class X_FTU_MaintWorkOrderLine extends PO implements I_FTU_MaintWorkOrder
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20180107L;
+	private static final long serialVersionUID = 20180407L;
 
     /** Standard Constructor */
     public X_FTU_MaintWorkOrderLine (Properties ctx, int FTU_MaintWorkOrderLine_ID, String trxName)
@@ -115,6 +118,12 @@ public class X_FTU_MaintWorkOrderLine extends PO implements I_FTU_MaintWorkOrder
 	public static final String CT_COMPONENTACTIONTYPE_Uninstalled = "Uninstalled";
 	/** Created = Created */
 	public static final String CT_COMPONENTACTIONTYPE_Created = "Created";
+	/** Inspected = Inspected */
+	public static final String CT_COMPONENTACTIONTYPE_Inspected = "Inspected";
+	/** Overhauled = Overhauled */
+	public static final String CT_COMPONENTACTIONTYPE_Overhauled = "Overhauled";
+	/** Repaired = Repaired */
+	public static final String CT_COMPONENTACTIONTYPE_Repaired = "Repaired";
 	/** Set Action Type.
 		@param CT_ComponentActionType 
 		The type of action performed on the component
@@ -151,6 +160,12 @@ public class X_FTU_MaintWorkOrderLine extends PO implements I_FTU_MaintWorkOrder
 	public static final String CT_COMPONENTRESOLUTIONTYPE_Uninstalled = "Uninstalled";
 	/** Created = Created */
 	public static final String CT_COMPONENTRESOLUTIONTYPE_Created = "Created";
+	/** Inspected = Inspected */
+	public static final String CT_COMPONENTRESOLUTIONTYPE_Inspected = "Inspected";
+	/** Overhauled = Overhauled */
+	public static final String CT_COMPONENTRESOLUTIONTYPE_Overhauled = "Overhauled";
+	/** Repaired = Repaired */
+	public static final String CT_COMPONENTRESOLUTIONTYPE_Repaired = "Repaired";
 	/** Set Resolution Type.
 		@param CT_ComponentResolutionType 
 		The type of action performed on the component to resolve a maintenance requirement
@@ -186,6 +201,23 @@ public class X_FTU_MaintWorkOrderLine extends PO implements I_FTU_MaintWorkOrder
 		return (String)get_Value(COLUMNNAME_FTU_Action);
 	}
 
+	/** Set Next Due (Date).
+		@param FTU_DateNextDue 
+		The date when the maintenance requirement is next due. (Calculated)
+	  */
+	public void setFTU_DateNextDue (Timestamp FTU_DateNextDue)
+	{
+		set_Value (COLUMNNAME_FTU_DateNextDue, FTU_DateNextDue);
+	}
+
+	/** Get Next Due (Date).
+		@return The date when the maintenance requirement is next due. (Calculated)
+	  */
+	public Timestamp getFTU_DateNextDue () 
+	{
+		return (Timestamp)get_Value(COLUMNNAME_FTU_DateNextDue);
+	}
+
 	public com.mckayerp.ftu.model.I_FTU_MaintRequirement getFTU_MaintRequirement() throws RuntimeException
     {
 		return (com.mckayerp.ftu.model.I_FTU_MaintRequirement)MTable.get(getCtx(), com.mckayerp.ftu.model.I_FTU_MaintRequirement.Table_Name)
@@ -219,8 +251,8 @@ public class X_FTU_MaintWorkOrderLine extends PO implements I_FTU_MaintWorkOrder
 		return (com.mckayerp.ftu.model.I_FTU_MaintRequirementLine)MTable.get(getCtx(), com.mckayerp.ftu.model.I_FTU_MaintRequirementLine.Table_Name)
 			.getPO(getFTU_MaintRequirementLine_ID(), get_TrxName());	}
 
-	/** Set Maintenance Requirement Line ID.
-		@param FTU_MaintRequirementLine_ID Maintenance Requirement Line ID	  */
+	/** Set Maintenance Requirement Line.
+		@param FTU_MaintRequirementLine_ID Maintenance Requirement Line	  */
 	public void setFTU_MaintRequirementLine_ID (int FTU_MaintRequirementLine_ID)
 	{
 		if (FTU_MaintRequirementLine_ID < 1) 
@@ -229,8 +261,8 @@ public class X_FTU_MaintWorkOrderLine extends PO implements I_FTU_MaintWorkOrder
 			set_Value (COLUMNNAME_FTU_MaintRequirementLine_ID, Integer.valueOf(FTU_MaintRequirementLine_ID));
 	}
 
-	/** Get Maintenance Requirement Line ID.
-		@return Maintenance Requirement Line ID	  */
+	/** Get Maintenance Requirement Line.
+		@return Maintenance Requirement Line	  */
 	public int getFTU_MaintRequirementLine_ID () 
 	{
 		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_MaintRequirementLine_ID);
@@ -267,8 +299,8 @@ public class X_FTU_MaintWorkOrderLine extends PO implements I_FTU_MaintWorkOrder
 		return ii.intValue();
 	}
 
-	/** Set Maintenance Work Order Line ID.
-		@param FTU_MaintWorkOrderLine_ID Maintenance Work Order Line ID	  */
+	/** Set Maintenance Work Order Line.
+		@param FTU_MaintWorkOrderLine_ID Maintenance Work Order Line	  */
 	public void setFTU_MaintWorkOrderLine_ID (int FTU_MaintWorkOrderLine_ID)
 	{
 		if (FTU_MaintWorkOrderLine_ID < 1) 
@@ -277,8 +309,8 @@ public class X_FTU_MaintWorkOrderLine extends PO implements I_FTU_MaintWorkOrder
 			set_ValueNoCheck (COLUMNNAME_FTU_MaintWorkOrderLine_ID, Integer.valueOf(FTU_MaintWorkOrderLine_ID));
 	}
 
-	/** Get Maintenance Work Order Line ID.
-		@return Maintenance Work Order Line ID	  */
+	/** Get Maintenance Work Order Line.
+		@return Maintenance Work Order Line	  */
 	public int getFTU_MaintWorkOrderLine_ID () 
 	{
 		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_MaintWorkOrderLine_ID);
@@ -302,6 +334,118 @@ public class X_FTU_MaintWorkOrderLine extends PO implements I_FTU_MaintWorkOrder
 	public String getFTU_Process () 
 	{
 		return (String)get_Value(COLUMNNAME_FTU_Process);
+	}
+
+	/** Set Time Interval Tol (+/-).
+		@param FTU_TimeIntervalTol 
+		The Tolerance in the Time Interval in the same units as the Interval
+	  */
+	public void setFTU_TimeIntervalTol (BigDecimal FTU_TimeIntervalTol)
+	{
+		set_Value (COLUMNNAME_FTU_TimeIntervalTol, FTU_TimeIntervalTol);
+	}
+
+	/** Get Time Interval Tol (+/-).
+		@return The Tolerance in the Time Interval in the same units as the Interval
+	  */
+	public BigDecimal getFTU_TimeIntervalTol () 
+	{
+		BigDecimal bd = (BigDecimal)get_Value(COLUMNNAME_FTU_TimeIntervalTol);
+		if (bd == null)
+			 return Env.ZERO;
+		return bd;
+	}
+
+	/** FTU_TimeToleranceType AD_Reference_ID=1000083 */
+	public static final int FTU_TIMETOLERANCETYPE_AD_Reference_ID=1000083;
+	/** Fixed = F */
+	public static final String FTU_TIMETOLERANCETYPE_Fixed = "F";
+	/** Cummulative = C */
+	public static final String FTU_TIMETOLERANCETYPE_Cummulative = "C";
+	/** Not Extended = NE */
+	public static final String FTU_TIMETOLERANCETYPE_NotExtended = "NE";
+	/** Set Time Tolerance Type.
+		@param FTU_TimeToleranceType 
+		Determines how the next time/date based scheduled maintenance requirement is determined.
+	  */
+	public void setFTU_TimeToleranceType (String FTU_TimeToleranceType)
+	{
+
+		set_Value (COLUMNNAME_FTU_TimeToleranceType, FTU_TimeToleranceType);
+	}
+
+	/** Get Time Tolerance Type.
+		@return Determines how the next time/date based scheduled maintenance requirement is determined.
+	  */
+	public String getFTU_TimeToleranceType () 
+	{
+		return (String)get_Value(COLUMNNAME_FTU_TimeToleranceType);
+	}
+
+	/** Set Usage Interval Tol (+/-).
+		@param FTU_UsageIntervalTol 
+		The Tolerance in the Usage Interval in the same units as the Usage Interval
+	  */
+	public void setFTU_UsageIntervalTol (BigDecimal FTU_UsageIntervalTol)
+	{
+		set_Value (COLUMNNAME_FTU_UsageIntervalTol, FTU_UsageIntervalTol);
+	}
+
+	/** Get Usage Interval Tol (+/-).
+		@return The Tolerance in the Usage Interval in the same units as the Usage Interval
+	  */
+	public BigDecimal getFTU_UsageIntervalTol () 
+	{
+		BigDecimal bd = (BigDecimal)get_Value(COLUMNNAME_FTU_UsageIntervalTol);
+		if (bd == null)
+			 return Env.ZERO;
+		return bd;
+	}
+
+	/** Set Next Due (Usage).
+		@param FTU_UsageNextDue 
+		The usage/life when the maintenance requirement is next due. (Calculated)
+	  */
+	public void setFTU_UsageNextDue (BigDecimal FTU_UsageNextDue)
+	{
+		set_Value (COLUMNNAME_FTU_UsageNextDue, FTU_UsageNextDue);
+	}
+
+	/** Get Next Due (Usage).
+		@return The usage/life when the maintenance requirement is next due. (Calculated)
+	  */
+	public BigDecimal getFTU_UsageNextDue () 
+	{
+		BigDecimal bd = (BigDecimal)get_Value(COLUMNNAME_FTU_UsageNextDue);
+		if (bd == null)
+			 return Env.ZERO;
+		return bd;
+	}
+
+	/** FTU_UsageToleranceType AD_Reference_ID=1000083 */
+	public static final int FTU_USAGETOLERANCETYPE_AD_Reference_ID=1000083;
+	/** Fixed = F */
+	public static final String FTU_USAGETOLERANCETYPE_Fixed = "F";
+	/** Cummulative = C */
+	public static final String FTU_USAGETOLERANCETYPE_Cummulative = "C";
+	/** Not Extended = NE */
+	public static final String FTU_USAGETOLERANCETYPE_NotExtended = "NE";
+	/** Set Usage Tolerance Type.
+		@param FTU_UsageToleranceType 
+		Determines how the next usage based scheduled maintenance requirement is determined.
+	  */
+	public void setFTU_UsageToleranceType (String FTU_UsageToleranceType)
+	{
+
+		set_Value (COLUMNNAME_FTU_UsageToleranceType, FTU_UsageToleranceType);
+	}
+
+	/** Get Usage Tolerance Type.
+		@return Determines how the next usage based scheduled maintenance requirement is determined.
+	  */
+	public String getFTU_UsageToleranceType () 
+	{
+		return (String)get_Value(COLUMNNAME_FTU_UsageToleranceType);
 	}
 
 	/** Set Line No.

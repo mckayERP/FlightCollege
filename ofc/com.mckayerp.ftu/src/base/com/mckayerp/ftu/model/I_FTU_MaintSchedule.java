@@ -122,10 +122,10 @@ public interface I_FTU_MaintSchedule
     /** Column name FTU_MaintSchedule_ID */
     public static final String COLUMNNAME_FTU_MaintSchedule_ID = "FTU_MaintSchedule_ID";
 
-	/** Set Maintenance Schedule ID	  */
+	/** Set Maintenance Schedule	  */
 	public void setFTU_MaintSchedule_ID (int FTU_MaintSchedule_ID);
 
-	/** Get Maintenance Schedule ID	  */
+	/** Get Maintenance Schedule	  */
 	public int getFTU_MaintSchedule_ID();
 
     /** Column name IsActive */

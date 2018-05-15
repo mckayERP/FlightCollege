@@ -26,6 +26,7 @@ import org.compiere.model.*;
 import org.compiere.process.DocAction;
 import org.compiere.process.DocumentEngine;
 import org.compiere.util.DB;
+import org.compiere.util.Msg;
 
 /** Generated Model for FTU_MaintWorkOrder
  *  @author Adempiere (generated) 
@@ -36,6 +37,10 @@ public class MFTUMaintWorkOrder extends X_FTU_MaintWorkOrder implements DocActio
 	 *
 	 */
 	private static final long serialVersionUID = 20160709L;
+	
+	/**	Aircraft Maintenance Work Order Entry   */
+	public static final String 	DOCTYPE_MaintControl     = "AMC";
+
 
     /** Standard Constructor */
     public MFTUMaintWorkOrder (Properties ctx, int FTU_MaintWorkOrder_ID, String trxName)
@@ -150,7 +155,15 @@ public class MFTUMaintWorkOrder extends X_FTU_MaintWorkOrder implements DocActio
 			m_processMsg = "@PeriodClosed@";
 			return DocAction.STATUS_Invalid;
 		}
-		//	Add up Amounts
+		
+		// Check that a Business partner (AMO) has been identified
+		// TODO verify that the AMO is qualified and on the list of validated AMOs
+		if (this.getC_BPartner_ID() <= 0)
+		{
+			m_processMsg = "@FillMandatory@ @C_BPartner_ID@";
+			return DocAction.STATUS_Invalid;
+		}
+		
 		m_processMsg = ModelValidationEngine.get().fireDocValidate(this, ModelValidator.TIMING_AFTER_PREPARE);
 		if (m_processMsg != null)
 			return DocAction.STATUS_Invalid;
@@ -397,6 +410,70 @@ public class MFTUMaintWorkOrder extends X_FTU_MaintWorkOrder implements DocActio
 
 		}
 		return m_lines;
+	}
+
+	/**
+	 * 	Called before Save for Pre-Save Operation
+	 * 	@param newRecord new record
+	 *	@return true if record can be saved
+	 */
+	protected boolean beforeSave(boolean newRecord)
+	{
+		/** Prevents saving
+		log.saveError("Error", Msg.parseTranslation(getCtx(), "@C_Currency_ID@ = @C_Currency_ID@"));
+		log.saveError("FillMandatory", Msg.getElement(getCtx(), "PriceEntered"));
+		/** Issues message
+		log.saveWarning(AD_Message, message);
+		log.saveInfo (AD_Message, message);
+		**/
+		if (newRecord) {
+			
+			if (this.getDateDoc() == null) {
+				Timestamp now = new Timestamp(System.currentTimeMillis());
+				this.setDateDoc(now);
+			}
+		}
+
+		if (this.getC_DocType_ID() <= 0)
+		{
+			MDocType types[] = MDocType.getOfDocBaseType(getCtx(), DOCTYPE_MaintControl);
+			if (types.length > 0)	//	get first
+				setC_DocType_ID(types[0].getC_DocType_ID());
+			else
+			{
+				log.saveError("Error", Msg.parseTranslation(getCtx(), "@NotFound@ @C_DocType_ID@"));
+				return false;
+			}
+		}
+
+		if (this.getFTU_Aircraft_ID() > 0 && this.getCT_Component_ID() <= 0)
+		{
+			int ct_component_id = this.getFTU_Aircraft().getCT_Component_ID();
+			this.setCT_Component_ID(ct_component_id);
+		}
+		
+		if (this.getCT_Component_ID() <= 0)
+		{
+			log.saveError("FillMandatory", Msg.getElement(getCtx(), MFTUMaintWorkOrder.COLUMNNAME_CT_Component_ID));
+			return false;
+		}
+		else
+		{
+			if (this.getFTU_Aircraft_ID() <= 0)
+			{
+				MFTUAircraft ac = MFTUAircraft.getByCT_Component_ID(getCtx(), this.getCT_Component_ID(), get_TrxName());
+				if (ac == null)
+				{
+					this.setFTU_Aircraft_ID(0);
+				}
+				else
+				{
+					this.setFTU_Aircraft_ID(ac.getFTU_Aircraft_ID());
+				}
+			}
+		}
+		
+		return true;	
 	}
 
 }

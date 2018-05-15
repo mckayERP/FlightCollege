@@ -32,7 +32,7 @@ public class X_FTU_MaintNextAction extends PO implements I_FTU_MaintNextAction, 
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20180107L;
+	private static final long serialVersionUID = 20180407L;
 
     /** Standard Constructor */
     public X_FTU_MaintNextAction (Properties ctx, int FTU_MaintNextAction_ID, String trxName)
@@ -73,6 +73,11 @@ public class X_FTU_MaintNextAction extends PO implements I_FTU_MaintNextAction, 
         .append(get_ID()).append("]");
       return sb.toString();
     }
+
+	public com.mckayerp.model.I_CT_Component getCT_Component() throws RuntimeException
+    {
+		return (com.mckayerp.model.I_CT_Component)MTable.get(getCtx(), com.mckayerp.model.I_CT_Component.Table_Name)
+			.getPO(getCT_Component_ID(), get_TrxName());	}
 
 	/** Set Component.
 		@param CT_Component_ID 
@@ -170,8 +175,8 @@ public class X_FTU_MaintNextAction extends PO implements I_FTU_MaintNextAction, 
 		return bd;
 	}
 
-	/** Set Next Maintenance Action ID.
-		@param FTU_MaintNextAction_ID Next Maintenance Action ID	  */
+	/** Set Next Maintenance Action.
+		@param FTU_MaintNextAction_ID Next Maintenance Action	  */
 	public void setFTU_MaintNextAction_ID (int FTU_MaintNextAction_ID)
 	{
 		if (FTU_MaintNextAction_ID < 1) 
@@ -180,8 +185,8 @@ public class X_FTU_MaintNextAction extends PO implements I_FTU_MaintNextAction, 
 			set_ValueNoCheck (COLUMNNAME_FTU_MaintNextAction_ID, Integer.valueOf(FTU_MaintNextAction_ID));
 	}
 
-	/** Get Next Maintenance Action ID.
-		@return Next Maintenance Action ID	  */
+	/** Get Next Maintenance Action.
+		@return Next Maintenance Action	  */
 	public int getFTU_MaintNextAction_ID () 
 	{
 		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_MaintNextAction_ID);
@@ -189,6 +194,11 @@ public class X_FTU_MaintNextAction extends PO implements I_FTU_MaintNextAction, 
 			 return 0;
 		return ii.intValue();
 	}
+
+	public com.mckayerp.ftu.model.I_FTU_MaintRequirement getFTU_MaintRequirement() throws RuntimeException
+    {
+		return (com.mckayerp.ftu.model.I_FTU_MaintRequirement)MTable.get(getCtx(), com.mckayerp.ftu.model.I_FTU_MaintRequirement.Table_Name)
+			.getPO(getFTU_MaintRequirement_ID(), get_TrxName());	}
 
 	/** Set Maintenance Requirement.
 		@param FTU_MaintRequirement_ID 
@@ -211,6 +221,46 @@ public class X_FTU_MaintNextAction extends PO implements I_FTU_MaintNextAction, 
 		if (ii == null)
 			 return 0;
 		return ii.intValue();
+	}
+
+	/** Set Time Interval Tol (+/-).
+		@param FTU_TimeIntervalTol 
+		The Tolerance in the Time Interval in the same units as the Interval
+	  */
+	public void setFTU_TimeIntervalTol (BigDecimal FTU_TimeIntervalTol)
+	{
+		set_Value (COLUMNNAME_FTU_TimeIntervalTol, FTU_TimeIntervalTol);
+	}
+
+	/** Get Time Interval Tol (+/-).
+		@return The Tolerance in the Time Interval in the same units as the Interval
+	  */
+	public BigDecimal getFTU_TimeIntervalTol () 
+	{
+		BigDecimal bd = (BigDecimal)get_Value(COLUMNNAME_FTU_TimeIntervalTol);
+		if (bd == null)
+			 return Env.ZERO;
+		return bd;
+	}
+
+	/** Set Usage Interval Tol (+/-).
+		@param FTU_UsageIntervalTol 
+		The Tolerance in the Usage Interval in the same units as the Usage Interval
+	  */
+	public void setFTU_UsageIntervalTol (BigDecimal FTU_UsageIntervalTol)
+	{
+		set_Value (COLUMNNAME_FTU_UsageIntervalTol, FTU_UsageIntervalTol);
+	}
+
+	/** Get Usage Interval Tol (+/-).
+		@return The Tolerance in the Usage Interval in the same units as the Usage Interval
+	  */
+	public BigDecimal getFTU_UsageIntervalTol () 
+	{
+		BigDecimal bd = (BigDecimal)get_Value(COLUMNNAME_FTU_UsageIntervalTol);
+		if (bd == null)
+			 return Env.ZERO;
+		return bd;
 	}
 
 	/** Set Last Done (Use).
@@ -287,6 +337,49 @@ public class X_FTU_MaintNextAction extends PO implements I_FTU_MaintNextAction, 
 	public BigDecimal getFTU_UseRemaining () 
 	{
 		BigDecimal bd = (BigDecimal)get_Value(COLUMNNAME_FTU_UseRemaining);
+		if (bd == null)
+			 return Env.ZERO;
+		return bd;
+	}
+
+	public com.mckayerp.model.I_CT_Component getRoot_Component() throws RuntimeException
+    {
+		return (com.mckayerp.model.I_CT_Component)MTable.get(getCtx(), com.mckayerp.model.I_CT_Component.Table_Name)
+			.getPO(getRoot_Component_ID(), get_TrxName());	}
+
+	/** Set Root Component.
+		@param Root_Component_ID 
+		The Root Component of the component BOM tree.
+	  */
+	public void setRoot_Component_ID (int Root_Component_ID)
+	{
+		throw new IllegalArgumentException ("Root_Component_ID is virtual column");	}
+
+	/** Get Root Component.
+		@return The Root Component of the component BOM tree.
+	  */
+	public int getRoot_Component_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_Root_Component_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
+	/** Set Row Status.
+		@param RowStatus 
+		A code that indicates the status of a row.
+	  */
+	public void setRowStatus (BigDecimal RowStatus)
+	{
+		throw new IllegalArgumentException ("RowStatus is virtual column");	}
+
+	/** Get Row Status.
+		@return A code that indicates the status of a row.
+	  */
+	public BigDecimal getRowStatus () 
+	{
+		BigDecimal bd = (BigDecimal)get_Value(COLUMNNAME_RowStatus);
 		if (bd == null)
 			 return Env.ZERO;
 		return bd;

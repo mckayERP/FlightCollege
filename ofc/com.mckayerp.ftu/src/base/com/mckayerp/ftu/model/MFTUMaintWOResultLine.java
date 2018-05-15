@@ -3,14 +3,18 @@ package com.mckayerp.ftu.model;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
+import java.util.Hashtable;
+import java.util.List;
 import java.util.Properties;
 
 import org.adempiere.engine.IDocumentLine;
-import org.compiere.model.MInOut;
+import org.compiere.model.Callout;
+import org.compiere.model.GridField;
+import org.compiere.model.GridTab;
+import org.compiere.model.Query;
+import org.compiere.util.Env;
 
-import com.mckayerp.ftu.model.X_FTU_MaintWOResultLine;
-
-public class MFTUMaintWOResultLine extends X_FTU_MaintWOResultLine implements IDocumentLine {
+public class MFTUMaintWOResultLine extends X_FTU_MaintWOResultLine implements IDocumentLine, Callout {
 
 	/**
 	 * 
@@ -116,14 +120,14 @@ public class MFTUMaintWOResultLine extends X_FTU_MaintWOResultLine implements ID
 
 	@Override
 	public int getM_Warehouse_ID() {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return this.getFTU_MaintWOResult().getM_Warehouse_ID();
+		
 	}
 
 	@Override
 	public Timestamp getMovementDate() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getFTU_MaintWOResult().getDateDoc(); // TODO - add a date field to the result line
 	}
 
 	@Override
@@ -132,4 +136,48 @@ public class MFTUMaintWOResultLine extends X_FTU_MaintWOResultLine implements ID
 		return null;
 	}
 
+	public List<MFTUMaintWORLDetail> getDetails() {
+		
+		String where = MFTUMaintWORLDetail.COLUMNNAME_FTU_MaintWOResultLine_ID + "=?";
+		
+		return new Query(getCtx(), MFTUMaintWORLDetail.Table_Name, where, get_TrxName())
+					.setClient_ID()
+					.setOnlyActiveRecords(true)
+					.setParameters(this.getFTU_MaintWOResultLine_ID())
+					.list();
+	}
+
+	@Override
+	public String start(Properties ctx, String method, int WindowNo,
+			GridTab mTab, GridField mField, Object value, Object oldValue) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String convert(String method, String value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/** Get the count of the number of times, the maintenance action has been completed
+	 * 
+	 * @param ctx
+	 * @param ftu_maintNextAction_id
+	 * @param trxName
+	 * @return the count of times
+	 */
+	public static int countByNextAction(Properties ctx,
+			int ftu_maintNextAction_id, String trxName) {
+		
+		String where = MFTUMaintWOResultLine.COLUMNNAME_FTU_MaintNextAction_ID + "=?"
+				+ " AND " + MFTUMaintWOResultLine.COLUMNNAME_IsMaintReqCompleted + "='Y'"
+				+ " AND " + MFTUMaintWOResultLine.COLUMNNAME_Processed + "='Y'";
+		
+		return new Query(ctx, MFTUMaintWOResultLine.Table_Name, where, trxName)
+					.setClient_ID()
+					.setOnlyActiveRecords(true)
+					.setParameters(ftu_maintNextAction_id)
+					.count();
+	}
 }

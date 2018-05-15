@@ -32,7 +32,7 @@ public class X_FTU_DefectLog extends PO implements I_FTU_DefectLog, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20180107L;
+	private static final long serialVersionUID = 20180407L;
 
     /** Standard Constructor */
     public X_FTU_DefectLog (Properties ctx, int FTU_DefectLog_ID, String trxName)
@@ -191,6 +191,34 @@ public class X_FTU_DefectLog extends PO implements I_FTU_DefectLog, I_Persistent
 		return ii.intValue();
 	}
 
+	public com.mckayerp.model.I_CT_ComponentBOMLine getCT_ComponentBOMLine() throws RuntimeException
+    {
+		return (com.mckayerp.model.I_CT_ComponentBOMLine)MTable.get(getCtx(), com.mckayerp.model.I_CT_ComponentBOMLine.Table_Name)
+			.getPO(getCT_ComponentBOMLine_ID(), get_TrxName());	}
+
+	/** Set Component BOM Line.
+		@param CT_ComponentBOMLine_ID 
+		A component included in an assembly
+	  */
+	public void setCT_ComponentBOMLine_ID (int CT_ComponentBOMLine_ID)
+	{
+		if (CT_ComponentBOMLine_ID < 1) 
+			set_ValueNoCheck (COLUMNNAME_CT_ComponentBOMLine_ID, null);
+		else 
+			set_ValueNoCheck (COLUMNNAME_CT_ComponentBOMLine_ID, Integer.valueOf(CT_ComponentBOMLine_ID));
+	}
+
+	/** Get Component BOM Line.
+		@return A component included in an assembly
+	  */
+	public int getCT_ComponentBOMLine_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_CT_ComponentBOMLine_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
 	/** Set Document Date.
 		@param DateDoc 
 		Date of the Document
@@ -227,7 +255,7 @@ public class X_FTU_DefectLog extends PO implements I_FTU_DefectLog, I_Persistent
 
 	/** Set Defect Date.
 		@param DefectDate 
-		The date the defect was entered in the log
+		The date and time the defect was entered in the log.
 	  */
 	public void setDefectDate (Timestamp DefectDate)
 	{
@@ -235,7 +263,7 @@ public class X_FTU_DefectLog extends PO implements I_FTU_DefectLog, I_Persistent
 	}
 
 	/** Get Defect Date.
-		@return The date the defect was entered in the log
+		@return The date and time the defect was entered in the log.
 	  */
 	public Timestamp getDefectDate () 
 	{
@@ -648,13 +676,63 @@ public class X_FTU_DefectLog extends PO implements I_FTU_DefectLog, I_Persistent
 		return ii.intValue();
 	}
 
+	public com.mckayerp.ftu.model.I_FTU_MaintWOResult getFTU_MaintWOResult() throws RuntimeException
+    {
+		return (com.mckayerp.ftu.model.I_FTU_MaintWOResult)MTable.get(getCtx(), com.mckayerp.ftu.model.I_FTU_MaintWOResult.Table_Name)
+			.getPO(getFTU_MaintWOResult_ID(), get_TrxName());	}
+
+	/** Set Maintenance Work Order Result.
+		@param FTU_MaintWOResult_ID Maintenance Work Order Result	  */
+	public void setFTU_MaintWOResult_ID (int FTU_MaintWOResult_ID)
+	{
+		if (FTU_MaintWOResult_ID < 1) 
+			set_ValueNoCheck (COLUMNNAME_FTU_MaintWOResult_ID, null);
+		else 
+			set_ValueNoCheck (COLUMNNAME_FTU_MaintWOResult_ID, Integer.valueOf(FTU_MaintWOResult_ID));
+	}
+
+	/** Get Maintenance Work Order Result.
+		@return Maintenance Work Order Result	  */
+	public int getFTU_MaintWOResult_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_MaintWOResult_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
+	public com.mckayerp.ftu.model.I_FTU_MaintWOResultLine getFTU_MaintWOResultLine() throws RuntimeException
+    {
+		return (com.mckayerp.ftu.model.I_FTU_MaintWOResultLine)MTable.get(getCtx(), com.mckayerp.ftu.model.I_FTU_MaintWOResultLine.Table_Name)
+			.getPO(getFTU_MaintWOResultLine_ID(), get_TrxName());	}
+
+	/** Set Maintenance Work Order Result Line.
+		@param FTU_MaintWOResultLine_ID Maintenance Work Order Result Line	  */
+	public void setFTU_MaintWOResultLine_ID (int FTU_MaintWOResultLine_ID)
+	{
+		if (FTU_MaintWOResultLine_ID < 1) 
+			set_ValueNoCheck (COLUMNNAME_FTU_MaintWOResultLine_ID, null);
+		else 
+			set_ValueNoCheck (COLUMNNAME_FTU_MaintWOResultLine_ID, Integer.valueOf(FTU_MaintWOResultLine_ID));
+	}
+
+	/** Get Maintenance Work Order Result Line.
+		@return Maintenance Work Order Result Line	  */
+	public int getFTU_MaintWOResultLine_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_MaintWOResultLine_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
 	public com.mckayerp.ftu.model.I_FTU_MaintWorkOrderLine getFTU_MaintWorkOrderLine() throws RuntimeException
     {
 		return (com.mckayerp.ftu.model.I_FTU_MaintWorkOrderLine)MTable.get(getCtx(), com.mckayerp.ftu.model.I_FTU_MaintWorkOrderLine.Table_Name)
 			.getPO(getFTU_MaintWorkOrderLine_ID(), get_TrxName());	}
 
-	/** Set Maintenance Work Order Line ID.
-		@param FTU_MaintWorkOrderLine_ID Maintenance Work Order Line ID	  */
+	/** Set Maintenance Work Order Line.
+		@param FTU_MaintWorkOrderLine_ID Maintenance Work Order Line	  */
 	public void setFTU_MaintWorkOrderLine_ID (int FTU_MaintWorkOrderLine_ID)
 	{
 		if (FTU_MaintWorkOrderLine_ID < 1) 
@@ -663,8 +741,8 @@ public class X_FTU_DefectLog extends PO implements I_FTU_DefectLog, I_Persistent
 			set_Value (COLUMNNAME_FTU_MaintWorkOrderLine_ID, Integer.valueOf(FTU_MaintWorkOrderLine_ID));
 	}
 
-	/** Get Maintenance Work Order Line ID.
-		@return Maintenance Work Order Line ID	  */
+	/** Get Maintenance Work Order Line.
+		@return Maintenance Work Order Line	  */
 	public int getFTU_MaintWorkOrderLine_ID () 
 	{
 		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_MaintWorkOrderLine_ID);
@@ -688,6 +766,30 @@ public class X_FTU_DefectLog extends PO implements I_FTU_DefectLog, I_Persistent
 	public Timestamp getIdentifiedDate () 
 	{
 		return (Timestamp)get_Value(COLUMNNAME_IdentifiedDate);
+	}
+
+	/** Set Is Administrative.
+		@param IsAdministrative 
+		Is the defect administrative? If selected, the defect will not be added to the AC Journey log.
+	  */
+	public void setIsAdministrative (boolean IsAdministrative)
+	{
+		set_ValueNoCheck (COLUMNNAME_IsAdministrative, Boolean.valueOf(IsAdministrative));
+	}
+
+	/** Get Is Administrative.
+		@return Is the defect administrative? If selected, the defect will not be added to the AC Journey log.
+	  */
+	public boolean isAdministrative () 
+	{
+		Object oo = get_Value(COLUMNNAME_IsAdministrative);
+		if (oo != null) 
+		{
+			 if (oo instanceof Boolean) 
+				 return ((Boolean)oo).booleanValue(); 
+			return "Y".equals(oo);
+		}
+		return false;
 	}
 
 	/** Set Approved.

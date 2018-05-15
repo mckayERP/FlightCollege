@@ -46,4 +46,19 @@ public class MFTUADApplicability extends X_FTU_ADApplicability {
 		
 	}
 
+	public static MFTUADApplicability getByADApplicationAndComponent(
+			Properties ctx, int ftu_adApplication_id, int ct_component_id,
+			String trxName) {
+
+		String where = MFTUADApplicability.COLUMNNAME_FTU_ADApplication_ID + "=?"
+				+ " AND " + MFTUADApplicability.COLUMNNAME_CT_Component_ID + "=?";
+		
+		return new Query(ctx, MFTUADApplicability.Table_Name, where, trxName)
+					.setClient_ID()
+					.setOnlyActiveRecords(false)
+					.setParameters(ftu_adApplication_id, ct_component_id)
+					.firstOnly();  // There should be only one.
+		
+	}
+
 }
