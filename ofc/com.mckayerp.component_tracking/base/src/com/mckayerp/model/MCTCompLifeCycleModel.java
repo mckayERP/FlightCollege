@@ -1,11 +1,15 @@
 package com.mckayerp.model;
 
 import java.sql.ResultSet;
+import java.util.List;
 import java.util.Properties;
 
 import org.adempiere.model.POWrapper;
 import org.compiere.model.MProduct;
 import org.compiere.model.Query;
+import org.compiere.util.Msg;
+
+import com.mckayerp.ftu.model.MFTUMaintRequirement;
 
 public class MCTCompLifeCycleModel extends X_CT_CompLifeCycleModel {
 
@@ -57,4 +61,38 @@ public class MCTCompLifeCycleModel extends X_CT_CompLifeCycleModel {
 		return model;
 	}
 
+	/**
+	 * 	Called before Save for Pre-Save Operation
+	 * 	@param newRecord new record
+	 *	@return true if record can be saved
+	 */
+	protected boolean beforeSave(boolean newRecord)
+	{
+		/** Prevents saving
+		log.saveError("Error", Msg.parseTranslation(getCtx(), "@C_Currency_ID@ = @C_Currency_ID@"));
+		log.saveError("FillMandatory", Msg.getElement(getCtx(), "PriceEntered"));
+		/** Issues message
+		log.saveWarning(AD_Message, message);
+		log.saveInfo (AD_Message, message);
+		**/
+		
+		// Ensure the product or product group are identified
+		if (this.getM_Product_ID() <= 0 && this.getM_Product_Group_ID() <= 0)
+		{
+			log.saveError("FillMandatory", Msg.parseTranslation(getCtx(), "@M_Product_ID@ @OR@ @M_Product_Group_ID@"));
+			return false;
+		}
+		return true;
+	}	//	beforeSave
+
+	public List<MFTUMaintRequirement> getFTU_MaintRequirements() {
+		
+		String where = MFTUMaintRequirement.COLUMNNAME_CT_CompLifeCycleModel_ID + "=?";
+		
+		return new Query(getCtx(), MFTUMaintRequirement.Table_Name, where, get_TrxName())
+					.setClient_ID()
+					.setOnlyActiveRecords(true)
+					.setParameters(this.getCT_CompLifeCycleModel_ID())
+					.list();
+	}
 }

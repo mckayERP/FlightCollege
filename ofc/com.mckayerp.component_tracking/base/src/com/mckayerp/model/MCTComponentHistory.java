@@ -11,6 +11,7 @@ import org.compiere.model.MMovementLine;
 import org.compiere.model.Query;
 import org.compiere.util.Msg;
 
+import com.mckayerp.ftu.model.MFTUMaintWORLDetail;
 import com.mckayerp.ftu.model.MFTUMaintWOResultLine;
 
 public class MCTComponentHistory extends X_CT_ComponentHistory {
@@ -108,6 +109,24 @@ public class MCTComponentHistory extends X_CT_ComponentHistory {
 		MCTComponent comp = (MCTComponent) getCT_Component();
 		return Msg.parseTranslation(getCtx(), "@CT_ComponentHistory_ID@ " + comp.toString() + " (" + getCT_ComponentHistory_ID() + ")");
 		
+	}
+
+	public static MCTComponentHistory getByDetail(Properties ctx,
+			MFTUMaintWORLDetail detail, String trxName) {
+
+		String where =  MCTComponentHistory.COLUMNNAME_FTU_MaintWOResultLine_ID + "=?"
+			+ " AND " + MCTComponentHistory.COLUMNNAME_CT_Component_ID + "=?"
+			+ " AND " + MCTComponentHistory.COLUMNNAME_CT_ComponentActionType + "=?";
+		
+		return new Query(ctx, MCTComponentHistory.Table_Name, where, trxName)
+					.setClient_ID()
+					.setOnlyActiveRecords(true)
+					.setParameters(
+							detail.getFTU_MaintWOResultLine_ID(), 
+							detail.getCT_Component_ID(), 
+							detail.getCT_ComponentActionType())
+					.firstOnly();  //  There should be only one entry per detail and action
+
 	}
 
 }

@@ -29,7 +29,7 @@ public class X_CT_ComponentBOM extends PO implements I_CT_ComponentBOM, I_Persis
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20180103L;
+	private static final long serialVersionUID = 20180427L;
 
     /** Standard Constructor */
     public X_CT_ComponentBOM (Properties ctx, int CT_ComponentBOM_ID, String trxName)

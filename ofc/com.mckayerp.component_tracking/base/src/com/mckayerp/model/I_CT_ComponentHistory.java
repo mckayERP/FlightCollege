@@ -150,10 +150,14 @@ public interface I_CT_ComponentHistory
     /** Column name DateAction */
     public static final String COLUMNNAME_DateAction = "DateAction";
 
-	/** Set Action Date	  */
+	/** Set Action Date.
+	  * The date the action took place
+	  */
 	public void setDateAction (Timestamp DateAction);
 
-	/** Get Action Date	  */
+	/** Get Action Date.
+	  * The date the action took place
+	  */
 	public Timestamp getDateAction();
 
     /** Column name FTU_DateToleranceApplied */
@@ -249,7 +253,7 @@ public interface I_CT_ComponentHistory
 	  */
 	public int getM_Locator_ID();
 
-	public org.compiere.model.I_M_Locator getM_Locator() throws RuntimeException;
+	public I_M_Locator getM_Locator() throws RuntimeException;
 
     /** Column name M_MovementLine_ID */
     public static final String COLUMNNAME_M_MovementLine_ID = "M_MovementLine_ID";
@@ -278,6 +282,19 @@ public interface I_CT_ComponentHistory
 	  * Method of moving the inventory
 	  */
 	public String getMovementType();
+
+    /** Column name OverhaulCount */
+    public static final String COLUMNNAME_OverhaulCount = "OverhaulCount";
+
+	/** Set Overhaul Count.
+	  * The number of life cycles completed or underway.
+	  */
+	public void setOverhaulCount (int OverhaulCount);
+
+	/** Get Overhaul Count.
+	  * The number of life cycles completed or underway.
+	  */
+	public int getOverhaulCount();
 
     /** Column name ParentComponent_ID */
     public static final String COLUMNNAME_ParentComponent_ID = "ParentComponent_ID";
@@ -319,6 +336,21 @@ public interface I_CT_ComponentHistory
 	  * Quantity
 	  */
 	public BigDecimal getQty();
+
+    /** Column name Root_Component_ID */
+    public static final String COLUMNNAME_Root_Component_ID = "Root_Component_ID";
+
+	/** Set Root Component.
+	  * The Root Component of the component BOM tree.
+	  */
+	public void setRoot_Component_ID (int Root_Component_ID);
+
+	/** Get Root Component.
+	  * The Root Component of the component BOM tree.
+	  */
+	public int getRoot_Component_ID();
+
+	public com.mckayerp.model.I_CT_Component getRoot_Component() throws RuntimeException;
 
     /** Column name Updated */
     public static final String COLUMNNAME_Updated = "Updated";

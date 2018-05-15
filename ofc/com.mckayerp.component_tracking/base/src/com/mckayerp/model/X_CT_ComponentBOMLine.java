@@ -32,7 +32,7 @@ public class X_CT_ComponentBOMLine extends PO implements I_CT_ComponentBOMLine, 
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20180103L;
+	private static final long serialVersionUID = 20180427L;
 
     /** Standard Constructor */
     public X_CT_ComponentBOMLine (Properties ctx, int CT_ComponentBOMLine_ID, String trxName)
@@ -260,6 +260,31 @@ public class X_CT_ComponentBOMLine extends PO implements I_CT_ComponentBOMLine, 
 	public String getDescription () 
 	{
 		return (String)get_Value(COLUMNNAME_Description);
+	}
+
+	public com.mckayerp.ftu.model.I_FTU_MaintWOResultLine getFTU_MaintWOResultLine() throws RuntimeException
+    {
+		return (com.mckayerp.ftu.model.I_FTU_MaintWOResultLine)MTable.get(getCtx(), com.mckayerp.ftu.model.I_FTU_MaintWOResultLine.Table_Name)
+			.getPO(getFTU_MaintWOResultLine_ID(), get_TrxName());	}
+
+	/** Set Maintenance Work Order Result Line.
+		@param FTU_MaintWOResultLine_ID Maintenance Work Order Result Line	  */
+	public void setFTU_MaintWOResultLine_ID (int FTU_MaintWOResultLine_ID)
+	{
+		if (FTU_MaintWOResultLine_ID < 1) 
+			set_Value (COLUMNNAME_FTU_MaintWOResultLine_ID, null);
+		else 
+			set_Value (COLUMNNAME_FTU_MaintWOResultLine_ID, Integer.valueOf(FTU_MaintWOResultLine_ID));
+	}
+
+	/** Get Maintenance Work Order Result Line.
+		@return Maintenance Work Order Result Line	  */
+	public int getFTU_MaintWOResultLine_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_FTU_MaintWOResultLine_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
 	}
 
 	/** Set Interval since install.

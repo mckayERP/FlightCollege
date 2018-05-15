@@ -31,7 +31,7 @@ public class X_CT_CompLifeCycleModel extends PO implements I_CT_CompLifeCycleMod
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20180103L;
+	private static final long serialVersionUID = 20180427L;
 
     /** Standard Constructor */
     public X_CT_CompLifeCycleModel (Properties ctx, int CT_CompLifeCycleModel_ID, String trxName)
@@ -144,6 +144,54 @@ public class X_CT_CompLifeCycleModel extends PO implements I_CT_CompLifeCycleMod
 	public boolean isLifeExtensionPossible () 
 	{
 		Object oo = get_Value(COLUMNNAME_IsLifeExtensionPossible);
+		if (oo != null) 
+		{
+			 if (oo instanceof Boolean) 
+				 return ((Boolean)oo).booleanValue(); 
+			return "Y".equals(oo);
+		}
+		return false;
+	}
+
+	/** Set On Condition Program Applies.
+		@param IsOnCondition 
+		The life cycle is governed by an "On Condition" program of preventative maintenance rather than a hard life limit.
+	  */
+	public void setIsOnCondition (boolean IsOnCondition)
+	{
+		set_Value (COLUMNNAME_IsOnCondition, Boolean.valueOf(IsOnCondition));
+	}
+
+	/** Get On Condition Program Applies.
+		@return The life cycle is governed by an "On Condition" program of preventative maintenance rather than a hard life limit.
+	  */
+	public boolean isOnCondition () 
+	{
+		Object oo = get_Value(COLUMNNAME_IsOnCondition);
+		if (oo != null) 
+		{
+			 if (oo instanceof Boolean) 
+				 return ((Boolean)oo).booleanValue(); 
+			return "Y".equals(oo);
+		}
+		return false;
+	}
+
+	/** Set Piston A/C Engine.
+		@param IsPistonACEngine 
+		Is the component a piston aircraft engine?
+	  */
+	public void setIsPistonACEngine (boolean IsPistonACEngine)
+	{
+		set_Value (COLUMNNAME_IsPistonACEngine, Boolean.valueOf(IsPistonACEngine));
+	}
+
+	/** Get Piston A/C Engine.
+		@return Is the component a piston aircraft engine?
+	  */
+	public boolean isPistonACEngine () 
+	{
+		Object oo = get_Value(COLUMNNAME_IsPistonACEngine);
 		if (oo != null) 
 		{
 			 if (oo instanceof Boolean) 
@@ -287,6 +335,51 @@ public class X_CT_CompLifeCycleModel extends PO implements I_CT_CompLifeCycleMod
 		return bd;
 	}
 
+	/** Set Max Number of Overhaul Cycles.
+		@param MaxOverhaulCount 
+		The maximum number of times that a component can be overhauled.
+	  */
+	public void setMaxOverhaulCount (int MaxOverhaulCount)
+	{
+		set_Value (COLUMNNAME_MaxOverhaulCount, Integer.valueOf(MaxOverhaulCount));
+	}
+
+	/** Get Max Number of Overhaul Cycles.
+		@return The maximum number of times that a component can be overhauled.
+	  */
+	public int getMaxOverhaulCount () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_MaxOverhaulCount);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
+	public com.mckayerp.model.I_CT_DataSet getMaxRPMRefData() throws RuntimeException
+    {
+		return (com.mckayerp.model.I_CT_DataSet)MTable.get(getCtx(), com.mckayerp.model.I_CT_DataSet.Table_Name)
+			.getPO(getMaxRPMRefDataSet(), get_TrxName());	}
+
+	/** Set Max Static RPM Reference Data Set.
+		@param MaxRPMRefDataSet 
+		Select the data set used to capture the maximum static RPM after overhaul.
+	  */
+	public void setMaxRPMRefDataSet (int MaxRPMRefDataSet)
+	{
+		set_Value (COLUMNNAME_MaxRPMRefDataSet, Integer.valueOf(MaxRPMRefDataSet));
+	}
+
+	/** Get Max Static RPM Reference Data Set.
+		@return Select the data set used to capture the maximum static RPM after overhaul.
+	  */
+	public int getMaxRPMRefDataSet () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_MaxRPMRefDataSet);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
 	/** Set Name.
 		@param Name 
 		Alphanumeric identifier of the entity
@@ -302,6 +395,31 @@ public class X_CT_CompLifeCycleModel extends PO implements I_CT_CompLifeCycleMod
 	public String getName () 
 	{
 		return (String)get_Value(COLUMNNAME_Name);
+	}
+
+	public com.mckayerp.model.I_CT_DataSet getOilConsumptionData() throws RuntimeException
+    {
+		return (com.mckayerp.model.I_CT_DataSet)MTable.get(getCtx(), com.mckayerp.model.I_CT_DataSet.Table_Name)
+			.getPO(getOilConsumptionDataSet(), get_TrxName());	}
+
+	/** Set Oil Consumption Data Set.
+		@param OilConsumptionDataSet 
+		The data set used in the Dispatch Control window to record oil consumption.
+	  */
+	public void setOilConsumptionDataSet (int OilConsumptionDataSet)
+	{
+		set_Value (COLUMNNAME_OilConsumptionDataSet, Integer.valueOf(OilConsumptionDataSet));
+	}
+
+	/** Get Oil Consumption Data Set.
+		@return The data set used in the Dispatch Control window to record oil consumption.
+	  */
+	public int getOilConsumptionDataSet () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_OilConsumptionDataSet);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
 	}
 
 	/** Set Search Key.

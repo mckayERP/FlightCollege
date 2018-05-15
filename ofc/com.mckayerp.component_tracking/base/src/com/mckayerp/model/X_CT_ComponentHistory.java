@@ -32,7 +32,7 @@ public class X_CT_ComponentHistory extends PO implements I_CT_ComponentHistory, 
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20180103L;
+	private static final long serialVersionUID = 20180427L;
 
     /** Standard Constructor */
     public X_CT_ComponentHistory (Properties ctx, int CT_ComponentHistory_ID, String trxName)
@@ -142,6 +142,12 @@ public class X_CT_ComponentHistory extends PO implements I_CT_ComponentHistory, 
 	public static final String CT_COMPONENTACTIONTYPE_Uninstalled = "Uninstalled";
 	/** Created = Created */
 	public static final String CT_COMPONENTACTIONTYPE_Created = "Created";
+	/** Inspected = Inspected */
+	public static final String CT_COMPONENTACTIONTYPE_Inspected = "Inspected";
+	/** Overhauled = Overhauled */
+	public static final String CT_COMPONENTACTIONTYPE_Overhauled = "Overhauled";
+	/** Repaired = Repaired */
+	public static final String CT_COMPONENTACTIONTYPE_Repaired = "Repaired";
 	/** Set Action Type.
 		@param CT_ComponentActionType 
 		The type of action performed on the component
@@ -212,14 +218,17 @@ public class X_CT_ComponentHistory extends PO implements I_CT_ComponentHistory, 
 	}
 
 	/** Set Action Date.
-		@param DateAction Action Date	  */
+		@param DateAction 
+		The date the action took place
+	  */
 	public void setDateAction (Timestamp DateAction)
 	{
 		set_ValueNoCheck (COLUMNNAME_DateAction, DateAction);
 	}
 
 	/** Get Action Date.
-		@return Action Date	  */
+		@return The date the action took place
+	  */
 	public Timestamp getDateAction () 
 	{
 		return (Timestamp)get_Value(COLUMNNAME_DateAction);
@@ -346,9 +355,9 @@ public class X_CT_ComponentHistory extends PO implements I_CT_ComponentHistory, 
 		return ii.intValue();
 	}
 
-	public org.compiere.model.I_M_Locator getM_Locator() throws RuntimeException
+	public I_M_Locator getM_Locator() throws RuntimeException
     {
-		return (org.compiere.model.I_M_Locator)MTable.get(getCtx(), org.compiere.model.I_M_Locator.Table_Name)
+		return (I_M_Locator)MTable.get(getCtx(), I_M_Locator.Table_Name)
 			.getPO(getM_Locator_ID(), get_TrxName());	}
 
 	/** Set Locator.
@@ -446,6 +455,26 @@ public class X_CT_ComponentHistory extends PO implements I_CT_ComponentHistory, 
 		return (String)get_Value(COLUMNNAME_MovementType);
 	}
 
+	/** Set Overhaul Count.
+		@param OverhaulCount 
+		The number of life cycles completed or underway.
+	  */
+	public void setOverhaulCount (int OverhaulCount)
+	{
+		set_Value (COLUMNNAME_OverhaulCount, Integer.valueOf(OverhaulCount));
+	}
+
+	/** Get Overhaul Count.
+		@return The number of life cycles completed or underway.
+	  */
+	public int getOverhaulCount () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_OverhaulCount);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
 	public com.mckayerp.model.I_CT_Component getParentComponent() throws RuntimeException
     {
 		return (com.mckayerp.model.I_CT_Component)MTable.get(getCtx(), com.mckayerp.model.I_CT_Component.Table_Name)
@@ -512,5 +541,33 @@ public class X_CT_ComponentHistory extends PO implements I_CT_ComponentHistory, 
 		if (bd == null)
 			 return Env.ZERO;
 		return bd;
+	}
+
+	public com.mckayerp.model.I_CT_Component getRoot_Component() throws RuntimeException
+    {
+		return (com.mckayerp.model.I_CT_Component)MTable.get(getCtx(), com.mckayerp.model.I_CT_Component.Table_Name)
+			.getPO(getRoot_Component_ID(), get_TrxName());	}
+
+	/** Set Root Component.
+		@param Root_Component_ID 
+		The Root Component of the component BOM tree.
+	  */
+	public void setRoot_Component_ID (int Root_Component_ID)
+	{
+		if (Root_Component_ID < 1) 
+			set_Value (COLUMNNAME_Root_Component_ID, null);
+		else 
+			set_Value (COLUMNNAME_Root_Component_ID, Integer.valueOf(Root_Component_ID));
+	}
+
+	/** Get Root Component.
+		@return The Root Component of the component BOM tree.
+	  */
+	public int getRoot_Component_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_Root_Component_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
 	}
 }

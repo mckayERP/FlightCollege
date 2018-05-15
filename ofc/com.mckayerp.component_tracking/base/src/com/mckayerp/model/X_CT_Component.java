@@ -32,7 +32,7 @@ public class X_CT_Component extends PO implements I_CT_Component, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20180103L;
+	private static final long serialVersionUID = 20180427L;
 
     /** Standard Constructor */
     public X_CT_Component (Properties ctx, int CT_Component_ID, String trxName)
@@ -74,6 +74,34 @@ public class X_CT_Component extends PO implements I_CT_Component, I_Persistent
         .append(get_ID()).append("]");
       return sb.toString();
     }
+
+	public com.mckayerp.model.I_CT_CompLifeCycleModel getCT_CompLifeCycleModel() throws RuntimeException
+    {
+		return (com.mckayerp.model.I_CT_CompLifeCycleModel)MTable.get(getCtx(), com.mckayerp.model.I_CT_CompLifeCycleModel.Table_Name)
+			.getPO(getCT_CompLifeCycleModel_ID(), get_TrxName());	}
+
+	/** Set Component Life Cycle Model.
+		@param CT_CompLifeCycleModel_ID 
+		The component life cycle model to use when creating new components for this product.
+	  */
+	public void setCT_CompLifeCycleModel_ID (int CT_CompLifeCycleModel_ID)
+	{
+		if (CT_CompLifeCycleModel_ID < 1) 
+			set_Value (COLUMNNAME_CT_CompLifeCycleModel_ID, null);
+		else 
+			set_Value (COLUMNNAME_CT_CompLifeCycleModel_ID, Integer.valueOf(CT_CompLifeCycleModel_ID));
+	}
+
+	/** Get Component Life Cycle Model.
+		@return The component life cycle model to use when creating new components for this product.
+	  */
+	public int getCT_CompLifeCycleModel_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_CT_CompLifeCycleModel_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
 
 	/** Set Component.
 		@param CT_Component_ID 
@@ -137,6 +165,30 @@ public class X_CT_Component extends PO implements I_CT_Component, I_Persistent
 	public boolean isLifeExtensionPossible () 
 	{
 		Object oo = get_Value(COLUMNNAME_IsLifeExtensionPossible);
+		if (oo != null) 
+		{
+			 if (oo instanceof Boolean) 
+				 return ((Boolean)oo).booleanValue(); 
+			return "Y".equals(oo);
+		}
+		return false;
+	}
+
+	/** Set On Condition Program Applies.
+		@param IsOnCondition 
+		The life cycle is governed by an "On Condition" program of preventative maintenance rather than a hard life limit.
+	  */
+	public void setIsOnCondition (boolean IsOnCondition)
+	{
+		set_Value (COLUMNNAME_IsOnCondition, Boolean.valueOf(IsOnCondition));
+	}
+
+	/** Get On Condition Program Applies.
+		@return The life cycle is governed by an "On Condition" program of preventative maintenance rather than a hard life limit.
+	  */
+	public boolean isOnCondition () 
+	{
+		Object oo = get_Value(COLUMNNAME_IsOnCondition);
 		if (oo != null) 
 		{
 			 if (oo instanceof Boolean) 
@@ -298,6 +350,46 @@ public class X_CT_Component extends PO implements I_CT_Component, I_Persistent
 		if (bd == null)
 			 return Env.ZERO;
 		return bd;
+	}
+
+	/** Set Max Number of Overhaul Cycles.
+		@param MaxOverhaulCount 
+		The maximum number of times that a component can be overhauled.
+	  */
+	public void setMaxOverhaulCount (int MaxOverhaulCount)
+	{
+		set_Value (COLUMNNAME_MaxOverhaulCount, Integer.valueOf(MaxOverhaulCount));
+	}
+
+	/** Get Max Number of Overhaul Cycles.
+		@return The maximum number of times that a component can be overhauled.
+	  */
+	public int getMaxOverhaulCount () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_MaxOverhaulCount);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
+	/** Set Overhaul Count.
+		@param OverhaulCount 
+		The number of life cycles completed or underway.
+	  */
+	public void setOverhaulCount (int OverhaulCount)
+	{
+		set_Value (COLUMNNAME_OverhaulCount, Integer.valueOf(OverhaulCount));
+	}
+
+	/** Get Overhaul Count.
+		@return The number of life cycles completed or underway.
+	  */
+	public int getOverhaulCount () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_OverhaulCount);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
 	}
 
 	public com.mckayerp.model.I_CT_Component getRoot_Component() throws RuntimeException
