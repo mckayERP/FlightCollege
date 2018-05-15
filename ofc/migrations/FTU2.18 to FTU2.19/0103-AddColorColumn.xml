@@ -1,0 +1,707 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Migrations>
+<Migration EntityType="MFTU" Name="Add Color Column to window and smart browse" ReleaseNo="FTU2.19" SeqNo="103">
+<Step SeqNo="20" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="1001859" Table="AD_Field">
+<Data AD_Column_ID="87585" Column="IsColorColumn" oldValue="false">true</Data>
+</PO>
+</Step>
+<Step SeqNo="30" StepType="AD">
+<PO AD_Table_ID="106" Action="U" Record_ID="1000072" Table="AD_Tab">
+<Data AD_Column_ID="2742" Column="OrderByClause" oldValue="FTU_UsageNextDue, FTU_DateNextDue">RowStatus DESC</Data>
+</PO>
+</Step>
+<Step SeqNo="40" StepType="AD">
+<PO AD_Table_ID="106" Action="U" Record_ID="1000072" Table="AD_Tab">
+<Data AD_Column_ID="2742" Column="OrderByClause" oldValue="RowStatus DESC">RowStatus,</Data>
+</PO>
+</Step>
+<Step SeqNo="50" StepType="AD">
+<PO AD_Table_ID="106" Action="U" Record_ID="1000072" Table="AD_Tab">
+<Data AD_Column_ID="2742" Column="OrderByClause" oldValue="RowStatus,">RowStatus, FTU_UseRemaining, FTU_TimeRemaining</Data>
+</PO>
+</Step>
+<Step SeqNo="60" StepType="AD">
+<PO AD_Table_ID="106" Action="U" Record_ID="1000072" Table="AD_Tab">
+<Data AD_Column_ID="2742" Column="OrderByClause" oldValue="RowStatus, FTU_UseRemaining, FTU_DaysRemaining">RowStatus, (SELECT FTU_Aricraft.callsign from FTU_Aircraft WHERE FTU_Aircraft.CT_Compontnent_ID=FTU_MaintNextAction.Root_Component_ID), FTU_UseRemaining, FTU_DaysRemaining</Data>
+</PO>
+</Step>
+<Step SeqNo="70" StepType="AD">
+<PO AD_Table_ID="106" Action="U" Record_ID="1000072" Table="AD_Tab">
+<Data AD_Column_ID="2742" Column="OrderByClause" oldValue="RowStatus, (SELECT FTU_Aricraft.callsign from FTU_Aircraft WHERE FTU_Aircraft.CT_Compontnent_ID=FTU_MaintNextAction.Root_Component_ID), FTU_UseRemaining, FTU_DaysRemaining">RowStatus, (SELECT FTU_Aircraft.callsign from FTU_Aircraft WHERE FTU_Aircraft.CT_Compontnent_ID=FTU_MaintNextAction.Root_Component_ID), FTU_UseRemaining, FTU_DaysRemaining</Data>
+</PO>
+</Step>
+<Step SeqNo="80" StepType="AD">
+<PO AD_Table_ID="106" Action="U" Record_ID="1000072" Table="AD_Tab">
+<Data AD_Column_ID="2742" Column="OrderByClause" oldValue="RowStatus, (SELECT FTU_Aircraft.callsign from FTU_Aircraft WHERE FTU_Aircraft.CT_Compontnent_ID=FTU_MaintNextAction.Root_Component_ID), FTU_UseRemaining, FTU_DaysRemaining">RowStatus, (SELECT FTU_Aircraft.callsign from FTU_Aircraft WHERE FTU_Aircraft.CT_Component_ID=FTU_MaintNextAction.Root_Component_ID), FTU_UseRemaining, FTU_DaysRemaining</Data>
+</PO>
+</Step>
+<Step SeqNo="90" StepType="AD">
+<PO AD_Table_ID="106" Action="U" Record_ID="1000072" Table="AD_Tab">
+<Data AD_Column_ID="2742" Column="OrderByClause" oldValue="RowStatus, (SELECT FTU_Aircraft.callsign from FTU_Aircraft WHERE FTU_Aircraft.CT_Component_ID=FTU_MaintNextAction.Root_Component_ID), FTU_UseRemaining, FTU_DaysRemaining">RowStatus, (SELECT FTU_Aircraft.callsign from FTU_Aircraft WHERE FTU_Aircraft.CT_Component_ID=Root_Component_ID), FTU_UseRemaining, FTU_DaysRemaining</Data>
+</PO>
+</Step>
+<Step SeqNo="100" StepType="AD">
+<PO AD_Table_ID="106" Action="U" Record_ID="1000072" Table="AD_Tab">
+<Data AD_Column_ID="2742" Column="OrderByClause" oldValue="RowStatus, (SELECT FTU_Aircraft.callsign from FTU_Aircraft WHERE FTU_Aircraft.CT_Component_ID=Root_Component_ID), FTU_UseRemaining, FTU_DaysRemaining">RowStatus, (SELECT FTU_Aircraft.callsign from FTU_Aircraft WHERE FTU_Aircraft.CT_Component_ID=(SELECT COALESCE(CT_Component.Root_Component_ID, FTU_MaintNextAction.CT_Component_ID) FROM CT_Component WHERE CT_Component.CT_Component_ID=FTU_MaintNextAction.CT_Component_ID)), FTU_UseRemaining, FTU_DaysRemaining</Data>
+</PO>
+</Step>
+<Step SeqNo="110" StepType="AD">
+<PO AD_Table_ID="53232" Action="I" Record_ID="1000126" Table="AD_View_Column">
+<Data AD_Column_ID="58107" Column="ColumnName">NA_ROWSTATUS</Data>
+<Data AD_Column_ID="58105" Column="Name">RowStatus</Data>
+<Data AD_Column_ID="58102" Column="Description" isNewNull="true"/>
+<Data AD_Column_ID="58109" Column="AD_Column_ID">1001888</Data>
+<Data AD_Column_ID="58103" Column="EntityType">MFTU</Data>
+<Data AD_Column_ID="58106" Column="ColumnSQL">na.RowStatus</Data>
+<Data AD_Column_ID="58093" Column="AD_Client_ID">0</Data>
+<Data AD_Column_ID="58094" Column="AD_Org_ID">0</Data>
+<Data AD_Column_ID="58095" Column="IsActive">true</Data>
+<Data AD_Column_ID="58096" Column="Created">2018-03-25 12:47:24.112</Data>
+<Data AD_Column_ID="58097" Column="Updated">2018-03-25 12:47:24.112</Data>
+<Data AD_Column_ID="58098" Column="CreatedBy">0</Data>
+<Data AD_Column_ID="58099" Column="UpdatedBy">0</Data>
+<Data AD_Column_ID="58100" Column="AD_View_Column_ID">1000126</Data>
+<Data AD_Column_ID="58104" Column="Help" isNewNull="true"/>
+<Data AD_Column_ID="58108" Column="AD_View_ID">1000002</Data>
+<Data AD_Column_ID="58101" Column="AD_View_Definition_ID">1000004</Data>
+</PO>
+</Step>
+<Step SeqNo="120" StepType="AD">
+<PO AD_Table_ID="53228" Action="I" Record_ID="1000126" Table="AD_View_Column_Trl">
+<Data AD_Column_ID="58040" Column="AD_Client_ID">0</Data>
+<Data AD_Column_ID="58041" Column="AD_Org_ID">0</Data>
+<Data AD_Column_ID="58042" Column="IsActive">true</Data>
+<Data AD_Column_ID="58043" Column="Created">2018-03-25 12:47:25.245</Data>
+<Data AD_Column_ID="58044" Column="Updated">2018-03-25 12:47:25.245</Data>
+<Data AD_Column_ID="58045" Column="CreatedBy">0</Data>
+<Data AD_Column_ID="58046" Column="UpdatedBy">0</Data>
+<Data AD_Column_ID="58047" Column="AD_View_Column_ID">1000126</Data>
+<Data AD_Column_ID="58048" Column="AD_Language">es_MX</Data>
+<Data AD_Column_ID="58049" Column="Description" isNewNull="true"/>
+<Data AD_Column_ID="58050" Column="Help" isNewNull="true"/>
+<Data AD_Column_ID="58051" Column="IsTranslated">false</Data>
+<Data AD_Column_ID="58052" Column="Name">RowStatus</Data>
+</PO>
+</Step>
+<Step SeqNo="130" StepType="AD">
+<PO AD_Table_ID="53232" Action="U" Record_ID="1000126" Table="AD_View_Column">
+<Data AD_Column_ID="58107" Column="ColumnName" oldValue="NA_ROWSTATUS">NA_RowStatus</Data>
+</PO>
+</Step>
+<Step SeqNo="140" StepType="AD">
+<PO AD_Table_ID="101" Action="I" Record_ID="1001889" Table="AD_Column">
+<Data AD_Column_ID="548" Column="IsActive">true</Data>
+<Data AD_Column_ID="3360" Column="IsUpdateable">true</Data>
+<Data AD_Column_ID="1692" Column="Callout" isNewNull="true"/>
+<Data AD_Column_ID="11617" Column="IsAlwaysUpdateable">false</Data>
+<Data AD_Column_ID="13448" Column="ColumnSQL" isNewNull="true"/>
+<Data AD_Column_ID="117" Column="DefaultValue" isNewNull="true"/>
+<Data AD_Column_ID="109" Column="AD_Column_ID">1001889</Data>
+<Data AD_Column_ID="114" Column="AD_Table_ID">53223</Data>
+<Data AD_Column_ID="3389" Column="ValueMax" isNewNull="true"/>
+<Data AD_Column_ID="6482" Column="EntityType">EE07</Data>
+<Data AD_Column_ID="110" Column="Version">0</Data>
+<Data AD_Column_ID="227" Column="AD_Reference_Value_ID" isNewNull="true"/>
+<Data AD_Column_ID="124" Column="IsMandatory">false</Data>
+<Data AD_Column_ID="125" Column="IsTranslated">false</Data>
+<Data AD_Column_ID="550" Column="CreatedBy">0</Data>
+<Data AD_Column_ID="551" Column="Updated">2018-03-25 12:50:29.669</Data>
+<Data AD_Column_ID="126" Column="IsIdentifier">false</Data>
+<Data AD_Column_ID="127" Column="SeqNo">0</Data>
+<Data AD_Column_ID="113" Column="Help">The Color Column value should be a numeric. A value of zero will appear have the default color (black).  A negative value will use the "issue" color, typically red.  A positive value will use the "OK" color, typically green or blue.</Data>
+<Data AD_Column_ID="3388" Column="ValueMin" isNewNull="true"/>
+<Data AD_Column_ID="120" Column="IsParent">false</Data>
+<Data AD_Column_ID="359" Column="AD_Client_ID">0</Data>
+<Data AD_Column_ID="360" Column="AD_Org_ID">0</Data>
+<Data AD_Column_ID="118" Column="FieldLength">1</Data>
+<Data AD_Column_ID="6244" Column="IsSelectionColumn">false</Data>
+<Data AD_Column_ID="226" Column="AD_Reference_ID">20</Data>
+<Data AD_Column_ID="6483" Column="IsSyncDatabase">N</Data>
+<Data AD_Column_ID="549" Column="Created">2018-03-25 12:50:29.669</Data>
+<Data AD_Column_ID="115" Column="AD_Val_Rule_ID" isNewNull="true"/>
+<Data AD_Column_ID="1179" Column="VFormat" isNewNull="true"/>
+<Data AD_Column_ID="119" Column="IsKey">false</Data>
+<Data AD_Column_ID="3369" Column="AD_Process_ID" isNewNull="true"/>
+<Data AD_Column_ID="552" Column="UpdatedBy">0</Data>
+<Data AD_Column_ID="6245" Column="ReadOnlyLogic" isNewNull="true"/>
+<Data AD_Column_ID="54358" Column="InfoFactoryClass" isNewNull="true"/>
+<Data AD_Column_ID="50218" Column="MandatoryLogic" isNewNull="true"/>
+<Data AD_Column_ID="56149" Column="IsAutocomplete">false</Data>
+<Data AD_Column_ID="56187" Column="IsAllowLogging">true</Data>
+<Data AD_Column_ID="56352" Column="FormatPattern" isNewNull="true"/>
+<Data AD_Column_ID="128" Column="IsEncrypted">N</Data>
+<Data AD_Column_ID="112" Column="Description">Is this field to be used to change the color of the displayed data in the row?</Data>
+<Data AD_Column_ID="111" Column="Name">Color Column</Data>
+<Data AD_Column_ID="116" Column="ColumnName">IsColorColumn</Data>
+<Data AD_Column_ID="59702" Column="AD_Chart_ID" isNewNull="true"/>
+<Data AD_Column_ID="2608" Column="AD_Element_ID">59931</Data>
+<Data AD_Column_ID="68024" Column="IsRange">false</Data>
+</PO>
+</Step>
+<Step SeqNo="150" StepType="AD">
+<PO AD_Table_ID="752" Action="I" Record_ID="1001889" Table="AD_Column_Trl">
+<Data AD_Column_ID="12959" Column="IsActive">true</Data>
+<Data AD_Column_ID="12955" Column="AD_Column_ID">1001889</Data>
+<Data AD_Column_ID="12956" Column="CreatedBy">0</Data>
+<Data AD_Column_ID="12958" Column="UpdatedBy">0</Data>
+<Data AD_Column_ID="12960" Column="Created">2018-03-25 12:50:30.346</Data>
+<Data AD_Column_ID="12961" Column="AD_Client_ID">0</Data>
+<Data AD_Column_ID="12951" Column="AD_Org_ID">0</Data>
+<Data AD_Column_ID="12952" Column="Updated">2018-03-25 12:50:30.346</Data>
+<Data AD_Column_ID="12953" Column="AD_Language">es_MX</Data>
+<Data AD_Column_ID="12954" Column="IsTranslated">false</Data>
+<Data AD_Column_ID="12957" Column="Name">Color Column</Data>
+</PO>
+</Step>
+<Step SeqNo="160" StepType="AD">
+<PO AD_Table_ID="752" Action="D" Record_ID="1001889" Table="AD_Column_Trl">
+<Data AD_Column_ID="12959" Column="IsActive" isNewNull="true" oldValue="true"/>
+<Data AD_Column_ID="12955" Column="AD_Column_ID" oldValue="1001889">1001889</Data>
+<Data AD_Column_ID="12956" Column="CreatedBy" isNewNull="true" oldValue="0"/>
+<Data AD_Column_ID="12958" Column="UpdatedBy" isNewNull="true" oldValue="0"/>
+<Data AD_Column_ID="12960" Column="Created" isNewNull="true" oldValue="2018-03-25 12:50:30.0"/>
+<Data AD_Column_ID="12961" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
+<Data AD_Column_ID="12951" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
+<Data AD_Column_ID="12952" Column="Updated" isNewNull="true" oldValue="2018-03-25 12:50:30.0"/>
+<Data AD_Column_ID="12953" Column="AD_Language" oldValue="es_MX">es_MX</Data>
+<Data AD_Column_ID="12954" Column="IsTranslated" isNewNull="true" oldValue="false"/>
+<Data AD_Column_ID="12957" Column="Name" isNewNull="true" oldValue="Color Column"/>
+</PO>
+</Step>
+<Step SeqNo="170" StepType="AD">
+<PO AD_Table_ID="101" Action="D" Record_ID="1001889" Table="AD_Column">
+<Data AD_Column_ID="548" Column="IsActive" isNewNull="true" oldValue="true"/>
+<Data AD_Column_ID="3360" Column="IsUpdateable" isNewNull="true" oldValue="true"/>
+<Data AD_Column_ID="1692" Column="Callout" isNewNull="true" isOldNull="true"/>
+<Data AD_Column_ID="11617" Column="IsAlwaysUpdateable" isNewNull="true" oldValue="false"/>
+<Data AD_Column_ID="13448" Column="ColumnSQL" isNewNull="true" isOldNull="true"/>
+<Data AD_Column_ID="117" Column="DefaultValue" isNewNull="true" isOldNull="true"/>
+<Data AD_Column_ID="109" Column="AD_Column_ID" isNewNull="true" oldValue="1001889"/>
+<Data AD_Column_ID="114" Column="AD_Table_ID" isNewNull="true" oldValue="53223"/>
+<Data AD_Column_ID="3389" Column="ValueMax" isNewNull="true" isOldNull="true"/>
+<Data AD_Column_ID="6482" Column="EntityType" isNewNull="true" oldValue="EE07"/>
+<Data AD_Column_ID="110" Column="Version" isNewNull="true" oldValue="0"/>
+<Data AD_Column_ID="227" Column="AD_Reference_Value_ID" isNewNull="true" isOldNull="true"/>
+<Data AD_Column_ID="124" Column="IsMandatory" isNewNull="true" oldValue="false"/>
+<Data AD_Column_ID="125" Column="IsTranslated" isNewNull="true" oldValue="false"/>
+<Data AD_Column_ID="550" Column="CreatedBy" isNewNull="true" oldValue="0"/>
+<Data AD_Column_ID="551" Column="Updated" isNewNull="true" oldValue="2018-03-25 12:50:29.0"/>
+<Data AD_Column_ID="126" Column="IsIdentifier" isNewNull="true" oldValue="false"/>
+<Data AD_Column_ID="127" Column="SeqNo" isNewNull="true" oldValue="0"/>
+<Data AD_Column_ID="113" Column="Help" isNewNull="true" oldValue="The Color Column value should be a numeric. A value of zero will appear have the default color (black).  A negative value will use the &quot;issue&quot; color, typically red.  A positive value will use the &quot;OK&quot; color, typically green or blue."/>
+<Data AD_Column_ID="3388" Column="ValueMin" isNewNull="true" isOldNull="true"/>
+<Data AD_Column_ID="120" Column="IsParent" isNewNull="true" oldValue="false"/>
+<Data AD_Column_ID="359" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
+<Data AD_Column_ID="360" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
+<Data AD_Column_ID="118" Column="FieldLength" isNewNull="true" oldValue="1"/>
+<Data AD_Column_ID="6244" Column="IsSelectionColumn" isNewNull="true" oldValue="false"/>
+<Data AD_Column_ID="226" Column="AD_Reference_ID" isNewNull="true" oldValue="20"/>
+<Data AD_Column_ID="6483" Column="IsSyncDatabase" isNewNull="true" oldValue="N"/>
+<Data AD_Column_ID="549" Column="Created" isNewNull="true" oldValue="2018-03-25 12:50:29.0"/>
+<Data AD_Column_ID="115" Column="AD_Val_Rule_ID" isNewNull="true" isOldNull="true"/>
+<Data AD_Column_ID="1179" Column="VFormat" isNewNull="true" isOldNull="true"/>
+<Data AD_Column_ID="119" Column="IsKey" isNewNull="true" oldValue="false"/>
+<Data AD_Column_ID="3369" Column="AD_Process_ID" isNewNull="true" isOldNull="true"/>
+<Data AD_Column_ID="552" Column="UpdatedBy" isNewNull="true" oldValue="0"/>
+<Data AD_Column_ID="6245" Column="ReadOnlyLogic" isNewNull="true" isOldNull="true"/>
+<Data AD_Column_ID="54358" Column="InfoFactoryClass" isNewNull="true" isOldNull="true"/>
+<Data AD_Column_ID="50218" Column="MandatoryLogic" isNewNull="true" isOldNull="true"/>
+<Data AD_Column_ID="56149" Column="IsAutocomplete" isNewNull="true" oldValue="false"/>
+<Data AD_Column_ID="56187" Column="IsAllowLogging" isNewNull="true" oldValue="true"/>
+<Data AD_Column_ID="56352" Column="FormatPattern" isNewNull="true" isOldNull="true"/>
+<Data AD_Column_ID="128" Column="IsEncrypted" isNewNull="true" oldValue="N"/>
+<Data AD_Column_ID="112" Column="Description" isNewNull="true" oldValue="Is this field to be used to change the color of the displayed data in the row?"/>
+<Data AD_Column_ID="111" Column="Name" isNewNull="true" oldValue="Color Column"/>
+<Data AD_Column_ID="116" Column="ColumnName" isNewNull="true" oldValue="IsColorColumn"/>
+<Data AD_Column_ID="59702" Column="AD_Chart_ID" isNewNull="true" isOldNull="true"/>
+<Data AD_Column_ID="2608" Column="AD_Element_ID" isNewNull="true" oldValue="59931"/>
+<Data AD_Column_ID="68024" Column="IsRange" isNewNull="true" oldValue="false"/>
+</PO>
+</Step>
+<Step SeqNo="180" StepType="AD">
+<PO AD_Table_ID="53223" Action="I" Record_ID="1000104" Table="AD_Browse_Field">
+<Data AD_Column_ID="57974" Column="Help" isNewNull="true"/>
+<Data AD_Column_ID="67114" Column="Callout" isNewNull="true"/>
+<Data AD_Column_ID="64853" Column="InfoFactoryClass" isNewNull="true"/>
+<Data AD_Column_ID="57969" Column="AD_Element_ID">1001211</Data>
+<Data AD_Column_ID="78559" Column="SeqNoGrid">0</Data>
+<Data AD_Column_ID="57973" Column="EntityType">MFTU</Data>
+<Data AD_Column_ID="64356" Column="DisplayLogic" isNewNull="true"/>
+<Data AD_Column_ID="64358" Column="ReadOnlyLogic" isNewNull="true"/>
+<Data AD_Column_ID="64359" Column="VFormat" isNewNull="true"/>
+<Data AD_Column_ID="57961" Column="AD_Client_ID">0</Data>
+<Data AD_Column_ID="57962" Column="AD_Org_ID">0</Data>
+<Data AD_Column_ID="57963" Column="IsActive">true</Data>
+<Data AD_Column_ID="57964" Column="Created">2018-03-25 13:00:09.983</Data>
+<Data AD_Column_ID="57965" Column="Updated">2018-03-25 13:00:09.983</Data>
+<Data AD_Column_ID="57966" Column="CreatedBy">0</Data>
+<Data AD_Column_ID="57967" Column="UpdatedBy">0</Data>
+<Data AD_Column_ID="57970" Column="AD_Reference_ID">22</Data>
+<Data AD_Column_ID="57972" Column="Description" isNewNull="true"/>
+<Data AD_Column_ID="57976" Column="IsDisplayed">true</Data>
+<Data AD_Column_ID="57977" Column="IsIdentifier">false</Data>
+<Data AD_Column_ID="57978" Column="IsKey">false</Data>
+<Data AD_Column_ID="57979" Column="IsQueryCriteria">false</Data>
+<Data AD_Column_ID="57980" Column="IsRange">false</Data>
+<Data AD_Column_ID="57982" Column="SeqNo">0</Data>
+<Data AD_Column_ID="57984" Column="AD_Reference_Value_ID" isNewNull="true"/>
+<Data AD_Column_ID="57983" Column="AD_Browse_ID">1000001</Data>
+<Data AD_Column_ID="57975" Column="IsCentrallyMaintained">true</Data>
+<Data AD_Column_ID="57971" Column="AD_View_Column_ID">1000126</Data>
+<Data AD_Column_ID="57985" Column="IsMandatory">false</Data>
+<Data AD_Column_ID="57968" Column="AD_Browse_Field_ID">1000104</Data>
+<Data AD_Column_ID="63218" Column="Axis_Column_ID" isNewNull="true"/>
+<Data AD_Column_ID="63219" Column="Axis_Parent_Column_ID" isNewNull="true"/>
+<Data AD_Column_ID="57981" Column="Name">Row Status</Data>
+<Data AD_Column_ID="63579" Column="IsReadOnly">true</Data>
+<Data AD_Column_ID="64222" Column="IsOrderBy">false</Data>
+<Data AD_Column_ID="64353" Column="AD_Val_Rule_ID" isNewNull="true"/>
+<Data AD_Column_ID="64354" Column="DefaultValue" isNewNull="true"/>
+<Data AD_Column_ID="64355" Column="DefaultValue2" isNewNull="true"/>
+<Data AD_Column_ID="64357" Column="FieldLength">0</Data>
+<Data AD_Column_ID="64221" Column="SortNo">0</Data>
+<Data AD_Column_ID="64360" Column="ValueMax" isNewNull="true"/>
+<Data AD_Column_ID="64361" Column="ValueMin" isNewNull="true"/>
+<Data AD_Column_ID="87586" Column="IsColorColumn">true</Data>
+</PO>
+</Step>
+<Step SeqNo="190" StepType="AD">
+<PO AD_Table_ID="53227" Action="I" Record_ID="1000104" Table="AD_Browse_Field_Trl">
+<Data AD_Column_ID="58034" Column="AD_Browse_Field_ID">1000104</Data>
+<Data AD_Column_ID="58031" Column="Updated">2018-03-25 13:00:10.901</Data>
+<Data AD_Column_ID="58032" Column="CreatedBy">0</Data>
+<Data AD_Column_ID="58027" Column="AD_Client_ID">0</Data>
+<Data AD_Column_ID="58029" Column="IsActive">true</Data>
+<Data AD_Column_ID="58030" Column="Created">2018-03-25 13:00:10.901</Data>
+<Data AD_Column_ID="58033" Column="UpdatedBy">0</Data>
+<Data AD_Column_ID="58035" Column="AD_Language">es_MX</Data>
+<Data AD_Column_ID="58036" Column="Description" isNewNull="true"/>
+<Data AD_Column_ID="58037" Column="Help" isNewNull="true"/>
+<Data AD_Column_ID="58038" Column="IsTranslated">false</Data>
+<Data AD_Column_ID="58039" Column="Name">Row Status</Data>
+<Data AD_Column_ID="58028" Column="AD_Org_ID">0</Data>
+</PO>
+</Step>
+<Step SeqNo="200" StepType="AD">
+<PO AD_Table_ID="53223" Action="U" Record_ID="1000104" Table="AD_Browse_Field">
+<Data AD_Column_ID="57982" Column="SeqNo" oldValue="0">100</Data>
+</PO>
+</Step>
+<Step SeqNo="210" StepType="AD">
+<PO AD_Table_ID="53223" Action="U" Record_ID="1000104" Table="AD_Browse_Field">
+<Data AD_Column_ID="64222" Column="IsOrderBy" oldValue="false">true</Data>
+<Data AD_Column_ID="64221" Column="SortNo" oldValue="0">10</Data>
+</PO>
+</Step>
+<Step SeqNo="220" StepType="AD">
+<PO AD_Table_ID="53232" Action="U" Record_ID="1000126" Table="AD_View_Column">
+<Data AD_Column_ID="58106" Column="ColumnSQL" oldValue="na.RowStatus">(CASE  WHEN ((date_part('day',date_trunc('day',  na.FTU_DateNextDue-now()))) &gt; COALESCE(na.FTU_TimeIntervalTol,0) AND (na.FTU_UsageNextDue - (SELECT CT.LifeUsed FROM CT_Component CT WHERE CT.CT_Component_ID = na.CT_Component_ID)) &gt; COALESCE(na.FTU_UsageIntervalTol,0)) THEN 1  WHEN ((date_part('day',date_trunc('day',  na.FTU_DateNextDue-now()))) &lt; (-1*COALESCE(na.FTU_TimeIntervalTol,0))	OR (na.FTU_UsageNextDue - (SELECT CT.LifeUsed FROM CT_Component CT WHERE CT.CT_Component_ID = na.CT_Component_ID)) &lt; (-1*COALESCE(na.FTU_UsageIntervalTol,0))) THEN -1 ELSE 0  END)</Data>
+</PO>
+</Step>
+<Step SeqNo="230" StepType="AD">
+<PO AD_Table_ID="53223" Action="U" Record_ID="1000104" Table="AD_Browse_Field">
+<Data AD_Column_ID="57976" Column="IsDisplayed" oldValue="true">false</Data>
+</PO>
+</Step>
+<Step SeqNo="240" StepType="AD">
+<PO AD_Table_ID="53223" Action="U" Record_ID="1000104" Table="AD_Browse_Field">
+<Data AD_Column_ID="57976" Column="IsDisplayed" oldValue="false">true</Data>
+</PO>
+</Step>
+<Step SeqNo="250" StepType="AD">
+<PO AD_Table_ID="101" Action="I" Record_ID="1001890" Table="AD_Column">
+<Data AD_Column_ID="226" Column="AD_Reference_ID">22</Data>
+<Data AD_Column_ID="6483" Column="IsSyncDatabase">N</Data>
+<Data AD_Column_ID="548" Column="IsActive">true</Data>
+<Data AD_Column_ID="3360" Column="IsUpdateable">false</Data>
+<Data AD_Column_ID="1692" Column="Callout" isNewNull="true"/>
+<Data AD_Column_ID="11617" Column="IsAlwaysUpdateable">false</Data>
+<Data AD_Column_ID="13448" Column="ColumnSQL">(CASE WHEN aircraftStatus = 'Serv' THEN 1  WHEN aircraftStatus = 'U/S' THEN -1  ELSE 0 END)</Data>
+<Data AD_Column_ID="117" Column="DefaultValue" isNewNull="true"/>
+<Data AD_Column_ID="109" Column="AD_Column_ID">1001890</Data>
+<Data AD_Column_ID="114" Column="AD_Table_ID">1000034</Data>
+<Data AD_Column_ID="3389" Column="ValueMax" isNewNull="true"/>
+<Data AD_Column_ID="6482" Column="EntityType">MFTU</Data>
+<Data AD_Column_ID="110" Column="Version">0</Data>
+<Data AD_Column_ID="227" Column="AD_Reference_Value_ID" isNewNull="true"/>
+<Data AD_Column_ID="124" Column="IsMandatory">false</Data>
+<Data AD_Column_ID="125" Column="IsTranslated">false</Data>
+<Data AD_Column_ID="550" Column="CreatedBy">0</Data>
+<Data AD_Column_ID="551" Column="Updated">2018-03-26 10:07:02.774</Data>
+<Data AD_Column_ID="126" Column="IsIdentifier">false</Data>
+<Data AD_Column_ID="127" Column="SeqNo">0</Data>
+<Data AD_Column_ID="113" Column="Help">The code is used with row colors to show how a row is to be displayed - similar to conditional formating.</Data>
+<Data AD_Column_ID="3388" Column="ValueMin" isNewNull="true"/>
+<Data AD_Column_ID="120" Column="IsParent">false</Data>
+<Data AD_Column_ID="359" Column="AD_Client_ID">0</Data>
+<Data AD_Column_ID="360" Column="AD_Org_ID">0</Data>
+<Data AD_Column_ID="118" Column="FieldLength">10</Data>
+<Data AD_Column_ID="6244" Column="IsSelectionColumn">false</Data>
+<Data AD_Column_ID="549" Column="Created">2018-03-26 10:07:02.774</Data>
+<Data AD_Column_ID="115" Column="AD_Val_Rule_ID" isNewNull="true"/>
+<Data AD_Column_ID="1179" Column="VFormat" isNewNull="true"/>
+<Data AD_Column_ID="119" Column="IsKey">false</Data>
+<Data AD_Column_ID="3369" Column="AD_Process_ID" isNewNull="true"/>
+<Data AD_Column_ID="552" Column="UpdatedBy">0</Data>
+<Data AD_Column_ID="6245" Column="ReadOnlyLogic" isNewNull="true"/>
+<Data AD_Column_ID="54358" Column="InfoFactoryClass" isNewNull="true"/>
+<Data AD_Column_ID="50218" Column="MandatoryLogic" isNewNull="true"/>
+<Data AD_Column_ID="56149" Column="IsAutocomplete">false</Data>
+<Data AD_Column_ID="56187" Column="IsAllowLogging">true</Data>
+<Data AD_Column_ID="56352" Column="FormatPattern" isNewNull="true"/>
+<Data AD_Column_ID="128" Column="IsEncrypted">N</Data>
+<Data AD_Column_ID="112" Column="Description">A code that indicates the status of a row.</Data>
+<Data AD_Column_ID="111" Column="Name">Row Status</Data>
+<Data AD_Column_ID="116" Column="ColumnName">RowStatus</Data>
+<Data AD_Column_ID="59702" Column="AD_Chart_ID" isNewNull="true"/>
+<Data AD_Column_ID="2608" Column="AD_Element_ID">1001211</Data>
+<Data AD_Column_ID="68024" Column="IsRange">false</Data>
+</PO>
+</Step>
+<Step SeqNo="260" StepType="AD">
+<PO AD_Table_ID="752" Action="I" Record_ID="1001890" Table="AD_Column_Trl">
+<Data AD_Column_ID="12959" Column="IsActive">true</Data>
+<Data AD_Column_ID="12955" Column="AD_Column_ID">1001890</Data>
+<Data AD_Column_ID="12956" Column="CreatedBy">0</Data>
+<Data AD_Column_ID="12958" Column="UpdatedBy">0</Data>
+<Data AD_Column_ID="12960" Column="Created">2018-03-26 10:07:05.571</Data>
+<Data AD_Column_ID="12961" Column="AD_Client_ID">0</Data>
+<Data AD_Column_ID="12951" Column="AD_Org_ID">0</Data>
+<Data AD_Column_ID="12952" Column="Updated">2018-03-26 10:07:05.571</Data>
+<Data AD_Column_ID="12953" Column="AD_Language">es_MX</Data>
+<Data AD_Column_ID="12954" Column="IsTranslated">false</Data>
+<Data AD_Column_ID="12957" Column="Name">Row Status</Data>
+</PO>
+</Step>
+<Step SeqNo="270" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="1001890" Table="AD_Column">
+<Data AD_Column_ID="13448" Column="ColumnSQL" oldValue="(CASE WHEN aircraftStatus = 'Serv' THEN 1  WHEN aircraftStatus = 'U/S' THEN -1  ELSE 0 END)">(CASE WHEN ACStatus = 'Serv' THEN 1  WHEN ACStatus = 'U/S' THEN -1  ELSE 0 END)</Data>
+</PO>
+</Step>
+<Step SeqNo="280" StepType="AD">
+<PO AD_Table_ID="107" Action="I" Record_ID="1001862" Table="AD_Field">
+<Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
+<Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
+<Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
+<Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
+<Data AD_Column_ID="578" Column="IsActive">true</Data>
+<Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
+<Data AD_Column_ID="186" Column="IsEncrypted">false</Data>
+<Data AD_Column_ID="582" Column="UpdatedBy">0</Data>
+<Data AD_Column_ID="384" Column="AD_Org_ID">0</Data>
+<Data AD_Column_ID="579" Column="Created">2018-03-26 10:08:28.971</Data>
+<Data AD_Column_ID="383" Column="AD_Client_ID">0</Data>
+<Data AD_Column_ID="180" Column="DisplayLength">10</Data>
+<Data AD_Column_ID="176" Column="IsDisplayed">true</Data>
+<Data AD_Column_ID="174" Column="AD_Column_ID">1001890</Data>
+<Data AD_Column_ID="183" Column="IsSameLine">false</Data>
+<Data AD_Column_ID="184" Column="IsHeading">false</Data>
+<Data AD_Column_ID="185" Column="IsFieldOnly">false</Data>
+<Data AD_Column_ID="181" Column="SeqNo" isNewNull="true"/>
+<Data AD_Column_ID="2745" Column="IsCentrallyMaintained">true</Data>
+<Data AD_Column_ID="172" Column="AD_Tab_ID">1000039</Data>
+<Data AD_Column_ID="167" Column="AD_Field_ID">1001862</Data>
+<Data AD_Column_ID="580" Column="CreatedBy">0</Data>
+<Data AD_Column_ID="581" Column="Updated">2018-03-26 10:08:28.971</Data>
+<Data AD_Column_ID="2007" Column="IsReadOnly">false</Data>
+<Data AD_Column_ID="170" Column="Help">The code is used with row colors to show how a row is to be displayed - similar to conditional formating.</Data>
+<Data AD_Column_ID="5375" Column="AD_FieldGroup_ID" isNewNull="true"/>
+<Data AD_Column_ID="9969" Column="ObscureType" isNewNull="true"/>
+<Data AD_Column_ID="15011" Column="AD_Reference_ID" isNewNull="true"/>
+<Data AD_Column_ID="177" Column="DisplayLogic" isNewNull="true"/>
+<Data AD_Column_ID="15013" Column="IsMandatory" isNewNull="true"/>
+<Data AD_Column_ID="7714" Column="EntityType">MFTU</Data>
+<Data AD_Column_ID="53265" Column="DefaultValue" isNewNull="true"/>
+<Data AD_Column_ID="54356" Column="AD_Reference_Value_ID" isNewNull="true"/>
+<Data AD_Column_ID="54357" Column="AD_Val_Rule_ID" isNewNull="true"/>
+<Data AD_Column_ID="54359" Column="InfoFactoryClass" isNewNull="true"/>
+<Data AD_Column_ID="57957" Column="Included_Tab_ID" isNewNull="true"/>
+<Data AD_Column_ID="169" Column="Description">A code that indicates the status of a row.</Data>
+<Data AD_Column_ID="168" Column="Name">Row Status</Data>
+<Data AD_Column_ID="59704" Column="PreferredWidth" isNewNull="true"/>
+<Data AD_Column_ID="87585" Column="IsColorColumn" isNewNull="true"/>
+</PO>
+</Step>
+<Step SeqNo="290" StepType="AD">
+<PO AD_Table_ID="127" Action="I" Record_ID="1001862" Table="AD_Field_Trl">
+<Data AD_Column_ID="671" Column="IsActive">true</Data>
+<Data AD_Column_ID="284" Column="AD_Field_ID">1001862</Data>
+<Data AD_Column_ID="285" Column="AD_Language">es_MX</Data>
+<Data AD_Column_ID="1204" Column="AD_Client_ID">0</Data>
+<Data AD_Column_ID="674" Column="Updated">2018-03-26 10:08:29.597</Data>
+<Data AD_Column_ID="675" Column="UpdatedBy">0</Data>
+<Data AD_Column_ID="673" Column="CreatedBy">0</Data>
+<Data AD_Column_ID="672" Column="Created">2018-03-26 10:08:29.597</Data>
+<Data AD_Column_ID="288" Column="Help">The code is used with row colors to show how a row is to be displayed - similar to conditional formating.</Data>
+<Data AD_Column_ID="289" Column="IsTranslated">false</Data>
+<Data AD_Column_ID="1205" Column="AD_Org_ID">0</Data>
+<Data AD_Column_ID="286" Column="Name">Row Status</Data>
+<Data AD_Column_ID="287" Column="Description">A code that indicates the status of a row.</Data>
+</PO>
+</Step>
+<Step SeqNo="300" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="1001862" Table="AD_Field">
+<Data AD_Column_ID="62478" Column="IsDisplayedGrid" oldValue="true">false</Data>
+<Data AD_Column_ID="176" Column="IsDisplayed" oldValue="true">false</Data>
+<Data AD_Column_ID="87585" Column="IsColorColumn" oldValue="false">true</Data>
+</PO>
+</Step>
+<Step SeqNo="310" StepType="AD">
+<PO AD_Table_ID="101" Action="I" Record_ID="1001891" Table="AD_Column">
+<Data AD_Column_ID="548" Column="IsActive">true</Data>
+<Data AD_Column_ID="3360" Column="IsUpdateable">true</Data>
+<Data AD_Column_ID="1692" Column="Callout" isNewNull="true"/>
+<Data AD_Column_ID="11617" Column="IsAlwaysUpdateable">false</Data>
+<Data AD_Column_ID="13448" Column="ColumnSQL" isNewNull="true"/>
+<Data AD_Column_ID="117" Column="DefaultValue" isNewNull="true"/>
+<Data AD_Column_ID="109" Column="AD_Column_ID">1001891</Data>
+<Data AD_Column_ID="114" Column="AD_Table_ID">1000094</Data>
+<Data AD_Column_ID="3389" Column="ValueMax" isNewNull="true"/>
+<Data AD_Column_ID="6482" Column="EntityType">MFTU</Data>
+<Data AD_Column_ID="110" Column="Version">0</Data>
+<Data AD_Column_ID="227" Column="AD_Reference_Value_ID" isNewNull="true"/>
+<Data AD_Column_ID="124" Column="IsMandatory">false</Data>
+<Data AD_Column_ID="125" Column="IsTranslated">false</Data>
+<Data AD_Column_ID="550" Column="CreatedBy">0</Data>
+<Data AD_Column_ID="551" Column="Updated">2018-03-26 14:33:23.144</Data>
+<Data AD_Column_ID="126" Column="IsIdentifier">false</Data>
+<Data AD_Column_ID="127" Column="SeqNo">0</Data>
+<Data AD_Column_ID="113" Column="Help" isNewNull="true"/>
+<Data AD_Column_ID="3388" Column="ValueMin" isNewNull="true"/>
+<Data AD_Column_ID="120" Column="IsParent">false</Data>
+<Data AD_Column_ID="359" Column="AD_Client_ID">0</Data>
+<Data AD_Column_ID="360" Column="AD_Org_ID">0</Data>
+<Data AD_Column_ID="118" Column="FieldLength">22</Data>
+<Data AD_Column_ID="6244" Column="IsSelectionColumn">false</Data>
+<Data AD_Column_ID="226" Column="AD_Reference_ID">16</Data>
+<Data AD_Column_ID="6483" Column="IsSyncDatabase">N</Data>
+<Data AD_Column_ID="549" Column="Created">2018-03-26 14:33:23.145</Data>
+<Data AD_Column_ID="115" Column="AD_Val_Rule_ID" isNewNull="true"/>
+<Data AD_Column_ID="1179" Column="VFormat" isNewNull="true"/>
+<Data AD_Column_ID="119" Column="IsKey">false</Data>
+<Data AD_Column_ID="3369" Column="AD_Process_ID" isNewNull="true"/>
+<Data AD_Column_ID="552" Column="UpdatedBy">0</Data>
+<Data AD_Column_ID="6245" Column="ReadOnlyLogic" isNewNull="true"/>
+<Data AD_Column_ID="54358" Column="InfoFactoryClass" isNewNull="true"/>
+<Data AD_Column_ID="50218" Column="MandatoryLogic" isNewNull="true"/>
+<Data AD_Column_ID="56149" Column="IsAutocomplete">false</Data>
+<Data AD_Column_ID="56187" Column="IsAllowLogging">true</Data>
+<Data AD_Column_ID="56352" Column="FormatPattern" isNewNull="true"/>
+<Data AD_Column_ID="128" Column="IsEncrypted">N</Data>
+<Data AD_Column_ID="112" Column="Description" isNewNull="true"/>
+<Data AD_Column_ID="111" Column="Name">Action Date</Data>
+<Data AD_Column_ID="116" Column="ColumnName">DateAction</Data>
+<Data AD_Column_ID="59702" Column="AD_Chart_ID" isNewNull="true"/>
+<Data AD_Column_ID="2608" Column="AD_Element_ID">59218</Data>
+<Data AD_Column_ID="68024" Column="IsRange">false</Data>
+</PO>
+</Step>
+<Step SeqNo="320" StepType="AD">
+<PO AD_Table_ID="752" Action="I" Record_ID="1001891" Table="AD_Column_Trl">
+<Data AD_Column_ID="12959" Column="IsActive">true</Data>
+<Data AD_Column_ID="12955" Column="AD_Column_ID">1001891</Data>
+<Data AD_Column_ID="12956" Column="CreatedBy">0</Data>
+<Data AD_Column_ID="12958" Column="UpdatedBy">0</Data>
+<Data AD_Column_ID="12960" Column="Created">2018-03-26 14:33:27.066</Data>
+<Data AD_Column_ID="12961" Column="AD_Client_ID">0</Data>
+<Data AD_Column_ID="12951" Column="AD_Org_ID">0</Data>
+<Data AD_Column_ID="12952" Column="Updated">2018-03-26 14:33:27.066</Data>
+<Data AD_Column_ID="12953" Column="AD_Language">es_MX</Data>
+<Data AD_Column_ID="12954" Column="IsTranslated">false</Data>
+<Data AD_Column_ID="12957" Column="Name">Action Date</Data>
+</PO>
+</Step>
+<Step SeqNo="330" StepType="AD">
+<PO AD_Table_ID="107" Action="I" Record_ID="1001863" Table="AD_Field">
+<Data AD_Column_ID="62478" Column="IsDisplayedGrid">true</Data>
+<Data AD_Column_ID="62479" Column="SeqNoGrid" isNewNull="true"/>
+<Data AD_Column_ID="59703" Column="IsEmbedded">false</Data>
+<Data AD_Column_ID="74868" Column="IsAllowCopy">true</Data>
+<Data AD_Column_ID="578" Column="IsActive">true</Data>
+<Data AD_Column_ID="182" Column="SortNo" isNewNull="true"/>
+<Data AD_Column_ID="186" Column="IsEncrypted">false</Data>
+<Data AD_Column_ID="582" Column="UpdatedBy">0</Data>
+<Data AD_Column_ID="384" Column="AD_Org_ID">0</Data>
+<Data AD_Column_ID="579" Column="Created">2018-03-26 14:34:05.843</Data>
+<Data AD_Column_ID="383" Column="AD_Client_ID">0</Data>
+<Data AD_Column_ID="180" Column="DisplayLength">22</Data>
+<Data AD_Column_ID="176" Column="IsDisplayed">true</Data>
+<Data AD_Column_ID="174" Column="AD_Column_ID">1001891</Data>
+<Data AD_Column_ID="183" Column="IsSameLine">false</Data>
+<Data AD_Column_ID="184" Column="IsHeading">false</Data>
+<Data AD_Column_ID="185" Column="IsFieldOnly">false</Data>
+<Data AD_Column_ID="181" Column="SeqNo" isNewNull="true"/>
+<Data AD_Column_ID="2745" Column="IsCentrallyMaintained">true</Data>
+<Data AD_Column_ID="172" Column="AD_Tab_ID">1000076</Data>
+<Data AD_Column_ID="167" Column="AD_Field_ID">1001863</Data>
+<Data AD_Column_ID="580" Column="CreatedBy">0</Data>
+<Data AD_Column_ID="581" Column="Updated">2018-03-26 14:34:05.843</Data>
+<Data AD_Column_ID="2007" Column="IsReadOnly">false</Data>
+<Data AD_Column_ID="170" Column="Help" isNewNull="true"/>
+<Data AD_Column_ID="5375" Column="AD_FieldGroup_ID" isNewNull="true"/>
+<Data AD_Column_ID="9969" Column="ObscureType" isNewNull="true"/>
+<Data AD_Column_ID="15011" Column="AD_Reference_ID" isNewNull="true"/>
+<Data AD_Column_ID="177" Column="DisplayLogic" isNewNull="true"/>
+<Data AD_Column_ID="15013" Column="IsMandatory" isNewNull="true"/>
+<Data AD_Column_ID="7714" Column="EntityType">MFTU</Data>
+<Data AD_Column_ID="53265" Column="DefaultValue" isNewNull="true"/>
+<Data AD_Column_ID="54356" Column="AD_Reference_Value_ID" isNewNull="true"/>
+<Data AD_Column_ID="54357" Column="AD_Val_Rule_ID" isNewNull="true"/>
+<Data AD_Column_ID="54359" Column="InfoFactoryClass" isNewNull="true"/>
+<Data AD_Column_ID="57957" Column="Included_Tab_ID" isNewNull="true"/>
+<Data AD_Column_ID="169" Column="Description" isNewNull="true"/>
+<Data AD_Column_ID="168" Column="Name">Action Date</Data>
+<Data AD_Column_ID="59704" Column="PreferredWidth" isNewNull="true"/>
+<Data AD_Column_ID="87585" Column="IsColorColumn" isNewNull="true"/>
+</PO>
+</Step>
+<Step SeqNo="340" StepType="AD">
+<PO AD_Table_ID="127" Action="I" Record_ID="1001863" Table="AD_Field_Trl">
+<Data AD_Column_ID="671" Column="IsActive">true</Data>
+<Data AD_Column_ID="284" Column="AD_Field_ID">1001863</Data>
+<Data AD_Column_ID="285" Column="AD_Language">es_MX</Data>
+<Data AD_Column_ID="1204" Column="AD_Client_ID">0</Data>
+<Data AD_Column_ID="674" Column="Updated">2018-03-26 14:34:06.658</Data>
+<Data AD_Column_ID="675" Column="UpdatedBy">0</Data>
+<Data AD_Column_ID="673" Column="CreatedBy">0</Data>
+<Data AD_Column_ID="672" Column="Created">2018-03-26 14:34:06.658</Data>
+<Data AD_Column_ID="288" Column="Help" isNewNull="true"/>
+<Data AD_Column_ID="289" Column="IsTranslated">false</Data>
+<Data AD_Column_ID="1205" Column="AD_Org_ID">0</Data>
+<Data AD_Column_ID="286" Column="Name">Action Date</Data>
+<Data AD_Column_ID="287" Column="Description" isNewNull="true"/>
+</PO>
+</Step>
+<Step SeqNo="350" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="1001863" Table="AD_Field">
+<Data AD_Column_ID="181" Column="SeqNo" isOldNull="true">70</Data>
+</PO>
+</Step>
+<Step SeqNo="360" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="1001735" Table="AD_Field">
+<Data AD_Column_ID="181" Column="SeqNo" oldValue="70">80</Data>
+</PO>
+</Step>
+<Step SeqNo="370" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="1001724" Table="AD_Field">
+<Data AD_Column_ID="181" Column="SeqNo" oldValue="80">90</Data>
+</PO>
+</Step>
+<Step SeqNo="380" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="1001731" Table="AD_Field">
+<Data AD_Column_ID="181" Column="SeqNo" oldValue="90">100</Data>
+</PO>
+</Step>
+<Step SeqNo="390" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="1001721" Table="AD_Field">
+<Data AD_Column_ID="181" Column="SeqNo" oldValue="100">110</Data>
+</PO>
+</Step>
+<Step SeqNo="400" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="1001732" Table="AD_Field">
+<Data AD_Column_ID="181" Column="SeqNo" oldValue="110">120</Data>
+</PO>
+</Step>
+<Step SeqNo="410" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="1001729" Table="AD_Field">
+<Data AD_Column_ID="181" Column="SeqNo" oldValue="120">130</Data>
+</PO>
+</Step>
+<Step SeqNo="420" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="1001737" Table="AD_Field">
+<Data AD_Column_ID="181" Column="SeqNo" oldValue="130">140</Data>
+</PO>
+</Step>
+<Step SeqNo="430" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="1001749" Table="AD_Field">
+<Data AD_Column_ID="181" Column="SeqNo" oldValue="140">150</Data>
+</PO>
+</Step>
+<Step SeqNo="440" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="1001748" Table="AD_Field">
+<Data AD_Column_ID="181" Column="SeqNo" oldValue="150">160</Data>
+</PO>
+</Step>
+<Step SeqNo="450" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="1001747" Table="AD_Field">
+<Data AD_Column_ID="181" Column="SeqNo" oldValue="160">170</Data>
+</PO>
+</Step>
+<Step SeqNo="460" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="1001730" Table="AD_Field">
+<Data AD_Column_ID="181" Column="SeqNo" oldValue="170">180</Data>
+</PO>
+</Step>
+<Step SeqNo="470" StepType="AD">
+<PO AD_Table_ID="276" Action="U" Record_ID="59218" Table="AD_Element">
+<Data AD_Column_ID="2605" Column="Help" isOldNull="true">The date and time of the action is used to keep the history of the action in sequence.</Data>
+<Data AD_Column_ID="2604" Column="Description" isOldNull="true">The date the action took place</Data>
+</PO>
+</Step>
+<Step SeqNo="480" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="82352" Table="AD_Column">
+<Data AD_Column_ID="113" Column="Help" isOldNull="true">The date and time of the action is used to keep the history of the action in sequence.</Data>
+<Data AD_Column_ID="112" Column="Description" isOldNull="true">The date the action took place</Data>
+</PO>
+</Step>
+<Step SeqNo="490" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="80966" Table="AD_Field">
+<Data AD_Column_ID="170" Column="Help" isOldNull="true">The date and time of the action is used to keep the history of the action in sequence.</Data>
+<Data AD_Column_ID="169" Column="Description" isOldNull="true">The date the action took place</Data>
+</PO>
+</Step>
+<Step SeqNo="500" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="1001891" Table="AD_Column">
+<Data AD_Column_ID="113" Column="Help" isOldNull="true">The date and time of the action is used to keep the history of the action in sequence.</Data>
+<Data AD_Column_ID="112" Column="Description" isOldNull="true">The date the action took place</Data>
+</PO>
+</Step>
+<Step SeqNo="510" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="1001863" Table="AD_Field">
+<Data AD_Column_ID="170" Column="Help" isOldNull="true">The date and time of the action is used to keep the history of the action in sequence.</Data>
+<Data AD_Column_ID="169" Column="Description" isOldNull="true">The date the action took place</Data>
+</PO>
+</Step>
+<Step SeqNo="520" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="1001891" Table="AD_Column">
+<Data AD_Column_ID="124" Column="IsMandatory" oldValue="false">true</Data>
+</PO>
+</Step>
+<Step SeqNo="530" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="1001732" Table="AD_Field">
+<Data AD_Column_ID="181" Column="SeqNo" oldValue="120">90</Data>
+</PO>
+</Step>
+<Step SeqNo="540" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="1001729" Table="AD_Field">
+<Data AD_Column_ID="181" Column="SeqNo" oldValue="130">100</Data>
+</PO>
+</Step>
+<Step SeqNo="550" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="1001737" Table="AD_Field">
+<Data AD_Column_ID="181" Column="SeqNo" oldValue="140">110</Data>
+</PO>
+</Step>
+<Step SeqNo="560" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="1001724" Table="AD_Field">
+<Data AD_Column_ID="181" Column="SeqNo" oldValue="90">120</Data>
+</PO>
+</Step>
+<Step SeqNo="570" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="1001731" Table="AD_Field">
+<Data AD_Column_ID="181" Column="SeqNo" oldValue="100">130</Data>
+</PO>
+</Step>
+<Step SeqNo="580" StepType="AD">
+<PO AD_Table_ID="107" Action="U" Record_ID="1001721" Table="AD_Field">
+<Data AD_Column_ID="181" Column="SeqNo" oldValue="110">140</Data>
+</PO>
+</Step>
+<Step SeqNo="590" StepType="AD">
+<PO AD_Table_ID="101" Action="U" Record_ID="1001831" Table="AD_Column">
+<Data AD_Column_ID="50218" Column="MandatoryLogic" isNewNull="true" oldValue="@CT_Component_ID@&lt;=0"/>
+</PO>
+</Step>
+</Migration>
+</Migrations>
