@@ -17,6 +17,8 @@
  *****************************************************************************/
 package org.compiere.model;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
@@ -29,7 +31,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
@@ -86,6 +90,39 @@ public class GridField
 	 * 
 	 */
 	private static final long serialVersionUID = -6007475135643071025L;
+	
+	
+	public class ConditionalFormat
+	{
+		private Color background;
+		private Color foreground;
+		/**
+		 * @return the foreground
+		 */
+		public Color getForeground() {
+			return foreground;
+		}
+		/**
+		 * @param foreground the foreground to set
+		 */
+		public void setForeground(Color foreground) {
+			this.foreground = foreground;
+		}
+		/**
+		 * @return the background
+		 */
+		public Color getBackground() {
+			return background;
+		}
+		/**
+		 * @param background the background to set
+		 */
+		public void setBackground(Color background) {
+			this.background = background;
+		}
+	}
+	
+	private Map<Integer, ConditionalFormat> conditionalFormats;
 
 	/**
 	 *  Field Constructor.
@@ -169,7 +206,7 @@ public class GridField
 			return;
 		log.config("(" + m_vo.ColumnName + ")");
 
-		if (DisplayType.isLookup(m_vo.displayType) && m_vo.IsDisplayed)
+		if (DisplayType.isLookup(m_vo.displayType) && m_vo.IsDisplayed  && DisplayType.Color != m_vo.displayType)
 		{
 			if (m_vo.lookupInfo == null)
 			{
@@ -208,6 +245,12 @@ public class GridField
 			MPAttributeLookup pa = new MPAttributeLookup (m_vo.ctx, m_vo.WindowNo);
 			m_lookup = pa;
 		}
+		else if (m_vo.displayType == DisplayType.Color)    //  not cached
+		{
+			MColorLookup pc = new MColorLookup (m_vo.lookupInfo, m_vo.TabNo);
+			m_lookup = pc;
+		}
+
 	}   //  m_lookup
 
 	/**
@@ -238,14 +281,16 @@ public class GridField
 		boolean retValue = false;
 		if (DisplayType.isLookup(m_vo.displayType))
 			retValue = true;
-		else if (m_vo.IsKey)
+		else if (m_vo.IsKey)  // Except for the AttributeSetInstance, DataSetInstance (DataPoint) and AD_Color_ID
 			retValue = false;
 	//	else if (m_vo.ColumnName.equals("CreatedBy") || m_vo.ColumnName.equals("UpdatedBy"))
 	//		retValue = false;
 		else if (m_vo.displayType == DisplayType.Location
 			|| m_vo.displayType == DisplayType.Locator
 			|| m_vo.displayType == DisplayType.Account
-			|| m_vo.displayType == DisplayType.PAttribute)
+			|| m_vo.displayType == DisplayType.PAttribute
+			|| m_vo.displayType == DisplayType.DataPoint
+			|| m_vo.displayType == DisplayType.Color)
 			retValue = true;
 
 		return retValue;
@@ -286,6 +331,12 @@ public class GridField
 		if (m_lookup != null)
 			Evaluator.parseDepends(list, m_lookup.getValidation());
 		//
+		// Special case for AD_Color_ID in AD_Color table
+		if (m_gridTab != null && m_gridTab.getAD_Table_ID() == MColor.Table_ID)
+		{
+			MColor.addOwnTableDependents(list, m_vo.ColumnName);
+		}
+
 		if (list.size() > 0 && CLogMgt.isLevelFiner())
 		{
 			StringBuffer sb = new StringBuffer();
@@ -398,6 +449,10 @@ public class GridField
 			return false;
 		}
 
+		// Special case for AD_Color
+		if (m_vo.AD_Table_ID == MColor.Table_ID && m_vo.IsKey && DisplayType.Color == this.getDisplayType())
+			return true;
+		
 		//	Not Updateable - only editable if new updateable row
 		if (!m_vo.IsUpdateable && !m_inserting)
 		{
@@ -485,7 +540,8 @@ public class GridField
 	 *		(c) Column Default		//	system integrity
 	 *      (d) User Preference
 	 *		(e) System Preference
-	 *		(f) DataType Defaults
+	 *		(f) Model Validator (last chance before data types)
+	 *		(g) DataType Defaults
 	 *
 	 *  Don't default from Context => use explicit defaultValue
 	 *  (would otherwise copy previous record)
@@ -634,7 +690,13 @@ public class GridField
 		}
 
 		/**
-		 *	(f) DataType defaults
+		 *	(f) ModelValidator defaults
+		 */
+
+		// TODO - for a field rather than a PO?  - See po.load()
+		
+		/**
+		 *	(g) DataType defaults
 		 */
 
 		//	Button to N
@@ -1973,4 +2035,118 @@ public class GridField
     {
     	return m_vo.isEmbedded;
     }
+
+	public int getAD_Field_ID()
+	{
+		return m_vo.AD_Field_ID;
+	}
+
+	public boolean isColorColumn() 
+	{
+		return m_vo.IsColorColumn;
+	}
+
+	public boolean isConditionalFormat() 
+	{
+		return m_vo.IsConditionalFormat;
+	}
+
+	public boolean testAndSetConditionalFormat(Evaluatee rowData, int row) {
+		
+		// Colors are stored as fields so they can be 
+		// recovered by other methods.
+		
+		if (!isConditionalFormat())
+		{
+			return false;
+		}
+
+		if (conditionalFormats == null)
+		{
+			conditionalFormats = new HashMap<Integer, ConditionalFormat>();
+		}
+
+		ConditionalFormat cf = conditionalFormats.get(row);
+		
+		if (cf == null)
+		{
+			cf = new ConditionalFormat();
+			conditionalFormats.put(row, cf);
+		}
+		
+		cf.setBackground(null);
+		cf.setForeground(null);
+		
+		// Get the formats.  These will be ordered by the sequence number.
+		List<MFieldFormat> formats = MFieldFormat.getForField(Env.getCtx(), this.getAD_Field_ID());
+
+		boolean applies = false;
+		for (MFieldFormat format : formats)
+		{
+			// Evaluate the conditions based on the rowData in which the 
+			// field is found.  Stop at the first "true" condition
+			// and record that format.
+			if (format.evaluate(rowData)) // Evaluate the conditions based on the 
+			{
+				applies = true;
+				cf.setBackground(format.getBackground());
+				cf.setForeground(format.getForeground());
+				break;
+			}
+		}
+		return applies;
+	}
+
+	public void applyConditionalFormat(Component c, int row) {
+
+		if (!isConditionalFormat())
+			return;
+		
+		if (conditionalFormats == null)
+			return;
+
+		ConditionalFormat cf = conditionalFormats.get(row);
+		
+		if (cf == null)
+		{
+			return;
+		}
+		
+		if (cf.getBackground() != null)
+			c.setBackground(cf.getBackground());
+		if (cf.getForeground() != null)
+			c.setForeground(cf.getForeground());
+		
+	}
+
+	/**
+	 *  Get a list of variables, the conditional formatting of this field are dependent on.
+	 *  @return ArrayList
+	 */
+	public ArrayList<String> getConditionalDependentOn()
+	{
+		ArrayList<String> list = new ArrayList<String>();
+
+		if (!isConditionalFormat())
+			return list;
+
+		// Get the formats.  These will be ordered by the sequence number.
+		List<MFieldFormat> formats = MFieldFormat.getForField(Env.getCtx(), this.getAD_Field_ID());
+
+		for (MFieldFormat format : formats)
+		{
+			Evaluator.parseDepends(list, format.getConditionLogic());
+		}
+		
+		if (list.size() > 0 && CLogMgt.isLevelFiner())
+		{
+			StringBuffer sb = new StringBuffer();
+			for (int i = 0; i < list.size(); i++)
+				sb.append(list.get(i)).append(" ");
+			log.finer("(" + m_vo.ColumnName + ") " + sb.toString());
+		}
+
+		return list;
+	}   //  getConditionalDependentOn
+
 }   //  MField
