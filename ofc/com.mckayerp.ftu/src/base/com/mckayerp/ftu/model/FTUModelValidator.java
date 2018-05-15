@@ -1,6 +1,7 @@
 package com.mckayerp.ftu.model;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,6 +16,7 @@ import java.util.logging.Level;
 import org.adempiere.engine.IDocumentLine;
 import org.adempiere.exceptions.AdempiereException;
 import org.adempiere.model.MProductClass;
+import org.compiere.apps.form.VDataPointCollector;
 import org.compiere.model.I_M_Product_Category;
 import org.compiere.model.I_M_Product_Class;
 import org.compiere.model.MAttributeSet;
@@ -43,15 +45,25 @@ import org.compiere.model.ModelValidator;
 import org.compiere.model.PO;
 import org.compiere.model.Query;
 import org.compiere.process.DocAction;
+import org.compiere.process.ProcessInfo;
 import org.compiere.util.CLogger;
 import org.compiere.util.DB;
 import org.compiere.util.Env;
+import org.compiere.util.Msg;
 import org.eevolution.model.MPPMRP;
+import org.eevolution.service.dsl.ProcessBuilder;
 
+import com.mckayerp.ftu.process.MaintUpdateACServiceabilityStatus;
 import com.mckayerp.model.ComponentModelValidator;
+import com.mckayerp.model.MCTCompLifeCycleModel;
 import com.mckayerp.model.MCTComponent;
+import com.mckayerp.model.MCTComponentBOM;
 import com.mckayerp.model.MCTComponentBOMLine;
 import com.mckayerp.model.MCTComponentHistory;
+import com.mckayerp.model.MCTDataElementValue;
+import com.mckayerp.model.MCTDataInstance;
+import com.mckayerp.model.MCTDataSet;
+import com.mckayerp.model.MCTDataSetInstance;
 
 public class FTUModelValidator implements ModelValidator {
 	
@@ -62,7 +74,6 @@ public class FTUModelValidator implements ModelValidator {
 		 					.setClient_ID()
 		 					.setOnlyActiveRecords(true)
 		 					.firstIdOnly();
-
 	}
 
 	private class CustomerBlockBookings {
@@ -258,6 +269,15 @@ public class FTUModelValidator implements ModelValidator {
 		engine.addModelChange(MFTUFlightsheet.Table_Name, this);
 		engine.addModelChange(MFTUAircraft.Table_Name, this);
 		engine.addModelChange(MFTUDefectLog.Table_Name, this);
+		engine.addModelChange(MCTComponent.Table_Name, this);
+		engine.addModelChange(MCTComponentBOMLine.Table_Name, this);
+		engine.addModelChange(MCTCompLifeCycleModel.Table_Name, this);
+		engine.addModelChange(MFTUMaintNextAction.Table_Name, this);
+		engine.addModelChange(MFTUMaintWORLDetail.Table_Name, this);
+		engine.addModelChange(MProduct.Table_Name,  this);
+		engine.addModelChange(MCTDataSetInstance.Table_Name, this);
+		engine.addModelChange(MCTDataSet.Table_Name, this);
+
 		engine.addDocValidate(MOrder.Table_Name, this);
 		engine.addDocValidate(MInventory.Table_Name, this);
 		
@@ -277,18 +297,34 @@ public class FTUModelValidator implements ModelValidator {
 	public String modelChange(PO po, int type) throws Exception {
 		
 		boolean isNew = (TYPE_AFTER_NEW == type);
-		boolean isChange = (TYPE_AFTER_CHANGE == type);
-
-		if (po instanceof MFTUFlightsheet && (isNew || isChange)) {
-			return mc_mftuFlightSheet(po, type, isNew, isChange);				
+		boolean isAfterChange = (TYPE_AFTER_CHANGE == type);
+		
+		if (po instanceof MFTUMaintNextAction && (isNew || isAfterChange)) {
+			return mc_mftuMaintNextAction(po, type, isNew, isAfterChange);
+		}
+			
+		if (po instanceof MFTUFlightsheet && (isNew || isAfterChange)) {
+			return mc_mftuFlightSheet(po, type, isNew, isAfterChange);				
 		}
 
 		if (po instanceof MInventory) {	
-			return mc_mInventory(po, type, isNew, isChange);
+			return mc_mInventory(po, type, isNew, isAfterChange);
 		}
 		
 		if (po instanceof MFTUDefectLog) {
-			return mc_mftuDefectLog(po, type, isNew, isChange);
+			return mc_mftuDefectLog(po, type, isNew, isAfterChange);
+		}
+
+		if (po instanceof MCTComponent) {	
+			return mc_mCtComponent(po, type, isNew, isAfterChange);
+		}
+
+		if (po instanceof MCTComponentBOMLine) {	
+			return mc_mCtComponentBOMLine(po, type);
+		}
+
+		if (po instanceof MCTCompLifeCycleModel) {	
+			return mc_mCtCompLifeCycleModel(po, type);
 		}
 
 		if (po instanceof MOrder) {	
@@ -308,35 +344,456 @@ public class FTUModelValidator implements ModelValidator {
 			}
 		}
 
-		if(isChange 
-				&& po instanceof MFTUAircraft 
-				&& po.is_ValueChanged(MFTUAircraft.COLUMNNAME_CT_Component_ID))
+		if (po instanceof MFTUAircraft) {	
+			return mc_mftuAircraft(po, type, isNew, isAfterChange);
+		}
+
+		if (po instanceof MFTUMaintWORLDetail && (TYPE_BEFORE_CHANGE == type || TYPE_BEFORE_NEW == type)) {
+			return mc_mftuMaintWORLDetail_beforeSave(po);
+		}
+		
+		if (po instanceof MProduct && (TYPE_BEFORE_CHANGE == type || TYPE_BEFORE_NEW == type)) {
+			return mc_mProduct_beforeSave(po);
+		}
+
+		if (po instanceof MCTDataSetInstance && (TYPE_BEFORE_CHANGE == type || TYPE_BEFORE_NEW == type)) {
+			return mc_mCtDataSetInstance_beforeSave(po);
+		}
+
+		if (po instanceof MCTDataSetInstance && (isAfterChange)) {
+			return mc_mCtDataSetInstance_AfterSave(po);
+		}
+
+		if (po instanceof MCTDataSet && (TYPE_BEFORE_CHANGE == type)) {
+			return mc_mCtDataSet_beforeSave(po);
+		}
+
+		return null;
+	}
+
+	private String mc_mCtDataSet_beforeSave(PO po) {
+		MCTDataSet ds = (MCTDataSet) po;
+		
+		// Prevent changes to "named" data sets
+		if (ds.get_ID() == 1000001 && ds.is_ValueChanged(MCTDataSet.COLUMNNAME_Value))  // Oil Consumption
+		{
+			return "This record is used in calculations. Changes to the Search Key are not allowed.";
+		}
+		return null;
+	}
+
+	private String mc_mCtDataSetInstance_AfterSave(PO po) {
+		
+		// This is a bunch of hard-coded interconnections between tables that is very
+		// Client specific.  Probably should be in its own validator class
+		MCTDataSetInstance dsi = (MCTDataSetInstance) po;
+		
+		// Check if all the data has been added.  See VDataPointDialog.saveSelection()
+		if (!dsi.isComplete())
+			return null;
+		
+		MCTDataSet ds = (MCTDataSet) dsi.getCT_DataSet();
+		
+		
+		// Oil additions need to be noted in the Journey Log and removed
+		// from inventory
+		if (ds.getValue().equals("Oil Consumption") ) 			// TODO User can change this name.
+		{
+			return ctData_OilConsumption(dsi, ds);
+		}
+
+		if (ds.getValue().equals("Max Static RPM Ref") ) 			// TODO User can change this name.
+		{
+			return ctData_MaxStaticRPMRef(dsi, ds);
+		}
+
+		if (ds.getValue().equals("Engine On Condition Data (4Cyl)") ) 			// TODO User can change this name.
+		{
+			return ctData_EngOnConditionData4Cyl(dsi, ds);
+		}
+
+		return null;
+	}
+
+	private String ctData_EngOnConditionData4Cyl(MCTDataSetInstance dsi,
+			MCTDataSet ds) {
+		
+		BigDecimal oat = dsi.getDataInstance("OAT (°C)").getValueNumber();
+		Integer rpmMeasured = dsi.getDataInstance("Max Static RPM").getValueInteger();
+		
+		BigDecimal rpmCalibrated = ctData_calibrateRPM(rpmMeasured, oat);
+		
+		MCTDataInstance di = dsi.getDataInstance("Max RPM (Calibrated)");
+		di.setValueNumber(rpmCalibrated);
+		di.saveEx();
+		
+		return null;
+		
+	}
+
+	private String ctData_MaxStaticRPMRef(MCTDataSetInstance dsi, MCTDataSet ds) {
+		
+		BigDecimal oat = dsi.getDataInstance("OAT (°C)").getValueNumber();
+		Integer rpmMeasured = dsi.getDataInstance("Max RPM").getValueInteger();
+		
+		BigDecimal rpmCalibrated = ctData_calibrateRPM(rpmMeasured, oat);
+		
+		MCTDataInstance di = dsi.getDataInstance("Max RPM Ref (Calibrated)");
+		di.setValueNumber(rpmCalibrated);
+		di.saveEx();
+		
+		return null;
+	}
+
+	private BigDecimal ctData_calibrateRPM(Integer rpmMeasured, BigDecimal oat) {
+		
+		final BigDecimal m = new BigDecimal("-0.00052");
+		final BigDecimal b = new BigDecimal("1.0078");
+		
+		BigDecimal calFactor = oat.multiply(m).add(b);
+		
+		return new BigDecimal(rpmMeasured).multiply(calFactor);
+		
+	}
+
+	private String ctData_OilConsumption(MCTDataSetInstance dsi, MCTDataSet ds) {
+		
+		String key;
+		BigDecimal amount = dsi.getDataInstance("Amount added (Liters)").getValueNumber();
+		int oilType_id = dsi.getDataInstance("Oil Type").getValueInteger();
+		MProduct oilProduct = MProduct.get(dsi.getCtx(), oilType_id);
+		String oilType = oilProduct.getValue();  // TODO Translate?
+		int addedBy_id = dsi.getDataInstance("Added By").getValueInteger();
+		String addedBy = MBPartner.get(dsi.getCtx(), addedBy_id).getName();
+		boolean isOilChange = dsi.getDataInstance("Oil Change").isValueYN();
+
+		/* Want to add a string like
+		 * Oil added to engine <asi>. Qty __ liters at <root_life>
+		 * by <addedBy>.  Engine time since overhaul <comp_life>
+		 */
+		MFTUAircraft ac = MFTUAircraft.getByCT_Component_ID(dsi.getCtx(), dsi.getRoot_Component_ID(), dsi.get_TrxName());
+		if (ac == null)
+			return null;
+		
+		MCTComponent comp = (MCTComponent) dsi.getCT_Component();
+		String compName = comp.getM_Product().getValue() + " " + comp.getM_AttributeSetInstance().getDescription();
+		
+		String entry = "";
+		if (isOilChange)
+		{
+			entry = "Engine oil changed. " + compName + ". Type " + oilType
+					+ " Airframe Time " + dsi.getCT_RootLifeAtAction().setScale(1) 
+					+ ". Engine TSO " + dsi.getCT_ComponentLifeAtAction().setScale(1);
+		}
+		else
+		{
+			entry = "Oil added to engine " + compName + ". Type " + oilType + " Qty " + amount.setScale(1) + " liters."
+				+ " Airframe Time " + dsi.getCT_RootLifeAtAction().setScale(1) 
+				+ ". Engine TSO " + dsi.getCT_ComponentLifeAtAction().setScale(1);
+		}
+		MFTUACJourneyLog jl = new MFTUACJourneyLog(dsi.getCtx(), 0, dsi.get_TrxName());
+		jl.setFTU_Aircraft_ID(ac.getFTU_Aircraft_ID());
+		jl.setEntryDate(dsi.getDateRecorded());
+		jl.setIntendedFlight(entry);
+		jl.setTotalAirframeTime(MFTUACJourneyLog.getTotalAirframeTime(dsi.getCtx(), ac.getFTU_Aircraft_ID(), dsi.getDateRecorded(), dsi.get_TrxName()));
+		jl.saveEx();
+			
+		if (!isOilChange)  // Ignore oil changes performed by maintenance. No inventory change here.
+		{
+			// Remove the oil used from the inventory
+			int	fuelChargeID = ac.getFuelChargeID();
+			int locatorID = oilProduct.getM_Locator_ID();
+			int product_UOM_ID = oilProduct.getC_UOM_ID();
+			int m_M_Warehouse_ID = Env.getContextAsInt(dsi.getCtx(), "M_Warehouse_ID");
+			
+			MInventory inv = new MInventory(dsi.getCtx(),0,dsi.get_TrxName());
+			inv.setMovementDate(dsi.getDateRecorded());
+			inv.setM_Warehouse_ID(m_M_Warehouse_ID);
+			inv.setDescription(entry);
+			inv.saveEx();
+			
+			MInventoryLine il = new MInventoryLine(dsi.getCtx(),0,dsi.get_TrxName());
+			il.setM_Inventory_ID(inv.getM_Inventory_ID());
+			il.setInventoryType(MInventoryLine.INVENTORYTYPE_ChargeAccount);
+			il.setM_Product_ID(oilType_id);
+			il.setM_Locator_ID(locatorID);
+			il.setQtyInternalUse(amount.setScale(0, RoundingMode.UP));  // Assumes units are liters and excess is thrown away.
+			il.setC_Charge_ID(fuelChargeID);
+			il.saveEx();
+			
+			inv.processIt(DocAction.ACTION_Complete);
+			
+		}
+		else
+		{
+			// For an oil change, make note of the oil type used in the Aircraft
+			// record.  This appears in the Technical Dispatch window and the 
+			// Fleet Maintenance window.  The reference is a string rather than the 
+			// Product ID as, in the case of multi-engine aircraft, there may be more
+			// than one oil type in use.
+			String oilTypeDisplay = Msg.translate(dsi.getCtx(), "Multi-Engine:CheckEngineLogs");
+			
+			// See if there are more than one engine.
+			if (MCTComponentBOMLine.getLinesByRootAndDataSet(ac.getCT_Component_ID(), dsi.getCT_DataSet_ID()).size()==1)
+			{
+				oilTypeDisplay = oilType;
+			}
+			ac.setACOilGrade(oilTypeDisplay);
+			ac.saveEx();
+		}
+
+		return null;
+	}
+
+	private String mc_mCtDataSetInstance_beforeSave(PO po) {
+
+		// This is a bunch of hard-coded interconnections between tables that is very
+		// Client specific.  Probably should be in its own validator class
+		MCTDataSetInstance dsi = (MCTDataSetInstance) po;
+		
+		// Check if all the data has been added.  See VDataPointDialog.saveSelection()
+		if (!dsi.isComplete())
+			return null;
+		
+		MCTDataSet ds = (MCTDataSet) dsi.getCT_DataSet();
+		
+		// Check that there is at least one oil change prior to the addition
+		if (ds.getValue().equals("Oil Consumption") ) 			// TODO User can change this name.
+		{
+			MCTDataInstance di = dsi.getDataInstance("Oil Change");
+			if (di == null)
+				return null;  // These are not the droids we are looking for.
+			
+			if (di.isValueYN())
+			{
+				return null;  // This is an oil change - good. No need to do more. 
+			}
+			
+			// Not a change? Then we need to find at least one prior change
+			
+//			String where = MCTDataInstance.COLUMNNAME_ValueYN + "=?"
+//					+ " AND " + MCTDataInstance.COLUMNNAME_CT_DataElement_ID + "=?"
+//					+ " AND EXISTS (SELECT di.CT_DataInstance_ID"
+//					+ " FROM CT_DataInstance di "
+//					+ " JOIN CT_DataElement de ON (di.CT_DataElement_ID = de.CT_DataElement_ID)"
+//					+ " JOIN CT_DataSet ds ON (de.CT_DataSet_ID = ds.CT_DataSet_ID)"
+//					+ " JOIN CT_DataSetInstance dsi ON (ds.CT_DataSet_ID = dsi.CT_DataSet_ID)"
+//					+ " WHERE dsl." + MCTDataSetInstance.COLUMNNAME_DateRecorded + " < ?"
+//					+ " AND de.CT_DataElement_ID=?)";
+			
+			String where = MCTDataSetInstance.COLUMNNAME_CT_Component_ID + "=?"
+					+ " AND " + MCTDataSetInstance.COLUMNNAME_DateRecorded + " < ?"
+					+ " AND " + MCTDataSetInstance.COLUMNNAME_CT_DataSet_ID + "=?"
+					+ " AND " + "EXISTS (SELECT di.CT_DataInstance_ID"
+					+ " FROM CT_DataInstance di "
+//					+ " JOIN CT_DataElement de ON (di.CT_DataElement_ID = de.CT_DataElement_ID)"
+//					+ " JOIN CT_DataSet ds ON (de.CT_DataSet_ID = ds.CT_DataSet_ID)"
+//					+ " WHERE ds.CT_DataSet_ID = CT_DataSetInstance.CT_DataSet_ID"
+					+ " WHERE di.CT_DataSetInstance_ID = CT_DataSetInstance.CT_DataSetInstance_ID"
+					+ " AND di.CT_DataElement_ID=?"
+					+ " AND di.ValueYN=?)";
+					
+			MCTDataSetInstance lastOilChange = new Query(dsi.getCtx(), 
+					MCTDataSetInstance.Table_Name, where, dsi.get_TrxName())
+							.setClient_ID()
+							.setOnlyActiveRecords(true)
+							.setParameters(dsi.getCT_Component_ID(), 
+									dsi.getDateRecorded(),
+									dsi.getCT_DataSet_ID(),
+									di.getCT_DataElement_ID(),
+									true)
+							.setOrderBy(MCTDataSetInstance.COLUMNNAME_DateRecorded + " DESC")
+							.first();
+			
+			if (lastOilChange == null)
+			{
+				return "At least one oil change record is required prior to adding oil.";
+			}
+			
+			if (dsi.isComplete())
+			{
+				MCTDataInstance lastChangeTime = dsi.getDataInstance("Last Oil Change");
+				lastChangeTime.setValueNumber(lastOilChange.getCT_ComponentLifeAtAction());  // Set to the engine time.
+				lastChangeTime.saveEx();
+			}
+		}
+		
+		return null;
+	}
+
+	private String mc_mCtCompLifeCycleModel(PO po, int type) {
+		
+		if (type == TYPE_AFTER_CHANGE && 
+				(po.is_ValueChanged(MCTCompLifeCycleModel.COLUMNNAME_MaxLifeUsage)
+				|| po.is_ValueChanged(MCTCompLifeCycleModel.COLUMNNAME_LifeUsageUOM_ID)))
+		{
+			MCTCompLifeCycleModel lcm = (MCTCompLifeCycleModel) po;
+			if (!lcm.isOnCondition() && lcm.getMaxLifeUsage().compareTo(Env.ZERO) > 0)
+			{
+				List<MFTUMaintRequirement> mrList = lcm.getFTU_MaintRequirements();
+				
+				for (MFTUMaintRequirement mr : mrList)
+				{
+					if (mr.isOverhaulSchedule())
+					{
+						mr.setFTU_UsageInterval_Entered(lcm.getMaxLifeUsage());
+						mr.setFTU_UsageIntervalUOM_ID(lcm.getLifeUsageUOM_ID());
+						mr.saveEx();
+					}
+				}
+			}
+		}		
+		return null;
+	}
+
+	private String mc_mProduct_beforeSave(PO po) {
+
+		MProduct product = (MProduct) po;
+		
+		MProductCategory pc = (MProductCategory) product.getM_Product_Category();
+		
+		//  FTU2.20
+		//  Make sure that instructors, aircraft rentals and fuel surcharges are
+		//  flagged as tuition fees.
+		if (pc.getName().equals("Instructor") 
+			|| pc.getName().equals("Aircraft Rentals")
+			|| pc.getName().equals("Fuel Surcharge"))
+		{
+			product.setIsTuitionFee(true);
+		}
+		
+		return null;
+	}
+
+	private String mc_mftuMaintWORLDetail_beforeSave(PO po) {
+
+		MFTUMaintWORLDetail detail = (MFTUMaintWORLDetail) po;
+		
+		// Check if the component was uninstalled by setting ASI == 0;
+		if (detail.is_ValueChanged(MFTUMaintWORLDetail.COLUMNNAME_M_AttributeSetInstance_ID)
+				&& detail.get_ValueAsInt(MFTUMaintWORLDetail.COLUMNNAME_M_AttributeSetInstance_ID) == 0
+				&& detail.get_ValueAsInt(MFTUMaintWORLDetail.COLUMNNAME_CT_Component_ID) > 0)
 		{
 			
-			if (po.get_ValueOldAsInt(MFTUAircraft.COLUMNNAME_CT_Component_ID) > 0)
+			//  Reset the product and component
+			detail.setM_Product_ID(0);
+			detail.setCT_Component_ID(0);
+			
+		}
+		
+		if (detail.is_ValueChanged(MFTUMaintWORLDetail.COLUMNNAME_M_AttributeSetInstance_ID)
+			&& detail.get_ValueAsInt(MFTUMaintWORLDetail.COLUMNNAME_M_AttributeSetInstance_ID) > 0
+			&& detail.get_ValueAsInt(MFTUMaintWORLDetail.COLUMNNAME_M_Product_ID) > 0
+			&& detail.get_ValueAsInt(MFTUMaintWORLDetail.COLUMNNAME_CT_Component_ID) == 0)
+		{
+			// New component?
+			int m_product_id = detail.getM_Product_ID();
+			int m_attributeSetInstance_id = detail.getM_AttributeSetInstance_ID();
+			
+			MProduct product = MProduct.get(po.getCtx(), m_product_id);
+			if (product.isTrackAsComponent())
+			{
+				// Check if the component exists. If not create it.
+				MCTComponent component = MCTComponent.getCreateByProductAndASI(po.getCtx(), m_product_id, m_attributeSetInstance_id, po.get_TrxName());
+				MAttributeSet as = (MAttributeSet) detail.getM_AttributeSetInstance().getM_AttributeSet();
+				
+				if (as.isInstanceAttribute())  // ASI should be unique
+				{
+						detail.setQty(Env.ONE); // Unique ASI - only one is possible
+				}
+				
+				detail.setCT_Component_ID(component.getCT_Component_ID());				
+			}
+		}
+			
+		
+		if (detail.is_ValueChanged(MFTUMaintWORLDetail.COLUMNNAME_CT_Component_ID) 
+				&& detail.get_ValueAsInt(MFTUMaintWORLDetail.COLUMNNAME_CT_Component_ID) > 0)
+		{
+
+			MCTComponent component = (MCTComponent) detail.getCT_Component();
+			detail.setM_Product_ID(component.getM_Product_ID());
+			detail.setM_AttributeSetInstance_ID(component.getM_AttributeSetInstance_ID());
+			detail.setOverhaulCount(component.getOverhaulCount());
+			detail.setCT_ComponentLifeAtAction(component.getLifeUsed());
+
+			MAttributeSet as = (MAttributeSet) detail.getM_AttributeSetInstance().getM_AttributeSet();
+			
+			if (as.isInstanceAttribute())  // ASI should be unique
+			{
+					detail.setQty(Env.ONE); // Unique ASI - only one is possible
+			}
+														
+		}
+		
+		if (detail.is_ValueChanged(MFTUMaintWORLDetail.COLUMNNAME_CT_Component_ID) 
+				&& detail.get_ValueAsInt(MFTUMaintWORLDetail.COLUMNNAME_CT_Component_ID) <= 0)
+		{
+			
+			// Uninstall
+			detail.setM_Product_ID(0);
+			detail.setM_AttributeSetInstance_ID(0);					
+			detail.setOverhaulCount(0);
+			detail.setCT_ComponentLifeAtAction(Env.ZERO);
+						
+		}
+		return null;
+	}
+
+	private String mc_mCtComponentBOMLine(PO po, int type) {
+
+		boolean isBeforeDelete = TYPE_BEFORE_DELETE == type;
+		
+		if (isBeforeDelete)
+		{
+			MCTComponentBOMLine bomLine = (MCTComponentBOMLine) po;
+			
+			// Find any administrative defects related to the BOMLine and delete them as well
+			MFTUDefectLog defect = MFTUDefectLog.getByComponentBOMLine(bomLine.getCtx(), bomLine.getCT_ComponentBOMLine_ID(), bomLine.get_TrxName());
+			if (defect != null && defect.isAdministrative())
+			{
+				defect.deleteEx(false);
+			}
+		}
+		
+		return null;
+	}
+
+	private String mc_mftuAircraft(PO po, int type, boolean isNew,
+			boolean isAfterChange) {
+		
+		boolean isBeforeChange = TYPE_CHANGE == type;  // Is fired after the "beforeSave()" is called but before the save operation.
+		
+		MFTUAircraft ac = (MFTUAircraft) po;
+		
+		if(isAfterChange 
+				&& ac.is_ValueChanged(MFTUAircraft.COLUMNNAME_CT_Component_ID))
+		{
+			
+			if (ac.get_ValueOldAsInt(MFTUAircraft.COLUMNNAME_CT_Component_ID) > 0)
 			{
 			
 				// Remove the airframe time from the old component
-				MCTComponent component = new MCTComponent(po.getCtx(), 
-													po.get_ValueOldAsInt(MFTUAircraft.COLUMNNAME_CT_Component_ID), po.get_TrxName());
+				MCTComponent component = new MCTComponent(ac.getCtx(), 
+													ac.get_ValueOldAsInt(MFTUAircraft.COLUMNNAME_CT_Component_ID), ac.get_TrxName());
 				
 				// Check in case the component was deleted - shouldn't happen.
 				if (component != null && component.get_ID() > 0)
 				{
 					component.setLifeUsed(null);
 					component.saveEx();
-				}					
+				}
 			}
 			
-			if (po.get_ValueAsInt(MFTUAircraft.COLUMNNAME_CT_Component_ID) > 0)
+			if (ac.getCT_Component_ID() > 0)
 			{
 			
 				// Update the component with the current airframe time (TTSN)
-				MCTComponent component = (MCTComponent) ((MFTUAircraft) po).getCT_Component();
+				MCTComponent component = (MCTComponent) ac.getCT_Component();
 				// Check in case the component was deleted - shouldn't happen.
 				if (component != null && component.get_ID() > 0)
 				{
-					component.setLifeUsed(((MFTUAircraft) po).getAirframeTime());
+					component.setLifeUsed(ac.getAirframeTime());
 					component.saveEx();
 				}
 				
@@ -344,27 +801,96 @@ public class FTUModelValidator implements ModelValidator {
 
 		}
 		
-		if(isChange 
-				&& po instanceof MFTUAircraft 
-				&& po.is_ValueChanged(MFTUAircraft.COLUMNNAME_AirframeTime))
+		if(isAfterChange 
+				&& ac.is_ValueChanged(MFTUAircraft.COLUMNNAME_AirframeTime))
 		{
 			
 			// Update the component with the current airframe time (TTSN)
-			MCTComponent component = (MCTComponent) ((MFTUAircraft) po).getCT_Component();
+			MCTComponent component = (MCTComponent) ac.getCT_Component();
 			// Check in case the component was deleted - shouldn't happen.
 			if (component != null && component.get_ID() > 0)
 			{
-				component.setLifeUsed(((MFTUAircraft) po).getAirframeTime());
+				component.setLifeUsed(ac.getAirframeTime());
 				component.saveEx();
 			}
 			
 		}
-	
+		
+		// If the component has changed, update the next maintenance actions and serviceability status
+		if ((isNew || (isBeforeChange && ac.is_ValueChanged(MFTUAircraft.COLUMNNAME_CT_Component_ID))) && ac.getCT_Component_ID() > 0)
+		{
+			// TODO - what about the defects for the old component?
+//			boolean createDefects = false; // Don't create defects for missing BOM components here
+//			ac.updateACServiceabilityStatus(0, createDefects);
+			// No need to save - before change
+		}
+
 		return null;
 	}
 
+	private String mc_mftuMaintNextAction(PO po, int type, boolean isNew,
+			boolean isAfterChange) {
+		
+		// Update the aircraft maintenance times and dates
+		MFTUMaintNextAction na = (MFTUMaintNextAction) po;
+		Properties ctx = po.getCtx();
+		String trxName = po.get_TrxName();
+		
+		// Update aircraft record with next maintenance action.
+		MCTComponent comp = na.getCT_Component();
+		int ct_component_id = comp.getRoot_Component_ID();
+		
+		MFTUAircraft ac = MFTUAircraft.getByCT_Component_ID(ctx, ct_component_id, trxName);
+		if (ac != null)
+		{
+			// Find the next due maintenance actions by usage and time for that component.
+			// The times are common in that a date is the same date for all components in 
+			// the BOM tree.  Usage and component life used, are specific to the component
+			// and may not agree with the root component or aircraft life used. So, for 
+			// time, use the date of the next maintenance action but for usage, use the 
+			// next usage interval in hours to determine the next due usage.  In other 
+			// words, the next usage due for the aircraft will be the current aircraft
+			// usage or airframe life in hours plus the usage interval to the next 
+			// maintenance action.  The action times and intervals are the target and the
+			// tolerances apply to this both positive and negative.
+			MFTUMaintNextAction nextHrs = MFTUMaintNextAction.getNextActionByUsage(ctx, ct_component_id, trxName);		
+			MFTUMaintNextAction nextDate = MFTUMaintNextAction.getNextActionByDate(ctx, ct_component_id, trxName);
+			
+			// Update the aircraft record
+			ac.setACNextMaintHrs(ac.getAirframeTime().add(nextHrs.getFTU_UseRemaining()));
+			ac.setACNextMaintHrsTol(nextHrs.getFTU_UsageIntervalTol());
+			ac.setACNextMaintDate(nextDate.getFTU_DateNextDue());
+			ac.setACNextMaintDateTol(nextDate.getFTU_TimeIntervalTol());
+			ac.saveEx();
+		}
+		return null;
+	}
+
+	private String mc_mCtComponent(PO po, int type, boolean isNew,
+			boolean isAfterChange) {
+
+		Properties ctx = po.getCtx();
+		String trxName = po.get_TrxName();
+		int ct_component_id = po.get_ID();
+		MCTComponent comp = (MCTComponent) po;
+
+		if (isNew)
+		{			
+			// Create maintenance requirements based on the component.
+			// This will also update the next actions.
+			MFTUMaintRequirement.addCT_Component(ctx, ct_component_id, trxName);
+		}
+		
+//		if (isAfterChange && po.is_ValueChanged(MCTComponent.COLUMNNAME_Root_Component_ID))
+//		{
+//			MFTUMaintNextAction.updateRootComponent(ctx, ct_component_id, comp.getRoot_Component_ID(), trxName);
+//		}
+		return null;
+
+	}
+
 	private String mc_mftuDefectLog(PO po, int type, boolean isNew,
-			boolean isChange) {
+			boolean isAfterChange) {
 
 		MFTUDefectLog defect = (MFTUDefectLog) po;
 		
@@ -393,7 +919,7 @@ public class FTUModelValidator implements ModelValidator {
 	}
 
 	private String mc_mInventory(PO po, int type, boolean isNew,
-			boolean isChange) {
+			boolean isAfterChange) {
 		log.fine(po.get_TableName() + " Type: "+type);
 		String where = "";
 
@@ -431,7 +957,7 @@ public class FTUModelValidator implements ModelValidator {
 		return null;
 	}
 
-	private String mc_mftuFlightSheet(PO po, int type, boolean isNew, boolean isChange) {
+	private String mc_mftuFlightSheet(PO po, int type, boolean isNew, boolean isAfterChange) {
 		MFTUFlightsheet fs = (MFTUFlightsheet) po;
 		
 		// Ignore updates while the model is being validated
@@ -448,7 +974,7 @@ public class FTUModelValidator implements ModelValidator {
 		fs.setBeingModelValidated(true);
 		
 		// Ignore inactive flights - void the associated entries
-		if (isChange && (fs.is_ValueChanged(MFTUFlightsheet.COLUMNNAME_IsActive) && !fs.isActive())
+		if (isAfterChange && (fs.is_ValueChanged(MFTUFlightsheet.COLUMNNAME_IsActive) && !fs.isActive())
 				|| fs.is_ValueChanged(MFTUFlightsheet.COLUMNNAME_IsNoShow) && !fs.isNoShow()
 				|| fs.is_ValueChanged(MFTUFlightsheet.COLUMNNAME_Line_Status) && fs.getLine_Status().equals(MFTUFlightsheet.LINE_STATUS_Cancelled)) {
 			MOrder order = (MOrder) fs.getC_Order();
@@ -504,142 +1030,137 @@ public class FTUModelValidator implements ModelValidator {
 	@Override
 	public String docValidate(PO po, int timing) {
 
-		if (po instanceof MInventory) {	
-			log.fine(po.get_TableName() + " Timing: "+ timing);
-			boolean isVoided = (ModelValidator.TIMING_AFTER_REVERSECORRECT == timing || ModelValidator.TIMING_AFTER_VOID == timing);
-			
-			// If M_Inventory entries are voided, check if these are referenced from the flightsheet and remove the reference.
-			if (isVoided) {
-				String where =  MInventory.COLUMNNAME_M_Inventory_ID + "=" + ((MInventory) po).getM_Inventory_ID();
-				List<MFTUFlightsheet> flights = new Query(po.getCtx(), MFTUFlightsheet.Table_Name, where, po.get_TrxName() )
-													 .setClient_ID()
-													 .list();
-				for (MFTUFlightsheet flight : flights) {
-					flight.setM_Inventory_ID(0);
-					flight.saveEx();
-				}
-			}
+		if (po instanceof MInventory) 
+		{		
+			dv_mInventory(po, timing);	
 		}
 
-		if (po instanceof MOrder) {	
-			log.fine(po.get_TableName() + " Timing: "+ timing);
-			boolean isVoided = (ModelValidator.TIMING_AFTER_REVERSECORRECT == timing || ModelValidator.TIMING_AFTER_VOID == timing);
-			boolean isPrepare = (ModelValidator.TIMING_BEFORE_PREPARE == timing);
-			boolean isCompleted = (ModelValidator.TIMING_AFTER_COMPLETE == timing);
-			boolean isReactivated = (ModelValidator.TIMING_AFTER_REACTIVATE == timing);
-			
-			// If C_Order entries are voided, check if these are referenced from the flightsheet and remove the reference.
-			if (isVoided) {
-				String where =  MOrder.COLUMNNAME_C_Order_ID + "=" + ((MOrder) po).getC_Order_ID();
-				List<MFTUFlightsheet> flights = new Query(po.getCtx(), MFTUFlightsheet.Table_Name, where, po.get_TrxName() )
-													 .setClient_ID()
-													 .list();
-				for (MFTUFlightsheet flight : flights) {
-					flight.setC_Order_ID(0);
-					flight.setLine_Status(MFTUFlightsheet.LINE_STATUS_Waiting);  // pending/waiting.
-					flight.saveEx();
-				}
-			} // isVoided
-			
-			if (isReactivated) {
-				// Delete the reference to the order lines from the invoice lines
-				MOrder order = (MOrder) po;
-				MOrderLine[] orderLines = order.getLines();
-				for (MOrderLine orderLine : orderLines) 
-				{
-					
-					clearOrderLineReferences(po.getCtx(), orderLine, po.get_TrxName());
-					MProduct product = (MProduct) orderLine.getM_Product();
-					if (!product.isStocked()) 
-					{
-						
-						orderLine.setQtyDelivered(Env.ZERO);
-						orderLine.setQtyReserved(Env.ZERO);
-						orderLine.saveEx();
-						
-					}
-				}
-				
-				// reset the flightsheet entry to not closed
-				String where =  MOrder.COLUMNNAME_C_Order_ID + "=" + ((MOrder) po).getC_Order_ID();
-				List<MFTUFlightsheet> flights = new Query(po.getCtx(), MFTUFlightsheet.Table_Name, where, po.get_TrxName() )
-													 .setClient_ID()
-													 .list();
-				for (MFTUFlightsheet flight : flights) {
-					flight.setLine_Status(MFTUFlightsheet.LINE_STATUS_Waiting);  // pending/waiting.
-					flight.saveEx();
-				}
-								
-			} // isReactivated
-			
-			if (isPrepare) {
-				setHasAdvancedInstruction(po);
-				orderAddBlockBookings(po);
-				setExemptTaxes(po);
-			}
-			
-			if (isCompleted) {
-				String where =  MOrder.COLUMNNAME_C_Order_ID + "=" + ((MOrder) po).getC_Order_ID();
-				List<MFTUFlightsheet> flights = new Query(po.getCtx(), MFTUFlightsheet.Table_Name, where, po.get_TrxName() )
-													 .setClient_ID()
-													 .list();
-				for (MFTUFlightsheet flight : flights) {
-					flight.setLine_Status(MFTUFlightsheet.LINE_STATUS_Closed);
-					flight.saveEx();
-				}				
-			}
+		if (po instanceof MOrder) 
+		{		
+			dv_mOrder(po, timing);
 		}
 
 		if (po instanceof MFTUMaintWOResult)
 		{
-			IDocumentLine[] lines = (IDocumentLine[]) ((MFTUMaintWOResult) po).getLines();
-
-			boolean isCompleted = (ModelValidator.TIMING_AFTER_COMPLETE == timing);
-			
-			if (isCompleted)
-			{
-				
-				for (IDocumentLine line : lines)
-				{
-					//  Maintenance work orders can add or remove components from assemblies and affect inventory
-					String movementType = line.getMovementType();
-					BigDecimal movementQty = line.getMovementQty();
-					
-					//TODO fix this  MTransation?
-					boolean incomingTrx = MTransaction.isIncomingTransaction(movementType) && movementQty.signum() >= 0
-										|| !MTransaction.isIncomingTransaction(movementType) && movementQty.signum() < 0;	//	V+ Vendor Receipt
-		
-					MCTComponent component = (MCTComponent) ((MFTUMaintWOResultLine) line).getCT_Component();
-					// Two history elements - inventory and BOM actions
-					String action = MCTComponentHistory.CT_COMPONENTACTIONTYPE_Installed;
-					if (incomingTrx) 
-					{
-						action = MCTComponentHistory.CT_COMPONENTACTIONTYPE_Uninstalled;
-						// Uninstall first, then return to inventory
-						// TODO - is it important to track the component it was removed from?
-						// This happens after the maintenance action was completed, so the parent ID will already by zero 
-						ComponentModelValidator.addHistoryFromDocLine(po.getCtx(), component, line, 0, 0, action, movementType, po.get_TrxName());
-		
-						action = MCTComponentHistory.CT_COMPONENTACTIONTYPE_AddedToInventory;
-						ComponentModelValidator.addHistoryFromDocLine(po.getCtx(), component, line, line.getM_LocatorTo_ID(), 0, action, movementType, po.get_TrxName());
-					}
-					else
-					{
-						action = MCTComponentHistory.CT_COMPONENTACTIONTYPE_DrawnFromInentory;
-						// Draw from inventory first, then install
-						ComponentModelValidator.addHistoryFromDocLine(po.getCtx(), component, line, line.getM_Locator_ID(), 0, action, movementType, po.get_TrxName());
-		
-						action = MCTComponentHistory.CT_COMPONENTACTIONTYPE_Installed;
-						ComponentModelValidator.addHistoryFromDocLine(po.getCtx(), component, line, 0, component.getParentComponent_ID(), action, movementType, po.get_TrxName());
-					}
-				} // Lines
-			} // MFTUMaintWOResult Completed
+			dv_mftuMaintWOResult(po, timing);			
 		} // MFTUMaintWOResult
-
 
 		return null;
 	}
 	
+	private void dv_mInventory(PO po, int timing) {
+
+		log.fine(po.get_TableName() + " Timing: "+ timing);
+		boolean isVoided = (ModelValidator.TIMING_AFTER_REVERSECORRECT == timing || ModelValidator.TIMING_AFTER_VOID == timing);
+		
+		// If M_Inventory entries are voided, check if these are referenced from the flightsheet and remove the reference.
+		if (isVoided) {
+			String where =  MInventory.COLUMNNAME_M_Inventory_ID + "=" + ((MInventory) po).getM_Inventory_ID();
+			List<MFTUFlightsheet> flights = new Query(po.getCtx(), MFTUFlightsheet.Table_Name, where, po.get_TrxName() )
+												 .setClient_ID()
+												 .list();
+			for (MFTUFlightsheet flight : flights) {
+				flight.setM_Inventory_ID(0);
+				flight.saveEx();
+			}
+		}
+	}
+
+	private void dv_mOrder(PO po, int timing) {
+				
+		log.fine(po.get_TableName() + " Timing: "+ timing);
+		boolean isVoided = (ModelValidator.TIMING_AFTER_REVERSECORRECT == timing || ModelValidator.TIMING_AFTER_VOID == timing);
+		boolean isPrepare = (ModelValidator.TIMING_BEFORE_PREPARE == timing);
+		boolean isCompleted = (ModelValidator.TIMING_AFTER_COMPLETE == timing);
+		boolean isReactivated = (ModelValidator.TIMING_AFTER_REACTIVATE == timing);
+		
+		// If C_Order entries are voided, check if these are referenced from the flightsheet and remove the reference.
+		if (isVoided) {
+			String where =  MOrder.COLUMNNAME_C_Order_ID + "=" + ((MOrder) po).getC_Order_ID();
+			List<MFTUFlightsheet> flights = new Query(po.getCtx(), MFTUFlightsheet.Table_Name, where, po.get_TrxName() )
+												 .setClient_ID()
+												 .list();
+			for (MFTUFlightsheet flight : flights) {
+				flight.setC_Order_ID(0);
+				flight.setLine_Status(MFTUFlightsheet.LINE_STATUS_Waiting);  // pending/waiting.
+				flight.saveEx();
+			}
+		} // isVoided
+		
+		if (isReactivated) {
+			// Delete the reference to the order lines from the invoice lines
+			MOrder order = (MOrder) po;
+			MOrderLine[] orderLines = order.getLines();
+			for (MOrderLine orderLine : orderLines) 
+			{
+				
+				clearOrderLineReferences(po.getCtx(), orderLine, po.get_TrxName());
+				MProduct product = (MProduct) orderLine.getM_Product();
+				if (!product.isStocked()) 
+				{
+					
+					orderLine.setQtyDelivered(Env.ZERO);
+					orderLine.setQtyReserved(Env.ZERO);
+					orderLine.saveEx();
+					
+				}
+			}
+			
+			// reset the flightsheet entry to not closed
+			String where =  MOrder.COLUMNNAME_C_Order_ID + "=" + ((MOrder) po).getC_Order_ID();
+			List<MFTUFlightsheet> flights = new Query(po.getCtx(), MFTUFlightsheet.Table_Name, where, po.get_TrxName() )
+												 .setClient_ID()
+												 .list();
+			for (MFTUFlightsheet flight : flights) {
+				flight.setLine_Status(MFTUFlightsheet.LINE_STATUS_Waiting);  // pending/waiting.
+				flight.saveEx();
+			}
+							
+		} // isReactivated
+		
+		if (isPrepare) {
+			setHasAdvancedInstruction(po);
+			orderAddBlockBookings(po);
+			setExemptTaxes(po);
+		}
+		
+		if (isCompleted) {
+			String where =  MOrder.COLUMNNAME_C_Order_ID + "=" + ((MOrder) po).getC_Order_ID();
+			List<MFTUFlightsheet> flights = new Query(po.getCtx(), MFTUFlightsheet.Table_Name, where, po.get_TrxName() )
+												 .setClient_ID()
+												 .list();
+			for (MFTUFlightsheet flight : flights) {
+				flight.setLine_Status(MFTUFlightsheet.LINE_STATUS_Closed);
+				flight.saveEx();
+			}				
+		}
+	}
+
+	private void dv_mftuMaintWOResult(PO po, int timing) {
+
+		log.fine(po.get_TableName() + " Timing: "+ timing);
+		boolean isCompleted = (TIMING_AFTER_COMPLETE == timing);
+
+		if (isCompleted)
+		{
+			// Update the aircraft serviceability
+			MFTUMaintWOResult mwor = (MFTUMaintWOResult) po;
+			
+			MFTUAircraft ac = MFTUAircraft.getByCT_Component_ID(mwor.getCtx(), mwor.getParentComponent_ID(), mwor.get_TrxName());
+			
+			if (ac == null)
+				return;
+			
+			ProcessInfo processInfo = ProcessBuilder.create(mwor.getCtx())
+			.process(com.mckayerp.ftu.process.MaintUpdateACServiceabilityStatus.class)
+			.withTitle("Updating AC Serviceability")
+			.withParameter(MaintUpdateACServiceabilityStatus.FTU_Aircraft_ID, ac.getFTU_Aircraft_ID()) // all aircraft
+			.withParameter(MFTUMaintWOResult.COLUMNNAME_FTU_MaintWOResult_ID, mwor.getFTU_MaintWOResult_ID())
+			.execute();
+
+		} // MFTUMaintWOResult Completed
+	}
+
 	private void setHasAdvancedInstruction( PO po) {
 		// Determine if there is an advanced instruction product.
 		int advancedInstructionProduct_ID = 1000248;  // Hardcoded
@@ -953,6 +1474,7 @@ public class FTUModelValidator implements ModelValidator {
 		}
 		order.setM_Warehouse_ID(m_M_Warehouse_ID); //Use default			
 		order.setDateOrdered(fs.getFlightDate());
+		order.setDateAcct(fs.getFlightDate());     // TODO - for old scrapes, check calendar?
 		order.setC_DocTypeTarget_ID("WI"); //Credit Order
 
 		order.saveEx();
@@ -1552,6 +2074,4 @@ public class FTUModelValidator implements ModelValidator {
 		
 		}
 	}
-
-
 }

@@ -136,6 +136,21 @@ public interface I_FTU_DefectLog
 
 	public com.mckayerp.model.I_CT_Component getCT_Component() throws RuntimeException;
 
+    /** Column name CT_ComponentBOMLine_ID */
+    public static final String COLUMNNAME_CT_ComponentBOMLine_ID = "CT_ComponentBOMLine_ID";
+
+	/** Set Component BOM Line.
+	  * A component included in an assembly
+	  */
+	public void setCT_ComponentBOMLine_ID (int CT_ComponentBOMLine_ID);
+
+	/** Get Component BOM Line.
+	  * A component included in an assembly
+	  */
+	public int getCT_ComponentBOMLine_ID();
+
+	public com.mckayerp.model.I_CT_ComponentBOMLine getCT_ComponentBOMLine() throws RuntimeException;
+
     /** Column name DateDoc */
     public static final String COLUMNNAME_DateDoc = "DateDoc";
 
@@ -166,12 +181,12 @@ public interface I_FTU_DefectLog
     public static final String COLUMNNAME_DefectDate = "DefectDate";
 
 	/** Set Defect Date.
-	  * The date the defect was entered in the log
+	  * The date and time the defect was entered in the log.
 	  */
 	public void setDefectDate (Timestamp DefectDate);
 
 	/** Get Defect Date.
-	  * The date the defect was entered in the log
+	  * The date and time the defect was entered in the log.
 	  */
 	public Timestamp getDefectDate();
 
@@ -372,13 +387,35 @@ public interface I_FTU_DefectLog
 
 	public com.mckayerp.ftu.model.I_FTU_MaintJASCHdr getFTU_MaintJASCHdr() throws RuntimeException;
 
+    /** Column name FTU_MaintWOResult_ID */
+    public static final String COLUMNNAME_FTU_MaintWOResult_ID = "FTU_MaintWOResult_ID";
+
+	/** Set Maintenance Work Order Result	  */
+	public void setFTU_MaintWOResult_ID (int FTU_MaintWOResult_ID);
+
+	/** Get Maintenance Work Order Result	  */
+	public int getFTU_MaintWOResult_ID();
+
+	public com.mckayerp.ftu.model.I_FTU_MaintWOResult getFTU_MaintWOResult() throws RuntimeException;
+
+    /** Column name FTU_MaintWOResultLine_ID */
+    public static final String COLUMNNAME_FTU_MaintWOResultLine_ID = "FTU_MaintWOResultLine_ID";
+
+	/** Set Maintenance Work Order Result Line	  */
+	public void setFTU_MaintWOResultLine_ID (int FTU_MaintWOResultLine_ID);
+
+	/** Get Maintenance Work Order Result Line	  */
+	public int getFTU_MaintWOResultLine_ID();
+
+	public com.mckayerp.ftu.model.I_FTU_MaintWOResultLine getFTU_MaintWOResultLine() throws RuntimeException;
+
     /** Column name FTU_MaintWorkOrderLine_ID */
     public static final String COLUMNNAME_FTU_MaintWorkOrderLine_ID = "FTU_MaintWorkOrderLine_ID";
 
-	/** Set Maintenance Work Order Line ID	  */
+	/** Set Maintenance Work Order Line	  */
 	public void setFTU_MaintWorkOrderLine_ID (int FTU_MaintWorkOrderLine_ID);
 
-	/** Get Maintenance Work Order Line ID	  */
+	/** Get Maintenance Work Order Line	  */
 	public int getFTU_MaintWorkOrderLine_ID();
 
 	public com.mckayerp.ftu.model.I_FTU_MaintWorkOrderLine getFTU_MaintWorkOrderLine() throws RuntimeException;
@@ -408,6 +445,19 @@ public interface I_FTU_DefectLog
 	  * The record is active in the system
 	  */
 	public boolean isActive();
+
+    /** Column name IsAdministrative */
+    public static final String COLUMNNAME_IsAdministrative = "IsAdministrative";
+
+	/** Set Is Administrative.
+	  * Is the defect administrative? If selected, the defect will not be added to the AC Journey log.
+	  */
+	public void setIsAdministrative (boolean IsAdministrative);
+
+	/** Get Is Administrative.
+	  * Is the defect administrative? If selected, the defect will not be added to the AC Journey log.
+	  */
+	public boolean isAdministrative();
 
     /** Column name IsApproved */
     public static final String COLUMNNAME_IsApproved = "IsApproved";

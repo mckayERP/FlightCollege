@@ -27,6 +27,7 @@ public class CalloutDefectLog extends CalloutEngine {
 			return "";
 
 		mTab.setValue(I_FTU_DefectLog.COLUMNNAME_TotalAirframeTime, ac.getAirframeTime());
+		mTab.setValue(I_FTU_DefectLog.COLUMNNAME_CT_Component_ID, ac.getCT_Component_ID());
 
 		return "";
 	}

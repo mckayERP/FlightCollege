@@ -130,6 +130,19 @@ public interface I_FTU_Aircraft
 	  */
 	public Timestamp getACNextMaintDate();
 
+    /** Column name ACNextMaintDateTol */
+    public static final String COLUMNNAME_ACNextMaintDateTol = "ACNextMaintDateTol";
+
+	/** Set Next Maint Date Tolerance.
+	  * The tolerance in days around the next maintenance date.
+	  */
+	public void setACNextMaintDateTol (BigDecimal ACNextMaintDateTol);
+
+	/** Get Next Maint Date Tolerance.
+	  * The tolerance in days around the next maintenance date.
+	  */
+	public BigDecimal getACNextMaintDateTol();
+
     /** Column name ACNextMaintHrs */
     public static final String COLUMNNAME_ACNextMaintHrs = "ACNextMaintHrs";
 
@@ -142,6 +155,19 @@ public interface I_FTU_Aircraft
 	  * The Airframe hours when the next maintenance action is due.
 	  */
 	public BigDecimal getACNextMaintHrs();
+
+    /** Column name ACNextMaintHrsTol */
+    public static final String COLUMNNAME_ACNextMaintHrsTol = "ACNextMaintHrsTol";
+
+	/** Set Next Maint Hours Tolerance.
+	  * The tolerance in hours use around the next maintenance due.
+	  */
+	public void setACNextMaintHrsTol (BigDecimal ACNextMaintHrsTol);
+
+	/** Get Next Maint Hours Tolerance.
+	  * The tolerance in hours use around the next maintenance due.
+	  */
+	public BigDecimal getACNextMaintHrsTol();
 
     /** Column name ACOilGrade */
     public static final String COLUMNNAME_ACOilGrade = "ACOilGrade";
@@ -813,6 +839,19 @@ public interface I_FTU_Aircraft
 	  * Alphanumeric identifier of the entity
 	  */
 	public String getName();
+
+    /** Column name RowStatus */
+    public static final String COLUMNNAME_RowStatus = "RowStatus";
+
+	/** Set Row Status.
+	  * A code that indicates the status of a row.
+	  */
+	public void setRowStatus (BigDecimal RowStatus);
+
+	/** Get Row Status.
+	  * A code that indicates the status of a row.
+	  */
+	public BigDecimal getRowStatus();
 
     /** Column name S_Resource_ID */
     public static final String COLUMNNAME_S_Resource_ID = "S_Resource_ID";
